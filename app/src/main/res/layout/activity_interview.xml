@@ -7,35 +7,6 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textViewWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Benvenuto nella sezione di registrazione!"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editTextNomeUtente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nome"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/editTextEmail2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
-
-    <TextView
         android:id="@+id/textViewDrink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,9 +82,17 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/buttonSignUpCompleted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Salva" />
+        android:text="Fine" />
+
+    <Button
+        android:id="@+id/buttonBackToSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Indietro" />
+
+
 
 </LinearLayout>
