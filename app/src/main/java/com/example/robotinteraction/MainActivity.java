@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private Button buttonLogin;
 
+    private Button buttonSignUp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
+        buttonSignUp = findViewById(R.id.buttonSignUp);
 
-        // Gestire evento sul pulsante accedi"
+        // Gestire evento sul pulsante accedi
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     //procedere...
                 }
+            }
+        });
+
+        //Gestione evento sul pulsante registrati
+        buttonSignUp.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onLick(View v){
+                //aprire pagina di registrazione
             }
         });
     }
