@@ -14,33 +14,26 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/radioButton2"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-        <RadioButton
-            android:id="@+id/radioButton3"
+            android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-        <RadioButton
-            android:id="@+id/radioButton4"
+            android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
-
-        <RadioButton
-            android:id="@+id/radioButton"
+            android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="CheckBox" />
 
         <TextView
             android:id="@+id/textViewArgomenti"
@@ -49,37 +42,30 @@
             android:text="Quali argomenti preferisci?"
             android:textSize="24sp"
             android:textStyle="bold" />
-    </RadioGroup>
 
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/radioButton5"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="CheckBox" />
 
-        <RadioButton
-            android:id="@+id/radioButton6"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="CheckBox" />
 
-        <RadioButton
-            android:id="@+id/radioButton7"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="CheckBox" />
 
-        <RadioButton
-            android:id="@+id/radioButton8"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
-    </RadioGroup>
+            android:text="CheckBox" />
 
     <Button
         android:id="@+id/buttonSignUpCompleted"

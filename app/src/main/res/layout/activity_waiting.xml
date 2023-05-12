@@ -7,18 +7,20 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textViewWelcomeBot"
+        android:id="@+id/textViewAttendi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ciao utente, hai effettuato l'accesso!"
+        android:text="Ciao utente, attendi il tuo turno!"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonContinua"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewPostoCoda"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continua" />
+        android:text="Posto in coda n°"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/buttonLogOut"
