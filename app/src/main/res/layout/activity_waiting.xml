@@ -28,4 +28,10 @@
         android:layout_height="wrap_content"
         android:text="Esci" />
 
+    <Button
+        android:id="@+id/buttonGoToChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Accedi alla chat" />
+
 </LinearLayout>

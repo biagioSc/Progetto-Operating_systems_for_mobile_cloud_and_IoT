@@ -10,15 +10,15 @@
         android:id="@+id/textViewWelcomeBot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ciao utente, hai effettuato l'accesso!"
+        android:text="Benvenuto utente!"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/buttonContinua"
+        android:id="@+id/buttonGoToWaiting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continua" />
+        android:text="Accedi alla lista d'attesa" />
 
     <Button
         android:id="@+id/buttonLogOut"

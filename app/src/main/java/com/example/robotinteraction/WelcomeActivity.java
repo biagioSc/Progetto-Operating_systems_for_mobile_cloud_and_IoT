@@ -24,5 +24,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
 
         });
+
+        Button buttonGoToWaiting = findViewById(R.id.buttonGoToWaiting);
+        buttonGoToWaiting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent GoToWaiting = new Intent(WelcomeActivity.this, WaitingActivity.class);
+                startActivity(GoToWaiting);
+            }
+        });
     }
 }

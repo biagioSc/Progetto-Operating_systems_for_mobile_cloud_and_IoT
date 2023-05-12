@@ -24,6 +24,8 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".InterviewActivity" />
         <activity android:name=".WelcomeActivity" />
+        <activity android:name=".OrderingActivity" />
+        <activity android:name=".WaitingActivity" />
 
     </application>
 

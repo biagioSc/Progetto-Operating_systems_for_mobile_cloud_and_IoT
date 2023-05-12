@@ -24,5 +24,16 @@ public class WaitingActivity extends AppCompatActivity {
             }
 
         });
+
+        Button buttonGoToChat = findViewById(R.id.buttonGoToChat);
+        buttonGoToChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent GoToChat = new Intent(WaitingActivity.this, OrderingActivity.class);
+                startActivity(GoToChat);
+            }
+
+        });
     }
 }
