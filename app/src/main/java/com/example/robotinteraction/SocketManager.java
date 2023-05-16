@@ -22,7 +22,7 @@ public class SocketManager {
     private MessageListener messageListener;
 
     private static final String SERVER_IP = "127.0.0.1";
-    private static final int SERVER_PORT = 8080;
+    private static final int SERVER_PORT = 0000;
 
     private SocketManager() {
         // Nessun costruttore esterno necessario
@@ -40,16 +40,42 @@ public class SocketManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    socket = new Socket(SERVER_IP, SERVER_PORT);
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                int attempts = 0;
+                final int MAX_ATTEMPTS = 3;
+
+                while (attempts < MAX_ATTEMPTS) {
+                    try {
+                        socket = new Socket(SERVER_IP, SERVER_PORT);
+                        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+
+                        // Se la connessione è riuscita, esce dal ciclo
+                        break;
+                    } catch (IOException e) {
+                        attempts++;
+                        e.printStackTrace();
+                        Log.e("SocketManager", "Failed to connect. Attempt " + attempts + " of " + MAX_ATTEMPTS);
+
+                        // Se non è riuscito a connettersi, aspetta 5 secondi prima del prossimo tentativo
+                        try {
+                            Thread.sleep(5000); // 5000 milliseconds = 5 seconds
+                        } catch (InterruptedException ie) {
+                            // Thread was interrupted during sleep, this is usually a sign to stop
+                            Log.e("SocketManager", "Connection retry interrupted: ", ie);
+                            return;
+                        }
+
+                        // Se ha raggiunto il numero massimo di tentativi, lancia un'eccezione
+                        if (attempts == MAX_ATTEMPTS) {
+                            throw new RuntimeException("Failed to connect to the server after " + MAX_ATTEMPTS + " attempts");
+                        }
+                    }
                 }
             }
         }).start();
     }
+
+
 
 
     public static synchronized SocketManager getInstance() {
@@ -62,6 +88,10 @@ public class SocketManager {
 
 
     public String receiveMessage() throws IOException {
+
+        if(in == null){
+            throw new IOException("Ho ricevuto un input null dal Server!");
+        }
         String line = in.readLine();
         if (messageListener != null) {
             messageListener.onNewMessage(line);
@@ -69,29 +99,20 @@ public class SocketManager {
         return line;
     }
 
-    public void sendMessage(String message) throws IOException{
-        final int MAX_RETRIES = 3;  // Numero di tentativi
-        int attempt = 0;
-
-        while (attempt < MAX_RETRIES) {
-            out.println(message);
-            if (!out.checkError()) {
-                // Il messaggio è stato inviato con successo, quindi esco dal ciclo
-                break;
-            } else {
-                // C'è stato un errore nell'invio del messaggio, stampo i log di errore
-                attempt++;
-                Log.e("SocketManager", "Errore durante l'invio del messaggio. Tentativo "
-                        + attempt + " di " + MAX_RETRIES);
-            }
+    public void sendMessage(String message) throws IOException {
+        if (out == null) {
+            throw new IOException("Il messaggio da inviare è null!");
         }
 
-        // Raggiunti i tentativi massimi
-        if (attempt == MAX_RETRIES) {
-            Log.e("SocketManager", "Non è stato possibile inviare il messaggio dopo "
-                    + MAX_RETRIES + " tentativi.");
+        out.println(message);
+
+        // Se ci sono stati errori nella scrittura, PrintWriter non lancerà un'eccezione,
+        // ma potrai comunque controllarlo con checkError().
+        if (out.checkError()) {
+            throw new IOException("Si è verificato un errore durante l'invio del messaggio!");
         }
     }
+
 
     public void close() {
         try {

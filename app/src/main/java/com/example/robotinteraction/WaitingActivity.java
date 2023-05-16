@@ -15,6 +15,7 @@ public class WaitingActivity extends AppCompatActivity {
     private TextView waitingTextView;
     private SocketManager socket;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,41 +32,47 @@ public class WaitingActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
+                String message = null;
                 while(true) {
-                    String message = null;
+
                     try {
                         message = socket.receiveMessage();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // Supponendo che "Wait Over" sia il messaggio che indica la fine dell'attesa
-                    if (message.equalsIgnoreCase("WAIT_OVER")) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(WaitingActivity.this, OrderingActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                        break;
-                    }
-                    // Altrimenti provo a trasformare il messaggio in un numero per vedere se il Server
-                    // mi ha inviato quante persone mancano
-                    else {
-                        try {
-                            int counter = Integer.parseInt(message);
 
+                    if(message != null){
+
+                        // Supponendo che "Wait Over" sia il messaggio che indica la fine dell'attesa
+                        if (message.equalsIgnoreCase("WAIT_OVER")) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    waitingTextView.setText("Ti precedono n." + counter + " utenti.");
+                                    Intent intent = new Intent(WaitingActivity.this, OrderingActivity.class);
+                                    startActivity(intent);
                                 }
                             });
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            break;
+                        }
+                        // Altrimenti provo a trasformare il messaggio in un numero per vedere se il Server
+                        // mi ha inviato quante persone mancano
+                        else {
+                            try {
+                                int counter = Integer.parseInt(message);
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        waitingTextView.setText("Ti precedono n." + counter + " utenti.");
+                                    }
+                                });
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
+
+
                 }
             }
         }).start();

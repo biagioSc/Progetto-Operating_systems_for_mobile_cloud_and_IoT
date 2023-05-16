@@ -88,6 +88,13 @@ public class  InterviewActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Toast.makeText(InterviewActivity.this, finalResponse, Toast.LENGTH_SHORT).show();
+
+                            // Se il server manda un messaggio di successo
+                            if(finalResponse.equalsIgnoreCase("Success")){
+                                Intent intent = new Intent(InterviewActivity.this,MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                     });
                 }
