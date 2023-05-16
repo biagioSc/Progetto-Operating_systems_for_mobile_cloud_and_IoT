@@ -7,12 +7,26 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textViewWelcome"
+        android:id="@+id/textViewSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Benvenuto in RoboDrink!"
+        android:text="Benvenuto nella sezione di registrazione!"
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editTextCognome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cognome"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -28,17 +42,20 @@
         android:hint="Password"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Accedi"
-        android:onClick="onLoginClick"/>
+
 
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/buttonGoToInterview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registrati" />
+        android:text="Continua"
+        android:onClick="onNextClick"/>
+
+    <Button
+        android:id="@+id/buttonGoToMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Indietro"
+        android:onClick="onBackClick"/>
 
 </LinearLayout>

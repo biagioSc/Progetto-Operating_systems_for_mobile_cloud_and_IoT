@@ -7,38 +7,31 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/textViewWelcome"
+        android:id="@+id/textViewAttendi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Benvenuto in RoboDrink!"
+        android:text="Ciao utente, attendi il tuo turno!"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textViewPostoCoda"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        android:text="Posto in coda n°"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/buttonLogOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Accedi"
-        android:onClick="onLoginClick"/>
+        android:text="Esci" />
 
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/buttonGoToChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registrati" />
+        android:text="Accedi alla chat" />
 
 </LinearLayout>

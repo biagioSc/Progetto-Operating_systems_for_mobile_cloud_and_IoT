@@ -1,17 +1,22 @@
 package com.example.robotinteraction;
 
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.content.Intent;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private Button buttonLogin;
+    private Button buttonSignUp;
+    private SocketManager socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,41 +26,64 @@ public class MainActivity extends AppCompatActivity {
         // Set degli ID per i componenti grafici
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        buttonLogin = findViewById(R.id.buttonLogin);
+        buttonSignUp = findViewById(R.id.buttonSignUp);
 
-        // Gestire evento sul pulsante accedi"
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
+        //creazione socket
+        socket = SocketManager.getInstance();
+
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = editTextEmail.getText().toString();
-                String password = editTextPassword.getText().toString();
 
-                // Verificare i dati con il database
-                if(!verifyCredentials(email,password)){
-                    //messaggio di errore, inserire nuovamente i dati
-                }
-                else{
-                    //procedere...
-                }
+                Intent switchToSignUpActivity = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(switchToSignUpActivity);
             }
         });
+
     }
 
-    private boolean verifyEmail(String email){
-        //connessione al database e verifica della mail
-        return false;
+
+    //Gestione dell'evento click su accedi
+    public void onLoginClick(View view){
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    socket.sendMessage(email);
+                    socket.sendMessage(password);
+
+                    String response = socket.receiveMessage();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+
     }
 
-    private boolean verifyPassword(String password){
-        //connessione al database e verifica della password
-        return false;
-    };
-    private boolean verifyCredentials(String email, String password){
-        if(!verifyEmail(email) || !verifyPassword(password)){
-            return false;
-        }
-        return true;
-    };
+
 }
 
-//
+
+
+
+
+
+
+
+

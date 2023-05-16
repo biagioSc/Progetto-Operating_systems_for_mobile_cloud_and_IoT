@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewDrink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quali drink preferisci?"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkBoxDrink1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/checkBoxDrink2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/checkBoxDrink3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+        <CheckBox
+            android:id="@+id/checkBoxDrink4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+
+        <TextView
+            android:id="@+id/textViewArgomenti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quali argomenti preferisci?"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/checkBoxTopic1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkBoxTopic2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkBoxTopic3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkBoxTopic4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
+
+    <Button
+        android:id="@+id/buttonSignUpCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrati"
+        android:onClick="onSignUpDoneClick"/>
+
+    <Button
+        android:id="@+id/buttonBackToSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Indietro"
+        android:onClick="onBackToSignUpClick"/>
+
+
+
+</LinearLayout>
