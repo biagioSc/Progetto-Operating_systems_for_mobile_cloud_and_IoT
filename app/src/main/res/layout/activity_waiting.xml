@@ -15,23 +15,25 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textViewPostoCoda"
+        android:id="@+id/textViewWaiting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Posto in coda n°"
         android:textSize="24sp"
         android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/buttonLogOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Esci" />
 
     <Button
         android:id="@+id/buttonGoToChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Accedi alla chat" />
+
+    <Button
+        android:id="@+id/buttonLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Esci"
+        android:onClick="onBackButtonClick"/>
+
+
 
 </LinearLayout>

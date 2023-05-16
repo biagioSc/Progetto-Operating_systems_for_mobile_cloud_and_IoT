@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
+import java.io.IOException;
 
 public class OrderingActivity extends AppCompatActivity {
 
@@ -26,6 +28,33 @@ public class OrderingActivity extends AppCompatActivity {
         userResponse = findViewById(R.id.messageEditText);
 
         socket = SocketManager.getInstance();
+        socket.setMessageListener(new SocketManager.MessageListener() {
+            @Override
+            public void onNewMessage(final String message) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.add(message);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
+        // Avvio thread che ascolta per nuovi messaggi
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        socket.receiveMessage();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+            }
+        }).start();
     }
 
 
@@ -37,31 +66,33 @@ public class OrderingActivity extends AppCompatActivity {
         }
     }
 
-    private void sendChatMessage(String message) {
+    public void sendChatMessage(String message) {
+        // Aggiungo il messaggio alla ListView della chat.
+        adapter.add(message);
+        adapter.notifyDataSetChanged();
+
+        // Invio il messaggio al server su un Thread separato
         new Thread(new Runnable() {
             @Override
             public void run() {
-                socket.sendMessage(message);
+                try {
+                    socket.sendMessage(message);
+                } catch (IOException e) {
 
-                String  response = null;
-                response = socket.receiveMessage();
+                    e.printStackTrace();
 
-
-                if (response != null) {
-                    String finalResponse = response;
+                    //Se si è verificato un errore mostro un messaggio al client con Toast
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            adapter.add("User: " + message);
-                            adapter.add("Server: " + finalResponse);
-                            adapter.notifyDataSetChanged();
-                            listView.smoothScrollToPosition(adapter.getCount() - 1);
+                            Toast.makeText(OrderingActivity.this, "Errore nell'invio del messaggio. Riprova.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         }).start();
     }
+
 
 
 

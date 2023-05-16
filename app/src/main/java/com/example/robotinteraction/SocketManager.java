@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import android.util.Log;
 
 public class SocketManager {
     private String serverIp;
@@ -18,11 +19,21 @@ public class SocketManager {
     private PrintWriter out;
     private static SocketManager instance = null;
 
+    private MessageListener messageListener;
+
     private static final String SERVER_IP = "127.0.0.1";
     private static final int SERVER_PORT = 8080;
 
     private SocketManager() {
         // Nessun costruttore esterno necessario
+    }
+
+    public interface MessageListener {
+        void onNewMessage(String message);
+    }
+
+    public void setMessageListener(MessageListener listener){
+        this.messageListener = listener;
     }
 
     public void connect() {
@@ -50,25 +61,45 @@ public class SocketManager {
     }
 
 
-    public String receiveMessage(){
+    public String receiveMessage() throws IOException {
+        String line = in.readLine();
+        if (messageListener != null) {
+            messageListener.onNewMessage(line);
+        }
+        return line;
+    }
 
-        String line = null;
+    public void sendMessage(String message) throws IOException{
+        final int MAX_RETRIES = 3;  // Numero di tentativi
+        int attempt = 0;
 
+        while (attempt < MAX_RETRIES) {
+            out.println(message);
+            if (!out.checkError()) {
+                // Il messaggio è stato inviato con successo, quindi esco dal ciclo
+                break;
+            } else {
+                // C'è stato un errore nell'invio del messaggio, stampo i log di errore
+                attempt++;
+                Log.e("SocketManager", "Errore durante l'invio del messaggio. Tentativo "
+                        + attempt + " di " + MAX_RETRIES);
+            }
+        }
+
+        // Raggiunti i tentativi massimi
+        if (attempt == MAX_RETRIES) {
+            Log.e("SocketManager", "Non è stato possibile inviare il messaggio dopo "
+                    + MAX_RETRIES + " tentativi.");
+        }
+    }
+
+    public void close() {
         try {
-            line = in.readLine();
+            socket.close();
+            instance = null;
         }catch (IOException e){
             e.printStackTrace();
         }
 
-        return line;
-    }
-
-    public void sendMessage(String message) {
-        out.println(message);
-    }
-
-    public void close() throws IOException {
-        socket.close();
-        instance = null;
     }
 }

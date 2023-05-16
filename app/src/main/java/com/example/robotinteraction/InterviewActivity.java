@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -57,21 +59,28 @@ public class  InterviewActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    socket.sendMessage(name);
+                    socket.sendMessage(surname);
+                    socket.sendMessage(email);
+                    socket.sendMessage(password);
 
-                socket.sendMessage(name);
-                socket.sendMessage(surname);
-                socket.sendMessage(email);
-                socket.sendMessage(password);
-                
-                for(String drink : drinkPreferences){
-                    socket.sendMessage(drink);
+                    for(String drink : drinkPreferences){
+                        socket.sendMessage(drink);
+                    }
+                    for(String topic : topicsPreferences){
+                        socket.sendMessage(topic);
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
                 }
-                for(String topic : topicsPreferences){
-                    socket.sendMessage(topic);
-                }
-                
+
                 String response = null;
-                response = socket.receiveMessage();
+               try {
+                   response = socket.receiveMessage();
+               }catch (IOException e){
+                   e.printStackTrace();
+               }
                 
                 if(response != null){
                     String finalResponse = response;
@@ -90,7 +99,6 @@ public class  InterviewActivity extends AppCompatActivity {
     }
 
     public void onBackToSignUpClick(View view){
-        Intent intent = new Intent(InterviewActivity.this,SignUpActivity.class);
-        startActivity(intent);
+        finish();
     }
 }
