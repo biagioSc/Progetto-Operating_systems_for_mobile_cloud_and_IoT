@@ -15,22 +15,22 @@
         android:textStyle="bold" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxDrink1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxDrink2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxDrink3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxDrink4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
@@ -44,25 +44,25 @@
             android:textStyle="bold" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxTopic1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxTopic2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxTopic3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxTopic4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CheckBox" />
@@ -71,13 +71,15 @@
         android:id="@+id/buttonSignUpCompleted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fine" />
+        android:text="Registrati"
+        android:onClick="onSignUpDoneClick"/>
 
     <Button
         android:id="@+id/buttonBackToSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Indietro" />
+        android:text="Indietro"
+        android:onClick="onBackToSignUpClick"/>
 
 
 

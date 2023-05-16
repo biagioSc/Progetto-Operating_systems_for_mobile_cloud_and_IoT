@@ -48,12 +48,14 @@
         android:id="@+id/buttonGoToInterview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continua" />
+        android:text="Continua"
+        android:onClick="onNextClick"/>
 
     <Button
         android:id="@+id/buttonGoToMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Indietro" />
+        android:text="Indietro"
+        android:onClick="onBackClick"/>
 
 </LinearLayout>
