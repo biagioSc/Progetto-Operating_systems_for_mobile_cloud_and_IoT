@@ -31,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
         //creazione socket
         socket = SocketManager.getInstance();
 
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent switchToSignUpActivity = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(switchToSignUpActivity);
+            }
+        });
+
     }
 
 
@@ -63,14 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
 
-            Intent switchToSignUpActivity = new Intent(MainActivity.this, SignUpActivity.class);
-            startActivity(switchToSignUpActivity);
-        }
-        });
 
     }
 

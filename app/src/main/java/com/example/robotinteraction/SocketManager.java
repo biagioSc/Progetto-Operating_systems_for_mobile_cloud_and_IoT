@@ -26,15 +26,20 @@ public class SocketManager {
     }
 
     public void connect() {
-        try {
-            socket = new Socket(SERVER_IP, SERVER_PORT);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-        } catch (IOException e) {
-            // gestire eccezioni
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    socket = new Socket(SERVER_IP, SERVER_PORT);
+                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
+
 
     public static synchronized SocketManager getInstance() {
         if (instance == null) {
