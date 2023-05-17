@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -8,22 +10,48 @@
 
     <TextView
         android:id="@+id/textViewWelcomeBot"
-        android:layout_width="wrap_content"
+        android:layout_width="384dp"
         android:layout_height="wrap_content"
-        android:text="Benvenuto utente!"
-        android:textSize="24sp"
+        android:text="Benvenuto su robotDrink!"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonGoToWaiting"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Accedi alla lista d'attesa" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/buttonLogOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Esci" />
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Esci"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="603dp" />
+
+        <Button
+            android:id="@+id/buttonGoToWaiting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Accedi alla lista d'attesa"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="547dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="377dp"
+            android:layout_height="545dp"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/robot2"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

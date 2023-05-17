@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -10,8 +12,9 @@
         android:id="@+id/textViewAttendi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ciao utente, attendi il tuo turno!"
-        android:textSize="24sp"
+        android:text="Il robot è occupato, attendi il tuo turno!"
+        android:textAlignment="center"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
     <TextView
@@ -21,19 +24,37 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonGoToChat"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Accedi alla chat" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/buttonLogOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Esci"
-        android:onClick="onBackButtonClick"/>
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onBackButtonClick"
+            android:text="Esci"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="544dp" />
 
+        <Button
+            android:id="@+id/buttonGoToChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="Accedi alla chat"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="489dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="226dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGoToChat"
+            tools:layout_editor_absoluteX="155dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
