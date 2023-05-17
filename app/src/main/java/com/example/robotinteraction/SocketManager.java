@@ -21,8 +21,8 @@ public class SocketManager {
 
     private MessageListener messageListener;
 
-    private static final String SERVER_IP = "127.0.0.1";
-    private static final int SERVER_PORT = 0000;
+    private static final String SERVER_IP = "192.168.1.101";
+    private static final int SERVER_PORT = 5400;
 
     private SocketManager() {
         // Nessun costruttore esterno necessario

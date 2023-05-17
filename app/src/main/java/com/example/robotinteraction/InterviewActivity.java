@@ -2,11 +2,11 @@ package com.example.robotinteraction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -37,15 +37,16 @@ public class  InterviewActivity extends AppCompatActivity {
 
 
     public void onSignUpDoneClick(View view){
+
+        // Informazioni passate dalla Intent precedente
         String name = getIntent().getStringExtra("name");
         String surname = getIntent().getStringExtra("surname");
         String email = getIntent().getStringExtra("email");
         String password = getIntent().getStringExtra("password");
-
         ArrayList<String> drinkPreferences = new ArrayList<>();
         ArrayList<String> topicsPreferences = new ArrayList<>();
 
-
+        // Se i CheckBox sono stati cliccati aggiungo le preferenze
         if (drinkCheckBox1.isChecked()) drinkPreferences.add(drinkCheckBox1.getText().toString());
         if (drinkCheckBox2.isChecked()) drinkPreferences.add(drinkCheckBox2.getText().toString());
         if (drinkCheckBox3.isChecked()) drinkPreferences.add(drinkCheckBox3.getText().toString());
@@ -56,10 +57,20 @@ public class  InterviewActivity extends AppCompatActivity {
         if (topicCheckBox3.isChecked()) topicsPreferences.add(topicCheckBox3.getText().toString());
         if (topicCheckBox4.isChecked()) topicsPreferences.add(topicCheckBox4.getText().toString());
 
+        // Gestisco lo scambio di messaggi per completare la SignUp
+        manageSignUpMessages(name,surname,email,password,drinkPreferences,topicsPreferences);
+
+
+    }
+
+    private void manageSignUpMessages(String name, String surname, String email, String password,
+                                     ArrayList<String> drinkPreferences, ArrayList<String>
+                                      topicsPreferences){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    socket.sendMessage("SIGN_UP");
                     socket.sendMessage(name);
                     socket.sendMessage(surname);
                     socket.sendMessage(email);
@@ -76,34 +87,46 @@ public class  InterviewActivity extends AppCompatActivity {
                 }
 
                 String response = null;
-               try {
-                   response = socket.receiveMessage();
-               }catch (IOException e){
-                   e.printStackTrace();
-               }
-                
-                if(response != null){
-                    String finalResponse = response;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(InterviewActivity.this, finalResponse, Toast.LENGTH_SHORT).show();
+                try {
+                    response = socket.receiveMessage();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
 
-                            // Se il server manda un messaggio di successo
-                            if(finalResponse.equalsIgnoreCase("Success")){
-                                Intent intent = new Intent(InterviewActivity.this,MainActivity.class);
+                if(response != null)
+                {
+                    String finalResponse = response;
+
+                    if(finalResponse.equalsIgnoreCase(("SIGN_UP_ERROR"))){
+                        Toast.makeText(InterviewActivity.this,"Registrazione fallita",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    else if(finalResponse.equalsIgnoreCase("SIGN_UP_SUCCESS")){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InterviewActivity.this,
+                                        "Registrazione completata",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(InterviewActivity.this,
+                                        MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
-                        }
-                    });
+                        });
+
+                    }
+
+                }else{
+                    Log.d("InterviewActivity","Il server ha inviato msg = null " +
+                            "come risposta alla signup");
+                    Toast.makeText(InterviewActivity.this, "Si è verificato un errore" +
+                            " lato Server", Toast.LENGTH_SHORT).show();
                 }
-             
 
             }
         }).start();
-
     }
+
 
     public void onBackToSignUpClick(View view){
         finish();

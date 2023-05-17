@@ -48,14 +48,15 @@ public class WaitingActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent intent = new Intent(WaitingActivity.this, OrderingActivity.class);
+                                    Intent intent = new Intent(WaitingActivity.this,
+                                            OrderingActivity.class);
                                     startActivity(intent);
                                 }
                             });
                             break;
                         }
-                        // Altrimenti provo a trasformare il messaggio in un numero per vedere se il Server
-                        // mi ha inviato quante persone mancano
+                        // Altrimenti provo a trasformare il messaggio in un numero per
+                        // vedere se il Server mi ha inviato quante persone mancano
                         else {
                             try {
                                 int counter = Integer.parseInt(message);
