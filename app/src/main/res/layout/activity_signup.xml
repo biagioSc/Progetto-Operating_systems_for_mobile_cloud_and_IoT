@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -14,48 +16,72 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTextNome"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nome"
-        android:inputType="textPersonName" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextCognome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Cognome"
-        android:inputType="textPersonName" />
+        <Button
+            android:id="@+id/buttonGoToMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onBackClick"
+            android:text="Indietro"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="575dp" />
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        <Button
+            android:id="@+id/buttonGoToInterview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onNextClick"
+            android:text="Continua"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="510dp" />
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="426dp" />
 
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="346dp" />
 
+        <EditText
+            android:id="@+id/editTextCognome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cognome"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="274dp" />
 
-    <Button
-        android:id="@+id/buttonGoToInterview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Continua"
-        android:onClick="onNextClick"/>
+        <EditText
+            android:id="@+id/editTextNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="201dp" />
 
-    <Button
-        android:id="@+id/buttonGoToMain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Indietro"
-        android:onClick="onBackClick"/>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="492dp"
+            android:layout_height="237dp"
+            app:srcCompat="@drawable/robot2"
+            tools:layout_editor_absoluteX="-57dp"
+            tools:layout_editor_absoluteY="-13dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
