@@ -70,20 +70,22 @@ public class MainActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        // Controllo nuovamente la connessione al Server
-        if(socket == null || !socket.isConnected()){
-            Toast.makeText(MainActivity.this, "Connessione al server non riuscita. Riprova.",
-                    Toast.LENGTH_SHORT).show();
 
-            socket.attemptConnection();
-            return;
-        }
 
         // Verifico se i campi sono stati riempiti
         if(email.equals("") || password.equals("")){
             Toast.makeText(MainActivity.this, "Inserisci email e password per accedere.",
                     Toast.LENGTH_SHORT).show();
         }else{
+
+            // Controllo nuovamente la connessione al Server
+            if(socket == null || !socket.isConnected()){
+                Toast.makeText(MainActivity.this, "Connessione al server non riuscita. Riprova.",
+                        Toast.LENGTH_SHORT).show();
+
+                socket.attemptConnection();
+                return;
+            }
             // Gestisco lo scambio di messaggi col Server per completare la funzione di LogIn
             manageLogInMessages(email,password);
         }
