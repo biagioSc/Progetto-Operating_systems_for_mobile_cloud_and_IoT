@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
@@ -12,75 +11,103 @@
         android:layout_height="wrap_content"
         android:text="Quali drink preferisci?"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
-            android:id="@+id/checkBoxDrink1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
-        <CheckBox
-            android:id="@+id/checkBoxDrink2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
-        <CheckBox
-            android:id="@+id/checkBoxDrink3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
-        <CheckBox
-            android:id="@+id/checkBoxDrink4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxDrink1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDrink"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewArgomenti"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Quali argomenti preferisci?"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxDrink2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink1"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <CheckBox
-            android:id="@+id/checkBoxTopic1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxDrink3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink2"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <CheckBox
-            android:id="@+id/checkBoxTopic2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxDrink4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink3"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <CheckBox
-            android:id="@+id/checkBoxTopic3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
+    <TextView
+        android:id="@+id/textViewArgomenti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quali argomenti preferisci?"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink4"
+        android:layout_marginTop="20dp" />
 
-        <CheckBox
-            android:id="@+id/checkBoxTopic4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CheckBox" />
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxTopic1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/textViewArgomenti"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxTopic2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxTopic1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxTopic3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxTopic2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkBoxTopic4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxTopic3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSignUpCompleted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Registrati"
-        android:onClick="onSignUpDoneClick"/>
+        android:onClick="onSignUpDoneClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxTopic4"
+        android:layout_marginTop="20dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonBackToSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Indietro"
-        android:onClick="onBackToSignUpClick"/>
+        android:onClick="onBackToSignUpClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignUpCompleted"
+        android:layout_marginTop="10dp" />
 
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
