@@ -21,8 +21,8 @@ public class SocketManager {
 
     private MessageListener messageListener;
 
-    private static final String SERVER_IP = "127.0.0.1";
-    private static final int SERVER_PORT = 8080;
+    private static final String SERVER_IP = "000.000.000";
+    private static final int SERVER_PORT = 0000;
 
     private SocketManager() {
         // Nessun costruttore esterno necessario
@@ -40,37 +40,19 @@ public class SocketManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int attempts = 0;
-                final int MAX_ATTEMPTS = 3;
 
-                while (attempts < MAX_ATTEMPTS) {
                     try {
                         socket = new Socket(SERVER_IP, SERVER_PORT);
                         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                         out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
-                        // Se la connessione è riuscita, esce dal ciclo
-                        break;
                     } catch (IOException e) {
-                        attempts++;
                         e.printStackTrace();
-                        Log.e("SocketManager", "Failed to connect. Attempt " + attempts + " of " + MAX_ATTEMPTS);
+                        Log.e("SocketManager", "Failed to connect");
 
-                        // Se non è riuscito a connettersi, aspetta 5 secondi prima del prossimo tentativo
-                        try {
-                            Thread.sleep(5000); // 5000 milliseconds = 5 seconds
-                        } catch (InterruptedException ie) {
-                            // Thread was interrupted during sleep, this is usually a sign to stop
-                            Log.e("SocketManager", "Connection retry interrupted: ", ie);
-                            return;
-                        }
 
-                        // Se ha raggiunto il numero massimo di tentativi, lancia un'eccezione
-                        if (attempts == MAX_ATTEMPTS) {
-                            throw new RuntimeException("Failed to connect to the server after " + MAX_ATTEMPTS + " attempts");
-                        }
                     }
-                }
+
             }
         }).start();
     }
@@ -93,6 +75,9 @@ public class SocketManager {
             throw new IOException("Ho ricevuto un input null dal Server!");
         }
         String line = in.readLine();
+
+        // Log del messaggio ricevuto
+        Log.d("SocketManager", "[SERVER] Messaggio ricevuto: " + line);
         if (messageListener != null) {
             messageListener.onNewMessage(line);
         }
@@ -100,16 +85,27 @@ public class SocketManager {
     }
 
     public void sendMessage(String message) throws IOException {
+
         if (out == null) {
             throw new IOException("Il messaggio da inviare è null!");
         }
 
         out.println(message);
 
+        // Log del messaggio inviato
+        Log.d("SocketManager", "[CLIENT] Messaggio inviato: " + message);
+
         // Se ci sono stati errori nella scrittura, PrintWriter non lancerà un'eccezione,
         // ma potrai comunque controllarlo con checkError().
         if (out.checkError()) {
-            throw new IOException("Si è verificato un errore durante l'invio del messaggio!");
+            throw new IOException();
+        }
+
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -122,5 +118,16 @@ public class SocketManager {
             e.printStackTrace();
         }
 
+    }
+
+
+    public boolean isConnected(){
+        return socket != null && socket.isConnected() && !socket.isClosed();
+    }
+
+    public void attemptConnection(){
+        if(!isConnected()){
+            connect();
+        }
     }
 }

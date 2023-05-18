@@ -36,15 +36,21 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 while(true){
                     try {
+                        Log.d("MainActivity", "[CONNECTION] Tentativo di connessione...");
+
                         // Crea una nuova istanza di SocketManager e tenta la connessione.
                         socket = SocketManager.getInstance();
+                        socket.attemptConnection();
 
-                        // Se la connessione è riuscita, esce dal loop.
-                        break;
+                        if(socket.isConnected()){
+                            Log.d("MainActivity","[CONNECTION] Connessione stabilita");
+                            break;
+                        }else {
+                            throw new IOException();
+                        }
+
                     } catch (Exception e) {
-                        // Se la connessione non è riuscita, stampa lo stack trace e
-                        // attende 5 secondi prima di riprovare.
-                        e.printStackTrace();
+                        Log.d("MainActivity","[CONNECTION] Connessione fallita");
 
                         try {
                             Thread.sleep(5000);
@@ -57,15 +63,32 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    //Gestione dell'evento click su accedi
+    // Gestione dell'evento click su accedi
     public void onLoginClick(View view){
 
         // Recupera l'email e la password inserite dall'utente.
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
 
-        // Gestisco lo scambio di messaggi col Server per completare la funzione di LogIn
-        manageLogInMessages(email,password);
+        // Controllo nuovamente la connessione al Server
+        if(socket == null || !socket.isConnected()){
+            Toast.makeText(MainActivity.this, "Connessione al server non riuscita. Riprova.",
+                    Toast.LENGTH_SHORT).show();
+
+            socket.attemptConnection();
+            return;
+        }
+
+        // Verifico se i campi sono stati riempiti
+        if(email.equals("") || password.equals("")){
+            Toast.makeText(MainActivity.this, "Inserisci email e password per accedere.",
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            // Gestisco lo scambio di messaggi col Server per completare la funzione di LogIn
+            manageLogInMessages(email,password);
+        }
+
+
     }
 
 
@@ -81,61 +104,62 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    socket.sendMessage("LOG_IN");
-                    socket.sendMessage(email);
-                    socket.sendMessage(password);
 
-                    String response = socket.receiveMessage();
-                    Log.d("MainActivity", "Il Server ha risposto con: "+response);
+                        socket.sendMessage("LOG_IN");
+                        socket.sendMessage(email);
+                        socket.sendMessage(password);
 
-                    // Aggiorno l'interfaccia utente con la risposta dal server.
-                    // Questo deve essere fatto sul thread principale, quindi utilizziamo runOnUiThread.
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                        String response = socket.receiveMessage();
 
-                            if(response != null)
-                            {
-                                if (response.equalsIgnoreCase("LOG_IN_ERROR")) {
-                                    Toast.makeText(MainActivity.this, "Login fallito." +
-                                            " Riprova.", Toast.LENGTH_SHORT).show();
+                        // Aggiorno l'interfaccia utente con la risposta dal server.
+                        // Questo deve essere fatto sul thread principale, quindi utilizziamo runOnUiThread.
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Login " +
-                                            "effettuato con successo", Toast.LENGTH_SHORT).show();
+                                if(response != null)
+                                {
+                                    if (response.equalsIgnoreCase("LOG_IN_ERROR")) {
+                                        Toast.makeText(MainActivity.this, "Login fallito." +
+                                                " Riprova.", Toast.LENGTH_SHORT).show();
 
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Intent intent;
-                                            if(response.equalsIgnoreCase("ORDERING")){
-                                                intent = new Intent(MainActivity.this,
-                                                        OrderingActivity.class);
-                                                startActivity(intent);
-                                            }else if(response.equalsIgnoreCase("WAITING")){
-                                                intent = new Intent(MainActivity.this,
-                                                        WaitingActivity.class);
-                                                startActivity(intent);
-                                            }else{
-                                                throw new IllegalArgumentException("La risposta " +
-                                                        "Server non è stata riconosciuta");
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Login " +
+                                                "effettuato con successo", Toast.LENGTH_SHORT).show();
+
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent;
+                                                if(response.equalsIgnoreCase("ORDERING")){
+                                                    intent = new Intent(MainActivity.this,
+                                                            OrderingActivity.class);
+                                                    startActivity(intent);
+                                                }else if(response.equalsIgnoreCase("WAITING")){
+                                                    intent = new Intent(MainActivity.this,
+                                                            WaitingActivity.class);
+                                                    startActivity(intent);
+                                                }else{
+                                                    throw new IllegalArgumentException("La risposta " +
+                                                            "Server non è stata riconosciuta");
+                                                }
                                             }
-                                        }
-                                    }, 3000); //ritardo di 3 secondi
+                                        }, 3000); //ritardo di 3 secondi
 
+                                    }
+                                }else{
+                                    Toast.makeText(MainActivity.this, "Si è verificato un errore" +
+                                            " lato Server", Toast.LENGTH_SHORT).show();
                                 }
-                            }else{
-                                Log.d("MainActivity","Il server ha inviato msg = null " +
-                                        "come risposta alla login");
-                                Toast.makeText(MainActivity.this, "Si è verificato un errore" +
-                                        " lato Server", Toast.LENGTH_SHORT).show();
-                            }
 
-                        }
-                    });
+                            }
+                        });
+
+
+
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.d("MainActivity","[ERROR] Connessione persa con il Server");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

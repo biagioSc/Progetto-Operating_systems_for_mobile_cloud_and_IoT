@@ -32,7 +32,33 @@ public class  InterviewActivity extends AppCompatActivity {
         topicCheckBox3 = findViewById(R.id.checkBoxTopic3);
         topicCheckBox4 = findViewById(R.id.checkBoxTopic4);
 
-        socket = SocketManager.getInstance();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        socket = SocketManager.getInstance();
+                        socket.attemptConnection();
+
+                        if(socket.isConnected()){
+                            break;
+                        }else{
+                            throw new IOException();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        }).start();
+
     }
 
 
@@ -58,7 +84,18 @@ public class  InterviewActivity extends AppCompatActivity {
         if (topicCheckBox4.isChecked()) topicsPreferences.add(topicCheckBox4.getText().toString());
 
         // Gestisco lo scambio di messaggi per completare la SignUp
-        manageSignUpMessages(name,surname,email,password,drinkPreferences,topicsPreferences);
+        if(drinkPreferences.isEmpty() || topicsPreferences.isEmpty()){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(InterviewActivity.this, "Inserisci le tue preferenze " +
+                            "per continuare", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else{
+            manageSignUpMessages(name,surname,email,password,drinkPreferences,topicsPreferences);
+        }
+
 
 
     }
@@ -76,12 +113,15 @@ public class  InterviewActivity extends AppCompatActivity {
                     socket.sendMessage(email);
                     socket.sendMessage(password);
 
+
                     for(String drink : drinkPreferences){
                         socket.sendMessage(drink);
                     }
                     for(String topic : topicsPreferences){
                         socket.sendMessage(topic);
                     }
+
+
                 }catch (IOException e){
                     e.printStackTrace();
                 }
@@ -98,15 +138,22 @@ public class  InterviewActivity extends AppCompatActivity {
                     String finalResponse = response;
 
                     if(finalResponse.equalsIgnoreCase(("SIGN_UP_ERROR"))){
-                        Toast.makeText(InterviewActivity.this,"Registrazione fallita",
-                                Toast.LENGTH_SHORT).show();
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InterviewActivity.this,"Registrazione fallita",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
                     else if(finalResponse.equalsIgnoreCase("SIGN_UP_SUCCESS")){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(InterviewActivity.this,
-                                        "Registrazione completata",Toast.LENGTH_SHORT).show();
+                                        "Registrazione completata",Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(InterviewActivity.this,
                                         MainActivity.class);
                                 startActivity(intent);
@@ -119,8 +166,15 @@ public class  InterviewActivity extends AppCompatActivity {
                 }else{
                     Log.d("InterviewActivity","Il server ha inviato msg = null " +
                             "come risposta alla signup");
-                    Toast.makeText(InterviewActivity.this, "Si è verificato un errore" +
-                            " lato Server", Toast.LENGTH_SHORT).show();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(InterviewActivity.this, "Si è verificato un errore" +
+                                    " lato Server", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
 
             }

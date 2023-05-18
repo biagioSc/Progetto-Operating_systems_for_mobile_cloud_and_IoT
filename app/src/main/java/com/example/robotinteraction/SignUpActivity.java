@@ -10,18 +10,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
-    private EditText nameEditText,surnameEditText,emailEditText,passwordEditText;
+    private EditText nameEditText, surnameEditText, emailEditText, passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        //set degli id per i componenti grafici
-        nameEditText.findViewById(R.id.editTextNome);
-        surnameEditText.findViewById(R.id.editTextCognome);
-        emailEditText.findViewById(R.id.editTextEmail);
-        passwordEditText.findViewById(R.id.editTextPassword);
+        // Set the id for the graphic components
+        nameEditText = findViewById(R.id.editTextNome);
+        surnameEditText = findViewById(R.id.editTextCognome);
+        emailEditText = findViewById(R.id.editTextEmail);
+        passwordEditText = findViewById(R.id.editTextPassword);
     }
 
     public void onNextClick(View view){
@@ -36,24 +36,32 @@ public class SignUpActivity extends AppCompatActivity {
         boolean surnameChecker = checkIsGoodSurname(surname);
 
 
-            //Se l'email non rispetta le condizioni per la mail, mostro un errore
-            if(!emailChecker){
-                Toast.makeText(SignUpActivity.this, "Inserisci una email valida.",
+            if(name.equals("") || surname.equals("") || email.equals("") || password.equals("")){
+                Toast.makeText(SignUpActivity.this, "Compila tutti i campi prima di procedere",
                         Toast.LENGTH_SHORT).show();
                 return;
+            }else{
+                //Se l'email non rispetta le condizioni per la mail, mostro un errore
+                if(!emailChecker){
+                    Toast.makeText(SignUpActivity.this, "Inserisci una email valida.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Se il nome non rispetta le condizioni per il nome, mostro un errore
+                if(!nameChecker){
+                    Toast.makeText(SignUpActivity.this, "Il nome contiene dei caratteri non validi.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Se il cognome non rispetta le condizioni per il cognome, mostro un errore
+                if(!surnameChecker){
+                    Toast.makeText(SignUpActivity.this, "Il cognome contiene dei caratteri non validi.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
-            //Se il nome non rispetta le condizioni per il nome, mostro un errore
-            if(!nameChecker){
-                Toast.makeText(SignUpActivity.this, "Il nome contiene dei caratteri non validi.",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-            //Se il cognome non rispetta le condizioni per il cognome, mostro un errore
-            if(!surnameChecker){
-                Toast.makeText(SignUpActivity.this, "Il cognome contiene dei caratteri non validi.",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
+
+
 
 
         // Creo la nuova intent per il passaggio all' interviewActivity
