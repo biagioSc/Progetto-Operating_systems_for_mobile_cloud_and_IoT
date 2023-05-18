@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#673AB7"
     android:padding="16dp">
 
     <TextView
@@ -13,29 +14,29 @@
         android:text="Benvenuto nella sezione di registrazione!"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:srcCompat="@drawable/robot2"
-        app:layout_constraintTop_toBottomOf="@id/textViewSignUp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.6"
         app:layout_constraintHeight_percent="0.3"
-        app:layout_constraintDimensionRatio="16:9" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewSignUp"
+        app:layout_constraintWidth_percent="0.6"
+        app:srcCompat="@drawable/robot2" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextNomeLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/imageView2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextNome"
@@ -50,9 +51,9 @@
         android:id="@+id/editTextCognomeLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/editTextNomeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/editTextNomeLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextCognome"
@@ -67,9 +68,9 @@
         android:id="@+id/editTextEmailLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/editTextCognomeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/editTextCognomeLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextEmail"
@@ -84,9 +85,9 @@
         android:id="@+id/editTextPasswordLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/editTextEmailLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/editTextEmailLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextPassword"
@@ -102,21 +103,29 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
         android:onClick="onNextClick"
         android:text="Continua"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordLayout"
+        android:textColor="@color/white"
+        app:backgroundTint="#673AB7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.937"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordLayout" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonGoToMain"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:onClick="onBackClick"
         android:text="Indietro"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGoToInterview"
+        android:textColor="@color/white"
+        app:backgroundTint="#673AB7"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonGoToInterview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
