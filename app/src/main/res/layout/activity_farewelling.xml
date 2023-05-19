@@ -1,29 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textViewDrinkPronto"
-        android:layout_width="389dp"
-        android:layout_height="wrap_content"
-        android:text="Il tuo drink è pronto, ritiralo!"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/buttonGoToGone"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ritira drink" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/buttonLogOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Esci" />
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Esci"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="560dp" />
+
+        <Button
+            android:id="@+id/buttonGoToGone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ritira drink"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="512dp" />
+
+        <TextView
+            android:id="@+id/textViewDrinkPronto"
+            android:layout_width="389dp"
+            android:layout_height="wrap_content"
+            android:text="Il tuo drink è pronto, ritiralo!"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="39dp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="389dp"
+            android:layout_height="379dp"
+            app:srcCompat="@drawable/drink"
+            tools:layout_editor_absoluteX="-10dp"
+            tools:layout_editor_absoluteY="109dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
