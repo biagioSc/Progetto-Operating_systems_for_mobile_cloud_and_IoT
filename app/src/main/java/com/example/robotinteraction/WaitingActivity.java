@@ -35,6 +35,7 @@ public class WaitingActivity extends AppCompatActivity {
                 String message = null;
                 while(true) {
 
+
                     try {
                         message = socket.receiveMessage();
                     } catch (IOException e) {
@@ -57,7 +58,7 @@ public class WaitingActivity extends AppCompatActivity {
                         }
                         // Altrimenti provo a trasformare il messaggio in un numero per
                         // vedere se il Server mi ha inviato quante persone mancano
-                        else {
+                        else if (message.equalsIgnoreCase("WAIT_MORE")){
                             try {
                                 int counter = Integer.parseInt(message);
 
