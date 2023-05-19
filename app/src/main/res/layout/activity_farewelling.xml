@@ -42,7 +42,7 @@
             android:id="@+id/imageView4"
             android:layout_width="389dp"
             android:layout_height="379dp"
-            app:srcCompat="@drawable/robot2"
+            app:srcCompat="@drawable/drink"
             tools:layout_editor_absoluteX="-10dp"
             tools:layout_editor_absoluteY="109dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>

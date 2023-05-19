@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewWelcomeBot"
         app:layout_constraintBottom_toTopOf="@id/buttonGoToWaiting"
-        app:srcCompat="@drawable/robot2" />
+        app:srcCompat="@drawable/welcome" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonGoToWaiting"
