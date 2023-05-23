@@ -32,7 +32,7 @@ pthread_cond_t condizioneDiSblocco2 = PTHREAD_COND_INITIALIZER; // Variabile per
 
 /**
  * @brief Funzione per l'invio di dati che legge dalla riga
- * 
+ *
  * @param sock Socket di invio
  * @param data Dati da inviare
  * @param size Dimensione
@@ -40,9 +40,9 @@ pthread_cond_t condizioneDiSblocco2 = PTHREAD_COND_INITIALIZER; // Variabile per
  */
 int sendRaw(int sock, const void *data, int size)
 {
-    const char *buffer = (const char*) data;
+    const char *buffer = (const char *)data;
     while (size > 0)
-    { 
+    {
         ssize_t sent = send(sock, buffer, size, 0);
         if (sent < 0)
             return 0;
@@ -54,7 +54,7 @@ int sendRaw(int sock, const void *data, int size)
 
 /**
  * @brief Funzione per l'invio di stringhe su socket
- * 
+ *
  * @param sock Socket di invio dei dati
  * @param s Dati in ingresso da inviare
  * @return int Interno di ritorno di succeso o meno
@@ -62,88 +62,102 @@ int sendRaw(int sock, const void *data, int size)
 int sendString(int sock, const char *s)
 {
     int32_t len = strlen(s) + 1;
-    return sendRaw(sock,s,len);
+    return sendRaw(sock, s, len);
 }
 
 /**
  * @brief Funzione per la ricezione della riga
- * 
+ *
  * @param sock Socket di ricezione dati
  * @param data Dati da leggere
- * @param size Dimensioee dati 
+ * @param size Dimensioee dati
  * @return int Interno di ritorno di succeso o meno
  */
 int readRaw(int sock, void *data, int size)
 {
-  char *buffer = (char *)data;
-  while (size > 0)
-  {
-    ssize_t recvd = recv(sock, buffer, size, 0);
-    if (recvd < 0)
-      return -1;
-    if (recvd == 0)
-      return 0;
-    buffer += recvd;
-    size -= recvd;
-  }
-  return 1;
+    char *buffer = (char *)data;
+    while (size > 0)
+    {
+        ssize_t recvd = recv(sock, buffer, size, 0);
+        if (recvd < 0)
+            return -1;
+        if (recvd == 0)
+            return 0;
+        buffer += recvd;
+        size -= recvd;
+    }
+    return 1;
 }
 /**
  * @brief Funzione per la ricezione di stringhe che delimita solo i dati contenuti effettivamente
- * 
+ *
  * @param sock Socket dove ricevere i dati
  * @return char* Ritorna dell array con i dati al intenro
  */
 char *readString(int sock)
 {
-  char *ret = NULL, *tmp;
-  size_t len = 0, cap = 0;
-  char ch;
+    char *ret = NULL, *tmp;
+    size_t len = 0, cap = 0;
+    char ch;
 
-  do
-  {
-    if (readRaw(sock, &ch, 1) <= 0)
+    do
     {
-      free(ret);
-      return NULL;
-    }
+        if (readRaw(sock, &ch, 1) <= 0)
+        {
+            free(ret);
+            return NULL;
+        }
 
-    if (ch == '\0')
-      break;
+        if (ch == '\0')
+            break;
+
+        if (len == cap)
+        {
+            cap += 100;
+            tmp = (char *)realloc(ret, cap);
+            if (!tmp)
+            {
+                free(ret);
+                return NULL;
+            }
+            ret = tmp;
+        };
+        ret[len] = ch;
+        ++len;
+    } while (1);
 
     if (len == cap)
     {
-      cap += 100;
-      tmp = (char *)realloc(ret, cap);
-      if (!tmp)
-      {
-        free(ret);
-        return NULL;
-      }
-      ret = tmp;
+        tmp = (char *)realloc(ret, cap + 1);
+        if (!tmp)
+        {
+            free(ret);
+            return NULL;
+        }
+        ret = tmp;
     }
-    ;
-    ret[len] = ch;
-    ++len;
-  } while (1);
 
-  if (len == cap)
-  {
-    tmp = (char *)realloc(ret, cap + 1);
-    if (!tmp)
-    {
-      free(ret);
-      return NULL;
-    }
-    ret = tmp;
-  }
- 
-  ret[len] = '\0';
-  return ret;
+    ret[len] = '\0';
+    return ret;
 }
 
-
-
+// Funzione che esegue il check nel database postgresql della presenza effettiva del utente
+int check(void *arg)
+{
+    int clientSocket = *(int *)arg; // Variabile per la gestione della socket del client
+    int variabileFittizia = 1;      // Variabile per la gestione della presenza o meno del utente nel DB
+    // Controllo Attuale : fittizzio per il momento manca la conessione al DB
+    if (variabileFittizia == 1)
+    {
+        printf("[CHECK] Utente Presente nel DB\n");
+        return 1;
+    }
+    else
+    {
+        printf("[CHECK] Utente non Presente nel DB\n");
+        return 0;
+    }
+}
 
 // Funzione che da il benvenuto a un nuovo utente e manda un messaggio al client di benvenuto
 void *welcome(void *arg)
@@ -178,7 +192,7 @@ void *ordering(void *arg)
 {
     int clientSocket = *(int *)arg; // Variabile per la gestione della socket del client
     char buffer[BUFSIZE];           // Buffer per la gestione dei messaggi
-    char *scelta=NULL;              // Ulteriore variabile per lettura di messaggi
+    char *scelta = NULL;            // Ulteriore variabile per lettura di messaggi
     int n;                          // Variabile per la gestione del numero di byte letti
 
     // Messaggio di benvenuto
@@ -186,9 +200,9 @@ void *ordering(void *arg)
     sendString(clientSocket, buffer);
 
     scelta = readString(clientSocket);
-    if (atoi(scelta)== 1)
+    if (atoi(scelta) == 1)
     {
-        
+
         strcpy(buffer, "Grazie per aver ordinato \0");
         sendString(clientSocket, buffer);
     }
@@ -210,8 +224,8 @@ void *interacting(void *arg)
 {
     int clientSocket = *(int *)arg; // Variabile per la gestione della socket del client
     char buffer[BUFSIZE];           // Buffer per la gestione dei messaggi
-    char *scelta=NULL;  
-    int n;                          // Variabile per la gestione del numero di byte letti
+    char *scelta = NULL;
+    int n; // Variabile per la gestione del numero di byte letti
 
     // Messaggi di interacting
 
@@ -219,18 +233,16 @@ void *interacting(void *arg)
     sendString(clientSocket, buffer);
     scelta = readString(clientSocket);
     free(scelta);
-    
+
     strcpy(buffer, "Certo che hai sempre delle storie avvicenti , come mai stasera sei qui ? \0");
     sendString(clientSocket, buffer);
     scelta = readString(clientSocket);
     free(scelta);
-    
 
     strcpy(buffer, "Beato te , invece noi robot facciamo solo drink qui , ah ecco mi sa che è forse è pronto\0");
     sendString(clientSocket, buffer);
     scelta = readString(clientSocket);
     free(scelta);
-    
 
     return NULL;
 }
@@ -246,9 +258,7 @@ void *non_interacting(void *arg)
 
     strcpy(buffer, "In teoria il tuo drink tra un po sara pronto\0");
     sendString(clientSocket, buffer);
-    sleep(5);        
-    
-    
+    sleep(5);
 
     return NULL;
 }
@@ -258,8 +268,8 @@ void *serving(void *arg)
 {
     int clientSocket = *(int *)arg; // Variabile per la gestione della socket del client
     char buffer[BUFSIZE];           // Buffer per la gestione dei messaggi
-    char *scelta=NULL;         
-    int n;                          // Variabile per la gestione del numero di byte letti
+    char *scelta = NULL;
+    int n; // Variabile per la gestione del numero di byte letti
 
     // Messaggio di Preparazione
 
@@ -270,10 +280,10 @@ void *serving(void *arg)
 
     strcpy(buffer, "Vuoi interagire con il robot ? 1=(Si)|0=(No) \0");
     sendString(clientSocket, buffer);
-    
-    //Ricevo la riposta
+
+    // Ricevo la riposta
     scelta = readString(clientSocket);
-    if (atoi(scelta)== 1)
+    if (atoi(scelta) == 1)
     {
         interacting(&clientSocket);
     }
@@ -306,7 +316,7 @@ void *farewelling(void *arg)
 
 void *gestioneConnessioneDispari(void *p_clientSocket)
 {
-        // Operazioni Preliminari per la gestione
+    // Operazioni Preliminari per la gestione
     int clientSocket = *(int *)p_clientSocket; // Riporto il puntatore a una variabile normale
     free(p_clientSocket);
 
@@ -338,7 +348,6 @@ void *gestioneConnessioneDispari(void *p_clientSocket)
     serving(&clientSocket);     // Al cliente viene preparato il drink / conversa con il robot
     farewelling(&clientSocket); // Il cliente prende il drink e saluta
 
-    
     servizio--;                                    // Sblocco qualche altro thread
     pthread_cond_broadcast(&condizioneDiSblocco2); // Sblocco un dei thread in coda
     pthread_mutex_unlock(&semaforo2);              // Chiudo la fase critica
@@ -347,7 +356,7 @@ void *gestioneConnessioneDispari(void *p_clientSocket)
     // Fine Gestione
 
     close(clientSocket);
-    printf("[Thread n %d] Chiuso la socket e ho finito la fase critica \n\n\n", numeroThreadLocale);        
+    printf("[Thread n %d] Chiuso la socket e ho finito la fase critica \n\n\n", numeroThreadLocale);
     numeroThread--;
     return NULL;
 }
@@ -365,11 +374,11 @@ void *gestioneConnessionePari(void *p_clientSocket)
     free(p_clientSocket);
 
     // Cambio Il numero dei thread imposto un semaforo cosi ne fa un cambio alla volta
- 
+
     int numeroThreadLocale = ++numeroThread;
 
     // Incremento il numero di Thread
-    printf("\n\n[Thread n %d] tid - %d - socket %d \n", numeroThreadLocale, (int)pthread_self(),clientSocket);
+    printf("\n\n[Thread n %d] tid - %d - socket %d \n", numeroThreadLocale, (int)pthread_self(), clientSocket);
     welcome(&clientSocket); // Eseguo il welcome
     wait(&clientSocket);    // Metto utente in Fase di wait
 
@@ -391,7 +400,6 @@ void *gestioneConnessionePari(void *p_clientSocket)
     serving(&clientSocket);     // Al cliente viene preparato il drink / conversa con il robot
     farewelling(&clientSocket); // Il cliente prende il drink e saluta
 
-    
     servizio--;                                    // Sblocco qualche altro thread
     pthread_cond_broadcast(&condizioneDiSblocco1); // Sblocco un dei thread in coda
     pthread_mutex_unlock(&semaforo1);              // Chiudo la fase critica
@@ -400,11 +408,10 @@ void *gestioneConnessionePari(void *p_clientSocket)
     // Fine Gestione
 
     close(clientSocket);
-    printf("[Thread n %d] Chiuso la socket e ho finito la fase critica \n\n\n", numeroThreadLocale);        
+    printf("[Thread n %d] Chiuso la socket e ho finito la fase critica \n\n\n", numeroThreadLocale);
     numeroThread--;
 
     return NULL;
-
 }
 
 /**
@@ -445,6 +452,7 @@ int main()
     controllaFunzione(bind(serverSocket, (SA *)&serverAddr, sizeof(serverAddr)), "[Errore] Bind non riuscito");
     controllaFunzione(listen(serverSocket, 3), "[Errore] Listen non riuscito\0");
 
+    //Ciclo infinito per la gestione delle connessioni
     while (1)
     {
         printf("[LISTEN] In Attesa di una connessione...\n");
@@ -452,20 +460,32 @@ int main()
         controllaFunzione(clientSocket = accept(serverSocket, (SA *)&clientAddr, &addr_size), "[Errore] Accept non riuscito");
         printf("[ACCEPT] Client Connesso : %s and port: %i \n", inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
 
+        //Controllo di utente presente nel database
         pthread_t thread1;
         int *p_newSock = malloc(sizeof(int));
         *p_newSock = clientSocket;
-        if (contatore % 2 == 0)
+        
+        if (checkClient(&clientSocket) == 1)
         {
-            pthread_create(&thread1, NULL, gestioneConnessionePari, p_newSock);
-            contatore++;
-            
+            //Controllo effettuato con successo
+            //Smisto l'utente in 2 code di thread diversi
+            if (contatore % 2 == 0)
+            {
+                pthread_create(&thread1, NULL, gestioneConnessionePari, p_newSock);
+                contatore++;
+            }
+            else
+            {
+                pthread_create(&thread1, NULL, gestioneConnessioneDispari, p_newSock);
+                contatore++;
+            }
         }
         else
         {
-            pthread_create(&thread1, NULL, gestioneConnessioneDispari, p_newSock);
-            contatore++;
+            printf("[ERRORE] Autenticazione non riuscita chiusura del client \n");
+            close(clientSocket);
         }
+        
     }
     close(serverSocket);
     return 0;
