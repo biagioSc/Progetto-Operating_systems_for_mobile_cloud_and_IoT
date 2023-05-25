@@ -1,42 +1,55 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/input_layout">
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="214dp"
+        android:layout_height="61dp"
+        android:text="Risposta 1"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="341dp" />
 
-        <LinearLayout
-            android:id="@+id/chat_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="214dp"
+        android:layout_height="61dp"
+        android:text="Risposta 2"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="423dp" />
 
-    </ScrollView>
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="528dp"
+        android:layout_height="295dp"
+        app:srcCompat="@drawable/puntini"
+        tools:layout_editor_absoluteX="-59dp"
+        tools:layout_editor_absoluteY="-23dp" />
 
-    <LinearLayout
-        android:id="@+id/input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:padding="8dp">
+    <Button
+        android:id="@+id/button"
+        android:layout_width="214dp"
+        android:layout_height="61dp"
+        android:text="Risposta 3"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="501dp" />
 
-        <EditText
-            android:id="@+id/message_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Type a message"
-            android:inputType="text" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="302dp"
+        android:layout_height="50dp"
+        android:text="TESTO DELLA DOMANDA"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="261dp" />
 
-        <Button
-            android:id="@+id/send_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="229dp"
+        android:layout_height="54dp"
+        android:text="HAI RISPOSTO: "
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="594dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
