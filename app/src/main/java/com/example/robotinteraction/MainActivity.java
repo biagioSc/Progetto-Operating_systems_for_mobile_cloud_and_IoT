@@ -74,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Verifico se i campi sono stati riempiti
         if(email.equals("") || password.equals("")){
-            Toast.makeText(MainActivity.this, "Inserisci email e password per accedere.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Inserisci email e password per accedere.",Toast.LENGTH_SHORT).show();
         }else{
 
             // Controllo nuovamente la connessione al Server
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             // Gestisco lo scambio di messaggi col Server per completare la funzione di LogIn
+            Log.d("MainActivity", "[APP] Controllo dati effettuato correttamente mando tutto al server ");
             manageLogInMessages(email,password);
         }
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         socket.sendMessage(password);
 
                         String response = socket.receiveMessage();
-
+                        Log.d("MainActivity", "[APP]Ho ricevuto effettivamente qualcosa");
                         // Aggiorno l'interfaccia utente con la risposta dal server.
                         // Questo deve essere fatto sul thread principale, quindi utilizziamo runOnUiThread.
                         runOnUiThread(new Runnable() {
@@ -129,13 +129,13 @@ public class MainActivity extends AppCompatActivity {
                                         Toast.makeText(MainActivity.this, "Login " +
                                                 "effettuato con successo", Toast.LENGTH_SHORT).show();
 
-                                        new Handler().postDelayed(new Runnable() {
+                                        new Handler().postDelayed(new Runnable()
+                                        {
                                             @Override
                                             public void run() {
                                                 Intent intent;
                                                 if(response.equalsIgnoreCase("ORDERING")){
-                                                    intent = new Intent(MainActivity.this,
-                                                            OrderingActivity.class);
+                                                    intent = new Intent(MainActivity.this, OrderingActivity.class);
                                                     startActivity(intent);
                                                 }else if(response.equalsIgnoreCase("WAITING")){
                                                     intent = new Intent(MainActivity.this,

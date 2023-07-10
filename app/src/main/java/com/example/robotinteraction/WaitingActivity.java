@@ -49,8 +49,7 @@ public class WaitingActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent intent = new Intent(WaitingActivity.this,
-                                            OrderingActivity.class);
+                                    Intent intent = new Intent(WaitingActivity.this,OrderingActivity.class);
                                     startActivity(intent);
                                 }
                             });

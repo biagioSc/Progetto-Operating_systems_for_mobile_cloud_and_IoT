@@ -21,8 +21,8 @@ public class SocketManager {
 
     private MessageListener messageListener;
 
-    private static final String SERVER_IP = "000.000.000";
-    private static final int SERVER_PORT = 0000;
+    private static final String SERVER_IP = "195.231.38.118";
+    private static final int SERVER_PORT = 8080;
 
     private SocketManager() {
         // Nessun costruttore esterno necessario
@@ -71,7 +71,9 @@ public class SocketManager {
 
     public String receiveMessage() throws IOException {
 
-        if(in == null){
+        if(in == null)
+        {
+            Log.d("SocketManager", "[SERVER] Non ricevo nulla dal server");
             throw new IOException("Ho ricevuto un input null dal Server!");
         }
         String line = in.readLine();
