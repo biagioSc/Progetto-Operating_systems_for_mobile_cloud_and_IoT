@@ -36,11 +36,9 @@ public class WaitingActivity extends AppCompatActivity {
                 while(true) {
 
 
-                    try {
+
                         message = socket.receiveMessage();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
 
                     if(message != null){
 

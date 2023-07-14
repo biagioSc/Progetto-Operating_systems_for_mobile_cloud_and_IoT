@@ -1,6 +1,10 @@
+// Classe OrderingActivity
 package com.example.robotinteraction;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -9,13 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 import java.io.IOException;
 
-public class OrderingActivity extends AppCompatActivity {
+public class OrderingActivity extends AppCompatActivity implements SocketManager.MessageListener {
 
     private EditText userResponse;
     private ListView listView;
     private SocketManager socket;
     private ArrayAdapter<String> adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,60 +31,24 @@ public class OrderingActivity extends AppCompatActivity {
         userResponse = findViewById(R.id.messageEditText);
 
         socket = SocketManager.getInstance();
-        socket.setMessageListener(new SocketManager.MessageListener() {
-            @Override
-            public void onNewMessage(final String message) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.add(message);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
+        socket.setMessageListener(this);
 
-        // Avvio thread che ascolta per nuovi messaggi
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
-                    try {
-                        socket.receiveMessage();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                        break;
-                    }
+                while (true) {
+                    String message = socket.receiveMessage();
                 }
             }
         }).start();
-    }
 
-
-    public void onSendMessageClick(View view){
-        String message = userResponse.getText().toString().trim();
-        if(!message.isEmpty()){
-            sendChatMessage(message);
-            userResponse.setText("");
-        }
-    }
-
-    public void sendChatMessage(String message) {
-        // Aggiungo il messaggio alla ListView della chat.
-        adapter.add(message);
-        adapter.notifyDataSetChanged();
-
-        // Invio il messaggio al server su un Thread separato
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    socket.sendMessage(message);
+                    socket.sendMessage("START_CHAT");
                 } catch (IOException e) {
-
                     e.printStackTrace();
-
-                    //Se si è verificato un errore mostro un messaggio al client con Toast
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -93,7 +60,63 @@ public class OrderingActivity extends AppCompatActivity {
         }).start();
     }
 
+    public void onSendMessageClick(View view) {
+        String message = userResponse.getText().toString().trim();
+        if (!message.isEmpty()) {
+            sendChatMessage(message);
+            userResponse.setText("");
+        }
+    }
 
+    public void onBackClick(View view){
+        // Creo la nuova intent per il passaggio all'activity precedente, MainActivity
+        Intent intent = new Intent(OrderingActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
+    public void sendChatMessage(String message) {
+        // Aggiungo il messaggio alla ListView della chat
+        adapter.add(message);
+        adapter.notifyDataSetChanged();
 
+        // Invio il messaggio al server su un Thread separato
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    socket.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(OrderingActivity.this, "Errore nell'invio del messaggio. Riprova.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
 
+    @Override
+    public void onMessageReceived(String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                receiveChatMessage(message);
+            }
+        });
+    }
+
+    public void receiveChatMessage(String message) {
+        // Aggiungo il messaggio alla ListView della chat
+        adapter.add(message);
+        adapter.notifyDataSetChanged();
+
+        // Cambio il colore del messaggio ricevuto
+        int lastPosition = adapter.getCount() - 1;
+        View listItem = listView.getChildAt(lastPosition);
+        if (listItem != null) {
+            listItem.setBackgroundColor(Color.parseColor("#FFFF00")); // Imposta il colore di sfondo del messaggio ricevuto (es. giallo)
+        }
+    }
 }

@@ -19,23 +19,23 @@
         android:id="@+id/checkBoxDrink1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDrink"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Mojito"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDrink" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkBoxDrink2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink1"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Cosmopolitan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink1" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/checkBoxDrink3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Old Fashioned"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink2"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/checkBoxDrink4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Gin Tonic"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxDrink3"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -62,7 +62,7 @@
         android:id="@+id/checkBoxTopic1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Viaggi"
         app:layout_constraintTop_toBottomOf="@+id/textViewArgomenti"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -70,7 +70,7 @@
         android:id="@+id/checkBoxTopic2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Cibo"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxTopic1"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -78,7 +78,7 @@
         android:id="@+id/checkBoxTopic3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Sport"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxTopic2"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -86,7 +86,7 @@
         android:id="@+id/checkBoxTopic4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Assi"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxTopic3"
         app:layout_constraintStart_toStartOf="parent" />
 

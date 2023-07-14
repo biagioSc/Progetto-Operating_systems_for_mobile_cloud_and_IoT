@@ -21,10 +21,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include <pthread.h>
+
+#include <string.h>
+#include <strings.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/types.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include "libpq-fe.h"
 
@@ -68,7 +74,7 @@ int read_from_socket(int sockfd, char *buffer, int bufsize)
 
     // Remove newline character if present
     buffer[strcspn(buffer, "\n")] = '\0';
-
+    printf("Received: %s\n", buffer);
     return n;
 }
 
@@ -77,25 +83,29 @@ int read_from_socket(int sockfd, char *buffer, int bufsize)
  * @param sockfd The socket file descriptor.
  * @param buffer The data to write.
  * @return int The number of bytes written, or -1 if an error occurred.
+ *
+ *
+ *
  */
-int write_to_socket(int sockfd, const char *buffer)
+int write_to_socket(int sockfd, const char *message)
 {
-    int n = write(sockfd, buffer, strlen(buffer));
+    int message_length = strlen(message);
+    char *full_message = malloc(message_length + 2); // Aggiungi spazio per \n e \0
+    strcpy(full_message, message);
+    strcat(full_message, "\n"); // Aggiungi \n
+
+    int n = send(sockfd, full_message, message_length + 2, 0);
+    free(full_message);
+
     if (n < 0)
     {
-        perror("Error writing to socket");
+        perror("Error sending data to Android");
         return -1;
     }
-
-    // Forces immediate data transmission
-    if (shutdown(sockfd, SHUT_WR) < 0)
-    {
-        perror("Error forcing data transmission");
-        return -1;
-    }
-
+    fflush(stdout); // Forza l'invio immediato dei dati sulla socket
     return n;
 }
+
 /**
  * @brief Checks how many users are in the state of ordering.
  * @param conn The database connection handle.
@@ -142,7 +152,7 @@ int handle_login(int sockfd, PGconn *conn, char *email)
     read_from_socket(sockfd, email, BUFFER_SIZE);
     read_from_socket(sockfd, password, BUFFER_SIZE);
 
-    printf("Email e password: %s - %s\n", email,password);
+    printf("Email e password: %s - %s\n", email, password);
     // Verify the credentials with the database.
     char query[BUFFER_SIZE * 2];
     sprintf(query, "SELECT password FROM users WHERE email='%s';", email);
@@ -152,23 +162,23 @@ int handle_login(int sockfd, PGconn *conn, char *email)
     {
         printf("No data retrieved\n");
         PQclear(resLogin);
-        PQfinish(conn);
-        close(sockfd);
+        write_to_socket(sockfd, "LOG_IN_ERROR");
+        // PQfinish(conn);
+        // close(sockfd); Se chiudiamo la socket non diamo possibilità all utente di riprovare a loggarsi
         return -1;
     }
-
     if (strcmp(password, PQgetvalue(resLogin, 0, 0)) == 0)
     {
         printf("User %s logged in\n", email);
-        write_to_socket(sockfd, "ORDERING");
+        write_to_socket(sockfd, "WELCOMING");
     }
     else
     {
-        printf("Invalid password\n");
+        printf("Invalid password for user %s \n", email);
         PQclear(resLogin);
-        PQfinish(conn);
         write_to_socket(sockfd, "LOG_IN_ERROR");
-        close(sockfd);
+        // PQfinish(conn);
+        // close(sockfd); Se chiudiamo la socket non diamo possibilità all utente di riprovare a loggarsi
         return -1;
     }
 
@@ -196,6 +206,7 @@ int handle_welcoming(int sockfd, PGconn *conn, char *email)
         sprintf(setOrdering, "UPDATE users SET state='ORDERING' WHERE email='%s';", email);
         PQexec(conn, setOrdering);
         write_to_socket(sockfd, "ORDERING");
+        printf("User %s is ordering\n", email);
     }
     else if (check_state(conn) >= 2)
     {
@@ -203,10 +214,13 @@ int handle_welcoming(int sockfd, PGconn *conn, char *email)
         char setWaiting[BUFFER_SIZE];
         sprintf(setWaiting, "UPDATE users SET state='WAITING' WHERE email='%s';", email);
         PQexec(conn, setWaiting);
+        printf("User %s is waiting\n", email);
         write_to_socket(sockfd, "WAITING");
     }
     else
+    {
         return -1;
+    }
 
     return 0;
 }
@@ -219,10 +233,9 @@ int handle_welcoming(int sockfd, PGconn *conn, char *email)
  */
 int handle_signup(int sockfd, PGconn *conn)
 {
-
     char email[BUFFER_SIZE], password[BUFFER_SIZE];
     char name[BUFFER_SIZE], surname[BUFFER_SIZE];
-    char drinks[BUFFER_SIZE],topics[BUFFER_SIZE];
+    char drinks[BUFFER_SIZE], topics[BUFFER_SIZE];
     char drinksCounterStr[BUFFER_SIZE], topicsCounterStr[BUFFER_SIZE];
     int signUpDone = 1;
     int drinksCounter, topicsCounter;
@@ -236,28 +249,53 @@ int handle_signup(int sockfd, PGconn *conn)
     else
     {
         read_from_socket(sockfd, name, BUFFER_SIZE);
+        printf("Name: %s\n", name);
         read_from_socket(sockfd, surname, BUFFER_SIZE);
+        printf("Surname: %s\n", surname);
         read_from_socket(sockfd, password, BUFFER_SIZE);
         read_from_socket(sockfd, drinksCounterStr, BUFFER_SIZE);
         drinksCounter = atoi(drinksCounterStr);
+        printf("Drinks counter: %d\n", drinksCounter);
+        // Unite drinks into a single string
+        drinks[0] = '\0'; // Initialize the drinks string
 
         for (int i = 0; i < drinksCounter; i++)
         {
-            read_from_socket(sockfd, drinks[i], BUFFER_SIZE);
+            char drink[BUFFER_SIZE];
+            read_from_socket(sockfd, drink, BUFFER_SIZE);
+            strcat(drinks, drink);
+
+            // Add separator between drinks
+            if (i < drinksCounter - 1)
+            {
+                strcat(drinks, ",");
+            }
         }
 
         read_from_socket(sockfd, topicsCounterStr, BUFFER_SIZE);
         topicsCounter = atoi(topicsCounterStr);
 
+        // Unite topics into a single string
+        topics[0] = '\0'; // Initialize the topics string
+
         for (int i = 0; i < topicsCounter; i++)
         {
-            read_from_socket(sockfd, topics, BUFFER_SIZE);
+            char topic[BUFFER_SIZE];
+            read_from_socket(sockfd, topic, BUFFER_SIZE);
+            strcat(topics, topic);
+
+            // Add separator between topics
+            if (i < topicsCounter - 1)
+            {
+                strcat(topics, ",");
+            }
         }
 
         // name, surname, email, password INSERTION
-
         char query[BUFFER_SIZE * 4];
-        sprintf(query, sizeof(query), "INSERT INTO users (name, surname, email, password , state) VALUES ('%s', '%s', '%s', '%s', 'stato');", name, surname, email, password);
+        sprintf(query, "INSERT INTO users (name, surname, email, password, \"favDrink\" , \"favTopics\", state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', 'IDLE');",
+                name, surname, email, password, drinks, topics);
+        printf("%s\n", query);
         PGresult *res = PQexec(conn, query);
 
         if (PQresultStatus(res) != PGRES_COMMAND_OK)
@@ -267,45 +305,6 @@ int handle_signup(int sockfd, PGconn *conn)
             PQclear(res);
             PQfinish(conn);
             return 1;
-        }
-
-        // favourite_drinks INSERTION
-
-        for (int i = 0; i < drinksCounter; i++)
-        {
-
-            snprintf(query, sizeof(query), "INSERT INTO users favourite_drinks VALUES ('%s');", drinks[i]);
-            res = PQexec(conn, query);
-
-            if (PQresultStatus(res) != PGRES_COMMAND_OK)
-            {
-                signUpDone = 0;
-                fprintf(stderr, "Insert drink preference failed: %s", PQerrorMessage(conn));
-                PQclear(res);
-                PQfinish(conn);
-                return 1;
-            }
-
-            PQclear(res);
-        }
-
-        // favourite_topics INSERTION
-
-        for (int i = 0; i < topicsCounter; i++)
-        {
-            snprintf(query, sizeof(query), "INSERT INTO users favourite_topics VALUES ('%s');", topics[i]);
-            res = PQexec(conn, query);
-
-            if (PQresultStatus(res) != PGRES_COMMAND_OK)
-            {
-                signUpDone = 0;
-                fprintf(stderr, "Insert topic preference failed: %s", PQerrorMessage(conn));
-                PQclear(res);
-                PQfinish(conn);
-                return 1;
-            }
-
-            PQclear(res);
         }
 
         if (signUpDone == 1)
@@ -333,7 +332,7 @@ char *suggest_drink(PGconn *conn)
     {
         printf("Query execution failed: %s\n", PQerrorMessage(conn));
         PQclear(res);
-        return;
+        return NULL;
     }
 
     int num_drinks = PQntuples(res);
@@ -343,9 +342,13 @@ char *suggest_drink(PGconn *conn)
     int random_index = rand() % num_drinks;
     char *suggested_drink = PQgetvalue(res, random_index, 0);
 
+    // Allocate memory and copy the suggested drink
+    char *suggested_drink_copy = malloc(strlen(suggested_drink) + 1);
+    strcpy(suggested_drink_copy, suggested_drink);
+
     PQclear(res);
 
-    return suggested_drink;
+    return suggested_drink_copy;
 }
 
 /**
@@ -355,7 +358,6 @@ char *suggest_drink(PGconn *conn)
  */
 char *get_topics(PGconn *conn)
 {
-
     char query[BUFFER_SIZE];
     sprintf(query, "SELECT name FROM topics;");
     PGresult *res = PQexec(conn, query);
@@ -364,22 +366,37 @@ char *get_topics(PGconn *conn)
     {
         printf("Query execution failed: %s\n", PQerrorMessage(conn));
         PQclear(res);
-        return 'error';
+        return NULL;
     }
 
     int num_topics = PQntuples(res);
-    char *topics = (char *)malloc(MAX_TOPICS);
-    memset(topics, 0, MAX_TOPICS);
+    size_t total_length = 0;
 
+    // Calcola la lunghezza totale necessaria per la stringa dei temi
     for (int i = 0; i < num_topics; i++)
     {
-        strncat(topics, PQgetvalue(res, i, 0), MAX_TOPICS - strlen(topics) - 1);
-        if (i < num_topics - 1)
-        {
-            strncat(topics, ", ", MAX_TOPICS - strlen(topics) - 1);
-        }
+        total_length += strlen(PQgetvalue(res, i, 0));
     }
 
+    // Calcola la lunghezza totale dei separatori
+    size_t separators_length = 2 * (num_topics - 1);
+
+    // Calcola la dimensione totale necessaria per la stringa finale
+    size_t final_length = total_length + separators_length + 1;
+
+    // Alloca memoria per la stringa finale
+    char *topics = malloc(final_length);
+    memset(topics, 0, final_length);
+
+    // Costruisci la stringa finale dei temi
+    for (int i = 0; i < num_topics; i++)
+    {
+        strcat(topics, PQgetvalue(res, i, 0));
+        if (i < num_topics - 1)
+        {
+            strcat(topics, ", ");
+        }
+    }
     PQclear(res);
 
     return topics;
@@ -410,7 +427,50 @@ char **split_topics(char *topics)
 
     return result;
 }
+int is_valid_topic(PGconn *conn, const char *topic)
+{
+    char query[BUFFER_SIZE];
+    sprintf(query, "SELECT name FROM topics WHERE name = '%s';", topic);
+    PGresult *res = PQexec(conn, query);
 
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    {
+        printf("Query execution failed: %s\n", PQerrorMessage(conn));
+        PQclear(res);
+        return 0;
+    }
+
+    int is_valid = (PQntuples(res) > 0);
+
+    PQclear(res);
+
+    return is_valid;
+}
+char *getTopicText(PGconn *conn, const char *topicName)
+{
+    char query[256];
+    sprintf(query, "SELECT testo FROM topics WHERE name = '%s'", topicName);
+
+    PGresult *result = PQexec(conn, query);
+
+    if (PQresultStatus(result) != PGRES_TUPLES_OK)
+    {
+        fprintf(stderr, "Query fallita: %s\n", PQerrorMessage(conn));
+        PQclear(result);
+        exit(1);
+    }
+
+    int numRows = PQntuples(result);
+    char *text = NULL;
+
+    if (numRows > 0)
+    {
+        text = strdup(PQgetvalue(result, 0, 0));
+    }
+
+    PQclear(result);
+    return text;
+}
 /**
  * @brief Handles the chat start procedure.
  * @param sockfd The socket file descriptor.
@@ -419,13 +479,15 @@ char **split_topics(char *topics)
  */
 int handle_chat(int sockfd, PGconn *conn)
 {
-
     char *suggested_drink = suggest_drink(conn);
     char *unique_string_topics = get_topics(conn);
-    char **splitted_topics = split_topics(unique_string_topics);
     char buffer[BUFFER_SIZE];
+    char message[BUFFER_SIZE];
+    printf("Suggested drink: %s\n", suggested_drink);
+    printf("Topics: %s\n", unique_string_topics);
 
-    write_to_socket(sockfd, sprintf("Benvenuto nella chat di RoboDrink! Ti andrebbe il drink: %s?", suggested_drink));
+    sprintf(message, "Benvenuto nella chat di RoboDrink! Ti andrebbe il drink: %s?", suggested_drink);
+    write_to_socket(sockfd, message);
     int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
 
     if (n > 0)
@@ -441,16 +503,76 @@ int handle_chat(int sockfd, PGconn *conn)
 
                 if (strcasecmp(buffer, "si") == 0 || strcasecmp(buffer, "ok") == 0 || strcasecmp(buffer, "va bene") == 0)
                 {
-
-                    write_to_socket(sockfd, strcat("Bene! Scegli l'argomento tra i seguenti: ", unique_string_topics));
+                    sprintf(message, "Bene! Scegli l'argomento tra i seguenti: %s", unique_string_topics);
+                    write_to_socket(sockfd, message);
                     free(unique_string_topics);
+                    n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
 
-                    // prendo la risposta, verifico che la risposta è tra gli argomenti splitted_topics e continuo...
+                    if (is_valid_topic(conn, buffer))
+                    {
+                        strcpy(buffer, getTopicText(conn, buffer));
+                        write_to_socket(sockfd, buffer);
+                        int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+                        write_to_socket(sockfd, "Sono d accordo anche io!");
+                        write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
+                    }
+                    else
+                    {
+                        write_to_socket(sockfd, "Argomento non valido!!!");
+                        write_to_socket(sockfd, "Il tuo drink è pronto arrivederci!");
+                    }
+                }
+                else if (strcasecmp(buffer, "no") == 0)
+                {
+                    write_to_socket(sockfd, "Va bene, preparero il tuo drink in silenzio ");
+                    write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
+                }
+                else
+                {
+                    write_to_socket(sockfd, "CHAT_MESSAGE_NOT_VALID");
                 }
             }
         }
         else if (strcasecmp(buffer, "no") == 0)
         {
+            write_to_socket(sockfd, "Va bene, allora dimmi che drink vorresti ? ");
+            n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+            write_to_socket(sockfd, "Ottimo! Il tuo drink è in preparazione. Ti andrebbe di chiacchierare?");
+            n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+            if (n > 0)
+            {
+
+                if (strcasecmp(buffer, "si") == 0 || strcasecmp(buffer, "ok") == 0 || strcasecmp(buffer, "va bene") == 0)
+                {
+                    sprintf(message, "Bene! Scegli l'argomento tra i seguenti: %s", unique_string_topics);
+                    write_to_socket(sockfd, message);
+                    free(unique_string_topics);
+                    n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+
+                    if (is_valid_topic(conn, buffer))
+                    {
+                        strcpy(buffer, getTopicText(conn, buffer));
+                        write_to_socket(sockfd, buffer);
+                        int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+                        write_to_socket(sockfd, "Sono d accordo anche io!");
+                        write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
+                    }
+                    else
+                    {
+                        write_to_socket(sockfd, "Argomento non valido!!!");
+                        write_to_socket(sockfd, "Il tuo drink è pronto arrivederci!");
+                    }
+                }
+                else if (strcasecmp(buffer, "no") == 0)
+                {
+                    write_to_socket(sockfd, "Va bene, preparero il tuo drink in silenzio ");
+                    write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
+                }
+                else
+                {
+                    write_to_socket(sockfd, "CHAT_MESSAGE_NOT_VALID");
+                }
+            }
         }
         else
         {
@@ -467,7 +589,13 @@ void *client_handler(void *socket_desc)
 {
     int sockfd = *(int *)socket_desc;
     free(socket_desc);
-
+    // Modifico alcune opzioni della socket
+    int optval = 1;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &optval, sizeof(optval)) < 0)
+    {
+        perror("Error setting socket option");
+        return -1;
+    }
     char buffer[BUFFER_SIZE];
     char email[BUFFER_SIZE];
 
@@ -481,17 +609,15 @@ void *client_handler(void *socket_desc)
     while (1)
     {
         int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-        printf("Da client : %s \n",buffer);
         if (n <= 0)
         {
             printf("ERRORE NELLA LETTURA DELLA SOCKET\n");
             break;
         }
-      
-        
+
         if (strcmp(buffer, "LOG_IN") == 0)
         {
-            handle_login(sockfd, conn,email);
+            handle_login(sockfd, conn, email);
         }
         else if (strcmp(buffer, "SIGN_UP") == 0)
         {
@@ -524,8 +650,7 @@ int main()
     int n;
     char *IP = "195.231.38.118"; // Indirizzo IP del server
 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0)
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
     {
         perror("Error opening socket");
         exit(1);
@@ -537,9 +662,8 @@ int main()
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(portno);
     serv_addr.sin_addr.s_addr = inet_addr(IP);
-    
 
-    if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+    if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1)
     {
         perror("Error on binding");
         exit(1);
@@ -565,7 +689,7 @@ int main()
             perror("Error creating thread");
             return 1;
         }
-        pthread_detach(client_thread); // Detach thread to prevent memory leaks
+        // pthread_detach(client_thread); // Detach thread to prevent memory leaks
     }
 
     close(sockfd);

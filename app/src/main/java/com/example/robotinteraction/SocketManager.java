@@ -1,6 +1,5 @@
+// Classe SocketManager
 package com.example.robotinteraction;
-
-
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,10 +12,10 @@ import android.util.Log;
 
 public class SocketManager {
     private String serverIp;
-    private int serverPort;
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
+    private int serverPort;
     private static SocketManager instance = null;
 
     private MessageListener messageListener;
@@ -28,37 +27,26 @@ public class SocketManager {
         // Nessun costruttore esterno necessario
     }
 
-    public interface MessageListener {
-        void onNewMessage(String message);
-    }
-
-    public void setMessageListener(MessageListener listener){
-        this.messageListener = listener;
+    public void setMessageListener(MessageListener messageListener) {
+        this.messageListener = messageListener;
     }
 
     public void connect() {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    socket = new Socket(SERVER_IP, SERVER_PORT);
+                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
-                    try {
-                        socket = new Socket(SERVER_IP, SERVER_PORT);
-                        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.e("SocketManager", "Failed to connect");
-
-
-                    }
-
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("SocketManager", "Failed to connect");
+                }
             }
         }).start();
     }
-
-
-
 
     public static synchronized SocketManager getInstance() {
         if (instance == null) {
@@ -68,68 +56,65 @@ public class SocketManager {
         return instance;
     }
 
-
-    public String receiveMessage() throws IOException {
-
-        if(in == null)
-        {
-            Log.d("SocketManager", "[SERVER] Non ricevo nulla dal server");
-            throw new IOException("Ho ricevuto un input null dal Server!");
+    public String receiveMessage() {
+        try {
+            String receivedData = in.readLine();
+            if (receivedData != null) {
+                receivedData = receivedData.trim().replaceAll("\\n$", "");
+                notifyMessageReceived(receivedData);
+            }
+            Log.d("SocketManager", "[Server] Ho ricevuto questo messaggio: " + receivedData);
+            return receivedData;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        String line = in.readLine();
-
-        // Log del messaggio ricevuto
-        Log.d("SocketManager", "[SERVER] Messaggio ricevuto: " + line);
-        if (messageListener != null) {
-            messageListener.onNewMessage(line);
-        }
-        return line;
     }
 
     public void sendMessage(String message) throws IOException {
-
         if (out == null) {
-            throw new IOException("Il messaggio da inviare è null!");
+            throw new IOException("Il messaggio da inviare è nullo!");
         }
-
-        out.println(message);
-
-        // Log del messaggio inviato
-        Log.d("SocketManager", "[CLIENT] Messaggio inviato: " + message);
-
-        // Se ci sono stati errori nella scrittura, PrintWriter non lancerà un'eccezione,
-        // ma potrai comunque controllarlo con checkError().
-        if (out.checkError()) {
-            throw new IOException();
-        }
-
-
+        out.flush();
         try {
-            Thread.sleep(100);
+            Thread.sleep(300); // Aggiungi un ritardo di 300 millisecondi tra ogni invio
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+        out.println(message);
+        Log.d("SocketManager", "[CLIENT] Messaggio inviato: " + message);
 
+        if (out.checkError()) {
+            throw new IOException("Errore durante l'invio del messaggio.");
+        }
+    }
 
     public void close() {
         try {
             socket.close();
             instance = null;
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-
-    public boolean isConnected(){
+    public boolean isConnected() {
         return socket != null && socket.isConnected() && !socket.isClosed();
     }
 
-    public void attemptConnection(){
-        if(!isConnected()){
+    public void attemptConnection() {
+        if (!isConnected()) {
             connect();
         }
+    }
+
+    private void notifyMessageReceived(String message) {
+        if (messageListener != null) {
+            messageListener.onMessageReceived(message);
+        }
+    }
+
+    public interface MessageListener {
+        void onMessageReceived(String message);
     }
 }

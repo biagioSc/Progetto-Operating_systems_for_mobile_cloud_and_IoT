@@ -108,17 +108,27 @@ public class  InterviewActivity extends AppCompatActivity {
             public void run() {
                 try {
                     socket.sendMessage("SIGN_UP");
-                    socket.sendMessage(name);
-                    socket.sendMessage(surname);
                     socket.sendMessage(email);
-                    socket.sendMessage(password);
+                    socket.sendMessage(name);
 
+                    socket.sendMessage(surname);
+                    socket.sendMessage(password);
+                    int numeropreferezeInt=drinkPreferences.size();
+                    String numeroprefrenzeString=Integer.toString(numeropreferezeInt);
+                    socket.sendMessage(numeroprefrenzeString);
 
                     for(String drink : drinkPreferences){
                         socket.sendMessage(drink);
+
                     }
+                    numeropreferezeInt=topicsPreferences.size();
+                    numeroprefrenzeString=Integer.toString(numeropreferezeInt);
+                    socket.sendMessage(numeroprefrenzeString);
+
                     for(String topic : topicsPreferences){
+
                         socket.sendMessage(topic);
+
                     }
 
 
@@ -127,11 +137,9 @@ public class  InterviewActivity extends AppCompatActivity {
                 }
 
                 String response = null;
-                try {
-                    response = socket.receiveMessage();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
+
+                response = socket.receiveMessage();
+
 
                 if(response != null)
                 {
