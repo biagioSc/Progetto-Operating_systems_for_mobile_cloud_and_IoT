@@ -427,25 +427,7 @@ char **split_topics(char *topics)
 
     return result;
 }
-int is_valid_topic(PGconn *conn, const char *topic)
-{
-    char query[BUFFER_SIZE];
-    sprintf(query, "SELECT name FROM topics WHERE name = '%s';", topic);
-    PGresult *res = PQexec(conn, query);
 
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
-    {
-        printf("Query execution failed: %s\n", PQerrorMessage(conn));
-        PQclear(res);
-        return 0;
-    }
-
-    int is_valid = (PQntuples(res) > 0);
-
-    PQclear(res);
-
-    return is_valid;
-}
 char *getTopicText(PGconn *conn, const char *topicName)
 {
     char query[256];
@@ -471,6 +453,74 @@ char *getTopicText(PGconn *conn, const char *topicName)
     PQclear(result);
     return text;
 }
+
+
+
+
+/**
+ * @brief Manages user interaction for chat.
+ * @param sockfd The socket file descriptor.
+ * @param conn The database connection handle.
+ * @param unique_string_topics String of topics for chat.
+ * @return void
+ */
+void interacting(int sockfd, PGconn *conn, char *unique_string_topics) {
+    char buffer[BUFFER_SIZE];
+    char message[BUFFER_SIZE];
+    int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+
+    if (n > 0) 
+    {
+        if (strcasecmp(buffer, "si") == 0) 
+        {
+            sprintf(message, "Bene! Scegli l'argomento tra i seguenti: %s", unique_string_topics);
+            write_to_socket(sockfd, message);
+            free(unique_string_topics);
+            n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+
+            //prende il testo della domanda e lo scrive
+            strcpy(buffer, getTopicText(conn, buffer));
+            write_to_socket(sockfd, buffer);
+
+            //seleziona dal database le risposte possibili e le invia.....
+
+
+            //leggo la risposta dell'utente e la confronto con la risposta corretta
+            int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+
+            if(n>0)
+            {
+                    //confronto la risposta
+
+
+                    //se la risposta è corretta
+                    write_to_socket(sockfd,"Risposta esatta, complimenti!");
+
+
+                    //permettere nuove domande e continuare interacting oppure drink pronto ?
+                    //...
+            }
+
+
+        } else if (strcasecmp(buffer, "no") == 0) {
+            write_to_socket(sockfd, "Va bene, il tuo ordine è in preparazione!");
+            sleep(30);
+            write_to_socket(sockfd, "Il tuo drink è pronto. Clicca su 'Ritirato' per confermare il ritiro.");
+            int n = read_from_socket(sockfd,buffer,BUFFER_SIZE);
+            if(n>0)
+            {
+                if(strcasecmp(buffer,"ritirato") == 0)
+                {
+                    write_to_socket(sockfd,"Grazie per aver ordinato da RoboDrink. Arrivederci!");
+                }
+
+                //altrimenti possibile out_of_sight
+            }
+        }
+    }
+}
+
+
 /**
  * @brief Handles the chat start procedure.
  * @param sockfd The socket file descriptor.
@@ -492,92 +542,23 @@ int handle_chat(int sockfd, PGconn *conn)
 
     if (n > 0)
     {
-        if (strcasecmp(buffer, "si") == 0 || strcasecmp(buffer, "ok") == 0 || strcasecmp(buffer, "va bene") == 0)
+        if (strcasecmp(buffer, "si") == 0)
         {
-
-            write_to_socket(sockfd, "Ottimo! Il tuo drink è in preparazione. Ti andrebbe di chiacchierare?");
-            n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-
-            if (n > 0)
-            {
-
-                if (strcasecmp(buffer, "si") == 0 || strcasecmp(buffer, "ok") == 0 || strcasecmp(buffer, "va bene") == 0)
-                {
-                    sprintf(message, "Bene! Scegli l'argomento tra i seguenti: %s", unique_string_topics);
-                    write_to_socket(sockfd, message);
-                    free(unique_string_topics);
-                    n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-
-                    if (is_valid_topic(conn, buffer))
-                    {
-                        strcpy(buffer, getTopicText(conn, buffer));
-                        write_to_socket(sockfd, buffer);
-                        int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-                        write_to_socket(sockfd, "Sono d accordo anche io!");
-                        write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
-                    }
-                    else
-                    {
-                        write_to_socket(sockfd, "Argomento non valido!!!");
-                        write_to_socket(sockfd, "Il tuo drink è pronto arrivederci!");
-                    }
-                }
-                else if (strcasecmp(buffer, "no") == 0)
-                {
-                    write_to_socket(sockfd, "Va bene, preparero il tuo drink in silenzio ");
-                    write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
-                }
-                else
-                {
-                    write_to_socket(sockfd, "CHAT_MESSAGE_NOT_VALID");
-                }
-            }
+            write_to_socket(sockfd, "Ottimo! Il tuo ordine è stato registrato. Ti andrebbe di chiacchierare?");
+            interacting(sockfd,conn,unique_string_topics);
         }
         else if (strcasecmp(buffer, "no") == 0)
         {
-            write_to_socket(sockfd, "Va bene, allora dimmi che drink vorresti ? ");
-            n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-            write_to_socket(sockfd, "Ottimo! Il tuo drink è in preparazione. Ti andrebbe di chiacchierare?");
-            n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-            if (n > 0)
-            {
+            write_to_socket(sockfd, "Va bene, allora seleziona tra i drink disponibili.");
+            //selezionare i drink disponibili ed inviarli al client
 
-                if (strcasecmp(buffer, "si") == 0 || strcasecmp(buffer, "ok") == 0 || strcasecmp(buffer, "va bene") == 0)
-                {
-                    sprintf(message, "Bene! Scegli l'argomento tra i seguenti: %s", unique_string_topics);
-                    write_to_socket(sockfd, message);
-                    free(unique_string_topics);
-                    n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+            //...
 
-                    if (is_valid_topic(conn, buffer))
-                    {
-                        strcpy(buffer, getTopicText(conn, buffer));
-                        write_to_socket(sockfd, buffer);
-                        int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-                        write_to_socket(sockfd, "Sono d accordo anche io!");
-                        write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
-                    }
-                    else
-                    {
-                        write_to_socket(sockfd, "Argomento non valido!!!");
-                        write_to_socket(sockfd, "Il tuo drink è pronto arrivederci!");
-                    }
-                }
-                else if (strcasecmp(buffer, "no") == 0)
-                {
-                    write_to_socket(sockfd, "Va bene, preparero il tuo drink in silenzio ");
-                    write_to_socket(sockfd, "Ottimo! Il tuo drink è pronto arrivederci!");
-                }
-                else
-                {
-                    write_to_socket(sockfd, "CHAT_MESSAGE_NOT_VALID");
-                }
-            }
+            n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+            write_to_socket(sockfd, "Ottimo! Il tuo ordine è stato registrato. Ti andrebbe di chiacchierare?");
+            interacting(sockfd,conn,unique_string_topics);
         }
-        else
-        {
-            write_to_socket(sockfd, "CHAT_MESSAGE_NOT_VALID");
-        }
+
     }
 }
 
