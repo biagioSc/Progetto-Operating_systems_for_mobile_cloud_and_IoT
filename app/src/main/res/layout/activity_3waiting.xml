@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="Logo"
+        android:src="@drawable/pic3waiting" />
+
+    <TextView
+        android:id="@+id/textViewWaiting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="In attesa del tuo turno..."
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarWaiting"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewWaiting"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:indeterminate="true" />
+
+    <TextView
+        android:id="@+id/textViewPleaseWait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attendere..."
+        android:textSize="16sp"
+        android:textColor="#757575"
+        android:layout_below="@id/progressBarWaiting"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
+
+</RelativeLayout>

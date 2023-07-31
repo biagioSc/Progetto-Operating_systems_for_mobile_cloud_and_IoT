@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Immagine in alto -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Inserisci le tue preferenze"
+            android:textColor="#2196F3"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"/>
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/pic9interview"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="-2dp"/>
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Domande sulle preferenze dei drink:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDrink1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drink 1" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDrink2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drink 2" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDrink3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drink 2" />
+
+            <CheckBox
+                android:id="@+id/checkBoxDrink4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drink 2" />
+
+            <!-- Aggiungi altre checkbox per altri drink -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Domande sugli argomenti preferiti:"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/checkBoxTopic1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Argomento 1" />
+
+            <CheckBox
+                android:id="@+id/checkBoxTopic2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Argomento 2" />
+
+            <CheckBox
+                android:id="@+id/checkBoxTopic3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Argomento 2" />
+
+            <CheckBox
+                android:id="@+id/checkBoxTopic4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Argomento 2" />
+            <!-- Aggiungi altre checkbox per altri argomenti -->
+
+            <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/button_rounded_background"
+                android:padding="16dp"
+                android:text="Invia Risposte"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

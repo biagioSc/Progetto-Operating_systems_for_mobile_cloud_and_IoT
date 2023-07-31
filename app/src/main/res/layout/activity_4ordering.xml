@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="Logo"
+        android:src="@drawable/pic4ordering" />
+
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleziona il Tuo Drink"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <Spinner
+        android:id="@+id/spinnerDrinks"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:id="@+id/textViewOrderMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#757575"
+        android:layout_below="@id/buttonOrder"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/buttonOrder"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Ordina"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_rounded_background"
+        android:layout_below="@id/spinnerDrinks"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:padding="16dp"
+        android:entries="@array/dropdown_items"
+        />
+    <Button
+        android:id="@+id/buttonExit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Esci"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_rounded_background"
+        android:layout_below="@id/spinnerDrinks"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:padding="16dp"
+        android:entries="@array/dropdown_items"
+        />
+
+</RelativeLayout>

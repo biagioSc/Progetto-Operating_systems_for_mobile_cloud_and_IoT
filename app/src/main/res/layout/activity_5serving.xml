@@ -1,0 +1,62 @@
+<!-- activity_order_status.xml -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imageViewOrderStatus"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:contentDescription="Logo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/pic5serving" />
+
+    <TextView
+        android:id="@+id/textViewOrderStatusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewOrderStatus"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Drink in Preparazione"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textViewOrderStatusMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Il tuo ordine è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz."
+        android:textSize="18sp"
+        android:textColor="#757575"
+        android:layout_below="@id/textViewOrderStatusTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:id="@+id/buttonWaitingRoom"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Sala d'Attesa"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_rounded_background"
+        android:layout_below="@id/textViewOrderStatusMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:padding="16dp" />
+
+    <Button
+        android:id="@+id/buttonQuiz"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Quiz"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_rounded_background"
+        android:layout_below="@id/buttonWaitingRoom"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="16dp" />
+
+</RelativeLayout>

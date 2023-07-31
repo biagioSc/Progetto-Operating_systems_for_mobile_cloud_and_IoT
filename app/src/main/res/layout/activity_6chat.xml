@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:textAlignment="center">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:contentDescription="Logo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/pic6chat" />
+
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_below="@id/imageView6"
+        android:layout_marginTop="2dp"
+        android:text="Ciao, io sono RobotDrink"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:layout_above="@id/buttons_layout"
+        android:layout_below="@id/welcomeTextView"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="13dp"
+        android:textAlignment="center">
+
+        <TextView
+            android:id="@+id/chatTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:text="QUI DOMANDA"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/buttonOption1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="#852196F3"
+            android:foregroundTint="#FFFFFF"
+            android:text="Risposta 1"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/buttonOption2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="#852196F3"
+            android:foregroundTint="#FFFFFF"
+            android:text="Risposta 2"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/buttonOption3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="#852196F3"
+            android:foregroundTint="#FFFFFF"
+            android:text="Risposta 3"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</RelativeLayout>

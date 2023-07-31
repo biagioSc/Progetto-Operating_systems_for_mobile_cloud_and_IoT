@@ -1,0 +1,38 @@
+<!-- activity_waiting_room.xml -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imageViewWelcome"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:contentDescription="Logo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/pic6attesa" />
+
+    <TextView
+        android:id="@+id/textViewWelcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Benvenuto nella Sala d'Attesa!"
+        android:textSize="24sp"
+        android:textColor="#000000"
+        android:layout_below="@id/imageViewWelcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/textViewTimeElapsed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewWelcomeMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Il tuo drink è quasi pronto"
+        android:textColor="#757575"
+        android:textSize="18sp" />
+
+</RelativeLayout>

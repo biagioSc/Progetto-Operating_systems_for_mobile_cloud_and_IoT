@@ -1,0 +1,37 @@
+<!-- activity_standby.xml -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imageViewStandby"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:contentDescription="Logo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/picoutofsight" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewStandby"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Ti sei allontanato"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/buttonWaitingRoom"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Riprendi"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_rounded_background"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="450dp"
+        android:padding="16dp" />
+
+</RelativeLayout>
