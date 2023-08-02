@@ -173,5 +173,51 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp" />
 
+    <TextView
+        android:id="@+id/textViewQueueCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Persone in coda: 0"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:layout_below="@id/textViewPleaseWait"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/textViewWaitTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tempo di attesa: 0 minuti"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:layout_below="@id/textViewQueueCount"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
+
+        <TextView
+        android:id="@+id/textViewSongName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome della canzone"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:layout_below="@id/textViewWaitTime"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarSong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewSongName"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        style="@android:style/Widget.ProgressBar.Horizontal" />
+
     </RelativeLayout>
 </LinearLayout>

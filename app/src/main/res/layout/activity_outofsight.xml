@@ -129,7 +129,6 @@
     <!-- Contenuto principale -->
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="#FFFFFF"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -145,6 +144,7 @@
             android:src="@drawable/picoutofsight" />
 
         <TextView
+            android:id="@+id/textInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageViewStandby"
@@ -161,9 +161,50 @@
             android:text="Riprendi"
             android:textColor="#FFFFFF"
             android:background="@drawable/button_rounded_background"
+            android:layout_below="@id/textInfo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="450dp"
+            android:layout_marginTop="32dp"
             android:padding="16dp" />
+
+        <!-- Aggiungiamo il timer sotto il bottone -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonWaitingRoom"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp">
+
+            <!-- Testo "Tempo rimanente:" -->
+            <TextView
+                android:id="@+id/textViewTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/timer_background"
+                android:fontFamily="sans-serif-light"
+                android:padding="8dp"
+                android:text="Tempo rimanente"
+                android:textColor="#FF2222"
+                android:textSize="18sp" />
+
+            <!-- Conteggio numerico del timer -->
+            <TextView
+                android:id="@+id/textViewTimerCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTimer"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/timercount_background"
+                android:fontFamily="sans-serif-light"
+                android:padding="8dp"
+                android:text="10s"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
 </LinearLayout>

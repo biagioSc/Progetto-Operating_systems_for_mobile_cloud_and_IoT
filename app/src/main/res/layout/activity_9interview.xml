@@ -176,29 +176,80 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/checkBoxDrink1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Drink 1" />
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/checkBoxDrink2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Drink 2" />
+                <!-- Checkbox a sinistra -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/checkBoxDrink3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Drink 2" />
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mojito" />
 
-            <CheckBox
-                android:id="@+id/checkBoxDrink4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Drink 2" />
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Martini" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Midori" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Manhattan" />
+
+                </LinearLayout>
+
+                <!-- Checkbox a destra -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Negroni" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daiquiri" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Piña Colada" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxDrink8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gin Lemon" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
             <!-- Aggiungi altre checkbox per altri drink -->
 
@@ -210,29 +261,79 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/checkBoxTopic1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Argomento 1" />
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/checkBoxTopic2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Argomento 2" />
+                <!-- Checkbox a sinistra -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/checkBoxTopic3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Argomento 2" />
+                    <CheckBox
+                        android:id="@+id/checkBoxArg1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Storia" />
 
-            <CheckBox
-                android:id="@+id/checkBoxTopic4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Argomento 2" />
+                    <CheckBox
+                        android:id="@+id/checkBoxArg2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Geografia" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxArg3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sport" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxArg4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Letteratura" />
+
+                </LinearLayout>
+
+                <!-- Checkbox a destra -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/checkBoxArg5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Attualità" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxArg6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Finanza" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxArg7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Informatica" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxArg8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scienza" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <!-- Aggiungi altre checkbox per altri argomenti -->
 
             <Button
