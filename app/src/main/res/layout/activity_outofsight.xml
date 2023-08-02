@@ -1,37 +1,77 @@
-<!-- activity_standby.xml -->
-<RelativeLayout
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:orientation="horizontal"
+    android:weightSum="3">
 
-    <ImageView
-        android:id="@+id/imageViewStandby"
-        android:layout_width="380dp"
-        android:layout_height="350dp"
-        android:contentDescription="Logo"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/picoutofsight" />
+    <!-- Barra laterale -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@android:color/darker_gray">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewStandby"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Ti sei allontanato"
-        android:textColor="#000000"
-        android:textSize="24sp" />
+        <TextView
+            android:id="@+id/tvSidebarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stato attuale"
+            android:textSize="18sp"
+            android:padding="16dp"
+            android:background="@android:color/white"/>
 
-    <Button
-        android:id="@+id/buttonWaitingRoom"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Riprendi"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/button_rounded_background"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"
-        android:padding="16dp" />
+        <ListView
+            android:id="@+id/lvStates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="@android:color/darker_gray"/>
 
-</RelativeLayout>
+    </LinearLayout>
+
+    <!-- Contenuto principale -->
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewStandby"
+            android:layout_width="380dp"
+            android:layout_height="350dp"
+            android:contentDescription="Logo"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/picoutofsight" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewStandby"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Ti sei allontanato"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/buttonWaitingRoom"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Riprendi"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_rounded_background"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="450dp"
+            android:padding="16dp" />
+
+    </RelativeLayout>
+</LinearLayout>
+

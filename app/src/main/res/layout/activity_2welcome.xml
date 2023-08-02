@@ -1,73 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:orientation="horizontal"
+    android:weightSum="3">
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="380dp"
-        android:layout_height="350dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Logo"
-        android:src="@drawable/pic2welcome" />
+    <!-- Barra laterale -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@android:color/darker_gray">
 
-    <TextView
-        android:id="@+id/textViewWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Bentornato su RobotDrink!"
-        android:textColor="#000000"
-        android:textSize="28sp" />
+        <TextView
+            android:id="@+id/tvSidebarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stato attuale"
+            android:textSize="18sp"
+            android:padding="16dp"
+            android:background="@android:color/white"/>
 
-    <TextView
-        android:id="@+id/textViewDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewWelcome"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="Grazie per aver scelto la nostra app"
-        android:textColor="#757575"
-        android:textSize="18sp" />
+        <ListView
+            android:id="@+id/lvStates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="@android:color/darker_gray"/>
 
-    <Button
-        android:id="@+id/buttonJoinQueue"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewDescription"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/button_rounded_background"
-        android:padding="16dp"
-        android:text="Accedi alla Coda"
-        android:textColor="#FFFFFF" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewOr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonJoinQueue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="oppure"
-        android:textColor="#757575"
-        android:textSize="18sp" />
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonNotNow"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewOr"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_rounded_border"
-        android:backgroundTint="#FFFFFF"
-        android:padding="16dp"
-        android:text="Esci"
-        android:textColor="#000000" />
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="380dp"
+            android:layout_height="350dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
+            android:src="@drawable/pic2welcome" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewLogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Bentornato su RobotDrink!"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/textViewDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewWelcome"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Grazie per aver scelto la nostra app"
+            android:textColor="#757575"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/buttonGoToWaiting"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewDescription"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button_rounded_background"
+            android:padding="16dp"
+            android:text="Accedi alla Coda"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textViewOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonGoToWaiting"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="oppure"
+            android:textColor="#757575"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewOr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_rounded_border"
+            android:backgroundTint="#FFFFFF"
+            android:padding="16dp"
+            android:text="Esci"
+            android:textColor="#000000" />
+
+    </RelativeLayout>
+</LinearLayout>

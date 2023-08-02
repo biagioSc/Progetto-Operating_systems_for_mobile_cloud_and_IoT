@@ -1,63 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:orientation="horizontal"
+    android:weightSum="3">
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="380dp"
-        android:layout_height="350dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Logo"
-        android:src="@drawable/pic1main" />
+    <!-- Barra laterale -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@android:color/darker_gray">
 
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Email"
-        android:textColor="#000000"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tvSidebarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stato attuale"
+            android:textSize="18sp"
+            android:padding="16dp"
+            android:background="@android:color/white"/>
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextEmail"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Password"
-        android:textColor="#000000"
-        android:textSize="20sp" />
+        <ListView
+            android:id="@+id/lvStates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="@android:color/darker_gray"/>
 
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/button_rounded_background"
-        android:padding="16dp"
-        android:text="Accedi"
-        android:textColor="#FFFFFF" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:text="Non hai un account? Registrati!"
-        android:textColor="#1976D2"
-        android:textSize="16sp"
-        android:layout_below="@id/buttonLogin"
-        android:layout_centerHorizontal="true"
-        android:padding="16dp" />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="380dp"
+            android:layout_height="350dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
+            android:src="@drawable/pic1main" />
+
+        <TextView
+            android:id="@+id/textViewSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benvenuto in RoboDrink"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:layout_below="@id/imageViewLogo" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            android:layout_width="260dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/textViewSignUp">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            android:layout_width="260dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/emailTextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/passwordTextInputLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button_rounded_background"
+            android:onClick="onLoginClick"
+            android:padding="16dp"
+            android:text="Accedi"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/buttonSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:onClick="onSignUpClick"
+            android:text="Non hai un account? Registrati!"
+            android:textColor="#1976D2"
+            android:textSize="16sp"
+            android:layout_below="@id/buttonLogin"
+            android:layout_centerHorizontal="true"
+            android:padding="16dp" />
+
+    </RelativeLayout>
+</LinearLayout>
