@@ -11,25 +11,118 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:background="@android:color/darker_gray">
+        android:background="#232196F3"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvSidebarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stato attuale"
-            android:textSize="18sp"
+            android:background="#C92196F3"
             android:padding="16dp"
-            android:background="@android:color/white"/>
+            android:text="STATO"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/lvStates"
+        <TextView
+            android:id="@+id/item_login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"
-            android:background="@android:color/darker_gray"/>
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Login"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Welcome"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_waiting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Waiting"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_ordering"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Ordering"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_serving"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Serving"
+            android:typeface="monospace"/>
+
+        <TextView
+            android:id="@+id/item_attesa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Attesa"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_chatBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="ChatBot"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_farewelling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Farewelling"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Signup"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_interview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Interview"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_outofsight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#A1673AB7"
+            android:padding="10dp"
+            android:text="Out Of Sight"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Gone"
+            android:typeface="monospace" />
 
     </LinearLayout>
 
