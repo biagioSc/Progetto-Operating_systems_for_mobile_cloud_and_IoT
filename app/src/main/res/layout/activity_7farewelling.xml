@@ -192,7 +192,7 @@
             android:layout_height="wrap_content"
             android:text="Ritira"
             android:textColor="#FFFFFF"
-            android:background="@drawable/button_rounded_background"
+            android:background="@drawable/text_rounded_border"
             android:layout_below="@id/textViewDrinkDescription"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"

@@ -154,8 +154,8 @@
 
         <TextView
             android:id="@+id/textViewOrderStatusMessage"
-            android:layout_width="254dp"
-            android:layout_height="54dp"
+            android:layout_width="253dp"
+            android:layout_height="71dp"
             android:layout_below="@id/textViewOrderStatusTitle"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="22dp"

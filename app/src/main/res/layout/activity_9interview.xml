@@ -316,7 +316,7 @@
                         android:id="@+id/checkBoxArg6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Finanza" />
+                        android:text="Scienza" />
 
                     <CheckBox
                         android:id="@+id/checkBoxArg7"
@@ -328,7 +328,7 @@
                         android:id="@+id/checkBoxArg8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Scienza" />
+                        android:text="Nessuno" />
 
                 </LinearLayout>
 

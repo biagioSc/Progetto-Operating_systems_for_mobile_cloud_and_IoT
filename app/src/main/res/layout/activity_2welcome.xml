@@ -170,7 +170,7 @@
             android:layout_below="@id/textViewDescription"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
-            android:background="@drawable/button_rounded_background"
+            android:background="@drawable/button_rounded_border"
             android:padding="16dp"
             android:text="Accedi alla Coda"
             android:textColor="#FFFFFF" />

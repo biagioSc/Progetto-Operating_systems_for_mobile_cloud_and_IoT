@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="horizontal"
     android:weightSum="3">
 
@@ -45,12 +45,12 @@
             android:id="@+id/item_waiting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#A1673AB7"
             android:padding="10dp"
             android:text="Waiting"
-            android:typeface="monospace"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#A1673AB7" />
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_ordering"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Serving"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_attesa"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="ChatBot"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_farewelling"
@@ -122,102 +122,102 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Gone"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
     </LinearLayout>
 
     <RelativeLayout
-        android:background="#FFFFFF"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:background="#FFFFFF"
         android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="380dp"
-        android:layout_height="350dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Logo"
-        android:src="@drawable/pic3waiting" />
-
-    <TextView
-        android:id="@+id/textViewWaiting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="In attesa del tuo turno..."
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:layout_below="@id/imageViewLogo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
-
-    <ProgressBar
-        android:id="@+id/progressBarWaiting"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewWaiting"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:indeterminate="true" />
-
-    <TextView
-        android:id="@+id/textViewPleaseWait"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Attendere..."
-        android:textSize="16sp"
-        android:textColor="#757575"
-        android:layout_below="@id/progressBarWaiting"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/textViewQueueCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Persone in coda: 0"
-        android:textSize="16sp"
-        android:textColor="#000000"
-        android:layout_below="@id/textViewPleaseWait"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
-
-    <TextView
-        android:id="@+id/textViewWaitTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tempo di attesa: 0 minuti"
-        android:textSize="16sp"
-        android:textColor="#000000"
-        android:layout_below="@id/textViewQueueCount"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp" />
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="380dp"
+            android:layout_height="350dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
+            android:src="@drawable/pic3waiting" />
 
         <TextView
-        android:id="@+id/textViewSongName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nome della canzone"
-        android:textSize="18sp"
-        android:textColor="#000000"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:layout_below="@id/textViewWaitTime"/>
+            android:id="@+id/textViewWaiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewLogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="In attesa del tuo turno..."
+            android:textColor="#000000"
+            android:textSize="20sp" />
 
-    <ProgressBar
-        android:id="@+id/progressBarSong"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewSongName"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="0"
-        style="@android:style/Widget.ProgressBar.Horizontal" />
+        <ProgressBar
+            android:id="@+id/progressBarWaiting"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewWaiting"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/textViewPleaseWait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressBarWaiting"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Attendere..."
+            android:textColor="#757575"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewQueueCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewPleaseWait"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Persone in coda: 0"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewWaitTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewQueueCount"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Tempo di attesa: 0 minuti"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewSongName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewWaitTime"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:text="Nome della canzone"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBarSong"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewSongName"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="40" />
 
     </RelativeLayout>
 </LinearLayout>
