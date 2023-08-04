@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -153,38 +154,49 @@
             android:textColor="#000000"
             android:textSize="24sp" />
 
-        <LinearLayout
-            android:id="@+id/layout"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewTitle"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:layout_margin="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-            <TextView
-                android:id="@+id/textViewRecommendedDrink"
-                android:layout_width="110dp"
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mojito"
-                android:textColor="#000000"
-                android:textSize="24sp" />
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-            <Button
-                android:id="@+id/buttonOrderRecommendedDrink"
-                android:layout_width="127dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:backgroundTint="#E1AC0F"
-                android:text="Ordina"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textViewRecommendedDrink"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mojito"
+                    android:textColor="#020202"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/buttonOrderRecommendedDrink"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="#E1AC0F"
+                    android:text="Ordina"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/textViewOr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout"
+            android:layout_below="@id/cardView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="oppure"
@@ -223,16 +235,17 @@
 
         <Button
             android:id="@+id/buttonOrder"
-            android:layout_width="200dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:text="Ordina"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/button_rounded_background"
             android:layout_below="@id/spinnerDrinks"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:padding="16dp"
-            android:entries="@array/dropdown_items"/>
+            android:entries="@array/dropdown_items"
+            android:padding="12dp"
+            android:text="Ordina"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
 
     </RelativeLayout>
 </LinearLayout>
