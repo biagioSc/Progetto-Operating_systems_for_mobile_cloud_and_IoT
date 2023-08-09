@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private Button buttonSignUp;
+    private TextView buttonSignUp;
     private SocketManager socket;
 
     public String response;
@@ -24,13 +25,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_1main);
 
         // Set degli ID per i componenti grafici
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonSignUp = findViewById(R.id.buttonSignUp);
-
         // Crea un nuovo thread per gestire il tentativo di connessione continua.
         new Thread(new Runnable() {
             @Override
@@ -109,56 +109,26 @@ public class MainActivity extends AppCompatActivity {
 
                     response = socket.receiveMessage();
                     Log.d("MainActivity", "[APP] Ho ricevuto effettivamente qualcosa");
-                    if (response.equalsIgnoreCase("WELCOMING"))
-                    {
-                        try 
-                        {
-                            socket.sendMessage("CHECK_NEXT_STATE");
-                            response2 = socket.receiveMessage();
+                    // Ho effettuato il login con successo quindi ora posso ricevere il mio stato
+                    // e passare alla schermata corretta
 
-                        } catch (IOException e) {
-                            Log.d("MainActivity", "[ERROR] Next state non ricevuto dal Server");
-                            Log.d("MainActivity", "[ERROR] Connessione persa con il Server");
-                        }
-
-                    }
-                    // Aggiorno l'interfaccia utente con la risposta dal server.
-                    // Questo deve essere fatto sul thread principale, quindi utilizziamo
                     // runOnUiThread.
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (response != null) {
                                 if (response.equalsIgnoreCase("LOG_IN_ERROR")) {
-                                    Toast.makeText(MainActivity.this, "Login fallito. Riprova.", Toast.LENGTH_SHORT)
+                                    Toast.makeText(MainActivity.this, "Login fallito. Riprova.", Toast.LENGTH_LONG)
                                             .show();
-                                } 
-                                else if (response.equalsIgnoreCase("WELCOMING")) 
-                                {
-                                     new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Intent intent;
-                                                if (response2.equalsIgnoreCase("ORDERING")) {
-                                                    intent = new Intent(MainActivity.this, OrderingActivity.class);
-                                                    startActivity(intent);
-                                                } else if (response2.equalsIgnoreCase("WAITING")) {
-                                                    intent = new Intent(MainActivity.this, WaitingActivity.class);
-                                                    startActivity(intent);
-                                                } else {
-                                                    Log.d("MainActivity", "[SERVER] Stato utente non riconosciuto");
-                                                }
-                                            }
-                                        }, 700); // ritardo di 0.7 secondi
-                                  
+                                } else if (response.equalsIgnoreCase("WELCOMING")) {
                                     Toast.makeText(MainActivity.this, "Login effettuato con successo",
-                                    Toast.LENGTH_SHORT).show();
-
-                                } 
-                                else 
-                                {
-                                    Toast.makeText(MainActivity.this, "A server-side error commando Sconosciuto",
-                                    Toast.LENGTH_SHORT).show();
+                                            Toast.LENGTH_SHORT).show();
+                                    Intent passaggioWelcoming= new Intent(MainActivity.this, WelcomeActivity.class);
+                                    startActivity(passaggioWelcoming);
+                                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Errore lato-server commando ricevuto sconosciuto",
+                                            Toast.LENGTH_SHORT).show();
                                 }
 
                             } else {
@@ -175,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Errore di rete. Riprova.", Toast.LENGTH_SHORT).show();
                         }
                     });
-                } 
+                }
             }
         }).start(); // Avvio il thread.
     }

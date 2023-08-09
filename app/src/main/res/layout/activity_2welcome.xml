@@ -164,7 +164,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/buttonGoToWaiting"
+            android:id="@+id/buttonChecknextState"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewDescription"
@@ -179,7 +179,7 @@
             android:id="@+id/textViewOr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonGoToWaiting"
+            android:layout_below="@id/buttonChecknextState"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="oppure"

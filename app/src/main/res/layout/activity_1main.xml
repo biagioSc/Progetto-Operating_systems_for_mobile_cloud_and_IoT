@@ -127,7 +127,6 @@
     </LinearLayout>
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="#FFFFFF"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -205,15 +204,15 @@
             android:id="@+id/buttonSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/buttonLogin"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:onClick="onSignUpClick"
+            android:padding="16dp"
             android:text="Non hai un account? Registrati!"
             android:textColor="#1976D2"
-            android:textSize="16sp"
-            android:layout_below="@id/buttonLogin"
-            android:layout_centerHorizontal="true"
-            android:padding="16dp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
 </LinearLayout>

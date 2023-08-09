@@ -36,7 +36,7 @@
 
 #define BUFFER_SIZE 256
 #define MAX_TOPICS 100
-#define PORT_NUMBER 8080
+#define PORT_NUMBER 80
 
 /**
  * @brief Connects to the PostgreSQL database.
@@ -44,7 +44,7 @@
  */
 PGconn *connect_to_db()
 {
-    PGconn *conn = PQconnectdb("dbname=RobotApp user=postgres password=postgres hostaddr=195.231.38.118 port=5432");
+    PGconn *conn = PQconnectdb("dbname=robotapp user=postgres password=WalterBalzano01! hostaddr=195.231.38.118 port=5432");
     if (PQstatus(conn) == CONNECTION_BAD)
     {
         fprintf(stderr, "Connection to database failed: %s\n", PQerrorMessage(conn));
@@ -550,6 +550,7 @@ int handle_chat(int sockfd, PGconn *conn)
         else if (strcasecmp(buffer, "no") == 0)
         {
             write_to_socket(sockfd, "Va bene, allora seleziona tra i drink disponibili.");
+            
             //selezionare i drink disponibili ed inviarli al client
 
             //...
@@ -652,7 +653,7 @@ int main()
 
     listen(sockfd, 5);
     clilen = sizeof(cli_addr);
-
+    printf("Server in ascolto sulla porta %d\n", portno);
     while (1)
     {
         newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);

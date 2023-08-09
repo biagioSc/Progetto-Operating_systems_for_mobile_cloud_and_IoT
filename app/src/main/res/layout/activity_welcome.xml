@@ -28,11 +28,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewWelcomeBot"
-        app:layout_constraintBottom_toTopOf="@id/buttonGoToWaiting"
+        app:layout_constraintBottom_toTopOf="@id/buttonChecknextState"
         app:srcCompat="@drawable/welcome" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonGoToWaiting"
+        android:id="@+id/buttonChecknextState"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Accedi alla lista d'attesa"
@@ -49,7 +49,7 @@
         android:text="Esci"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonGoToWaiting"
+        app:layout_constraintTop_toBottomOf="@id/buttonChecknextState"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="16dp" />
 

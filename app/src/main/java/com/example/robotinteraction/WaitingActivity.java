@@ -34,12 +34,7 @@ public class WaitingActivity extends AppCompatActivity {
             public void run() {
                 String message = null;
                 while(true) {
-
-
-
                         message = socket.receiveMessage();
-
-
                     if(message != null){
 
                         // Supponendo che "Wait Over" sia il messaggio che indica la fine dell'attesa

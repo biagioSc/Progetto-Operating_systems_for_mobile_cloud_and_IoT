@@ -53,6 +53,10 @@ public class SocketManager {
             instance = new SocketManager();
             instance.connect();
         }
+        else
+        {
+            Log.d("SocketManager", "[Server] Connessione recuperata correttamente  ");
+        }
         return instance;
     }
 
@@ -78,10 +82,11 @@ public class SocketManager {
         out.flush();
         try {
             Thread.sleep(300); // Aggiungi un ritardo di 300 millisecondi tra ogni invio
+            out.println(message);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        out.println(message);
+
         Log.d("SocketManager", "[CLIENT] Messaggio inviato: " + message);
 
         if (out.checkError()) {
