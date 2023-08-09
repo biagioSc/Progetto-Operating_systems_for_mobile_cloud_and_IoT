@@ -197,7 +197,7 @@
             android:backgroundTint="#FFFFFF"
             android:padding="16dp"
             android:text="Esci"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 </LinearLayout>

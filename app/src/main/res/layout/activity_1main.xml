@@ -186,14 +186,26 @@
                 android:background="@drawable/text_rounded_border"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_below="@id/passwordTextInputLayout"
+            android:text="Email e/o password errate"
+            android:layout_marginTop="2dp"
+            android:textColor="#FF0000"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/buttonLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/passwordTextInputLayout"
+            android:layout_below="@id/textViewError"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="7dp"
             android:background="@drawable/button_rounded_background"
             android:onClick="onLoginClick"
             android:padding="16dp"
@@ -206,7 +218,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonLogin"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="7dp"
             android:clickable="true"
             android:onClick="onSignUpClick"
             android:padding="16dp"
