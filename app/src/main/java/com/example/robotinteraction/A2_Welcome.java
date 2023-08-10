@@ -15,8 +15,8 @@ public class A2_Welcome extends Activity {
         setContentView(R.layout.activity_2welcome);
 
         // Trova i bottoni nel layout tramite i loro ID
-        buttonGoToWaiting = findViewById(R.id.buttonGoToWaiting);
-        buttonLogOut = findViewById(R.id.buttonLogOut);
+        //buttonGoToWaiting = findViewById(R.id.buttonGoToWaiting);
+        //buttonLogOut = findViewById(R.id.buttonLogOut);
 
         // Imposta un ClickListener per il pulsante "Accedi alla Coda"
         buttonGoToWaiting.setOnClickListener(new View.OnClickListener() {

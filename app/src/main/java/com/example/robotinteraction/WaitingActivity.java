@@ -2,6 +2,7 @@ package com.example.robotinteraction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import java.io.IOException;
@@ -19,12 +20,10 @@ public class WaitingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_waiting);
-        waitingTextView = findViewById(R.id.textViewWaiting);
+        setContentView(R.layout.activity_3waiting);
+        waitingTextView = findViewById(R.id.textViewQueueCount);
         socket = SocketManager.getInstance();
         updateWaitingCount();
-
-
     }
 
     private void updateWaitingCount() {
@@ -34,7 +33,20 @@ public class WaitingActivity extends AppCompatActivity {
             public void run() {
                 String message = null;
                 while(true) {
+
+                    try
+                    {
+                        socket.sendMessage("CHECK_WAITING");
                         message = socket.receiveMessage();
+                        Thread.sleep(1000);
+                    }
+                    catch (IOException E)
+                    {
+                        Log.d("WaitingActvity","[CONNESIONE] Ho inviato il messaggio di wait ma ho ricevuto un Errore ");
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     if(message != null){
 
                         // Supponendo che "Wait Over" sia il messaggio che indica la fine dell'attesa
@@ -48,16 +60,14 @@ public class WaitingActivity extends AppCompatActivity {
                             });
                             break;
                         }
-                        // Altrimenti provo a trasformare il messaggio in un numero per
-                        // vedere se il Server mi ha inviato quante persone mancano
-                        else if (message.equalsIgnoreCase("WAIT_MORE")){
+                        else {
                             try {
                                 int counter = Integer.parseInt(message);
 
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        waitingTextView.setText("Ti precedono n." + counter + " utenti.");
+                                        waitingTextView.setText("Persone in coda : " + counter);
                                     }
                                 });
                             } catch (NumberFormatException e) {
@@ -78,17 +88,9 @@ public class WaitingActivity extends AppCompatActivity {
     // 2. Viene premuto il pulsante indietro integrato in Android
 
     //Gestisco il caso 1
-    public void onBackButtonClick(View view){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket.sendMessage("STOP_WAITING");
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+    public void onBackButtonClick(View view)
+    {
+
 
         // Termino activity corrente e passo all'activity immediatamente precedente Main
         finish();
@@ -96,19 +98,8 @@ public class WaitingActivity extends AppCompatActivity {
 
     //Gestisco il caso 2
     @Override
-    public void onBackPressed() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Invio un messaggio al server per informarlo che l'utente ha smesso di aspettare.
-                    socket.sendMessage("STOP_WAITING");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
+    public void onBackPressed()
+    {
         // Chiamo il comportamento di onBackPressed predefinito.
         super.onBackPressed();
     }

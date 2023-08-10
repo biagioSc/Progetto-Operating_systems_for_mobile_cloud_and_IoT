@@ -52,8 +52,8 @@ public class A3_Waiting extends Activity {
                         @Override
                         public void run() {
                             // Avvia l'attività "Ordering"
-                            Intent intent = new Intent(A3_Waiting.this, A4_Ordering.class);
-                            startActivity(intent);
+                            //Intent intent = new Intent(A3_Waiting.this, A4_Ordering.class);
+                            //startActivity(intent);
                             finish(); // Chiudi l'attuale attività "Waiting"
                         }
                     }, 5000); // Attendi 5 secondi (5000 millisecondi) prima di avviare l'attività "Ordering"

@@ -65,7 +65,7 @@ public class A1_Main extends AppCompatActivity {
     // Metodo richiamato quando il testo di registrazione viene cliccato
     private void onSignUpClick() {
         // Aggiungi qui la logica per la gestione del click del testo di registrazione
-        Intent intent = new Intent(A1_Main.this, A9_Signup.class);
-        startActivity(intent);
+        //Intent intent = new Intent(A1_Main.this, A9_Signup.class);
+        //startActivity(intent);
     }
 }

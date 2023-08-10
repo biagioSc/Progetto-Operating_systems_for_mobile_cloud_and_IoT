@@ -10,6 +10,8 @@
         2.i     A questo punto dovrà collegarsi ad un database Postgresql e verificare se i dati sono corretti (il database si trova sulla stessa macchina server)
         2.ii    Se i dati sono corretti invia un messaggio di "WELCOMING"
     3. Se il messaggio è "CHECK_NEXT_STATE" , il server invia "ORDERING" se non ci sono altri utenti che si trovano in quello stato, altrimenti "WAITING" se ci sono altri utenti che si trovano in quello stato. (max 2 utenti in ordering, verificabile dal db nella entry "state")
+        3.i Se il messaggio CHECK_WAITING il server controlla il numero di utenti in coda e lo invia al client
+            Se il numero in coda è <2 il server invia "WAIT_OVER" è passa alla fase di "ORDERING"
     4. Se il messaggio è "SIGN_UP" il server dovrà ricevere: nome, cognome, email, password, un arraylist di stringhe di drink preferiti e un arraylist di stringhe di argomenti preferiti.
         3.i     Il server avvierà una connessione con il database per registrare il nuovo utente con i dati forniti. Se tutto è andato a buon fine restituisce il messaggio al client "SIGN_UP_SUCCESS" altrimenti "SIGN_UP_ERROR"
         3.ii    Se l'utente prova a registrarsi con una email già presente nel db il messaggio impostato di errore è "EMAIL_ALREADY_USED"
@@ -22,7 +24,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-
 #include <string.h>
 #include <strings.h>
 #include <unistd.h>
@@ -36,7 +37,7 @@
 
 #define BUFFER_SIZE 256
 #define MAX_TOPICS 100
-#define PORT_NUMBER 80
+#define PORT_NUMBER 8080
 
 /**
  * @brief Connects to the PostgreSQL database.
@@ -81,7 +82,7 @@ int read_from_socket(int sockfd, char *buffer, int bufsize)
 /**
  * @brief Writes data to the socket and forces immediate data transmission.
  * @param sockfd The socket file descriptor.
- * @param buffer The data to write.
+ * @param message The data to write.
  * @return int The number of bytes written, or -1 if an error occurred.
  *
  *
@@ -105,7 +106,48 @@ int write_to_socket(int sockfd, const char *message)
     fflush(stdout); // Forza l'invio immediato dei dati sulla socket
     return n;
 }
+/**
+ * @brief Handles the login request.
+ * @param sockfd The socket file descriptor.
+ * @param conn The database connection handle.
+ */
+void handle_queue(int sockfd, PGconn *conn, char *email)
+{
+    int count = check_state(conn);
+    if (count < 2)
+    {
+        char updateState[BUFFER_SIZE];
+        sprintf(updateState, "UPDATE users SET state='ORDERING' WHERE email='%s';", email);    
+        PGresult *resUpdateState = PQexec(conn, updateState);
+        PQclear(resUpdateState);
+        write_to_socket(sockfd, "WAIT_OVER");
+    }
+    else
+    {
+        char countOrderingString[BUFFER_SIZE];
+        count = check_stateWaiting(conn);//Torno il numero di utenti in coda
+        sprintf(countOrderingString, "%d", count);
+        printf("Numero di utenti in coda che aspettando : %s\n", countOrderingString);
+        write_to_socket(sockfd, countOrderingString);
+    }
+}
+/**
+ * @brief Check ho many users are in the state of waiting. 
+ * @param conn The database connection handle.
+ * @return int The number of users in the state of waiting.
+ */
+int check_stateWaiting(PGconn *conn)
+{
+    char checkWaiting[BUFFER_SIZE];
+    sprintf(checkWaiting, "SELECT COUNT(*) FROM users WHERE state='WAITING';");
+    PGresult *resWaiting = PQexec(conn, checkWaiting);
 
+    int countWaiting = atoi(PQgetvalue(resWaiting, 0, 0));
+
+    PQclear(resWaiting);
+
+    return countWaiting;
+}
 /**
  * @brief Checks how many users are in the state of ordering.
  * @param conn The database connection handle.
@@ -118,11 +160,11 @@ int check_state(PGconn *conn)
     sprintf(checkOrdering, "SELECT COUNT(*) FROM users WHERE state='ORDERING';");
     PGresult *resOrdering = PQexec(conn, checkOrdering);
 
-    int countOrdering = atoi(PQgetvalue(resOrdering, 0, 0));
+    int count = atoi(PQgetvalue(resOrdering, 0, 0));
 
     PQclear(resOrdering);
 
-    return countOrdering;
+    return count;
 }
 
 /**
@@ -612,6 +654,10 @@ void *client_handler(void *socket_desc)
         else if (strcmp(buffer, "CHECK_NEXT_STATE") == 0)
         {
             handle_welcoming(sockfd, conn, email);
+        }
+        else if (strcmp(buffer, "CHECK_WAITING") == 0)
+        {
+            handle_queue(sockfd, conn, email);
         }
         else
         {
