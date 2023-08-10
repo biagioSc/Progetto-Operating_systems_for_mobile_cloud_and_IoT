@@ -202,7 +202,7 @@ int handle_login(int sockfd, PGconn *conn, char *email)
 
     if (PQresultStatus(resLogin) != PGRES_TUPLES_OK || PQntuples(resLogin) != 1)
     {
-        printf("No data retrieved\n");
+        printf("Nessun dato trovato\n");
         PQclear(resLogin);
         write_to_socket(sockfd, "LOG_IN_ERROR");
         // PQfinish(conn);
@@ -216,7 +216,7 @@ int handle_login(int sockfd, PGconn *conn, char *email)
     }
     else
     {
-        printf("Invalid password for user %s \n", email);
+        printf("Password non valida per questa email %s \n", email);
         PQclear(resLogin);
         write_to_socket(sockfd, "LOG_IN_ERROR");
         // PQfinish(conn);
@@ -241,7 +241,7 @@ int handle_welcoming(int sockfd, PGconn *conn, char *email)
     // Check number of users in ordering state:
     // If the number is < 2 we set the state of the user to "ORDERING" and send "ORDERING" to the client
     // Else we set the state of the user to "WAITING" and send "WAITING" to the client
-    if (check_state(conn) < 2)
+    if (check_state(conn) <= 2)
     {
 
         char setOrdering[BUFFER_SIZE];

@@ -190,14 +190,15 @@
             android:id="@+id/textViewError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:layout_below="@id/passwordTextInputLayout"
-            android:text="Email e/o password errate"
             android:layout_marginTop="2dp"
-            android:textColor="#FF0000"
+            android:padding="16dp"
+            android:text="Email e/o password errate"
             android:textAlignment="center"
+            android:textColor="#FF0000"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/buttonLogin"

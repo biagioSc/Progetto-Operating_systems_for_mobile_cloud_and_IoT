@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+/*
 public class A1_New extends AppCompatActivity {
 
     // Views
@@ -69,3 +70,4 @@ public class A1_New extends AppCompatActivity {
         startActivity(intent);
     }
 }
+*/

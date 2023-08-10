@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView buttonSignUp;
+    private TextView textLoginError;
     private SocketManager socket;
 
     public String response;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonSignUp = findViewById(R.id.buttonSignUp);
+        textLoginError = findViewById(R.id.textViewError);
         // Crea un nuovo thread per gestire il tentativo di connessione continua.
         new Thread(new Runnable() {
             @Override
@@ -117,9 +119,12 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             if (response != null) {
-                                if (response.equalsIgnoreCase("LOG_IN_ERROR")) {
+                                if (response.equalsIgnoreCase("LOG_IN_ERROR"))
+                                {
                                     Toast.makeText(MainActivity.this, "Login fallito. Riprova.", Toast.LENGTH_LONG)
                                             .show();
+                                    textLoginError.setVisibility(View.VISIBLE); //Abilito la scritta di errore del Login
+
                                 } else if (response.equalsIgnoreCase("WELCOMING")) {
                                     Toast.makeText(MainActivity.this, "Login effettuato con successo",
                                             Toast.LENGTH_SHORT).show();
