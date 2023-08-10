@@ -1,9 +1,7 @@
 package com.example.robotinteraction;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.content.Intent;
 import android.widget.TextView;
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_1main);
+        setContentView(R.layout.activity_1new);
 
         // Set degli ID per i componenti grafici
         editTextEmail = findViewById(R.id.editTextEmail);
