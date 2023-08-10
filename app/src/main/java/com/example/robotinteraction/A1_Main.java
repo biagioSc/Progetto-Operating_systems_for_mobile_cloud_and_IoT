@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-public class A1_Main extends AppCompatActivity {
+public class A1_New extends AppCompatActivity {
 
     // Views
     private EditText editTextEmail;
@@ -51,12 +51,12 @@ public class A1_Main extends AppCompatActivity {
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             // Uno o entrambi i campi sono vuoti, mostra un messaggio di errore
-            Toast.makeText(A1_Main.this, "Inserisci email e password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(A1_New.this, "Inserisci email e password", Toast.LENGTH_SHORT).show();
         } else {
             // Effettua qui la logica per controllare l'email e la password inserite
-            Toast.makeText(A1_Main.this, "Accesso riuscito!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(A1_New.this, "Accesso riuscito!", Toast.LENGTH_SHORT).show();
             // Avvia l'Activity successiva dopo un accesso riuscito
-            Intent intent = new Intent(A1_Main.this, A2_Welcome.class);
+            Intent intent = new Intent(A1_New.this, A2_Welcome.class);
             startActivity(intent);
         }
     }
@@ -65,7 +65,7 @@ public class A1_Main extends AppCompatActivity {
     // Metodo richiamato quando il testo di registrazione viene cliccato
     private void onSignUpClick() {
         // Aggiungi qui la logica per la gestione del click del testo di registrazione
-        //Intent intent = new Intent(A1_Main.this, A9_Signup.class);
-        //startActivity(intent);
+        Intent intent = new Intent(A1_New.this, A9_Signup.class);
+        startActivity(intent);
     }
 }
