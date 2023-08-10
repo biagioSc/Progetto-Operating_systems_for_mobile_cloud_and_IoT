@@ -394,6 +394,88 @@ char *suggest_drink(PGconn *conn)
 }
 
 /**
+ * @brief Combines an array of strings into a single comma-separated string.
+ * 
+ * @param drinks A NULL-terminated array of strings representing the drinks.
+ * 
+ * @return char* A newly dynamically allocated string containing all drink names
+ *               separated by commas.
+ *               Returns NULL on memory allocation errors.
+ */
+char *split_drinks(char **drinks){
+
+    // Calcola la lunghezza totale necessaria
+    int total_length = 0;
+    for (int i = 0; drinks[i] != NULL; i++) {
+        total_length += strlen(drinks[i]) + 1; // +1 per la virgola o il terminatore di stringa
+    }
+
+    char *result = malloc(total_length);
+    if (!result) {
+        perror("Memory allocation failed");
+        return NULL;
+    }
+
+    result[0] = '\0'; // Inizia con una stringa vuota
+
+    for (int i = 0; drinks[i] != NULL; i++) {
+        strcat(result, drinks[i]);
+        if (drinks[i + 1] != NULL) {
+            strcat(result, ",");
+        }
+    }
+
+    return result;
+}
+
+/**
+ * @brief Retrieves all drink names from the database.
+ * @param conn The database connection handle.
+ * @return char* The splitted string of drinks.
+ */
+char *get_drinks_name(PGconn *conn)
+{
+    // Query to get the drink's list
+    char query[BUFFER_SIZE];
+    sprintf(query, "SELECT name FROM drinks;");
+    PGresult *res = PQexec(conn, query);
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    {
+        printf("Query execution failed: %s\n", PQerrorMessage(conn));
+        PQclear(res);
+        return NULL;
+    }
+
+    int num_drinks = PQntuples(res);
+    
+    // Allocate memory for drink names
+    char **drinks = malloc(sizeof(char *) * (num_drinks + 1)); // +1 for a NULL terminator
+
+    for (int i = 0; i < num_drinks; i++)
+    {
+        char *drink_name = PQgetvalue(res, i, 0);
+        drinks[i] = strdup(drink_name); // Allocate and copy string
+    }
+
+    drinks[num_drinks] = NULL; // NULL-terminate the array
+
+    PQclear(res);
+
+    char *splitted_drinks = split_drinks(drinks);
+
+    // Free the memory of drinks
+    for (int i = 0; i < num_drinks; i++)
+    {
+        free(drinks[i]);
+    }
+    free(drinks);
+
+    return splitted_drinks;
+}
+
+
+/**
  * @brief Gets all the topics from the database list of topics.
  * @param conn The database connection handle.
  * @return char * The string with all the topics separated by ",".
@@ -515,8 +597,8 @@ void interacting(int sockfd, PGconn *conn, char *unique_string_topics) {
     {
         if (strcasecmp(buffer, "si") == 0) 
         {
-            sprintf(message, "Bene! Scegli l'argomento tra i seguenti: %s", unique_string_topics);
-            write_to_socket(sockfd, message);
+            write_to_socket(sockfd, "Bene! Scegli l'argomento tra i seguenti:");
+            write_to_socket(sockfd, unique_string_topics);
             free(unique_string_topics);
             n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
 
@@ -539,8 +621,7 @@ void interacting(int sockfd, PGconn *conn, char *unique_string_topics) {
                     write_to_socket(sockfd,"Risposta esatta, complimenti!");
 
 
-                    //permettere nuove domande e continuare interacting oppure drink pronto ?
-                    //...
+                    //permettere nuove domande e continuare interacting
             }
 
 
@@ -594,9 +675,14 @@ int handle_chat(int sockfd, PGconn *conn)
             write_to_socket(sockfd, "Va bene, allora seleziona tra i drink disponibili.");
             
             //selezionare i drink disponibili ed inviarli al client
+            char *available_drinks_string = get_drinks_name(conn);
 
-            //...
-
+            //controllo che la stringa non sia null
+            if(available_drinks_string){
+                write_to_socket(sockfd,available_drinks_string);
+                free(available_drinks_string);
+            }
+            
             n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
             write_to_socket(sockfd, "Ottimo! Il tuo ordine è stato registrato. Ti andrebbe di chiacchierare?");
             interacting(sockfd,conn,unique_string_topics);
