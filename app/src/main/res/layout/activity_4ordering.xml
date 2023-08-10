@@ -185,7 +185,7 @@
                     android:layout_width="100dp"
                     android:layout_height="45dp"
                     android:layout_marginStart="5dp"
-                    android:backgroundTint="#E1AC0F"
+                    android:backgroundTint="#C92196F3"
                     android:text="Ordina"
                     android:textColor="#000000"
                     android:textSize="16sp" />
