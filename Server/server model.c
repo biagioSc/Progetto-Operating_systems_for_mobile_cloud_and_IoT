@@ -715,6 +715,64 @@ int handle_chat(int sockfd, PGconn *conn)
 }
 
 /**
+ * @brief Retrieves the description of a drink from the database based on the drink's name sent from the client.
+ * 
+ * @param conn A pointer to the PostgreSQL connection object.
+ * @param sockfd The socket file descriptor used to communicate with the client.
+ * 
+ * @return char* A pointer to the description of the drink if found; otherwise, NULL. The caller is responsible for freeing the returned string.
+ */
+char *get_drink_description(PGconn *conn, int sockfd) {
+    
+    char query[BUFFER_SIZE];
+    char drink_name[10];
+    PGresult *res;
+    char *description = NULL;
+
+    // Ricevo il nome del drink dal client
+    if (read_from_socket(sockfd, drink_name, sizeof(drink_name)) < 0) {
+        perror("Errore nella lettura del drink inviato dal client");
+        return NULL;
+    }
+
+    // Controllo che la stringa inviatami non contenga caratteri particolari
+    for (int i = 0; drink_name[i]; i++) {
+        if (!isalnum(drink_name[i])) {
+            perror("Carattere non valido nel nome del drink");
+            return NULL;
+        }
+    }
+
+    // Costruisco la query
+    snprintf(query, sizeof(query), "SELECT description FROM drinks WHERE name='%s'", drink_name);
+
+    // Eseguo la query
+    res = PQexec(conn, query);
+
+    // Verifico se la query ha avuto successo e se è stata restituita almeno una riga
+    if (PQresultStatus(res) == PGRES_TUPLES_OK && PQntuples(res) > 0) {
+        
+        // Estraggo la descrizione dal risultato della query
+        description = strdup(PQgetvalue(res, 0, 0));
+        
+        // Invio la descrizione al client
+        if (write_to_socket(sockfd, description) < 0) {
+            // Stampo un messaggio di errore in caso di problemi nell'invio
+            perror("Errore nell'invio della descrizione del drink al client");
+        }
+    } else {
+        // Se non è stata trovata una descrizione, invio un messaggio di "non trovato" al client
+        write_to_socket(sockfd, "DRINK_DESCRIPTION_NOT_FOUND");
+    }
+
+
+    PQclear(res);
+
+    return description;
+}
+
+
+/**
  * @brief Handles client requests.
  * @param socket_desc The socket file descriptor.
  */
@@ -767,6 +825,9 @@ void *client_handler(void *socket_desc)
         else if (strcmp(buffer, "CHECK_WAITING") == 0)
         {
             handle_queue(sockfd, conn, email);
+        }
+        else if (strcmp(buffer,"DRINK_DESCRIPTION") == 0){
+
         }
         else
         {
