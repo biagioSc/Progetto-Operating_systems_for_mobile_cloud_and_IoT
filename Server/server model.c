@@ -238,26 +238,35 @@ int handle_login(int sockfd, PGconn *conn, char *email)
 int handle_welcoming(int sockfd, PGconn *conn, char *email)
 {
 
+
+    int users_in_ordering_state = check_state(conn);
+    char users_in_ordering_state_string[10];
+
+    //trasformo il numero degli utenti in stringa
+    sprintf(users_in_ordering_state_string,"%d",users_in_ordering_state);
+    //mando il numero degli utenti al client
+    write_to_socket(sockfd,users_in_ordering_state_string);
+
+
+
     // Check number of users in ordering state:
     // If the number is < 2 we set the state of the user to "ORDERING" and send "ORDERING" to the client
     // Else we set the state of the user to "WAITING" and send "WAITING" to the client
-    if (check_state(conn) <= 2)
+    if (users_in_ordering_state < 2)
     {
 
         char setOrdering[BUFFER_SIZE];
         sprintf(setOrdering, "UPDATE users SET state='ORDERING' WHERE email='%s';", email);
         PQexec(conn, setOrdering);
-        write_to_socket(sockfd, "ORDERING");
         printf("User %s is ordering\n", email);
     }
-    else if (check_state(conn) >= 2)
+    else if (users_in_ordering_state >= 2)
     {
 
         char setWaiting[BUFFER_SIZE];
         sprintf(setWaiting, "UPDATE users SET state='WAITING' WHERE email='%s';", email);
         PQexec(conn, setWaiting);
         printf("User %s is waiting\n", email);
-        write_to_socket(sockfd, "WAITING");
     }
     else
     {
@@ -290,17 +299,27 @@ int handle_signup(int sockfd, PGconn *conn)
     }
     else
     {
+        //ricevo il nome dell'utente
         read_from_socket(sockfd, name, BUFFER_SIZE);
         printf("Name: %s\n", name);
+
+        //ricevo il cognome dell'utente
         read_from_socket(sockfd, surname, BUFFER_SIZE);
         printf("Surname: %s\n", surname);
+
+        //ricevo la password e il numero di drink preferiti
         read_from_socket(sockfd, password, BUFFER_SIZE);
         read_from_socket(sockfd, drinksCounterStr, BUFFER_SIZE);
+
+        //trasformo il numero dei drink da stringa ad intero
         drinksCounter = atoi(drinksCounterStr);
         printf("Drinks counter: %d\n", drinksCounter);
-        // Unite drinks into a single string
-        drinks[0] = '\0'; // Initialize the drinks string
 
+        //terminazione per la stringa di drinks
+        drinks[0] = '\0'; 
+
+
+        //ricevo i drink e li separo con una virgola
         for (int i = 0; i < drinksCounter; i++)
         {
             char drink[BUFFER_SIZE];
@@ -314,12 +333,16 @@ int handle_signup(int sockfd, PGconn *conn)
             }
         }
 
+
+        //ricevo il numero di argomenti preferiti
         read_from_socket(sockfd, topicsCounterStr, BUFFER_SIZE);
         topicsCounter = atoi(topicsCounterStr);
 
         // Unite topics into a single string
         topics[0] = '\0'; // Initialize the topics string
 
+
+        //ricevo gli argomenti e li separo con una virgola
         for (int i = 0; i < topicsCounter; i++)
         {
             char topic[BUFFER_SIZE];
@@ -333,7 +356,7 @@ int handle_signup(int sockfd, PGconn *conn)
             }
         }
 
-        // name, surname, email, password INSERTION
+        // name, surname, email, password, favDrinks, favTopics INSERTION
         char query[BUFFER_SIZE * 4];
         sprintf(query, "INSERT INTO users (name, surname, email, password, \"favDrink\" , \"favTopics\", state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', 'IDLE');",
                 name, surname, email, password, drinks, topics);
