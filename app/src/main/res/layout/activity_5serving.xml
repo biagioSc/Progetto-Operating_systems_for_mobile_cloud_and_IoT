@@ -141,16 +141,16 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/pic5serving" />
 
-    <TextView
-        android:id="@+id/textViewOrderStatusTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageViewOrderStatus"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Drink in Preparazione"
-        android:textColor="#000000"
-        android:textSize="24sp" />
+        <TextView
+            android:id="@+id/textViewOrderStatusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewOrderStatus"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="In preparazione:"
+            android:textColor="#000000"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textViewOrderStatusMessage"

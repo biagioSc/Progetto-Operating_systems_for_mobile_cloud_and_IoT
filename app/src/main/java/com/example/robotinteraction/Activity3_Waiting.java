@@ -16,7 +16,6 @@ public class Activity3_Waiting extends AppCompatActivity {
     private TextView textViewQueueCount;
     private TextView textViewWaitTime;
     private ProgressBar progressBarWaiting;
-    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,44 +70,6 @@ public class Activity3_Waiting extends AppCompatActivity {
             }
         }.start();
 
-        // Initialize and start the background music
-        //mediaPlayer = MediaPlayer.create(this, R.raw.background_music);
-        //mediaPlayer.setLooping(true);
-        //mediaPlayer.start();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Pause the music when the activity is paused
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Resume the music when the activity is resumed
-        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Release resources and stop the music when the activity is destroyed
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
-
-    // Implement other methods as needed
-
-    public void onExitClick(View view) {
-        finish();
-    }
 }

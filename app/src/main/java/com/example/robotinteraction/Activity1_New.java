@@ -19,11 +19,13 @@ public class Activity1_New extends AppCompatActivity {
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private Button buttonLogin;
     private TextView textViewError, textViewSignUp;
-
     private Animation buttonAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //[SERVER] COLLEGAMENTO AL SERVER, SOCKET
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
@@ -77,29 +79,25 @@ public class Activity1_New extends AppCompatActivity {
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             textViewError.setText("Inserisci email e password");
             textViewError.setVisibility(View.VISIBLE);
-        } else if (!isValidEmail(email) || !isValidPassword(password)) {
+        } else if (!isValidLogin(email, password)) {
             textViewError.setText("Email e/o password non valide");
             textViewError.setVisibility(View.VISIBLE);
         } else {
             // Vai alla schermata di benvenuto
+            textViewError.setVisibility(View.INVISIBLE);  // Nascondi il messaggio di errore se necessario
             Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            //finish();
-            textViewError.setVisibility(View.INVISIBLE);  // Nascondi il messaggio di errore se necessario
         }
     }
 
-    // Metodo per verificare la validità dell'email
-    private boolean isValidEmail(String email) {
+    // Metodo per verificare la validità del login
+    private boolean isValidLogin(String email, String password) {
+        // [SERVER] COLLEGAMENTO SERVER
         // Implementa la logica per la validazione dell'email
         return true;
     }
 
-    // Metodo per verificare la validità della password
-    private boolean isValidPassword(String password) {
-        // Implementa la logica per la validazione della password
-        return true;
-    }
+
 
 }
