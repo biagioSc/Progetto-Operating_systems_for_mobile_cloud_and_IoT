@@ -1,4 +1,6 @@
 package com.example.robotinteraction;
+
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +24,8 @@ import java.io.IOException;
 
 public class Activity1_New extends AppCompatActivity {
 
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    // Dichiarazioni delle variabili per gli elementi dell'interfaccia
+    private static final long TIME_THRESHOLD = 20000; // Soglia di inattività di 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private EditText editTextEmail, editTextPassword;
@@ -30,17 +33,14 @@ public class Activity1_New extends AppCompatActivity {
     private Button buttonLogin;
     private TextView textViewError, textViewSignUp;
     private Animation buttonAnimation;
-
     private SocketManager socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //[SERVER] COLLEGAMENTO AL SERVER, SOCKET
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
+        // Collegamenti degli elementi dell'interfaccia alle variabili
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         emailTextInputLayout = findViewById(R.id.emailTextInputLayout);
@@ -49,9 +49,10 @@ public class Activity1_New extends AppCompatActivity {
         textViewError = findViewById(R.id.textViewError);
         textViewSignUp = findViewById(R.id.buttonSignUp);
 
-        // Carica l'animazione dal file XML
+        // Carica l'animazione del pulsante dal file XML
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
 
+        // Imposta un timer di inattività per passare all'Activity "OutOfSight"
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -62,7 +63,7 @@ public class Activity1_New extends AppCompatActivity {
 
         startInactivityTimer();
 
-        // Aggiungi un listener per nascondere il messaggio di errore quando l'utente inizia a modificare gli EditText
+        // Aggiungi listener per nascondere il messaggio di errore quando l'utente modifica gli EditText
         editTextEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -101,20 +102,20 @@ public class Activity1_New extends AppCompatActivity {
     }
 
     public void onClickSignUp(View v) {
-        // Vai alla schermata di registrazione
+        // Passa all'Activity di registrazione
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
         startActivity(intent);
     }
 
     public void onClickAccedi(View v) {
-        // Avvia l'animazione
+        // Avvia l'animazione del pulsante
         buttonLogin.startAnimation(buttonAnimation);
 
-        // Ottieni il testo inserito negli EditText
+        // Ottieni le credenziali inserite dall'utente
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        // Esegui la validazione e il controllo
+        // Verifica la validità delle credenziali
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             textViewError.setText("Inserisci email e password");
             textViewError.setVisibility(View.VISIBLE);
@@ -122,67 +123,45 @@ public class Activity1_New extends AppCompatActivity {
             textViewError.setText("Email e/o password non valide");
             textViewError.setVisibility(View.VISIBLE);
         } else {
-
-            // Il formato dei dati è corretto e procedo con la comunicazione col server
+            // Se le credenziali sono valide, avvia la comunicazione con il server
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-
-                        // Invio messaggio di inizio LOG_IN
+                        // Inizia la procedura di login con il server
                         socket.sendMessage("LOG_IN");
-
-                        // Invio email e password
                         socket.sendMessage(email);
                         socket.sendMessage(password);
 
-                        // Inizializzo la risposta e il sessionID dell'utente
-                        String response = null;
-                        String sessionID = null;
+                        // Ricevi la risposta dal server
+                        String response = socket.receiveMessage();
+                        if (response.equalsIgnoreCase("LOG_IN_SUCCESS")) {
+                            String sessionID = socket.receiveMessage();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
 
-                        // Ricevo risposta sull'avvenuto o meno LOGIN
-                        response = socket.receiveMessage();
-
-                        // Se il login è andato a buon fine, ricevo il sessionID
-                        if(response.equalsIgnoreCase("LOG_IN_SUCCESS")){
-                            // Ricevo id della sessione attiva dell'utente
-                            sessionID = socket.receiveMessage();
-                            //PORTARE QUESTO ID NELLE SUCCESSIVE INTENT FINO
-                            //ALLA CHIUSURA DELL'APP
-
-                        // Se ricevo Log-in-error il login non è andato a buon fine
-                        }else if(response.equalsIgnoreCase("LOG_IN_ERROR")){
-                            //Mostrare messaggio di errore: password o email non corretta
-                            Log.d("Activity1_New","Email o password non corrette!");
-
-                        // Vuol dire che la response è null
-                        }else{
-
-                            // Mostrare messaggio di errore di tipo server
-                            Log.d("Activity1_New","Il server ha risposto con Null dopo " +
-                                    "l'invio di email e password!");
+                                    // Passaggio del sessionID
+                                    intent.putExtra("SESSION_ID", sessionID);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                                }
+                            });
+                        } else {
+                            // Gestisci l'errore di login
+                            Log.d("Activity1_New", "Email o password non corrette!");
                         }
-
-                    }catch (IOException e){
-                        Log.d("Activity1_New","Si è verificata una eccezione nell'invio dei" +
-                                "dati login";
+                    } catch (IOException e) {
+                        Log.d("Activity1_New", "Errore durante la comunicazione con il server.");
                     }
                 }
             }).start();
-
-            // [AGGIUNGERE] PRIMA DI SPOSTARSI PORTARE CON SE L'ID DELLA SESSIONE "sessionID"
-            // Vai alla schermata di benvenuto
-            textViewError.setVisibility(View.INVISIBLE);  // Nascondi il messaggio di errore se necessario
-            Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
     }
 
-    // Metodo per verificare la validità del login
+    // Metodo per verificare la validità del login (momentaneamente sempre vero)
     private boolean isValidLogin(String email, String password) {
-        // [SERVER] COLLEGAMENTO SERVER
-        // Implementa la logica per la validazione dell'email
         return true;
     }
 
@@ -194,5 +173,4 @@ public class Activity1_New extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
-
 }

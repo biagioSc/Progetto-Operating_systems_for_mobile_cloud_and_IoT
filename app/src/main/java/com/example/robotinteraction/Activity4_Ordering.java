@@ -20,84 +20,81 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Activity4_Ordering extends AppCompatActivity {
 
-    private TextView textViewRecommendedDrink;
-    private Spinner spinnerDrinks;
+    private TextView textViewRecommendedDrink;  // TextView per visualizzare il drink raccomandato
+    private Spinner spinnerDrinks;  // Spinner per selezionare un drink dalla lista
+    private List<String> drinkList = new ArrayList<>();  // Lista dei drink
+    private Animation buttonAnimation;  // Animazione per i pulsanti
+    private Button buttonOrderRecommendedDrink, buttonOrder;  // Pulsanti per ordinare
+    private static final long TIME_THRESHOLD = 20000; // Soglia di tempo per l'inattività (20 secondi)
+    private Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
+    private Runnable runnable;  // Runnable per la logica del timer di inattività
+    private SocketManager socket;  // Manager del socket per la comunicazione con il server
 
-    private List<String> drinkList = new ArrayList<>();
-    private Random random = new Random();
-    private Animation buttonAnimation;
-    private Button buttonOrderRecommendedDrink, buttonOrder;
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
-    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_4ordering);
 
+        // Inizializzazione dei componenti dell'interfaccia utente
         textViewRecommendedDrink = findViewById(R.id.textViewRecommendedDrink);
         spinnerDrinks = findViewById(R.id.spinnerDrinks);
-
-        // Carica l'animazione dal file XML
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         buttonOrderRecommendedDrink = findViewById(R.id.buttonOrderRecommendedDrink);
         buttonOrder = findViewById(R.id.buttonOrder);
 
-        // [SERVER] COLLEGAMENTO SERVER PER DIRGLI CHE STO IN ORDERING
-        // [SERVER] COLLEGAMENTO SERVER PER DRINK CONSIGLIATO
-        // [SERVER] COLLEGAMENTO SERVER PER LISTA DRINK
-
-
-
-        // Fase di comunicazione con il server
+        // Comunicazione con il server
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    // Avviso il client dell'inizio della fase ordering
+                    // Informa il server che si è entrati nella fase di ordinazione
                     socket.sendMessage("ORDERING");
-
-                    //[AGGIUNGERE] Inivio il sessiondID dell'utente
+                    // Invia al server l'ID di sessione dell'utente
                     socket.sendMessage(sessionID);
 
-                    // Ricevo il drink suggerito in base alle preferenze dell'utente
-                    String responseSuggestedDrink = null;
-                    responseSuggestedDrink = socket.receiveMessage();
+                    // Riceve dal server il drink suggerito
+                    final String responseSuggestedDrink = socket.receiveMessage();
 
-                    // Se tutto è andato a buon fine, setto il textView del drink
-                    if(responseSuggestedDrink != null){
-                        textViewRecommendedDrink.setText(responseSuggestedDrink);
+                    if (responseSuggestedDrink != null) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                textViewRecommendedDrink.setText(responseSuggestedDrink);
+                            }
+                        });
                     }
 
+                    // Richiede al server la lista dei drink disponibili
+                    socket.sendMessage("DRINK_LIST");
+                    String drinkListResponse = socket.receiveMessage();
 
-                }catch (IOException e){
-                    Log.d("Activity4_Ordering","Problema nel suggerimento del drink");
+                    if(drinkListResponse != null) {
+                        String[] drinks = drinkListResponse.split(",");
+                        for(String drink : drinks) {
+                            drinkList.add(drink.trim());
+                        }
+
+                        // Aggiorna l'interfaccia utente con la lista dei drink
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(Activity4_Ordering.this, android.R.layout.simple_spinner_item, drinkList);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerDrinks.setAdapter(adapter);
+                            }
+                        });
+                    }
+
+                } catch (IOException e) {
+                    Log.d("Activity4_Ordering", "Problema nella comunicazione con il server");
                 }
             }
         }).start();
 
-        // Aggiungi gli elementi alla lista dei drink
-        drinkList.add("Mojito");
-        drinkList.add("Martini");
-        drinkList.add("Midori");
-        drinkList.add("Manhattan");
-        drinkList.add("Negroni");
-        drinkList.add("Daiquiri");
-        drinkList.add("Pina Colada");
-        drinkList.add("Gin Lemon");
-
-        // Imposta il drink raccomandato casualmente
-        setRandomRecommendedDrink();
-
-        // Inizializza il dropdown menu con gli elementi dalla lista dei drink
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDrinks.setAdapter(adapter);
-
+        // Timer di inattività
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -106,14 +103,12 @@ public class Activity4_Ordering extends AppCompatActivity {
                 finish();
             }
         };
-
         startInactivityTimer();
     }
 
-    private SocketManager socket;
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        // Ad ogni interazione, resetta il timer di inattività
         resetInactivityTimer();
         return super.onTouchEvent(event);
     }
@@ -139,27 +134,22 @@ public class Activity4_Ordering extends AppCompatActivity {
         startInactivityTimer();
     }
 
-
     public void onClickOrdina(View v) {
         buttonOrder.startAnimation(buttonAnimation);
         String selectedDrink = spinnerDrinks.getSelectedItem().toString();
         openServingActivity(selectedDrink);
     }
+
     public void onClickConsigliato(View v) {
         buttonOrderRecommendedDrink.startAnimation(buttonAnimation);
         String recommendedDrink = textViewRecommendedDrink.getText().toString();
         openServingActivity(recommendedDrink);
-    }
-    private void setRandomRecommendedDrink() {
-        int randomIndex = random.nextInt(drinkList.size());
-        String recommendedDrink = drinkList.get(randomIndex);
-        textViewRecommendedDrink.setText(recommendedDrink);
     }
 
     private void openServingActivity(String drink) {
         Intent intent = new Intent(this, Activity5_Serving.class);
         intent.putExtra("selectedDrink", drink);
         startActivity(intent);
-        //[SERVER] DIGLI FINE
+        // Informa il server della conclusione dell'ordinazione
     }
 }
