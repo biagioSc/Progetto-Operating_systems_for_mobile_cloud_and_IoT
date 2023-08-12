@@ -23,10 +23,16 @@ public class Activity7_Farewelling extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+    private String sessionID = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_7farewelling);
+
+        // Prendo il sessionID
+        Intent intent = getIntent();
+        if(intent != null)
+            sessionID = intent.getStringExtra("SESSION_ID");
 
         // Ottieni il parametro "selectedDrink" dalla chiamata all'activity
         String selectedDrink = getIntent().getStringExtra("selectedDrink");
@@ -51,7 +57,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
             public void run() {
                 boolean operationDone = false;
 
-                while(operationDone == false){
+                while(!operationDone){
                     try {
 
                         // Invio messaggio di richiesta di descrizione del drink
@@ -61,16 +67,28 @@ public class Activity7_Farewelling extends AppCompatActivity {
                         socket.sendMessage(selectedDrink);
 
                         // Ricevo descrizione del drink
-                        String responseDescription = null;
-                        responseDescription = socket.receiveMessage();
+                        final String innerResponseDescription = socket.receiveMessage();
 
                         // Se la risposta è != null e dal messaggio di errore, inserisco il valore
                         // della descrizione nell' EditText corrispondente
-                        if(responseDescription != null && !responseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
-                            textViewDrinkDescription.setText(responseDescription);
+                        if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
+
+                            // Qui utilizziamo runOnUiThread
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewDrinkDescription.setText(innerResponseDescription);
+                                }
+                            });
+
                             operationDone = true;
                         }else{
-                            textViewDrinkDescription.setText("");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textViewDrinkDescription.setText("");
+                                }
+                            });
                         }
 
                     }catch (IOException e){
@@ -127,6 +145,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
     }
     private void openFarewellingActivity() {
         Intent intent = new Intent(this, Activity8_Gone.class);
+        intent.putExtra("SESSION_ID",sessionID);
         startActivity(intent);
 
     }

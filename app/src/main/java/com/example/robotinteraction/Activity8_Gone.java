@@ -22,10 +22,17 @@ public class Activity8_Gone extends AppCompatActivity {
 
     private SocketManager socket;
 
+    private String sessionID = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_8gone);
+
+        // Prendo il sessionID
+        Intent intent = getIntent();
+        if(intent != null)
+            sessionID = intent.getStringExtra("SESSION_ID");
 
         buttonExit = findViewById(R.id.buttonExit);
 

@@ -18,6 +18,8 @@ public class Activity2_Welcome extends Activity {
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
 
+    private String sessionID = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,11 @@ public class Activity2_Welcome extends Activity {
 
         buttonCheckNextState = findViewById(R.id.buttonChecknextState);
         buttonLogOut = findViewById(R.id.buttonLogOut);
+
+        // Prendo il sessionID dell'utente
+        Intent intent = getIntent();
+        if(intent != null)
+            sessionID = intent.getStringExtra("SESSION_ID");
 
         // Carica l'animazione dal file XML
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -78,16 +85,22 @@ public class Activity2_Welcome extends Activity {
         // [SERVER] COLLEGAMENTO SERVER PER NUMERO UTENTI CODA
         // numPeopleInQueue = NUMERO DAL SERVER.TOINT()
 
+
+        Intent intent;
         if (numPeopleInQueue < 2) {
             // Vai alla schermata di Ordering
-            Intent intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
+            intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
             startActivity(intent);
         } else {
             // Vai alla schermata di Waiting passando il numero di utenti in coda come parametro
-            Intent intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
+            intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
             intent.putExtra("numPeopleInQueue", numPeopleInQueue);
             startActivity(intent);
         }
+
+        // In entrambi i casi (if o else) passo il sessionID
+        intent.putExtra("SESSION_ID",sessionID);
+
     }
     public void onClickExit(View v) {
         // Chiudi l'app

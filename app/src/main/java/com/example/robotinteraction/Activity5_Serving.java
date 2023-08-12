@@ -19,10 +19,17 @@ public class Activity5_Serving extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+
+    private String sessionID = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_5serving);
+
+        // Prendo il sessionID
+        Intent intent = getIntent();
+        if(intent != null)
+            sessionID = intent.getStringExtra("SESSION_ID");
 
         // Ottieni il parametro "selectedDrink" dalla chiamata all'activity
         selectedDrink = getIntent().getStringExtra("selectedDrink");
@@ -84,6 +91,7 @@ public class Activity5_Serving extends AppCompatActivity {
     private void openWaitingActivity(String selectedDrink) {
         Intent intent = new Intent(this, Activity6_Attesa.class);
         intent.putExtra("selectedDrink", selectedDrink);
+        intent.putExtra("SESSION_ID",sessionID);
         startActivity(intent);
 
     }
@@ -91,6 +99,7 @@ public class Activity5_Serving extends AppCompatActivity {
     private void openChatActivity(String selectedDrink) {
         Intent intent = new Intent(this, Activity6_Chat.class);
         intent.putExtra("selectedDrink", selectedDrink);
+        intent.putExtra("SESSION_ID",sessionID);
         startActivity(intent);
 
     }

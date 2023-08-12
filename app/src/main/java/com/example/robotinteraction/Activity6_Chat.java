@@ -33,10 +33,17 @@ public class Activity6_Chat extends AppCompatActivity {
     private Runnable runnable;
     private String[] selectedTopics = {"Storia", "Geografia"}; // Aggiungi gli argomenti desiderati
 
+    private String sessionID = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_6chat);
+
+        // Prendo il sessionID
+        Intent intent = getIntent();
+        if(intent != null)
+            sessionID = intent.getStringExtra("SESSION_ID");
 
         // [SERVER] AGGIUNGERE LOGICA CHE MI MANDA ARGOMENTI PREFERITI SERVER
 
@@ -191,6 +198,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private void openFarewellingActivity(String selectedDrink) {
         Intent intent = new Intent(this, Activity7_Farewelling.class);
         intent.putExtra("selectedDrink", selectedDrink);
+        intent.putExtra("SESSION_ID",sessionID);
         startActivity(intent);
 
     }

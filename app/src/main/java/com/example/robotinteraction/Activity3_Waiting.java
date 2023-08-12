@@ -22,15 +22,18 @@ public class Activity3_Waiting extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+
+    private String sessionID = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3waiting);
 
 
-        // Get parameters from previous activity (replace 'PARAM_NAME' with the actual parameter name)
+        // Get parameters from previous activity
         Intent intent = getIntent();
         queueCount = intent.getIntExtra("PARAM_NAME", 0);
+        sessionID = intent.getStringExtra("SESSION_ID");
 
         textViewQueueCount = findViewById(R.id.textViewQueueCount);
         textViewWaitTime = findViewById(R.id.textViewWaitTime);
@@ -71,6 +74,7 @@ public class Activity3_Waiting extends AppCompatActivity {
                 // Handle countdown finish
                 // For example, navigate to the "Ordering" activity
                 Intent intent = new Intent(Activity3_Waiting.this, Activity4_Ordering.class);
+                intent.putExtra("SESSION_ID",sessionID);
                 startActivity(intent);
             }
         }.start();

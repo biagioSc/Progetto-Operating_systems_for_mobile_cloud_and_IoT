@@ -33,6 +33,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     private Runnable runnable;  // Runnable per la logica del timer di inattività
     private SocketManager socket;  // Manager del socket per la comunicazione con il server
 
+    private String sessionID = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,11 @@ public class Activity4_Ordering extends AppCompatActivity {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         buttonOrderRecommendedDrink = findViewById(R.id.buttonOrderRecommendedDrink);
         buttonOrder = findViewById(R.id.buttonOrder);
+
+        // Prendo il sessionID
+        Intent intent = getIntent();
+        if(intent != null)
+            sessionID = intent.getStringExtra("SESSION_ID");
 
         // Comunicazione con il server
         new Thread(new Runnable() {
@@ -148,7 +154,10 @@ public class Activity4_Ordering extends AppCompatActivity {
 
     private void openServingActivity(String drink) {
         Intent intent = new Intent(this, Activity5_Serving.class);
+        // Passo il drink selezionato
         intent.putExtra("selectedDrink", drink);
+        // Passo il sessionID
+        intent.putExtra("SESSION_ID",sessionID);
         startActivity(intent);
         // Informa il server della conclusione dell'ordinazione
     }

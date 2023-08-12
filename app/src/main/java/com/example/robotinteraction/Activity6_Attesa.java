@@ -18,10 +18,17 @@ public class Activity6_Attesa extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+
+    private String sessionID = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_6attesa);
+
+        // Prendo il sessionID
+        Intent intent = getIntent();
+        if(intent != null)
+            sessionID = intent.getStringExtra("SESSION_ID");
 
         progressBarWaiting = findViewById(R.id.progressBarWaiting);
         textViewPleaseWait = findViewById(R.id.textViewPleaseWait);
@@ -93,6 +100,7 @@ public class Activity6_Attesa extends AppCompatActivity {
     private void openFarewellingActivity(String selectedDrink) {
         Intent intent = new Intent(this, Activity7_Farewelling.class);
         intent.putExtra("selectedDrink", selectedDrink);
+        intent.putExtra("SESSION_ID",sessionID);
         startActivity(intent);
 
     }
