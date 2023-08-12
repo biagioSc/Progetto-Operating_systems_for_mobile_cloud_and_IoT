@@ -39,6 +39,79 @@
 #define MAX_TOPICS 100
 #define PORT_NUMBER 8080
 
+
+
+// Struttura Lista utilizzata per suggerire drinks e topics
+// in maniera appropriata per ogni utente e per mantenere la sessione
+typedef struct User {
+    int id;
+    char email[BUFFER_SIZE];
+    char favDrinks[BUFFER_SIZE];
+    char favTopics[BUFFER_SIZE];
+    bool isLoggedIn;   // Aggiunto per tenere traccia dello stato di login
+    struct User* next;
+} User;
+
+
+// Variabile globale di riferimento
+User* usersList = NULL;
+
+
+
+void addUserToList(const char* email, const char* favDrinks, const char* favTopics) {
+    User* newUser = (User*) malloc(sizeof(User));
+    newUser->id = 0;   // ID inizializzato a 0. Sarà assegnato durante il login.
+    strcpy(newUser->email, email);
+    strcpy(newUser->favDrinks, favDrinks);
+    strcpy(newUser->favTopics, favTopics);
+    newUser->isLoggedIn = false;
+    newUser->next = usersList;
+    usersList = newUser;
+}
+
+
+User* findUserByEmail(const char* email) {
+    User* currentUser = usersList;
+    while (currentUser) {
+        if (strcmp(currentUser->email, email) == 0) {
+            return currentUser;
+        }
+        currentUser = currentUser->next;
+    }
+    return NULL;
+}
+
+
+void assignIdOnLogin(const char* email) {
+    User* user = findUserByEmail(email);
+    if (user && !user->isLoggedIn) {   // Se l'utente esiste ed è il suo primo login
+        user->id = currentUserId++;
+        user->isLoggedIn = true;
+    }
+}
+
+
+void setUserLoggedOut(const char* email) {
+    User* user = findUserByEmail(email);
+    if (user) {
+        user->isLoggedIn = false;
+    }
+}
+
+
+int getUserIdByEmail(const char* email) {
+    User* currentUser = usersList;
+    while (currentUser) {
+        if (strcmp(currentUser->email, email) == 0) {
+            return currentUser->id;
+        }
+        currentUser = currentUser->next;
+    }
+    return -1;  // Restituisce -1 se l'utente con l'email fornita non viene trovato
+}
+
+
+
 /**
  * @brief Connects to the PostgreSQL database.
  * @return PGconn* The database connection handle.
@@ -200,6 +273,8 @@ int handle_login(int sockfd, PGconn *conn, char *email)
     sprintf(query, "SELECT password FROM users WHERE email='%s';", email);
     PGresult *resLogin = PQexec(conn, query);
 
+
+    // Nessun dato trovato
     if (PQresultStatus(resLogin) != PGRES_TUPLES_OK || PQntuples(resLogin) != 1)
     {
         printf("Nessun dato trovato\n");
@@ -209,11 +284,29 @@ int handle_login(int sockfd, PGconn *conn, char *email)
         // close(sockfd); Se chiudiamo la socket non diamo possibilità all utente di riprovare a loggarsi
         return -1;
     }
+
+
+    // Utente loggato correttamente
     if (strcmp(password, PQgetvalue(resLogin, 0, 0)) == 0)
     {
         printf("User %s logged in\n", email);
-        write_to_socket(sockfd, "WELCOMING");
+        write_to_socket(sockfd, "LOG_IN_SUCCESS");
+
+        // Assegno l'identificativo di sessione all'utente che ha effettuato il login
+        assignIdOnLogin(email);
+
+        // Recupero il valore dell'ID assegnato
+        int id = getUserIdByEmail(email);
+
+        // Invio l'id al client dopo averlo trasformato in stringa
+        char idString[BUFFER_SIZE];
+        sprintf(idString,"%d",id);
+        write_to_socket(sockfd,idString);
+
+        // Il client provvederà a portare avanti l'id tramite le Intent
+        // fino alla chiusura dell'applicazione
     }
+    // Errore nel Login: password non valida
     else
     {
         printf("Password non valida per questa email %s \n", email);
@@ -373,7 +466,12 @@ int handle_signup(int sockfd, PGconn *conn)
         }
 
         if (signUpDone == 1)
+        {
+            addUserToList(email,drinks,topics);
+
+            // Invio messaggio di successo al client
             write_to_socket(sockfd, "SIGN_UP_SUCCESS");
+        }
         else
             write_to_socket(sockfd, "SIGN_UP_ERROR");
     }
@@ -382,39 +480,47 @@ int handle_signup(int sockfd, PGconn *conn)
 }
 
 /**
- * @brief Suggests a drink from the database list of drinks.
+ * @brief Suggests a drink from the database list of favourite_drinks of the user.
  * @param conn The database connection handle.
- * @return char* The suggested drink.
+ * @return char* A random drink from the favourite_drinks_list of the user.
  */
-char *suggest_drink(PGconn *conn)
-{
-    // Query to get the drink's list
+char *suggest_drink(PGconn *conn, const char *email) {
     char query[BUFFER_SIZE];
-    sprintf(query, "SELECT name FROM drinks;");
+
+    // Suggerimento del drink basato sullep preferenze inserite dall'utente durante l'interview
+    sprintf(query, "SELECT favDrink FROM users WHERE email='%s'", email); 
     PGresult *res = PQexec(conn, query);
 
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
-    {
+    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
         printf("Query execution failed: %s\n", PQerrorMessage(conn));
         PQclear(res);
         return NULL;
     }
 
-    int num_drinks = PQntuples(res);
+    // Estraggo la lista dei drink preferiti
+    char *favDrinksStr = PQgetvalue(res, 0, 0);
+    char *drinks[15];
+    int numDrinks = 0;
 
-    // Randomly select a drink to suggest
-    srand(time(NULL));
-    int random_index = rand() % num_drinks;
-    char *suggested_drink = PQgetvalue(res, random_index, 0);
+    // Suddivido la stringa in singoli drink usando strtok (la suddivisione avviene tramite parametro ',')
+    char *token = strtok(favDrinksStr, ",");
+    while (token) {
+        drinks[numDrinks++] = token;
+        token = strtok(NULL, ",");
+    }
 
-    // Allocate memory and copy the suggested drink
-    char *suggested_drink_copy = malloc(strlen(suggested_drink) + 1);
-    strcpy(suggested_drink_copy, suggested_drink);
-
-    PQclear(res);
-
-    return suggested_drink_copy;
+    // Seleziono un drink casuale da suggerire all'utente
+    if (numDrinks > 0) {
+        int randomIndex = rand() % numDrinks;
+        char *suggestedDrink = strdup(drinks[randomIndex]);
+        PQclear(res);
+        return suggestedDrink;
+    } else {
+        PQclear(res);
+        return NULL;
+    }
 }
+
 
 /**
  * @brief Combines an array of strings into a single comma-separated string.
@@ -720,9 +826,9 @@ int handle_chat(int sockfd, PGconn *conn)
  * @param conn A pointer to the PostgreSQL connection object.
  * @param sockfd The socket file descriptor used to communicate with the client.
  * 
- * @return char* A pointer to the description of the drink if found; otherwise, NULL. The caller is responsible for freeing the returned string.
+ * @return void
  */
-char *get_drink_description(PGconn *conn, int sockfd) {
+void send_drink_description(PGconn *conn, int sockfd) {
     
     char query[BUFFER_SIZE];
     char drink_name[10];
@@ -768,8 +874,23 @@ char *get_drink_description(PGconn *conn, int sockfd) {
 
     PQclear(res);
 
-    return description;
+    return;
 }
+
+
+
+
+void handle_ordering(int sockfd){
+
+    char *drink_to_suggest = suggest_drink();
+
+    if(write_to_socket(sockfd,drink_to_suggest) < 0){
+         // Stampo un messaggio di errore in caso di problemi nell'invio
+        perror("Errore nell'invio del drink suggerito al client");
+    }
+}
+
+
 
 
 /**
@@ -827,7 +948,10 @@ void *client_handler(void *socket_desc)
             handle_queue(sockfd, conn, email);
         }
         else if (strcmp(buffer,"DRINK_DESCRIPTION") == 0){
-
+            send_drink_description(conn,sockfd);
+        }
+        else if (strcmp(buffer,"ORDERING") == 0){
+            
         }
         else
         {
