@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,11 +19,14 @@ public class Activity3_Waiting extends AppCompatActivity {
     private TextView textViewQueueCount;
     private TextView textViewWaitTime;
     private ProgressBar progressBarWaiting;
-
+    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3waiting);
+
 
         // Get parameters from previous activity (replace 'PARAM_NAME' with the actual parameter name)
         Intent intent = getIntent();
@@ -66,10 +72,47 @@ public class Activity3_Waiting extends AppCompatActivity {
                 // For example, navigate to the "Ordering" activity
                 Intent intent = new Intent(Activity3_Waiting.this, Activity4_Ordering.class);
                 startActivity(intent);
-                finish();
             }
         }.start();
 
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Activity3_Waiting.this, Activity0_OutOfSight.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+
+        startInactivityTimer();
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void startInactivityTimer() {
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
+
 
 }

@@ -2,8 +2,13 @@ package com.example.robotinteraction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,7 +21,10 @@ public class Activity9_Signup extends AppCompatActivity {
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
     private Button buttonRegisterContinue;
     private TextView textViewError;
-
+    private Animation buttonAnimation;
+    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +37,7 @@ public class Activity9_Signup extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonRegisterContinue = findViewById(R.id.buttonRegisterContinue);
         textViewError = findViewById(R.id.textViewError2);
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
 
         buttonRegisterContinue.setEnabled(false);
         TextWatcher textWatcher = new TextWatcher() {
@@ -55,45 +64,84 @@ public class Activity9_Signup extends AppCompatActivity {
         editTextEmail.addTextChangedListener(textWatcher);
         editTextPassword.addTextChangedListener(textWatcher);
 
-        // Imposta un listener per il pulsante di registrazione
-        buttonRegisterContinue.setOnClickListener(new View.OnClickListener() {
+        runnable = new Runnable() {
             @Override
-            public void onClick(View view) {
-                // Ottieni il testo dai campi di input
-                String firstName = editTextFirstName.getText().toString().trim();
-                String lastName = editTextLastName.getText().toString().trim();
-                String email = editTextEmail.getText().toString().trim();
-                String password = editTextPassword.getText().toString().trim();
-
-                boolean nomeValido = !firstName.isEmpty() && !firstName.matches(".*\\d.*");
-                boolean cognomeValido = !lastName.isEmpty() && !lastName.matches(".*\\d.*");
-                boolean emailValido = !email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches();
-                boolean passwordValida = password.length() >= 6;
-
-                // Effettua il controllo sui campi obbligatori
-                if (!nomeValido && !cognomeValido && !emailValido && !passwordValida) {
-                    textViewError.setText("Email e/o password errate");
-                    textViewError.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                // Tutti i campi sono completati correttamente, puoi aprire l'activity "Interview"
-                textViewError.setVisibility(View.INVISIBLE);
-                buttonRegisterContinue.setEnabled(nomeValido && cognomeValido && emailValido && passwordValida);
-                openInterviewActivity(firstName, lastName, email, password);
+            public void run() {
+                Intent intent = new Intent(Activity9_Signup.this, Activity0_OutOfSight.class);
+                startActivity(intent);
+                finish();
             }
-        });
+        };
+
+        startInactivityTimer();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void startInactivityTimer() {
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
+
+    // Imposta un listener per il pulsante di registrazione
+
+    public void onClickRContinue(View view) {
+        // Ottieni il testo dai campi di input
+        buttonRegisterContinue.startAnimation(buttonAnimation);
+
+        String firstName = editTextFirstName.getText().toString().trim();
+        String lastName = editTextLastName.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        boolean nomeValido = !firstName.isEmpty() && !firstName.matches(".*\\d.*");
+        boolean cognomeValido = !lastName.isEmpty() && !lastName.matches(".*\\d.*");
+        boolean emailValido = !email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        boolean passwordValida = password.length() >= 6;
+
+        // [SERVER] CONTROLLARE DATI
+
+        // Effettua il controllo sui campi obbligatori
+        if (!nomeValido && !cognomeValido && !emailValido && !passwordValida) {
+            textViewError.setText("Email e/o password errate");
+            textViewError.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        // Tutti i campi sono completati correttamente, puoi aprire l'activity "Interview"
+        textViewError.setVisibility(View.INVISIBLE);
+        buttonRegisterContinue.setEnabled(nomeValido && cognomeValido && emailValido && passwordValida);
+        openInterviewActivity(firstName, lastName, email, password);
     }
 
     // Metodo per aprire l'activity "Interview"
     private void openInterviewActivity(String firstName, String lastName, String email, String password) {
         Intent intent = new Intent(this, Activity9_Interview.class);
-        intent.putExtra("selectedDrink", firstName);
-        intent.putExtra("selectedDrink", lastName);
-        intent.putExtra("selectedDrink", email);
-        intent.putExtra("selectedDrink", password);
+        intent.putExtra("nome", firstName);
+        intent.putExtra("cognome", lastName);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     private void updateButtonState() {

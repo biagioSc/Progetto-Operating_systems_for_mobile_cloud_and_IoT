@@ -68,7 +68,7 @@ public class Activity0_OutOfSight extends Activity {
         }
     }
 
-    public void onClick(View v) {
+    public void onClickRiprendi(View v) {
         v.startAnimation(buttonAnimation);
 
         // Annulla il countdown

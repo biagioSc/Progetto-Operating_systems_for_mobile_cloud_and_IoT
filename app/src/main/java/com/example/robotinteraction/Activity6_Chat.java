@@ -2,7 +2,12 @@ package com.example.robotinteraction;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +27,10 @@ public class Activity6_Chat extends AppCompatActivity {
     private List<Question> questionList;
     private int currentQuestionIndex = 0;
     private int score = 0;
+    private Animation buttonAnimation;
+    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     private String[] selectedTopics = {"Storia", "Geografia"}; // Aggiungi gli argomenti desiderati
 
     @Override
@@ -29,11 +38,14 @@ public class Activity6_Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_6chat);
 
+        // [SERVER] AGGIUNGERE LOGICA CHE MI MANDA ARGOMENTI PREFERITI SERVER
+
         textDomanda = findViewById(R.id.textDomanda);
         scoreTextView = findViewById(R.id.scoreTextView);
         buttonOption1 = findViewById(R.id.buttonOption1);
         buttonOption2 = findViewById(R.id.buttonOption2);
         buttonOption3 = findViewById(R.id.buttonOption3);
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
 
         final String selectedDrink = getIntent().getStringExtra("selectedDrink");
 
@@ -42,6 +54,43 @@ public class Activity6_Chat extends AppCompatActivity {
 
         // Avvia il gioco
         startGame(selectedDrink);
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Activity6_Chat.this, Activity0_OutOfSight.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+
+        startInactivityTimer();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void startInactivityTimer() {
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
     }
 
     private void initializeQuestionList() {
@@ -83,21 +132,24 @@ public class Activity6_Chat extends AppCompatActivity {
                 buttonOption1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        checkAnswer(buttonOption1.getText().toString(), selectedDrink);
+                        buttonOption1.startAnimation(buttonAnimation);
+                        checkAnswer(buttonOption1.getText().toString(), selectedDrink, buttonOption1);
                     }
                 });
 
                 buttonOption2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        checkAnswer(buttonOption2.getText().toString(), selectedDrink);
+                        buttonOption2.startAnimation(buttonAnimation);
+                        checkAnswer(buttonOption2.getText().toString(), selectedDrink, buttonOption2);
                     }
                 });
 
                 buttonOption3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        checkAnswer(buttonOption3.getText().toString(), selectedDrink);
+                        buttonOption3.startAnimation(buttonAnimation);
+                        checkAnswer(buttonOption3.getText().toString(), selectedDrink, buttonOption3);
                     }
                 });
             } else {
@@ -119,12 +171,16 @@ public class Activity6_Chat extends AppCompatActivity {
         }
         return false;
     }
-    private void checkAnswer(String selectedAnswer, String selectedDrink) {
+    private void checkAnswer(String selectedAnswer, String selectedDrink, Button buttonSelected) {
         Question currentQuestion = questionList.get(currentQuestionIndex);
         if (selectedAnswer.equals(currentQuestion.getCorrectAnswer())) {
             // Risposta corretta, aggiorna lo score
             score++;
             scoreTextView.setText("Score: " + score);
+            buttonSelected.setBackgroundResource(R.drawable.correct_button_background);
+        }
+        else{
+            buttonSelected.setBackgroundResource(R.drawable.wrong_button_background);
         }
 
         // Passa alla prossima domanda
@@ -136,7 +192,6 @@ public class Activity6_Chat extends AppCompatActivity {
         Intent intent = new Intent(this, Activity7_Farewelling.class);
         intent.putExtra("selectedDrink", selectedDrink);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
     }
 }

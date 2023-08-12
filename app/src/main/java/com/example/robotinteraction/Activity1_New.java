@@ -1,9 +1,12 @@
 package com.example.robotinteraction;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,6 +18,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import android.content.Intent;
 
 public class Activity1_New extends AppCompatActivity {
+
+    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private Button buttonLogin;
@@ -40,6 +47,16 @@ public class Activity1_New extends AppCompatActivity {
         // Carica l'animazione dal file XML
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
 
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Activity1_New.this, Activity0_OutOfSight.class);
+                startActivity(intent);
+            }
+        };
+
+        startInactivityTimer();
+
         // Aggiungi un listener per nascondere il messaggio di errore quando l'utente inizia a modificare gli EditText
         editTextEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -60,11 +77,28 @@ public class Activity1_New extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
     public void onClickSignUp(View v) {
         // Vai alla schermata di registrazione
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public void onClickAccedi(View v) {
@@ -98,6 +132,13 @@ public class Activity1_New extends AppCompatActivity {
         return true;
     }
 
+    private void startInactivityTimer() {
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
 
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
 
 }

@@ -187,6 +187,7 @@
                     android:layout_marginStart="5dp"
                     android:backgroundTint="#C92196F3"
                     android:text="Ordina"
+                    android:onClick="onClickConsigliato"
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -243,6 +244,7 @@
             android:entries="@array/dropdown_items"
             android:padding="12dp"
             android:text="Ordina"
+            android:onClick="onClickOrdina"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
 

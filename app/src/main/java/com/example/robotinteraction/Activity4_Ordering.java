@@ -2,6 +2,9 @@ package com.example.robotinteraction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,7 +28,10 @@ public class Activity4_Ordering extends AppCompatActivity {
     private List<String> drinkList = new ArrayList<>();
     private Random random = new Random();
     private Animation buttonAnimation;
-
+    private Button buttonOrderRecommendedDrink, buttonOrder;
+    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +42,12 @@ public class Activity4_Ordering extends AppCompatActivity {
 
         // Carica l'animazione dal file XML
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+        buttonOrderRecommendedDrink = findViewById(R.id.buttonOrderRecommendedDrink);
+        buttonOrder = findViewById(R.id.buttonOrder);
 
         // [SERVER] COLLEGAMENTO SERVER PER DIRGLI CHE STO IN ORDERING
+        // [SERVER] COLLEGAMENTO SERVER PER DRINK CONSIGLIATO
+        // [SERVER] COLLEGAMENTO SERVER PER LISTA DRINK
 
         // Aggiungi gli elementi alla lista dei drink
         drinkList.add("Mojito");
@@ -57,29 +67,56 @@ public class Activity4_Ordering extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDrinks.setAdapter(adapter);
 
-        // Gestisci il click sul bottone "Ordina Drink Raccomandato"
-        Button buttonOrderRecommendedDrink = findViewById(R.id.buttonOrderRecommendedDrink);
-        buttonOrderRecommendedDrink.setOnClickListener(new View.OnClickListener() {
+        runnable = new Runnable() {
             @Override
-            public void onClick(View v) {
-                buttonOrderRecommendedDrink.startAnimation(buttonAnimation);
-                String recommendedDrink = textViewRecommendedDrink.getText().toString();
-                openServingActivity(recommendedDrink);
+            public void run() {
+                Intent intent = new Intent(Activity4_Ordering.this, Activity0_OutOfSight.class);
+                startActivity(intent);
+                finish();
             }
-        });
+        };
 
-        // Gestisci il click sul bottone "Ordina"
-        Button buttonOrder = findViewById(R.id.buttonOrder);
-        buttonOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonOrder.startAnimation(buttonAnimation);
-                String selectedDrink = spinnerDrinks.getSelectedItem().toString();
-                openServingActivity(selectedDrink);
-            }
-        });
+        startInactivityTimer();
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void startInactivityTimer() {
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
+
+
+    public void onClickOrdina(View v) {
+        buttonOrder.startAnimation(buttonAnimation);
+        String selectedDrink = spinnerDrinks.getSelectedItem().toString();
+        openServingActivity(selectedDrink);
+    }
+    public void onClickConsigliato(View v) {
+        buttonOrderRecommendedDrink.startAnimation(buttonAnimation);
+        String recommendedDrink = textViewRecommendedDrink.getText().toString();
+        openServingActivity(recommendedDrink);
+    }
     private void setRandomRecommendedDrink() {
         int randomIndex = random.nextInt(drinkList.size());
         String recommendedDrink = drinkList.get(randomIndex);

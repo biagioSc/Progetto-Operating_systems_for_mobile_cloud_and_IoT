@@ -1,7 +1,12 @@
 package com.example.robotinteraction;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +17,8 @@ import android.content.Intent;
 
 public class Activity9_Interview extends AppCompatActivity {
 
+    // [SERVER] DECIDERE SE I CHECHBOX VOGLIAMO RIEMPIRLI DINAMICAMENTE
+
     private CheckBox[] drinkCheckboxes;
     private CheckBox[] argCheckboxes;
     private Button buttonSubmit;
@@ -21,17 +28,22 @@ public class Activity9_Interview extends AppCompatActivity {
     private String param4;
     private List<String> drinkSelections = new ArrayList<>();
     private List<String> argSelections = new ArrayList<>();
-
+    private Animation buttonAnimation;
+    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_9interview);
 
         Intent intent = getIntent();
-        param1 = intent.getStringExtra("param1");
-        param2 = intent.getStringExtra("param2");
-        param3 = intent.getStringExtra("param3");
-        param4 = intent.getStringExtra("param4");
+        param1 = intent.getStringExtra("nome");
+        param2 = intent.getStringExtra("cognome");
+        param3 = intent.getStringExtra("email");
+        param4 = intent.getStringExtra("password");
+
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
 
         drinkCheckboxes = new CheckBox[]{
                 findViewById(R.id.checkBoxDrink1),
@@ -88,14 +100,50 @@ public class Activity9_Interview extends AppCompatActivity {
             });
         }
 
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        runnable = new Runnable() {
             @Override
-            public void onClick(View v) {
-                //[SERVER] mandare dati al server
-                Intent newIntent = new Intent(Activity9_Interview.this, Activity1_New.class);
-                startActivity(newIntent);
+            public void run() {
+                Intent intent = new Intent(Activity9_Interview.this, Activity0_OutOfSight.class);
+                startActivity(intent);
+                finish();
             }
-        });
+        };
+
+        startInactivityTimer();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void startInactivityTimer() {
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
+
+    public void onClickRegister(View v) {
+        //[SERVER] mandare dati al server
+        buttonSubmit.startAnimation(buttonAnimation);
+        Intent newIntent = new Intent(Activity9_Interview.this, Activity1_New.class);
+        startActivity(newIntent);
     }
 
     private void updateDrinkSelections() {

@@ -234,6 +234,7 @@
         android:padding="16dp"
         android:text="Continua"
         android:textColor="#FFFFFF"
+        android:onClick="onClickRContinue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintStart_toStartOf="parent"

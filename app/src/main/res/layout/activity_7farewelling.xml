@@ -191,6 +191,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Ritira"
+            android:onClick="onClickRitira"
             android:textColor="#FFFFFF"
             android:background="@drawable/text_rounded_border"
             android:layout_below="@id/textViewDrinkDescription"

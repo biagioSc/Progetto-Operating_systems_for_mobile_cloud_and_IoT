@@ -2,6 +2,9 @@ package com.example.robotinteraction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.MotionEvent;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -12,7 +15,9 @@ public class Activity6_Attesa extends AppCompatActivity {
     private ProgressBar progressBarWaiting;
     private TextView textViewPleaseWait;
     private TextView textViewWaitTime;
-
+    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +51,49 @@ public class Activity6_Attesa extends AppCompatActivity {
                 openFarewellingActivity(selectedDrink);
             }
         }.start();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Activity6_Attesa.this, Activity0_OutOfSight.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+
+        startInactivityTimer();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void startInactivityTimer() {
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
     }
 
     private void openFarewellingActivity(String selectedDrink) {
         Intent intent = new Intent(this, Activity7_Farewelling.class);
         intent.putExtra("selectedDrink", selectedDrink);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
     }
 }

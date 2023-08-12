@@ -165,7 +165,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
             android:padding="16dp"
-            android:onClick="onClick"/>
+            android:onClick="onClickRiprendi"/>
 
         <!-- Aggiungiamo il timer sotto il bottone -->
         <RelativeLayout
