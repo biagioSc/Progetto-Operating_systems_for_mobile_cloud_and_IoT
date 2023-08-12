@@ -13,9 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,6 +51,35 @@ public class Activity4_Ordering extends AppCompatActivity {
         // [SERVER] COLLEGAMENTO SERVER PER DRINK CONSIGLIATO
         // [SERVER] COLLEGAMENTO SERVER PER LISTA DRINK
 
+
+
+        // Fase di comunicazione con il server
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Avviso il client dell'inizio della fase ordering
+                    socket.sendMessage("ORDERING");
+
+                    //[AGGIUNGERE] Inivio il sessiondID dell'utente
+                    socket.sendMessage(sessionID);
+
+                    // Ricevo il drink suggerito in base alle preferenze dell'utente
+                    String responseSuggestedDrink = null;
+                    responseSuggestedDrink = socket.receiveMessage();
+
+                    // Se tutto è andato a buon fine, setto il textView del drink
+                    if(responseSuggestedDrink != null){
+                        textViewRecommendedDrink.setText(responseSuggestedDrink);
+                    }
+
+
+                }catch (IOException e){
+                    Log.d("Activity4_Ordering","Problema nel suggerimento del drink");
+                }
+            }
+        }).start();
+
         // Aggiungi gli elementi alla lista dei drink
         drinkList.add("Mojito");
         drinkList.add("Martini");
@@ -78,6 +109,8 @@ public class Activity4_Ordering extends AppCompatActivity {
 
         startInactivityTimer();
     }
+
+    private SocketManager socket;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

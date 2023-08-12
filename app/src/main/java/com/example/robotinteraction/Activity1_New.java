@@ -16,6 +16,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import android.content.Intent;
+import android.util.Log;
+
+import java.io.IOException;
 
 public class Activity1_New extends AppCompatActivity {
 
@@ -27,6 +30,8 @@ public class Activity1_New extends AppCompatActivity {
     private Button buttonLogin;
     private TextView textViewError, textViewSignUp;
     private Animation buttonAnimation;
+
+    private SocketManager socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,55 @@ public class Activity1_New extends AppCompatActivity {
             textViewError.setText("Email e/o password non valide");
             textViewError.setVisibility(View.VISIBLE);
         } else {
+
+            // Il formato dei dati è corretto e procedo con la comunicazione col server
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+
+                        // Invio messaggio di inizio LOG_IN
+                        socket.sendMessage("LOG_IN");
+
+                        // Invio email e password
+                        socket.sendMessage(email);
+                        socket.sendMessage(password);
+
+                        // Inizializzo la risposta e il sessionID dell'utente
+                        String response = null;
+                        String sessionID = null;
+
+                        // Ricevo risposta sull'avvenuto o meno LOGIN
+                        response = socket.receiveMessage();
+
+                        // Se il login è andato a buon fine, ricevo il sessionID
+                        if(response.equalsIgnoreCase("LOG_IN_SUCCESS")){
+                            // Ricevo id della sessione attiva dell'utente
+                            sessionID = socket.receiveMessage();
+                            //PORTARE QUESTO ID NELLE SUCCESSIVE INTENT FINO
+                            //ALLA CHIUSURA DELL'APP
+
+                        // Se ricevo Log-in-error il login non è andato a buon fine
+                        }else if(response.equalsIgnoreCase("LOG_IN_ERROR")){
+                            //Mostrare messaggio di errore: password o email non corretta
+                            Log.d("Activity1_New","Email o password non corrette!");
+
+                        // Vuol dire che la response è null
+                        }else{
+
+                            // Mostrare messaggio di errore di tipo server
+                            Log.d("Activity1_New","Il server ha risposto con Null dopo " +
+                                    "l'invio di email e password!");
+                        }
+
+                    }catch (IOException e){
+                        Log.d("Activity1_New","Si è verificata una eccezione nell'invio dei" +
+                                "dati login";
+                    }
+                }
+            }).start();
+
+            // [AGGIUNGERE] PRIMA DI SPOSTARSI PORTARE CON SE L'ID DELLA SESSIONE "sessionID"
             // Vai alla schermata di benvenuto
             textViewError.setVisibility(View.INVISIBLE);  // Nascondi il messaggio di errore se necessario
             Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
