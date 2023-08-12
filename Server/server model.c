@@ -46,9 +46,6 @@
 typedef struct User {
     int id;
     char email[BUFFER_SIZE];
-    char favDrinks[BUFFER_SIZE];
-    char favTopics[BUFFER_SIZE];
-    bool isLoggedIn;   // Aggiunto per tenere traccia dello stato di login
     struct User* next;
 } User;
 
@@ -56,15 +53,15 @@ typedef struct User {
 // Variabile globale di riferimento
 User* usersList = NULL;
 
+int currentUserId = 0; 
 
 
-void addUserToList(const char* email, const char* favDrinks, const char* favTopics) {
+
+
+void addUserToList(const char* email) {
     User* newUser = (User*) malloc(sizeof(User));
-    newUser->id = 0;   // ID inizializzato a 0. Sarà assegnato durante il login.
+    newUser->id = ++currentUserId;   
     strcpy(newUser->email, email);
-    strcpy(newUser->favDrinks, favDrinks);
-    strcpy(newUser->favTopics, favTopics);
-    newUser->isLoggedIn = false;
     newUser->next = usersList;
     usersList = newUser;
 }
@@ -82,13 +79,7 @@ User* findUserByEmail(const char* email) {
 }
 
 
-void assignIdOnLogin(const char* email) {
-    User* user = findUserByEmail(email);
-    if (user && !user->isLoggedIn) {   // Se l'utente esiste ed è il suo primo login
-        user->id = currentUserId++;
-        user->isLoggedIn = true;
-    }
-}
+
 
 
 void setUserLoggedOut(const char* email) {
@@ -108,6 +99,39 @@ int getUserIdByEmail(const char* email) {
         currentUser = currentUser->next;
     }
     return -1;  // Restituisce -1 se l'utente con l'email fornita non viene trovato
+}
+
+
+const char* getEmailByUserId(int userId) {
+    User* currentUser = usersList;
+    while (currentUser) {
+        if (currentUser->id == userId) {
+            return currentUser->email;
+        }
+        currentUser = currentUser->next;
+    }
+    return NULL;  // Restituisce NULL se non viene trovato un utente con l'ID fornito
+}
+
+
+// Funzione per rimuovere un utente dalla lista
+void removeUserFromList(int session_id) {
+    User *current = usersList;
+    User *prev = NULL;
+
+    while(current != NULL) {
+        if(current->id == session_id) {
+            if(prev == NULL) {
+                usersList = current->next;
+            } else {
+                prev->next = current->next;
+            }
+            free(current);
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
 }
 
 
@@ -292,8 +316,8 @@ int handle_login(int sockfd, PGconn *conn, char *email)
         printf("User %s logged in\n", email);
         write_to_socket(sockfd, "LOG_IN_SUCCESS");
 
-        // Assegno l'identificativo di sessione all'utente che ha effettuato il login
-        assignIdOnLogin(email);
+        // Aggiungo l'utente alla lista di sessione e gli assegno l'id
+        addUserToList(email);
 
         // Recupero il valore dell'ID assegnato
         int id = getUserIdByEmail(email);
@@ -467,8 +491,6 @@ int handle_signup(int sockfd, PGconn *conn)
 
         if (signUpDone == 1)
         {
-            addUserToList(email,drinks,topics);
-
             // Invio messaggio di successo al client
             write_to_socket(sockfd, "SIGN_UP_SUCCESS");
         }
@@ -838,14 +860,14 @@ void send_drink_description(PGconn *conn, int sockfd) {
     // Ricevo il nome del drink dal client
     if (read_from_socket(sockfd, drink_name, sizeof(drink_name)) < 0) {
         perror("Errore nella lettura del drink inviato dal client");
-        return NULL;
+        return;
     }
 
     // Controllo che la stringa inviatami non contenga caratteri particolari
     for (int i = 0; drink_name[i]; i++) {
         if (!isalnum(drink_name[i])) {
             perror("Carattere non valido nel nome del drink");
-            return NULL;
+            return;
         }
     }
 
@@ -878,17 +900,77 @@ void send_drink_description(PGconn *conn, int sockfd) {
 }
 
 
+void send_drinks_list(int sockfd, PGconn *conn) {
+    // Ottieni la lista dei drink dal database
+    char *drinks_string = get_drinks_name(conn);
+
+    if (drinks_string != NULL) {
+        // Invia la lista dei drink al client
+        if (write_to_socket(sockfd, drinks_string) < 0) {
+            perror("Errore nell'invio della lista dei drink al client");
+        }
+
+        // Libera la memoria della stringa dei drink
+        free(drinks_string);
+    } else {
+        // Gestisci l'errore se non è possibile ottenere la lista dei drink
+        const char *error_msg = "ERROR_DRINKS_LIST";
+        if (write_to_socket(sockfd, error_msg) < 0) {
+            perror("Errore nell'invio del messaggio di errore al client");
+        }
+    }
+}
 
 
-void handle_ordering(int sockfd){
 
-    char *drink_to_suggest = suggest_drink();
 
+
+void handle_ordering(int sockfd, PGconn *conn){
+
+    
+    char user_session_id[10];
+
+    // Ricevo il sessionID dal client
+    if(read_from_socket(sockfd,user_session_id,sizeof(user_session_id) < 0)){
+        perror("Errore nella lettura del sessionID del client");
+        return;
+    }
+
+    // Effettuo la ricerca dell'email dell'utente in base al suo session ID
+    char *email = getEmailByUserId(user_session_id);
+
+    // Prendo il drink da suggerire
+    char *drink_to_suggest = suggest_drink(conn,email);
+
+    // Invio il drink suggerito in base alle sue preferenze e controllo eventuali errori
     if(write_to_socket(sockfd,drink_to_suggest) < 0){
          // Stampo un messaggio di errore in caso di problemi nell'invio
         perror("Errore nell'invio del drink suggerito al client");
     }
+
+    return;
 }
+
+
+void handle_gone(int sockfd) {
+    char user_session_id[BUFFER_SIZE];
+
+    // Ricevi l'ID della sessione dal client
+    if(read_from_socket(sockfd, user_session_id, sizeof(user_session_id)) < 0) {
+        perror("Errore nella lettura dell'ID della sessione dal client");
+        return;
+    }
+
+    // Converti l'ID della sessione in un numero intero
+    int session_id = atoi(user_session_id);
+
+    // Trova e rimuovi l'utente dalla lista degli utenti connessi
+    removeUserFromList(session_id);
+
+    // Invia un messaggio di conferma al client
+     write_to_socket(sockfd, "USER_REMOVED");
+}
+
 
 
 
@@ -951,7 +1033,13 @@ void *client_handler(void *socket_desc)
             send_drink_description(conn,sockfd);
         }
         else if (strcmp(buffer,"ORDERING") == 0){
-            
+            handle_ordering(sockfd,conn);
+        }
+        else if (strcmp(buffer,"DRINK_LIST") == 0){
+            send_drinks_list(sockfd,conn);
+        }
+        else if (strcmp(buffer,"USER_GONE") == 0){
+            handle_gone(sockfd);
         }
         else
         {
