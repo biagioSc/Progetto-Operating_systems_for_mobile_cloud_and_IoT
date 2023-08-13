@@ -42,7 +42,37 @@ public class Activity1_New extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
-        // [SERVER] CREARE CONNESSIONE SERVER??
+        // Tentativo di connessione continua
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Log.d("Activity1_New", "[CONNECTION] Tentativo di connessione...");
+
+                        // Crea una nuova istanza di SocketManager e tenta la connessione.
+                        socket = SocketManager.getInstance();
+                        socket.attemptConnection();
+
+                        if (socket.isConnected()) {
+                            Log.d("Activity1_New", "[CONNECTION] Connessione stabilita");
+                            break;
+                        } else {
+                            throw new IOException();
+                        }
+
+                    } catch (Exception e) {
+                        Log.d("Activity1_New", "[CONNECTION] Connessione fallita");
+
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
 
         // Collegamenti degli elementi dell'interfaccia alle variabili
         editTextEmail = findViewById(R.id.editTextEmail);

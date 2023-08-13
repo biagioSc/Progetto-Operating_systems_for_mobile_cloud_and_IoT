@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
 
 public class Activity3_Waiting extends AppCompatActivity {
     private int queueCount = 0;
@@ -24,6 +27,9 @@ public class Activity3_Waiting extends AppCompatActivity {
     private Runnable runnable;
 
     private String sessionID = null;
+
+    private SocketManager socket;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +81,21 @@ public class Activity3_Waiting extends AppCompatActivity {
                 // For example, navigate to the "Ordering" activity
                 Intent intent = new Intent(Activity3_Waiting.this, Activity4_Ordering.class);
                 intent.putExtra("SESSION_ID",sessionID);
+
+                // Informo il server dell'update da fare
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            socket.sendMessage("ADD_USER_ORDERING");
+                            socket.sendMessage(sessionID);
+
+                        }catch (IOException e){
+                            Log.d("Acitivty3_Waiting","Errore nella add_user_ordering");
+                        }
+                    }
+                }).start();
+
                 startActivity(intent);
             }
         }.start();

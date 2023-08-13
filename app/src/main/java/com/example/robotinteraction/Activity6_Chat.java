@@ -1,9 +1,11 @@
 package com.example.robotinteraction;
 
+ import android.net.SocketKeepalive;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,6 +17,7 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +38,11 @@ public class Activity6_Chat extends AppCompatActivity {
 
     private String sessionID = null;
 
+    private SocketManager socket;
+
+    private String favouriteTopics = null; // Unica stringa separata da virgole
+    private String[] favouriteTopicsSplitted = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +53,31 @@ public class Activity6_Chat extends AppCompatActivity {
         if(intent != null)
             sessionID = intent.getStringExtra("SESSION_ID");
 
-        // [SERVER] AGGIUNGERE LOGICA CHE MI MANDA ARGOMENTI PREFERITI SERVER
+        // Avvio comunicazione col server per ricevere topics preferiti dall'utente
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Avviso il server dell'inizio della chat
+                    socket.sendMessage("START_CHAT");
+                    // Invio il sessionID dell'utente
+                    socket.sendMessage(sessionID);
+                    // Ricevo i topics preferiti dal server (come unica stringa separata da virgole)
+                    favouriteTopics = socket.receiveMessage();
+
+                    // Eseguo lo split e inserisco ogni topic nell'array
+                    favouriteTopicsSplitted = favouriteTopics.split(",");
+
+                    // [IMPLEMENTARE - DECIDERE COME GESTIRE IL RESTO]
+
+
+
+                } catch (IOException e) {
+                    Log.d("Activity6_Chat", "Errore durante i messaggi nella chat.");
+                }
+            }
+        }).start();
+
 
         textDomanda = findViewById(R.id.textDomanda);
         scoreTextView = findViewById(R.id.scoreTextView);

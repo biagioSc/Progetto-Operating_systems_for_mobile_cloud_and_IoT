@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+
+import java.io.IOException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Activity2_Welcome extends Activity {
 
@@ -19,6 +23,10 @@ public class Activity2_Welcome extends Activity {
     private Runnable runnable;
 
     private String sessionID = null;
+
+    private SocketManager socket;
+
+    private int numPeopleInQueue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,22 +86,69 @@ public class Activity2_Welcome extends Activity {
         // Avvia l'animazione
         buttonCheckNextState.startAnimation(buttonAnimation);
 
-        // Implementa la logica per controllare il numero di persone in coda
-        int numPeopleInQueue = 0; // Esempio di numero di utenti in coda
 
-        // [SERVER] COLLEGAMENTO SERVER PER NUMERO UTENTI CODA
-        // numPeopleInQueue = NUMERO DAL SERVER.TOINT()
+        // Avvio collegamento con il server per ricevere numero di utenti in fase di ordering
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Avviso il server della richiesta di utenti nella fase di ordering
+                    socket.sendMessage("CHECK_USERS_ORDERING");
+
+                    // Ricevo numero di utenti nello stato di ordering
+                    String peopleInOrderingStateStr = socket.receiveMessage();
+                    numPeopleInQueue = Integer.parseInt(peopleInOrderingStateStr);
+
+
+                } catch (IOException e) {
+                    Log.d("Activity2_Welcome", "Errore durante i messaggi nella check_" +
+                            "users_ordering.");
+                }
+            }
+        }).start();
 
 
         Intent intent;
         if (numPeopleInQueue < 2) {
             // Vai alla schermata di Ordering
             intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
+
+            // Informo il server dell'update da fare
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        socket.sendMessage("ADD_USER_ORDERING");
+                        socket.sendMessage(sessionID);
+
+                    }catch (IOException e){
+                        Log.d("Acitivty2_Welcome","Errore nella add_user_ordering");
+                    }
+                }
+            }).start();
+
             startActivity(intent);
         } else {
             // Vai alla schermata di Waiting passando il numero di utenti in coda come parametro
             intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
             intent.putExtra("numPeopleInQueue", numPeopleInQueue);
+
+            // Informo il server dell'update da fare
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        socket.sendMessage("ADD_USER_WAITING");
+                        socket.sendMessage(sessionID);
+
+                    }catch (IOException e){
+                        Log.d("Acitivty2_Welcome","Errore nella add_user_waiting");
+                    }
+                }
+            }).start();
+
+
             startActivity(intent);
         }
 
@@ -104,6 +159,26 @@ public class Activity2_Welcome extends Activity {
     public void onClickExit(View v) {
         // Chiudi l'app
         buttonLogOut.startAnimation(buttonAnimation);
+
+        // Informo il server dell'uscita del client
+        try {
+            socket.sendMessage("USER_GONE");
+
+            // Prendere il sessionID dalle varie Intent
+            socket.sendMessage(sessionID);
+
+            String response = null;
+            response = socket.receiveMessage();
+
+            if(response.equalsIgnoreCase("USER_REMOVED")){
+                Log.d("Activity2_Welcome","Utente online dal server rimosso correttamente");
+            }else
+                Log.d("Activity2_Welcome","Utente online dal server non rimosso");
+        } catch (IOException e) {
+            // Gestisci l'eccezione: potresti registrare un errore o informare l'utente
+            Log.d("Activity2_Welcome","Problema durante l'invio del messaggio di GONE" +
+                    "al server");
+        }
         finish();
     }
 
