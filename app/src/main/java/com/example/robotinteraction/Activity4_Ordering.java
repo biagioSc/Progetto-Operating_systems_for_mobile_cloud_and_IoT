@@ -158,7 +158,24 @@ public class Activity4_Ordering extends AppCompatActivity {
         intent.putExtra("selectedDrink", drink);
         // Passo il sessionID
         intent.putExtra("SESSION_ID",sessionID);
-        startActivity(intent);
+
         // Informa il server della conclusione dell'ordinazione
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    socket.sendMessage("USER_STOP_ORDERING");
+                    socket.sendMessage(sessionID);
+
+                }catch (IOException e){
+                    Log.d("Acitivty4_Ordering","Errore nella user_stop_ordering");
+                }
+            }
+        }).start();
+
+
+
+        startActivity(intent);
+
     }
 }
