@@ -84,7 +84,6 @@ public class Activity3_Waiting extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(Activity3_Waiting.this, Activity0_OutOfSight.class);
                 startActivity(intent);
-                finish();
             }
         };
 

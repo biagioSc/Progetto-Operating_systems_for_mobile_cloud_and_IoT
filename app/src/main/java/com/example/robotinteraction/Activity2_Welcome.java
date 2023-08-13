@@ -41,7 +41,6 @@ public class Activity2_Welcome extends Activity {
             public void run() {
                 Intent intent = new Intent(Activity2_Welcome.this, Activity0_OutOfSight.class);
                 startActivity(intent);
-                finish();
             }
         };
 
