@@ -21,6 +21,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import java.io.IOException;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 
 public class Activity1_New extends AppCompatActivity {
 
@@ -39,6 +41,8 @@ public class Activity1_New extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
+
+        // [SERVER] CREARE CONNESSIONE SERVER??
 
         // Collegamenti degli elementi dell'interfaccia alle variabili
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -79,6 +83,23 @@ public class Activity1_New extends AppCompatActivity {
                 if (hasFocus) {
                     textViewError.setVisibility(View.INVISIBLE);
                 }
+            }
+        });
+
+        textViewSignUp.setOnHoverListener(new View.OnHoverListener() {
+            @Override
+            public boolean onHover(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_HOVER_ENTER:
+                        SpannableString spannableString = new SpannableString((CharSequence) textViewSignUp);
+                        spannableString.setSpan(new UnderlineSpan(), 0, textViewSignUp.length(), 0);
+                        textViewSignUp.setText(spannableString);
+                        break;
+                    case MotionEvent.ACTION_HOVER_EXIT:
+                        textViewSignUp.setText(textViewSignUp.getText().toString()); // Resetta il testo senza sottolineatura
+                        break;
+                }
+                return false;
             }
         });
     }
@@ -145,7 +166,6 @@ public class Activity1_New extends AppCompatActivity {
                                     // Passaggio del sessionID
                                     intent.putExtra("SESSION_ID", sessionID);
                                     startActivity(intent);
-                                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                                 }
                             });
                         } else {
