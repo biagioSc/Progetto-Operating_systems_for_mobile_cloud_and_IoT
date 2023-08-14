@@ -621,7 +621,7 @@ void handle_chat(int sockfd, PGconn *conn)
     }
     
     // Ottieni la stringa dei topics.
-    char *unique_string_topics = get_topics(conn);
+    char *unique_string_topics = get_topics(conn,email);
     if (!unique_string_topics) {
         perror("Errore durante il recupero dei topics");
         return;
@@ -746,7 +746,7 @@ void handle_ordering(int sockfd, PGconn *conn){
 }
 
 
-void handle_gone(int sockfd) {
+void handle_gone(int sockfd, PGconn *conn) {
     char user_session_id[BUFFER_SIZE];
 
     // Ricevi l'ID della sessione dal client
@@ -913,7 +913,7 @@ void *client_handler(void *socket_desc)
             send_drinks_list(sockfd,conn);
         }
         else if (strcmp(buffer,"USER_GONE") == 0){
-            handle_gone(sockfd);
+            handle_gone(sockfd,conn);
         }
         else
         {
