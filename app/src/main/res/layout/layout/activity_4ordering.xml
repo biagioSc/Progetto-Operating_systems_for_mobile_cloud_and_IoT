@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -39,10 +40,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Welcome"
-            android:typeface="monospace"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:background="#A1673AB7"  />
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_waiting"
@@ -50,7 +48,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Waiting"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_ordering"
@@ -58,7 +56,10 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Ordering"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#A1673AB7" />
 
         <TextView
             android:id="@+id/item_serving"
@@ -126,6 +127,7 @@
 
     </LinearLayout>
 
+
     <RelativeLayout
         android:background="#FFFFFF"
         android:layout_width="0dp"
@@ -133,72 +135,121 @@
         android:layout_weight="2"
         android:orientation="vertical">
 
+
         <ImageView
             android:id="@+id/imageViewLogo"
             android:layout_width="380dp"
             android:layout_height="350dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="Logo"
-            android:src="@drawable/pic2welcome" />
+            android:src="@drawable/pic4ordering" />
 
         <TextView
-            android:id="@+id/textViewWelcome"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageViewLogo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="Bentornato su RobotDrink!"
+            android:text="Drink consigliato"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewWelcome"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="Grazie per aver scelto la nostra app"
-            android:textColor="#757575"
-            android:textSize="16sp" />
+            android:layout_below="@id/textViewTitle"
+            android:layout_margin="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-        <Button
-            android:id="@+id/buttonChecknextState"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewDescription"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/button_rounded_border"
-            android:padding="16dp"
-            android:onClick="onClickQueue"
-            android:text="Accedi alla Coda"
-            android:textColor="#FFFFFF" />
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/textViewRecommendedDrink"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mojito"
+                    android:textColor="#020202"
+                    android:textSize="20sp"
+                    android:typeface="serif" />
+
+                <Button
+                    android:id="@+id/buttonOrderRecommendedDrink"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="5dp"
+                    android:backgroundTint="#C92196F3"
+                    android:onClick="onClickConsigliato"
+                    android:text="Ordina"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/textViewOr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonChecknextState"
+            android:layout_below="@id/cardView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="oppure"
             android:textColor="#757575"
             android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/buttonLogOut"
-            android:layout_width="200dp"
+        <TextView
+            android:id="@+id/textViewTitle2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewOr"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:background="@drawable/button_rounded_border"
-            android:backgroundTint="#FFFFFF"
-            android:padding="16dp"
-            android:text="Esci"
-            android:onClick="onClickExit" />
+            android:text="Scegli il Tuo Drink"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/spinnerDrinks"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewTitle2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/textViewOrderMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#757575"
+            android:layout_below="@id/buttonOrder"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/buttonOrder"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerDrinks"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:entries="@array/dropdown_items"
+            android:padding="12dp"
+            android:text="Ordina"
+            android:onClick="onClickOrdina"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
 
     </RelativeLayout>
 </LinearLayout>

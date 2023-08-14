@@ -39,10 +39,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Welcome"
-            android:typeface="monospace"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:background="#A1673AB7"  />
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_waiting"
@@ -50,7 +47,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Waiting"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_ordering"
@@ -66,7 +63,10 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Serving"
-            android:typeface="monospace"/>
+            android:typeface="monospace"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#A1673AB7" />
 
         <TextView
             android:id="@+id/item_attesa"
@@ -133,72 +133,62 @@
         android:layout_weight="2"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageViewLogo"
-            android:layout_width="380dp"
-            android:layout_height="350dp"
-            android:layout_centerHorizontal="true"
-            android:contentDescription="Logo"
-            android:src="@drawable/pic2welcome" />
+    <ImageView
+        android:id="@+id/imageViewOrderStatus"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:contentDescription="Logo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/pic5serving" />
 
         <TextView
-            android:id="@+id/textViewWelcome"
+            android:id="@+id/textViewOrderStatusTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageViewLogo"
+            android:layout_below="@id/imageViewOrderStatus"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="Bentornato su RobotDrink!"
+            android:text="In preparazione:"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewWelcome"
+            android:id="@+id/textViewOrderStatusMessage"
+            android:layout_width="253dp"
+            android:layout_height="71dp"
+            android:layout_below="@id/textViewOrderStatusTitle"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="Grazie per aver scelto la nostra app"
+            android:layout_marginTop="22dp"
+            android:text="Il tuo ordine è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz."
+            android:textAlignment="center"
             android:textColor="#757575"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/buttonChecknextState"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewDescription"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/button_rounded_border"
-            android:padding="16dp"
-            android:onClick="onClickQueue"
-            android:text="Accedi alla Coda"
-            android:textColor="#FFFFFF" />
+    <Button
+        android:id="@+id/buttonWaitingRoom"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Sala d'Attesa"
+        android:textColor="#FFFFFF"
+        android:onClick="onClickWait"
+        android:background="@drawable/button_design_general"
+        android:layout_below="@id/textViewOrderStatusMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:padding="16dp" />
 
-        <TextView
-            android:id="@+id/textViewOr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonChecknextState"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="oppure"
-            android:textColor="#757575"
-            android:textSize="18sp" />
+    <Button
+        android:id="@+id/buttonQuiz"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Quiz"
+        android:onClick="onClickQuiz"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_design_general"
+        android:layout_below="@id/buttonWaitingRoom"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="16dp" />
 
-        <Button
-            android:id="@+id/buttonLogOut"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewOr"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_rounded_border"
-            android:backgroundTint="#FFFFFF"
-            android:padding="16dp"
-            android:text="Esci"
-            android:onClick="onClickExit" />
-
-    </RelativeLayout>
+</RelativeLayout>
 </LinearLayout>

@@ -31,7 +31,10 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Login"
-            android:typeface="monospace" />
+            android:typeface="monospace"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#A1673AB7"  />
 
         <TextView
             android:id="@+id/item_welcome"
@@ -39,10 +42,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Welcome"
-            android:typeface="monospace"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:background="#A1673AB7"  />
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_waiting"
@@ -139,66 +139,93 @@
             android:layout_height="350dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="Logo"
-            android:src="@drawable/pic2welcome" />
+            android:src="@drawable/pic1main" />
 
         <TextView
-            android:id="@+id/textViewWelcome"
+            android:id="@+id/textViewSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageViewLogo"
+            android:text="Benvenuto in RoboDrink"
+            android:textSize="24sp"
             android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:layout_below="@id/imageViewLogo" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            android:layout_width="260dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Bentornato su RobotDrink!"
-            android:textColor="#000000"
-            android:textSize="22sp" />
+            android:layout_below="@id/textViewSignUp">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/text_rounded_border" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            android:layout_width="260dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_below="@id/emailTextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@drawable/text_rounded_border"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="wrap_content"
+            android:id="@+id/textViewError"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewWelcome"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="Grazie per aver scelto la nostra app"
-            android:textColor="#757575"
-            android:textSize="16sp" />
+            android:layout_below="@id/passwordTextInputLayout"
+            android:layout_marginTop="2dp"
+            android:padding="16dp"
+            android:text="Email e/o password errate"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
 
         <Button
-            android:id="@+id/buttonChecknextState"
+            android:id="@+id/buttonLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewDescription"
+            android:layout_below="@id/textViewError"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/button_rounded_border"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/button_design_general"
+            android:onClick="onClickAccedi"
             android:padding="16dp"
-            android:onClick="onClickQueue"
-            android:text="Accedi alla Coda"
+            android:text="Accedi"
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/textViewOr"
+            android:id="@+id/buttonSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonChecknextState"
+            android:layout_below="@id/buttonLogin"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="oppure"
-            android:textColor="#757575"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/buttonLogOut"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewOr"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_rounded_border"
-            android:backgroundTint="#FFFFFF"
+            android:layout_marginTop="7dp"
+            android:clickable="true"
+            android:onClick="onClickSignUp"
             android:padding="16dp"
-            android:text="Esci"
-            android:onClick="onClickExit" />
+            android:text="Non hai un account? Registrati!"
+            android:textColor="#1976D2"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 </LinearLayout>

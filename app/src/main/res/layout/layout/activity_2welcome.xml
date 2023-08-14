@@ -170,7 +170,7 @@
             android:layout_below="@id/textViewDescription"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
-            android:background="@drawable/button_rounded_border"
+            android:background="@drawable/button_design_general"
             android:padding="16dp"
             android:onClick="onClickQueue"
             android:text="Accedi alla Coda"
@@ -194,11 +194,11 @@
             android:layout_below="@id/textViewOr"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:background="@drawable/button_rounded_border"
-            android:backgroundTint="#FFFFFF"
+            android:background="@drawable/button_design_general"
             android:padding="16dp"
             android:text="Esci"
-            android:onClick="onClickExit" />
+            android:onClick="onClickExit"
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 </LinearLayout>

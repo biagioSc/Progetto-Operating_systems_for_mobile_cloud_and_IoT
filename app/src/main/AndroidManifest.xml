@@ -19,19 +19,48 @@
             android:resource="@xml/actions" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity0_OutOfSight" />
+
+        <activity
+            android:name=".Activity1_New"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".InterviewActivity" />
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".OrderingActivity" />
-        <activity android:name=".WaitingActivity" />
+
+        <activity
+            android:name=".Activity2_Welcome" />
+
+        <activity
+            android:name=".Activity3_Waiting" />
+
+        <activity
+            android:name=".Activity4_Ordering" />
+
+        <activity
+            android:name=".Activity5_Serving" />
+
+        <activity
+            android:name=".Activity6_Chat" />
+
+        <activity
+            android:name=".Activity6_Attesa" />
+
+        <activity
+            android:name=".Activity7_Farewelling" />
+
+        <activity
+            android:name=".Activity8_Gone" />
+
+        <activity
+            android:name=".Activity9_Signup" />
+
+        <activity
+            android:name=".Activity9_Interview" />
+
     </application>
+
 
 </manifest>
