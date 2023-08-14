@@ -207,7 +207,7 @@
             android:layout_below="@id/textViewError"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="7dp"
-            android:background="@drawable/button_rounded_background"
+            android:background="@drawable/button_design_general"
             android:onClick="onClickAccedi"
             android:padding="16dp"
             android:text="Accedi"

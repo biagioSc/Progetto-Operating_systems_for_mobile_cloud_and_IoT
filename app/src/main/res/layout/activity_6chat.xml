@@ -158,8 +158,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textDomanda"
             android:layout_marginTop="30dp"
-            android:foregroundTint="#FFFFFF"
             android:text="Risposta 1"
+            android:background="@drawable/button_design_chat"
             android:textColor="#FFFFFF"
             android:layout_centerHorizontal="true"
             android:textSize="20sp" />
@@ -170,8 +170,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonOption1"
             android:layout_marginTop="10dp"
-            android:foregroundTint="#FFFFFF"
             android:text="Risposta 1"
+            android:background="@drawable/button_design_chat"
             android:textColor="#FFFFFF"
             android:layout_centerHorizontal="true"
             android:textSize="20sp" />
@@ -181,11 +181,11 @@
             android:layout_width="248dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonOption2"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:foregroundTint="#FFFFFF"
+            android:background="@drawable/button_design_chat"
             android:text="Risposta 1"
             android:textColor="#FFFFFF"
-            android:layout_centerHorizontal="true"
             android:textSize="20sp" />
         <!-- Timer display -->
         <ProgressBar

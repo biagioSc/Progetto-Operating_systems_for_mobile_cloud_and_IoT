@@ -343,7 +343,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
                 android:onClick="onClickRegister"
-                android:background="@drawable/button_rounded_background"
+                android:background="@drawable/button_design_general"
                 android:padding="16dp"
                 android:text="Registrati"
                 android:textColor="#FFFFFF" />

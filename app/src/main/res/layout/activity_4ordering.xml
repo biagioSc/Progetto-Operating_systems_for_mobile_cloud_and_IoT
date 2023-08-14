@@ -167,7 +167,7 @@
             <LinearLayout
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
@@ -184,12 +184,14 @@
                     android:id="@+id/buttonOrderRecommendedDrink"
                     android:layout_width="100dp"
                     android:layout_height="45dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="5dp"
                     android:backgroundTint="#C92196F3"
-                    android:text="Ordina"
                     android:onClick="onClickConsigliato"
+                    android:text="Ordina"
                     android:textColor="#000000"
                     android:textSize="16sp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

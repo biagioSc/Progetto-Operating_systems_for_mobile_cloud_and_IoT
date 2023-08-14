@@ -3,6 +3,5 @@
     <stroke
         android:width="2dp"
         android:color="#00FF00" /> <!-- Colore del bordo (verde) -->
-    <solid android:color="@android:color/transparent" /> <!-- Sfondo trasparente -->
     <corners android:radius="4dp" /> <!-- Arrotondamento dei bordi, se desiderato -->
 </shape>

@@ -230,7 +230,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/button_rounded_background"
+        android:background="@drawable/button_design_general"
         android:padding="16dp"
         android:text="Continua"
         android:textColor="#FFFFFF"

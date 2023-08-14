@@ -170,7 +170,7 @@
         android:layout_height="wrap_content"
         android:text="Esci"
         android:textColor="#FFFFFF"
-        android:background="@drawable/button_rounded_background"
+        android:background="@drawable/button_design_general"
         android:layout_below="@id/textViewMessage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"

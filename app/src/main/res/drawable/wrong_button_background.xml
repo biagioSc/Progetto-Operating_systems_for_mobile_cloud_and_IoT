@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
     <stroke
         android:width="2dp"
         android:color="#FF0000" /> <!-- Colore del bordo (rosso) -->
-    <solid android:color="@android:color/transparent" /> <!-- Sfondo trasparente -->
+    <solid android:color="#FF0000" /> <!-- Sfondo trasparente -->
     <corners android:radius="4dp" /> <!-- Arrotondamento dei bordi, se desiderato -->
 </shape>
+
+
+<!-- Dimensioni dei bordi -->
+
