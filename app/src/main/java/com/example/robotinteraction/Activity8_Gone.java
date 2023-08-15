@@ -2,8 +2,12 @@ package com.example.robotinteraction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +18,8 @@ public class Activity8_Gone extends AppCompatActivity {
 
     private Button buttonExit;
 
+    private Animation buttonAnimation;
+
     private SocketManager socket;
 
     private String sessionID = null;
@@ -22,6 +28,8 @@ public class Activity8_Gone extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_8gone);
+
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
 
         // Prendo il sessionID
         Intent intent = getIntent();
@@ -39,6 +47,28 @@ public class Activity8_Gone extends AppCompatActivity {
                 exitApp();
             }
         });
+        buttonExit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
+
     }
 
     private void exitApp() {

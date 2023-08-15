@@ -143,6 +143,29 @@ public class Activity9_Interview extends AppCompatActivity {
         };
 
         startInactivityTimer();
+
+        buttonSubmit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -174,7 +197,6 @@ public class Activity9_Interview extends AppCompatActivity {
 
     public void onClickRegister(View v) {
         //[SERVER] mandare dati al server
-        buttonSubmit.startAnimation(buttonAnimation);
         new Thread(new Runnable() {
             @Override
             public void run() {

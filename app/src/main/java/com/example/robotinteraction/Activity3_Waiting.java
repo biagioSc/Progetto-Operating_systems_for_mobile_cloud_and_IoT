@@ -20,7 +20,7 @@ public class Activity3_Waiting extends AppCompatActivity {
     private TextView textViewQueueCount;
     private TextView textViewWaitTime;
     private ProgressBar progressBarWaiting;
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private static final long TIME_THRESHOLD = 1200000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
 
@@ -33,6 +33,36 @@ public class Activity3_Waiting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3waiting);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Log.d("Activity1_New", "[CONNECTION] Tentativo di connessione...");
+
+                        // Crea una nuova istanza di SocketManager e tenta la connessione.
+                        socket = SocketManager.getInstance();
+                        socket.attemptConnection();
+
+                        if (socket.isConnected()) {
+                            Log.d("Activity1_New", "[CONNECTION] Connessione stabilita");
+                            break;
+                        } else {
+                            throw new IOException();
+                        }
+
+                    } catch (Exception e) {
+                        Log.d("Activity1_New", "[CONNECTION] Connessione fallita");
+
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
 
         // Get parameters from previous activity
         Intent intent = getIntent();
@@ -45,7 +75,7 @@ public class Activity3_Waiting extends AppCompatActivity {
 
         textViewQueueCount.setText("Persone in coda: " + queueCount);
 
-        queueTime = queueCount * 30; // Calculate queue time in seconds
+        queueTime = queueCount * 60; // Calculate queue time in seconds
         textViewWaitTime.setText("Tempo di attesa: " + queueTime + " secondi");
 
         progressBarWaiting.setMax(queueTime);
@@ -64,11 +94,15 @@ public class Activity3_Waiting extends AppCompatActivity {
 
                 // Controlla se sono passati 30 secondi
                 if (secondCounter >= 30) {
+
+                    // [SERVER] CHIEDERE AGGIORNAMENTO A SERVER
                     // Azzerare la variabile dei secondi
                     secondCounter = 0;
 
                     // Diminuire il numero di persone in coda di 1
-                    queueCount--;
+                    //if(queueCount < queueCountActual){
+                        //queueCount--;
+                    //}
                     textViewQueueCount.setText("Persone in coda: " + queueCount);
                 }
             }

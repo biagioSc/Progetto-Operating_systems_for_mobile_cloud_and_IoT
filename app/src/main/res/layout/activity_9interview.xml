@@ -145,7 +145,7 @@
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical|center_horizontal"
             android:text="Inserisci le tue preferenze"
-            android:textColor="#2196F3"
+            android:textColor="#C92196F3"
             android:textSize="20sp"
             android:textStyle="bold" />
 

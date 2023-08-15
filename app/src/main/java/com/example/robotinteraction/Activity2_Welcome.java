@@ -17,7 +17,7 @@ public class Activity2_Welcome extends Activity {
 
     private Button buttonCheckNextState, buttonLogOut;
     private Animation buttonAnimation;
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
 
@@ -37,21 +37,21 @@ public class Activity2_Welcome extends Activity {
             public void run() {
                 while (true) {
                     try {
-                        Log.d("Activity1_New", "[CONNECTION] Tentativo di connessione...");
+                        Log.d("activity_2welcome", "[CONNECTION] Tentativo di connessione...");
 
                         // Crea una nuova istanza di SocketManager e tenta la connessione.
                         socket = SocketManager.getInstance();
                         socket.attemptConnection();
 
                         if (socket.isConnected()) {
-                            Log.d("Activity1_New", "[CONNECTION] Connessione stabilita");
+                            Log.d("activity_2welcome", "[CONNECTION] Connessione stabilita");
                             break;
                         } else {
                             throw new IOException();
                         }
 
                     } catch (Exception e) {
-                        Log.d("Activity1_New", "[] Connessione fallita");
+                        Log.d("activity_2welcome", "[] Connessione fallita");
 
                         try {
                             Thread.sleep(5000);
@@ -83,6 +83,52 @@ public class Activity2_Welcome extends Activity {
         };
 
         startInactivityTimer();
+
+        buttonLogOut.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
+
+        buttonCheckNextState.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -104,6 +150,7 @@ public class Activity2_Welcome extends Activity {
     }
 
     private void startInactivityTimer() {
+
         handler.postDelayed(runnable, TIME_THRESHOLD);
     }
 
@@ -113,9 +160,7 @@ public class Activity2_Welcome extends Activity {
     }
 
     public void onClickQueue(View v) {
-        // Avvia l'animazione
-        buttonCheckNextState.startAnimation(buttonAnimation);
-
+        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         // Avvio collegamento con il server per ricevere numero di utenti in fase di ordering
         new Thread(new Runnable() {
             @Override
@@ -187,7 +232,7 @@ public class Activity2_Welcome extends Activity {
     }
     public void onClickExit(View v) {
         // Chiudi l'app
-        buttonLogOut.startAnimation(buttonAnimation);
+        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
 
         // Informo il server dell'uscita del client
         try {

@@ -165,31 +165,31 @@
             app:cardBackgroundColor="#FFFFFF">
 
             <LinearLayout
-                android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/textViewRecommendedDrink"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mojito"
                     android:textColor="#020202"
+                    android:layout_gravity="center_horizontal"
                     android:textSize="20sp"
                     android:typeface="serif" />
 
                 <Button
                     android:id="@+id/buttonOrderRecommendedDrink"
-                    android:layout_width="100dp"
-                    android:layout_height="45dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="5dp"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
                     android:backgroundTint="#C92196F3"
+                    android:layout_gravity="center_horizontal"
                     android:onClick="onClickConsigliato"
+                    android:layout_marginTop="16dp"
                     android:text="Ordina"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -201,7 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/cardView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="6dp"
             android:text="oppure"
             android:textColor="#757575"
             android:textSize="18sp" />
@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewTitle2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:spinnerMode="dropdown" />
 
         <TextView
@@ -242,7 +242,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/spinnerDrinks"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="16dp"
             android:entries="@array/dropdown_items"
             android:padding="12dp"
             android:text="Ordina"

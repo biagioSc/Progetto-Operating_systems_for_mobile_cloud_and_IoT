@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 public class Activity5_Serving extends AppCompatActivity {
     private Animation buttonAnimation;
     private Button buttonQuiz, buttonWaitingRoom;
@@ -19,12 +22,44 @@ public class Activity5_Serving extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+    private SocketManager socket;  // Manager del socket per la comunicazione con il server
 
     private String sessionID = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_5serving);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Log.d("Activity4_Ordering", "[CONNECTION] Tentativo di connessione...");
+
+                        // Crea una nuova istanza di SocketManager e tenta la connessione.
+                        socket = SocketManager.getInstance();
+                        socket.attemptConnection();
+
+                        if (socket.isConnected()) {
+                            Log.d("Activity4_Ordering", "[CONNECTION] Connessione stabilita");
+                            break;
+                        } else {
+                            throw new IOException();
+                        }
+
+                    } catch (Exception e) {
+                        Log.d("Activity4_Ordering", "[] Connessione fallita");
+
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
 
         // Prendo il sessionID
         Intent intent = getIntent();
@@ -39,8 +74,13 @@ public class Activity5_Serving extends AppCompatActivity {
 
         // Imposta il testo nella TextView
         TextView textViewOrderStatusTitle = findViewById(R.id.textViewOrderStatusTitle);
-        textViewOrderStatusTitle.setText("In preparazione: " + selectedDrink);
+        TextView textViewOrderStatusMessage = findViewById(R.id.textViewOrderStatusMessage);
+        textViewOrderStatusTitle.setText("In preparazione: \n" + selectedDrink);
 
+        if(selectedDrink!="") {
+            textViewOrderStatusMessage.setText("Il tuo " + selectedDrink + " è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz."
+            );
+        }
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -50,6 +90,50 @@ public class Activity5_Serving extends AppCompatActivity {
         };
 
         startInactivityTimer();
+
+        buttonWaitingRoom.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
+
+        buttonQuiz.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -80,11 +164,9 @@ public class Activity5_Serving extends AppCompatActivity {
     }
 
     public void onClickWait(View v) {
-        buttonWaitingRoom.startAnimation(buttonAnimation);
         openWaitingActivity(selectedDrink);
     }
     public void onClickQuiz(View v) {
-        buttonQuiz.startAnimation(buttonAnimation);
         openChatActivity(selectedDrink);
     }
     private void openWaitingActivity(String selectedDrink) {

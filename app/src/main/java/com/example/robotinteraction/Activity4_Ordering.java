@@ -50,21 +50,21 @@ public class Activity4_Ordering extends AppCompatActivity {
             public void run() {
                 while (true) {
                     try {
-                        Log.d("Activity1_New", "[CONNECTION] Tentativo di connessione...");
+                        Log.d("Activity4_Ordering", "[CONNECTION] Tentativo di connessione...");
 
                         // Crea una nuova istanza di SocketManager e tenta la connessione.
                         socket = SocketManager.getInstance();
                         socket.attemptConnection();
 
                         if (socket.isConnected()) {
-                            Log.d("Activity1_New", "[CONNECTION] Connessione stabilita");
+                            Log.d("Activity4_Ordering", "[CONNECTION] Connessione stabilita");
                             break;
                         } else {
                             throw new IOException();
                         }
 
                     } catch (Exception e) {
-                        Log.d("Activity1_New", "[] Connessione fallita");
+                        Log.d("Activity4_Ordering", "[] Connessione fallita");
 
                         try {
                             Thread.sleep(5000);
@@ -139,6 +139,50 @@ public class Activity4_Ordering extends AppCompatActivity {
             }
         };
         startInactivityTimer();
+
+        buttonOrder.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
+
+        buttonOrderRecommendedDrink.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -170,18 +214,19 @@ public class Activity4_Ordering extends AppCompatActivity {
     }
 
     public void onClickOrdina(View v) {
-        buttonOrder.startAnimation(buttonAnimation);
+        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         String selectedDrink = spinnerDrinks.getSelectedItem().toString();
         openServingActivity(selectedDrink);
     }
 
     public void onClickConsigliato(View v) {
-        buttonOrderRecommendedDrink.startAnimation(buttonAnimation);
+        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         String recommendedDrink = textViewRecommendedDrink.getText().toString();
         openServingActivity(recommendedDrink);
     }
 
     private void openServingActivity(String drink) {
+        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         Intent intent = new Intent(this, Activity5_Serving.class);
         // Passo il drink selezionato
         intent.putExtra("selectedDrink", drink);

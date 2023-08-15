@@ -22,11 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
+import android.graphics.Typeface;
 
 public class Activity1_New extends AppCompatActivity {
 
     // Dichiarazioni delle variabili per gli elementi dell'interfaccia
-    private static final long TIME_THRESHOLD = 20000; // Soglia di inattività di 20 secondi
+    private static final long TIME_THRESHOLD = 600000; // Soglia di inattività di 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private EditText editTextEmail, editTextPassword;
@@ -101,6 +102,7 @@ public class Activity1_New extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
+                    resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
                     textViewError.setVisibility(View.INVISIBLE);
                 }
             }
@@ -110,22 +112,50 @@ public class Activity1_New extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
+                    resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
                     textViewError.setVisibility(View.INVISIBLE);
                 }
             }
         });
 
-        textViewSignUp.setOnHoverListener(new View.OnHoverListener() {
+        buttonLogin.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onHover(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_HOVER_ENTER:
-                        SpannableString spannableString = new SpannableString((CharSequence) textViewSignUp);
-                        spannableString.setSpan(new UnderlineSpan(), 0, textViewSignUp.length(), 0);
-                        textViewSignUp.setText(spannableString);
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
                         break;
-                    case MotionEvent.ACTION_HOVER_EXIT:
-                        textViewSignUp.setText(textViewSignUp.getText().toString()); // Resetta il testo senza sottolineatura
+                }
+                return false;
+            }
+        });
+
+        textViewSignUp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
                         break;
                 }
                 return false;
@@ -158,9 +188,6 @@ public class Activity1_New extends AppCompatActivity {
     }
 
     public void onClickAccedi(View v) {
-        // Avvia l'animazione del pulsante
-        buttonLogin.startAnimation(buttonAnimation);
-
         // Ottieni le credenziali inserite dall'utente
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -168,9 +195,6 @@ public class Activity1_New extends AppCompatActivity {
         // Verifica la validità delle credenziali
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             textViewError.setText("Inserisci email e password");
-            textViewError.setVisibility(View.VISIBLE);
-        } else if (!isValidLogin(email, password)) {
-            textViewError.setText("Email e/o password non valide");
             textViewError.setVisibility(View.VISIBLE);
         } else {
             // Se le credenziali sono valide, avvia la comunicazione con il server
@@ -200,6 +224,8 @@ public class Activity1_New extends AppCompatActivity {
                         } else {
                             // Gestisci l'errore di login
                             Log.d("Activity1_New", "Email o password non corrette!");
+                            textViewError.setText("Email e/o password non valide");
+                            textViewError.setVisibility(View.VISIBLE);
                         }
                     } catch (IOException e) {
                         Log.d("Activity1_New", "Errore durante la comunicazione con il server.");
@@ -210,11 +236,9 @@ public class Activity1_New extends AppCompatActivity {
     }
 
     // Metodo per verificare la validità del login (momentaneamente sempre vero)
-    private boolean isValidLogin(String email, String password) {
-        return true;
-    }
 
     private void startInactivityTimer() {
+
         handler.postDelayed(runnable, TIME_THRESHOLD);
     }
 

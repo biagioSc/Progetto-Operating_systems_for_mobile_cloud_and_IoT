@@ -54,6 +54,37 @@ public class Activity6_Chat extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                while (true) {
+                    try {
+                        Log.d("activity_2welcome", "[CONNECTION] Tentativo di connessione...");
+
+                        // Crea una nuova istanza di SocketManager e tenta la connessione.
+                        socket = SocketManager.getInstance();
+                        socket.attemptConnection();
+
+                        if (socket.isConnected()) {
+                            Log.d("activity_2welcome", "[CONNECTION] Connessione stabilita");
+                            break;
+                        } else {
+                            throw new IOException();
+                        }
+
+                    } catch (Exception e) {
+                        Log.d("activity_2welcome", "[] Connessione fallita");
+
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ie) {
+                            ie.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
                 try {
                     // Avviso il server dell'inizio della chat
                     socket.sendMessage("START_CHAT");
@@ -99,6 +130,75 @@ public class Activity6_Chat extends AppCompatActivity {
         };
 
         startInactivityTimer();
+
+        buttonOption1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
+
+        buttonOption2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
+
+        buttonOption3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -167,7 +267,6 @@ public class Activity6_Chat extends AppCompatActivity {
                 buttonOption1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        buttonOption1.startAnimation(buttonAnimation);
                         checkAnswer(buttonOption1.getText().toString(), selectedDrink, buttonOption1);
                     }
                 });
@@ -175,7 +274,6 @@ public class Activity6_Chat extends AppCompatActivity {
                 buttonOption2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        buttonOption2.startAnimation(buttonAnimation);
                         checkAnswer(buttonOption2.getText().toString(), selectedDrink, buttonOption2);
                     }
                 });
@@ -183,7 +281,6 @@ public class Activity6_Chat extends AppCompatActivity {
                 buttonOption3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        buttonOption3.startAnimation(buttonAnimation);
                         checkAnswer(buttonOption3.getText().toString(), selectedDrink, buttonOption3);
                     }
                 });
