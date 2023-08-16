@@ -17,14 +17,11 @@ public class Activity2_Welcome extends Activity {
 
     private Button buttonCheckNextState, buttonLogOut;
     private Animation buttonAnimation;
-    private static final long TIME_THRESHOLD = 60000; // 20 secondi
+    private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-
     private String sessionID = null;
-
     private SocketManager socket;
-
     private int numPeopleInQueue = 0;
 
     @Override

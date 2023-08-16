@@ -1,13 +1,13 @@
 package com.example.robotinteraction;
 
-public class Question {
+public class Activity_Question {
     private String topic;
     private String question;
     private String correctAnswer;
     private String wrongAnswer1;
     private String wrongAnswer2;
 
-    public Question(String topic, String question, String correctAnswer, String wrongAnswer1, String wrongAnswer2) {
+    public Activity_Question(String topic, String question, String correctAnswer, String wrongAnswer1, String wrongAnswer2) {
         this.topic = topic;
         this.question = question;
         this.correctAnswer = correctAnswer;

@@ -23,27 +23,38 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 import android.graphics.Typeface;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Activity1_New extends AppCompatActivity {
 
     // Dichiarazioni delle variabili per gli elementi dell'interfaccia
-    private static final long TIME_THRESHOLD = 600000; // Soglia di inattività di 20 secondi
+    private static final long TIME_THRESHOLD = 60000; // Soglia di inattività di 60 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private Button buttonLogin;
-    private TextView textViewError, textViewSignUp;
+    private TextView textViewError, textViewSignUp, textViewGuest;
     private Animation buttonAnimation;
-    private SocketManager socket;
+    //private SocketManager socket;
+    private Activity_SocketManager socketNew;
+
+    private String sessionID = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
+        socketNew = Activity_SocketManager.getInstance();
+
         // Tentativo di connessione continua
-        new Thread(new Runnable() {
+ /*       new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -63,17 +74,18 @@ public class Activity1_New extends AppCompatActivity {
 
                     } catch (Exception e) {
                         Log.d("Activity1_New", "[CONNECTION] Connessione fallita");
-
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
+                        showPopupMessage();
+                        break;
+                        //try {
+                          //  Thread.sleep(5000);
+                       // }/ catch (InterruptedException ie) {
+                         //   ie.printStackTrace();
+                        //}
                     }
                 }
             }
         }).start();
-
+*/
         // Collegamenti degli elementi dell'interfaccia alle variabili
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
@@ -82,6 +94,7 @@ public class Activity1_New extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewError = findViewById(R.id.textViewError);
         textViewSignUp = findViewById(R.id.buttonSignUp);
+        textViewGuest = findViewById(R.id.buttonGuest);
 
         // Carica l'animazione del pulsante dal file XML
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -161,6 +174,28 @@ public class Activity1_New extends AppCompatActivity {
                 return false;
             }
         });
+
+        textViewGuest.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Applica l'animazione di scala quando il bottone viene premuto
+                        v.startAnimation(buttonAnimation);
+
+                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Ripristina le dimensioni originali
+                                v.clearAnimation();
+                            }
+                        }, 200); // 1000 millisecondi = 1 secondo
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -187,6 +222,14 @@ public class Activity1_New extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onClickGuest(View v) {
+        Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
+        // Passaggio del sessionID
+        String sessionID = "Guest";
+        intent.putExtra("SESSION_ID", sessionID);
+        startActivity(intent);
+    }
+
     public void onClickAccedi(View v) {
         // Ottieni le credenziali inserite dall'utente
         String email = editTextEmail.getText().toString().trim();
@@ -201,34 +244,45 @@ public class Activity1_New extends AppCompatActivity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    // Inizia la procedura di login con il server
+                    socketNew.send("LOG_IN");
                     try {
-                        // Inizia la procedura di login con il server
-                        socket.sendMessage("LOG_IN");
-                        socket.sendMessage(email);
-                        socket.sendMessage(password);
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    socketNew.send(email);
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    socketNew.send(password);
 
-                        // Ricevi la risposta dal server
-                        String response = socket.receiveMessage();
-                        if (response.equalsIgnoreCase("LOG_IN_SUCCESS")) {
-                            String sessionID = socket.receiveMessage();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
-
-                                    // Passaggio del sessionID
-                                    intent.putExtra("SESSION_ID", sessionID);
-                                    startActivity(intent);
-                                }
-                            });
-                        } else {
-                            // Gestisci l'errore di login
-                            Log.d("Activity1_New", "Email o password non corrette!");
-                            textViewError.setText("Email e/o password non valide");
-                            textViewError.setVisibility(View.VISIBLE);
-                        }
-                    } catch (IOException e) {
-                        Log.d("Activity1_New", "Errore durante la comunicazione con il server.");
+                    // Ricevi la risposta dal server
+                    String response = socketNew.receive();
+                    Log.d("Activity1_New", response);
+                    if (response.equalsIgnoreCase("LOG_IN_SUCCESS")) {
+                        sessionID = socketNew.receive();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
+                                // Passaggio del sessionID
+                                intent.putExtra("SESSION_ID", sessionID);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    } else {
+                        // Gestisci l'errore di login
+                        Log.d("Activity1_New", "Email o password non corrette!");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                textViewError.setText("Email e/o password non valide");
+                                textViewError.setVisibility(View.VISIBLE);                            }
+                        });
                     }
                 }
             }).start();
@@ -245,5 +299,31 @@ public class Activity1_New extends AppCompatActivity {
     private void resetInactivityTimer() {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
+    }
+
+    public void showPopupMessage() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Activity1_New.this);
+                builder.setTitle("Server offline")
+                        .setMessage("Attualmente i server sono offline, fai l'accesso come 'Ospite'!")
+                        .setPositiveButton("Accedi come Ospite!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // L'utente ha fatto clic su "Ok"
+                                Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
+                                // Passaggio del sessionID
+                                sessionID = "Guest";
+                                intent.putExtra("SESSION_ID", sessionID);
+                                startActivity(intent);
+                                dialog.dismiss(); // Chiudi il popup
+                            }
+                        });
+
+                // Mostra il popup
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 }

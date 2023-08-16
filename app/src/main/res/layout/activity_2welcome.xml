@@ -171,8 +171,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
             android:background="@drawable/button_design_general"
-            android:padding="16dp"
             android:onClick="onClickQueue"
+            android:padding="16dp"
             android:text="Accedi alla Coda"
             android:textColor="#FFFFFF" />
 

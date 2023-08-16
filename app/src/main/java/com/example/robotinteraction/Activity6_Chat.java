@@ -24,7 +24,7 @@ public class Activity6_Chat extends AppCompatActivity {
 
     private TextView textDomanda, scoreTextView;
     private Button buttonOption1, buttonOption2, buttonOption3;
-    private List<Question> questionList;
+    private List<Activity_Question> questionList;
     private int currentQuestionIndex = 0;
     private int score = 0;
     private Animation buttonAnimation;
@@ -231,26 +231,26 @@ public class Activity6_Chat extends AppCompatActivity {
     private void initializeQuestionList() {
         questionList = new ArrayList<>();
         // Aggiungi le domande alla lista
-        questionList.add(new Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
     }
 
     private void startGame(String selectedDrink) {
         if (currentQuestionIndex < questionList.size()) {
             // Ottieni la domanda corrente
-            Question currentQuestion = questionList.get(currentQuestionIndex);
+            Activity_Question currentQuestion = questionList.get(currentQuestionIndex);
 
             if (isTopicSelected(currentQuestion.getTopic())) {
                 textDomanda.setText(currentQuestion.getQuestion());
@@ -304,7 +304,7 @@ public class Activity6_Chat extends AppCompatActivity {
         return false;
     }
     private void checkAnswer(String selectedAnswer, String selectedDrink, Button buttonSelected) {
-        Question currentQuestion = questionList.get(currentQuestionIndex);
+        Activity_Question currentQuestion = questionList.get(currentQuestionIndex);
         if (selectedAnswer.equals(currentQuestion.getCorrectAnswer())) {
             // Risposta corretta, aggiorna lo score
             score++;

@@ -156,7 +156,7 @@
             android:layout_width="260dp"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_below="@id/textViewSignUp">
 
 
@@ -174,7 +174,7 @@
             android:layout_width="260dp"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_below="@id/emailTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -192,7 +192,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/passwordTextInputLayout"
             android:layout_marginTop="2dp"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Email e/o password errate"
             android:textAlignment="center"
             android:textColor="#FF0000"
@@ -222,9 +222,22 @@
             android:layout_marginTop="7dp"
             android:clickable="true"
             android:onClick="onClickSignUp"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Non hai un account? Registrati!"
             android:textColor="#1976D2"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/buttonGuest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonSignUp"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="onClickGuest"
+            android:padding="8dp"
+            android:text="Accedi come Ospite!"
+            android:textColor="#757575"
             android:textSize="16sp" />
 
     </RelativeLayout>
