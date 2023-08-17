@@ -250,66 +250,73 @@ int check_user(PGconn *conn, char *email)
     return counterEmailCheck;
 }
 
-int handle_login(int sockfd, PGconn *conn, char *email)
+int handle_login(int sockfd, PGconn *conn, char *buffer)
 {
-    // Reads the email and password from the client
+    // L'email e la password sono nello stesso buffer separati da uno spazio
+    // Dopo il comando "LOG_IN"
+    char email[BUFFER_SIZE];
     char password[BUFFER_SIZE];
-    read_from_socket(sockfd, email, BUFFER_SIZE);
-    read_from_socket(sockfd, password, BUFFER_SIZE);
 
+    sscanf(buffer, "LOG_IN %s %s", email, password);
+
+    // Stampa l'email e la password ricevute (per debug)
     printf("Email e password: %s - %s\n", email, password);
-    // Verify the credentials with the database.
+
+    // Crea una query SQL per ottenere la password dell'utente con l'email specificata
     char query[BUFFER_SIZE * 2];
     sprintf(query, "SELECT password FROM users WHERE email='%s';", email);
+
+    // Esegue la query sul database
     PGresult *resLogin = PQexec(conn, query);
 
-
-    // Nessun dato trovato
+    // Verifica se la query ha restituito dei risultati
     if (PQresultStatus(resLogin) != PGRES_TUPLES_OK || PQntuples(resLogin) != 1)
     {
+        // Se non ci sono risultati, significa che l'email non esiste nel database
         printf("Nessun dato trovato\n");
-        PQclear(resLogin);
-        write_to_socket(sockfd, "LOG_IN_ERROR");
-        // PQfinish(conn);
-        // close(sockfd); Se chiudiamo la socket non diamo possibilità all utente di riprovare a loggarsi
-        return -1;
+        PQclear(resLogin); // Libera la memoria allocata per il risultato della query
+        write_to_socket(sockfd, "LOG_IN_ERROR"); // Invia un messaggio di errore al client
+        return -1; // Ritorna -1 per indicare un errore
     }
 
-
-    // Utente loggato correttamente
+    // Se la password inviata dal client corrisponde a quella nel database, l'utente viene autenticato
     if (strcmp(password, PQgetvalue(resLogin, 0, 0)) == 0)
     {
-        printf("User %s logged in\n", email);
-        write_to_socket(sockfd, "LOG_IN_SUCCESS");
+        // Stampa un messaggio di successo (per debug)
+        printf("L'utente %s ha effettuato l'accesso correttamente\n", email);
 
-        // Aggiungo l'utente alla lista di sessione e gli assegno l'id
-        addUserToList(email);
-
-        // Recupero il valore dell'ID assegnato
+        // Ottiene l'ID dell'utente appena autenticato
         int id = getUserIdByEmail(email);
 
-        // Invio l'id al client dopo averlo trasformato in stringa
+        // Converte l'ID in una stringa per poterlo inviare al client
         char idString[BUFFER_SIZE];
         sprintf(idString,"%d",id);
-        write_to_socket(sockfd,idString);
 
-        // Il client provvederà a portare avanti l'id tramite le Intent
-        // fino alla chiusura dell'applicazione
+        // Combina il successo del login con l'ID in una sola risposta
+        char response[BUFFER_SIZE];
+        sprintf(response, "LOG_IN_SUCCESS %s", idString);
+
+        printf("Invio: %s\n", response);
+
+
+        write_to_socket(sockfd, response); // Invia la risposta al client
     }
-    // Errore nel Login: password non valida
     else
     {
+        // Se la password non corrisponde, stampa un messaggio di errore (per debug)
         printf("Password non valida per questa email %s \n", email);
-        PQclear(resLogin);
-        write_to_socket(sockfd, "LOG_IN_ERROR");
-        // PQfinish(conn);
-        // close(sockfd); Se chiudiamo la socket non diamo possibilità all utente di riprovare a loggarsi
-        return -1;
+        PQclear(resLogin); // Libera la memoria allocata per il risultato della query
+        write_to_socket(sockfd, "LOG_IN_ERROR"); // Invia un messaggio di errore al client
+        return -1; // Ritorna -1 per indicare un errore
     }
 
+    // Libera la memoria allocata per il risultato della query (in caso di successo)
     PQclear(resLogin);
+
+    // Ritorna 0 per indicare un'esecuzione corretta della funzione
     return 0;
 }
+
 
 /**
  * @brief Handles the welcoming procedure.
@@ -874,13 +881,14 @@ void *client_handler(void *socket_desc)
         int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
         if (n <= 0)
         {
-            printf("ERRORE NELLA LETTURA DELLA SOCKET\n");
+            printf(" ERRORE NELLA LETTURA DELLA SOCKET");
             break;
         }
 
-        if (strcmp(buffer, "LOG_IN") == 0)
+        // Usa strncmp() per vedere se il buffer inizia con "LOG_IN"
+        if (strncmp(buffer, "LOG_IN", strlen("LOG_IN")) == 0)
         {
-            handle_login(sockfd, conn, email);
+            handle_login(sockfd, conn, buffer);
         }
         else if (strcmp(buffer, "SIGN_UP") == 0)
         {
