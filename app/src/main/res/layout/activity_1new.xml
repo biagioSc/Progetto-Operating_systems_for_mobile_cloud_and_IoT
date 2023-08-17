@@ -146,44 +146,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Benvenuto in RoboDrink"
-            android:textSize="24sp"
+            android:textSize="21sp"
             android:layout_centerHorizontal="true"
             android:textStyle="bold"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:layout_below="@id/imageViewLogo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInputLayout"
-            android:layout_width="260dp"
+            android:layout_width="240dp"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/textViewSignUp">
+            android:layout_below="@id/textViewSignUp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp">
 
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextEmail"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:background="@drawable/text_rounded_border" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/text_rounded_border" />
+                <ImageButton
+                    android:id="@+id/emailToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:src="@drawable/mail"
+                    android:clickable="false"
+                    android:contentDescription="Toggle Email Visibility"/>
+            </RelativeLayout>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordTextInputLayout"
-            android:layout_width="260dp"
+            android:layout_width="240dp"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/emailTextInputLayout">
+            android:layout_below="@id/emailTextInputLayout"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextPassword"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:background="@drawable/text_rounded_border"/>
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:background="@drawable/text_rounded_border"
+                    android:drawablePadding="8dp"/>
+
+                <ImageButton
+                    android:id="@+id/passwordToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:src="@drawable/hide"
+                    android:contentDescription="Toggle Password Visibility"
+                    android:onClick="togglePasswordVisibility"/>
+            </RelativeLayout>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

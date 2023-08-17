@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ConnectException;
@@ -21,6 +22,7 @@ public class Activity_SocketManager {
     private boolean isConnecting = false;
 
     private Activity_SocketManager() {
+
         connectToServer();
     }
 
@@ -74,21 +76,20 @@ public class Activity_SocketManager {
     }
 
     public String receive() {
-        final StringBuilder receivedMessage = new StringBuilder();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        receivedMessage.append(line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        try {
+            InputStream inputStream = socket.getInputStream(); // Supponiamo che tu abbia un oggetto Socket
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader in = new BufferedReader(inputStreamReader);
+
+            String receivedData = in.readLine();
+            if (receivedData != null) {
+                receivedData = receivedData.trim().replaceAll("\\n$", "");
             }
-        }).start();
-        return receivedMessage.toString();
+            return receivedData;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public boolean isConnected() {

@@ -1,13 +1,12 @@
 package com.example.robotinteraction;
 
-
+// Import delle librerie necessarie
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.UnderlineSpan;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,78 +14,61 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.io.IOException;
-import android.graphics.Typeface;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.View;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class Activity1_New extends AppCompatActivity {
 
-    // Dichiarazioni delle variabili per gli elementi dell'interfaccia
-    private static final long TIME_THRESHOLD = 60000; // Soglia di inattività di 60 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
+    // Dichiarazione delle variabili
+    private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private Button buttonLogin;
     private TextView textViewError, textViewSignUp, textViewGuest;
     private Animation buttonAnimation;
-    //private SocketManager socket;
-    private Activity_SocketManager socketNew;
-
-    private String sessionID = null;
+    private Activity_SocketManager socket;
+    private boolean isPasswordVisible = false;
+    private ImageButton passwordToggle;
+    private String sessionID = "Guest", LOG_IN_RESPONSE = "LOG_IN_ERROR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
-        socketNew = Activity_SocketManager.getInstance();
+        // Inizializzazione delle variabili e dei componenti
+        initVariables();
+        initUIComponents();
+        setupListeners();
+    }
 
-        // Tentativo di connessione continua
- /*       new Thread(new Runnable() {
+    // Metodo per inizializzare le variabili non legate all'interfaccia utente
+    private void initVariables() {
+        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        boolean connesso = socket.isConnected();
+
+        /*if(connesso==false){
+            showPopupMessage();
+        }*/
+
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation); // Carica animazione per i pulsanti
+        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        Log.d("Activity1_New", "[CONNECTION] Tentativo di connessione...");
 
-                        // Crea una nuova istanza di SocketManager e tenta la connessione.
-                        socket = SocketManager.getInstance();
-                        socket.attemptConnection();
-
-                        if (socket.isConnected()) {
-                            Log.d("Activity1_New", "[CONNECTION] Connessione stabilita");
-                            break;
-                        } else {
-                            throw new IOException();
-                        }
-
-                    } catch (Exception e) {
-                        Log.d("Activity1_New", "[CONNECTION] Connessione fallita");
-                        showPopupMessage();
-                        break;
-                        //try {
-                          //  Thread.sleep(5000);
-                       // }/ catch (InterruptedException ie) {
-                         //   ie.printStackTrace();
-                        //}
-                    }
-                }
+                navigateTo(Activity0_OutOfSight.class);
             }
-        }).start();
-*/
-        // Collegamenti degli elementi dell'interfaccia alle variabili
+        };
+    }
+
+    // Metodo per inizializzare i componenti dell'interfaccia utente
+    private void initUIComponents() {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         emailTextInputLayout = findViewById(R.id.emailTextInputLayout);
@@ -95,107 +77,57 @@ public class Activity1_New extends AppCompatActivity {
         textViewError = findViewById(R.id.textViewError);
         textViewSignUp = findViewById(R.id.buttonSignUp);
         textViewGuest = findViewById(R.id.buttonGuest);
+        passwordToggle = findViewById(R.id.passwordToggle);
+    }
 
-        // Carica l'animazione del pulsante dal file XML
-        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+    // Metodo per configurare i listener dei vari componenti
+    private void setupListeners() {
+        setFocusChangeListener(editTextEmail);
+        setFocusChangeListener(editTextPassword);
+        setTouchListenerForAnimation(buttonLogin);
+        setTouchListenerForAnimation(textViewSignUp);
+        setTouchListenerForAnimation(textViewGuest);
+    }
 
-        // Imposta un timer di inattività per passare all'Activity "OutOfSight"
-        runnable = new Runnable() {
+    private void setFocusChangeListener(View view) {
+        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void run() {
-                Intent intent = new Intent(Activity1_New.this, Activity0_OutOfSight.class);
-                startActivity(intent);
-            }
-        };
-
-        startInactivityTimer();
-
-        // Aggiungi listener per nascondere il messaggio di errore quando l'utente modifica gli EditText
-        editTextEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
+            public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+                    resetInactivityTimer();
                     textViewError.setVisibility(View.INVISIBLE);
                 }
             }
         });
+    }
 
-        editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-                    textViewError.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-
-        buttonLogin.setOnTouchListener(new View.OnTouchListener() {
+    private void setTouchListenerForAnimation(View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
-
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    applyButtonAnimation(v);
                 }
                 return false;
             }
         });
+    }
 
-        textViewSignUp.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
+    private void applyButtonAnimation(View v) {
+        v.startAnimation(buttonAnimation);
+        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+    }
 
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
-                }
-                return false;
-            }
-        });
+    private void navigateTo(Class<?> targetActivity) {
+        Intent intent = new Intent(Activity1_New.this, targetActivity);
+        startActivity(intent);
+    }
 
-        textViewGuest.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
-
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
-                }
-                return false;
-            }
-        });
+    private void navigateToParam(Class<?> targetActivity, String param) {
+        Intent intent = new Intent(Activity1_New.this, targetActivity);
+        intent.putExtra(param, param);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -217,71 +149,62 @@ public class Activity1_New extends AppCompatActivity {
     }
 
     public void onClickSignUp(View v) {
-        // Passa all'Activity di registrazione
+        resetInactivityTimer();
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
         startActivity(intent);
     }
 
     public void onClickGuest(View v) {
+        resetInactivityTimer();
         Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
-        // Passaggio del sessionID
-        String sessionID = "Guest";
+        sessionID = "Guest";
         intent.putExtra("SESSION_ID", sessionID);
         startActivity(intent);
     }
 
     public void onClickAccedi(View v) {
-        // Ottieni le credenziali inserite dall'utente
+        resetInactivityTimer();
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        // Verifica la validità delle credenziali
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             textViewError.setText("Inserisci email e password");
             textViewError.setVisibility(View.VISIBLE);
         } else {
-            // Se le credenziali sono valide, avvia la comunicazione con il server
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    // Inizia la procedura di login con il server
-                    socketNew.send("LOG_IN");
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    socketNew.send(email);
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    socketNew.send(password);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textViewError.setVisibility(View.INVISIBLE);
+                        }
+                    });
 
-                    // Ricevi la risposta dal server
-                    String response = socketNew.receive();
-                    Log.d("Activity1_New", response);
-                    if (response.equalsIgnoreCase("LOG_IN_SUCCESS")) {
-                        sessionID = socketNew.receive();
+                    socket.send("LOG_IN"+" "+email+" "+password);
+                    String response = socket.receive();
+
+                    String[] parts = response.split(" ");
+
+                    if (parts.length >= 2) {
+                        LOG_IN_RESPONSE = parts[0];
+                        sessionID = parts[1];
+                    }
+
+                    if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)){
+                        navigateToParam(Activity2_Welcome.class, sessionID);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
-                                // Passaggio del sessionID
-                                intent.putExtra("SESSION_ID", sessionID);
-                                startActivity(intent);
-                                finish();
+                                textViewError.setVisibility(View.INVISIBLE);
                             }
-                        });
-                    } else {
-                        // Gestisci l'errore di login
-                        Log.d("Activity1_New", "Email o password non corrette!");
+                        });                       }
+                    else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                textViewError.setText("Email e/o password non valide");
-                                textViewError.setVisibility(View.VISIBLE);                            }
+                                textViewError.setVisibility(View.VISIBLE);
+                            }
                         });
                     }
                 }
@@ -289,10 +212,7 @@ public class Activity1_New extends AppCompatActivity {
         }
     }
 
-    // Metodo per verificare la validità del login (momentaneamente sempre vero)
-
     private void startInactivityTimer() {
-
         handler.postDelayed(runnable, TIME_THRESHOLD);
     }
 
@@ -310,20 +230,31 @@ public class Activity1_New extends AppCompatActivity {
                         .setMessage("Attualmente i server sono offline, fai l'accesso come 'Ospite'!")
                         .setPositiveButton("Accedi come Ospite!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // L'utente ha fatto clic su "Ok"
                                 Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
-                                // Passaggio del sessionID
                                 sessionID = "Guest";
                                 intent.putExtra("SESSION_ID", sessionID);
                                 startActivity(intent);
-                                dialog.dismiss(); // Chiudi il popup
+                                dialog.dismiss();
+                                finish();
                             }
                         });
 
-                // Mostra il popup
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
         });
     }
+
+    public void togglePasswordVisibility(View view) {
+        if (isPasswordVisible) {
+            editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+            passwordToggle.setImageResource(R.drawable.hide);
+        } else {
+            editTextPassword.setTransformationMethod(null);
+            passwordToggle.setImageResource(R.drawable.visible);
+        }
+        isPasswordVisible = !isPasswordVisible;
+        editTextPassword.setSelection(editTextPassword.getText().length());
+    }
+
 }
