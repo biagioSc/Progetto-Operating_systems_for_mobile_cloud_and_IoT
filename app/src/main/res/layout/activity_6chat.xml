@@ -141,72 +141,114 @@
             android:layout_centerHorizontal="true"
             android:src="@drawable/pic6chat" />
 
-        <TextView
-            android:id="@+id/textDomanda"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/userToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/user"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewLoggedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Utente Loggato"
+                android:padding="8dp"
+                android:layout_toStartOf="@id/userToggle"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@id/imageView6"
-            android:layout_marginTop="3dp"
-            android:padding="16dp"
-            android:text="QUI DOMANDA"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+            android:orientation="vertical"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp">
 
-        <Button
-            android:id="@+id/buttonOption1"
-            android:layout_width="248dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textDomanda"
-            android:layout_marginTop="30dp"
-            android:text="Risposta 1"
-            android:background="@drawable/button_design_chat"
-            android:textColor="#FFFFFF"
-            android:layout_centerHorizontal="true"
-            android:textSize="20sp" />
+            <!-- Domanda -->
+            <TextView
+                android:id="@+id/textDomanda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Domanda"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/buttonOption2"
-            android:layout_width="248dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonOption1"
-            android:layout_marginTop="10dp"
-            android:text="Risposta 1"
-            android:background="@drawable/button_design_chat"
-            android:textColor="#FFFFFF"
-            android:layout_centerHorizontal="true"
-            android:textSize="20sp" />
+            <!-- Risposte -->
+            <RadioGroup
+                android:id="@+id/answerRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buttonOption3"
-            android:layout_width="248dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonOption2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_design_chat"
-            android:text="Risposta 1"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-        <!-- Timer display -->
-        <ProgressBar
-            android:id="@+id/timerProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonOption3"
-            android:layout_marginTop="40dp"
-            android:progress="100"
-            android:max="100" />
+                <RadioButton
+                    android:id="@+id/answerOptionA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="OptionA" />
 
-        <!-- Score display -->
-        <TextView
-            android:id="@+id/scoreTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/timerProgressBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="Score: 0" />
+                <RadioButton
+                    android:id="@+id/answerOptionB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="OptionB" />
+
+                <RadioButton
+                    android:id="@+id/answerOptionC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="OptionC" />
+
+                <RadioButton
+                    android:id="@+id/answerOptionD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="OptionD" />
+            </RadioGroup>
+
+            <!-- Pulsante per confermare la risposta -->
+            <Button
+                android:id="@+id/confirmButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_design_chat"
+                android:text="Conferma Risposta"
+                android:layout_marginTop="16dp"/>
+
+            <ProgressBar
+                android:id="@+id/timerProgressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/confirmButton"
+                android:layout_marginTop="15dp"
+                android:progress="100"
+                android:max="100" />
+
+            <!-- Score display -->
+            <TextView
+                android:id="@+id/scoreTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/timerProgressBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:text="Score: 0"
+                android:textAlignment="center" />
+        </LinearLayout>
+
 
     </RelativeLayout>
 </LinearLayout>

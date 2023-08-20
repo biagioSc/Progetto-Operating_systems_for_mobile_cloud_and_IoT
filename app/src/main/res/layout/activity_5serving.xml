@@ -141,6 +141,33 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/pic5serving" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/userToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/user"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewLoggedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/userToggle"
+                android:padding="8dp"
+                android:text="Utente Loggato" />
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/textViewOrderStatusTitle"
             android:layout_width="wrap_content"
@@ -149,6 +176,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:text="In preparazione:"
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp" />
 

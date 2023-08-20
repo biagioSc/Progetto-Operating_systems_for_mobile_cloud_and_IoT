@@ -1,6 +1,7 @@
 package com.example.robotinteraction;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,7 +11,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +27,9 @@ import java.util.List;
 
 public class Activity6_Chat extends AppCompatActivity {
 
-    private TextView textDomanda, scoreTextView;
-    private Button buttonOption1, buttonOption2, buttonOption3;
+    private TextView textDomanda, textViewLoggedIn, scoreTextView;
+    private RadioGroup answerRadioGroup;
+    private Button confirmButton;
     private List<Activity_Question> questionList;
     private int currentQuestionIndex = 0;
     private int score = 0;
@@ -32,224 +38,170 @@ public class Activity6_Chat extends AppCompatActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private String[] selectedTopics = {"Storia", "Geografia"}; // Aggiungi gli argomenti desiderati
+    private String sessionID = "-1", user = "Guest", selectedDrink;
+    private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
+    private static final long DELAY_BETWEEN_QUESTIONS = 5000; // 5 secondi
+    private ProgressBar progressBar;
+    private static final long DELAY_BEFORE_NEXT_QUESTION = 10000; // 10 secondi
 
-    private String sessionID = null;
-
-    private SocketManager socket;
-
-    private String favouriteTopics = null; // Unica stringa separata da virgole
-    private String[] favouriteTopicsSplitted = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_6chat);
 
-        // Prendo il sessionID
-        Intent intent = getIntent();
-        if(intent != null)
-            sessionID = intent.getStringExtra("SESSION_ID");
+        connection();
+        initUIComponents();
+        setupListeners();
 
-        // Avvio comunicazione col server per ricevere topics preferiti dall'utente
-        new Thread(new Runnable() {
+        receiveParam();
+        setUpComponent();
+    }
+    private void connection() {
+        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        boolean connesso = socket.isConnected();
+
+        /*if(connesso==false){
+            showPopupMessage();
+        }*/
+
+        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        Log.d("activity_2welcome", "[CONNECTION] Tentativo di connessione...");
 
-                        // Crea una nuova istanza di SocketManager e tenta la connessione.
-                        socket = SocketManager.getInstance();
-                        socket.attemptConnection();
-
-                        if (socket.isConnected()) {
-                            Log.d("activity_2welcome", "[CONNECTION] Connessione stabilita");
-                            break;
-                        } else {
-                            throw new IOException();
-                        }
-
-                    } catch (Exception e) {
-                        Log.d("activity_2welcome", "[] Connessione fallita");
-
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Avviso il server dell'inizio della chat
-                    socket.sendMessage("START_CHAT");
-                    // Invio il sessionID dell'utente
-                    socket.sendMessage(sessionID);
-                    // Ricevo i topics preferiti dal server (come unica stringa separata da virgole)
-                    favouriteTopics = socket.receiveMessage();
-
-                    // Eseguo lo split e inserisco ogni topic nell'array
-                    favouriteTopicsSplitted = favouriteTopics.split(",");
-
-                    // [IMPLEMENTARE - DECIDERE COME GESTIRE IL RESTO]
-
-
-
-                } catch (IOException e) {
-                    Log.d("Activity6_Chat", "Errore durante i messaggi nella chat.");
-                }
-            }
-        }).start();
-
-
-        textDomanda = findViewById(R.id.textDomanda);
-        scoreTextView = findViewById(R.id.scoreTextView);
-        buttonOption1 = findViewById(R.id.buttonOption1);
-        buttonOption2 = findViewById(R.id.buttonOption2);
-        buttonOption3 = findViewById(R.id.buttonOption3);
-        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
-
-        final String selectedDrink = getIntent().getStringExtra("selectedDrink");
-
-        // Inizializza la lista delle domande
-        initializeQuestionList();
-
-        // Avvia il gioco
-        startGame(selectedDrink);
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(Activity6_Chat.this, Activity0_OutOfSight.class);
-                startActivity(intent);
+                navigateTo(Activity0_OutOfSight.class);
             }
         };
+    }
+    private void initUIComponents() {
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+        textDomanda = findViewById(R.id.textDomanda);
+        answerRadioGroup = findViewById(R.id.answerRadioGroup);
+        confirmButton = findViewById(R.id.confirmButton);
+        scoreTextView = findViewById(R.id.scoreTextView);
+        textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
+        progressBar = findViewById(R.id.timerProgressBar);
 
-        startInactivityTimer();
+    }
+    private void setupListeners() {
+        setTouchListenerForAnimation(confirmButton);
+        setOnClickListener(confirmButton);
 
-        buttonOption1.setOnTouchListener(new View.OnTouchListener() {
+    }
+    private void setTouchListenerForAnimation(View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
-
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
-                }
-                return false;
-            }
-        });
-
-        buttonOption2.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
-
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
-                }
-                return false;
-            }
-        });
-
-        buttonOption3.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
-
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    resetInactivityTimer();
+                    applyButtonAnimation(v);
                 }
                 return false;
             }
         });
     }
-
+    private void setOnClickListener(View view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkAnswer();
+            }
+        });
+    }
+    private void applyButtonAnimation(View v) {
+        v.startAnimation(buttonAnimation);
+        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+    }
+    private void navigateTo(Class<?> targetActivity) {
+        Intent intent = new Intent(Activity6_Chat.this, targetActivity);
+        startActivity(intent);
+    }
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
+        Intent intent = new Intent(Activity6_Chat.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
+        intent.putExtra("param3", param3);
+        startActivity(intent);
+        finish();
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         resetInactivityTimer();
         return super.onTouchEvent(event);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         resetInactivityTimer();
     }
-
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
     }
-
     private void startInactivityTimer() {
+
         handler.postDelayed(runnable, TIME_THRESHOLD);
     }
-
     private void resetInactivityTimer() {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
+    private void receiveParam() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            sessionID = intent.getStringExtra("param1");
+            user = intent.getStringExtra("param2");
+            selectedDrink = intent.getStringExtra("param3");
+            int atIndex = user.indexOf("@");
 
+            // Verificare se è presente il simbolo "@"
+            if (atIndex != -1) {
+                String username = user.substring(0, atIndex);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewLoggedIn.setText(username);
+                    }
+                });
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        textViewLoggedIn.setText(user);
+                    }
+                });
+            }
+        }
+    }
+    private void setUpComponent() {
+        initializeQuestionList();
+        progressBar.setMax(questionList.size());
+        progressBar.setProgress(currentQuestionIndex);
+
+        startGame();
+    }
     private void initializeQuestionList() {
         questionList = new ArrayList<>();
         // Aggiungi le domande alla lista
-        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
-        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2"));
+        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
     }
-
-    private void startGame(String selectedDrink) {
+    private void startGame() {
         if (currentQuestionIndex < questionList.size()) {
-            // Ottieni la domanda corrente
             Activity_Question currentQuestion = questionList.get(currentQuestionIndex);
 
             if (isTopicSelected(currentQuestion.getTopic())) {
@@ -258,43 +210,43 @@ public class Activity6_Chat extends AppCompatActivity {
                 answerOptions.add(currentQuestion.getCorrectAnswer());
                 answerOptions.add(currentQuestion.getWrongAnswer1());
                 answerOptions.add(currentQuestion.getWrongAnswer2());
+                answerOptions.add(currentQuestion.getWrongAnswer3());
                 Collections.shuffle(answerOptions);
-                buttonOption1.setText(answerOptions.get(0));
-                buttonOption2.setText(answerOptions.get(1));
-                buttonOption3.setText(answerOptions.get(2));
 
-                // Aggiungi i listener per i pulsanti di risposta
-                buttonOption1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkAnswer(buttonOption1.getText().toString(), selectedDrink, buttonOption1);
-                    }
-                });
+                ((RadioButton) answerRadioGroup.getChildAt(0)).setText("A) " + answerOptions.get(0));
+                ((RadioButton) answerRadioGroup.getChildAt(1)).setText("B) " + answerOptions.get(1));
+                ((RadioButton) answerRadioGroup.getChildAt(2)).setText("C) " + answerOptions.get(2));
+                ((RadioButton) answerRadioGroup.getChildAt(3)).setText("D) " + answerOptions.get(3));
 
-                buttonOption2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkAnswer(buttonOption2.getText().toString(), selectedDrink, buttonOption2);
-                    }
-                });
+                answerRadioGroup.clearCheck();
 
-                buttonOption3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkAnswer(buttonOption3.getText().toString(), selectedDrink, buttonOption3);
-                    }
-                });
+                answerRadioGroup.setEnabled(true); // Abilita il gruppo di radiobutton
+                //confirmButton.setVisibility(View.VISIBLE); // Mostra il pulsante di conferma
+                //confirmButton.setEnabled(false); // Disabilita il pulsante di conferma
+
+                progressBar.setProgress(currentQuestionIndex + 1); // Aggiorna la ProgressBar
+
+                // Avvia il conteggio di tempo per la prossima domanda
+                delayedStartNextQuestion();
             } else {
-                // La domanda non corrisponde agli argomenti selezionati, passa alla prossima domanda
                 currentQuestionIndex++;
-                startGame(selectedDrink);
+                startGame();
             }
         } else {
-            // Il gioco è finito, vai alla schermata successiva (Activity_7Farewelling)
-            openFarewellingActivity(selectedDrink);
+            scoreTextView.setText("Hai finito il quiz. Punteggio: " + score);
+            navigateToParam(Activity2_Welcome.class, sessionID, user, selectedDrink);
         }
     }
-
+    private void delayedStartNextQuestion() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Passa alla prossima domanda
+                currentQuestionIndex++;
+                startGame();
+            }
+        }, DELAY_BEFORE_NEXT_QUESTION);
+    }
     private boolean isTopicSelected(String topic) {
         for (String selectedTopic : selectedTopics) {
             if (selectedTopic.equals(topic)) {
@@ -303,28 +255,35 @@ public class Activity6_Chat extends AppCompatActivity {
         }
         return false;
     }
-    private void checkAnswer(String selectedAnswer, String selectedDrink, Button buttonSelected) {
+    private void checkAnswer() {
         Activity_Question currentQuestion = questionList.get(currentQuestionIndex);
-        if (selectedAnswer.equals(currentQuestion.getCorrectAnswer())) {
-            // Risposta corretta, aggiorna lo score
-            score++;
-            scoreTextView.setText("Score: " + score);
-            buttonSelected.setBackgroundResource(R.drawable.correct_button_background);
+        int selectedRadioButtonId = answerRadioGroup.getCheckedRadioButtonId();
+
+        if (selectedRadioButtonId != -1) {
+            RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+            String selectedAnswer = selectedRadioButton.getText().toString().substring(3);
+            if (selectedAnswer.equals(currentQuestion.getCorrectAnswer())) {
+                score++;
+                scoreTextView.setText("Score: " + score);
+                selectedRadioButton.setTextColor(Color.GREEN);
+            } else {
+                selectedRadioButton.setTextColor(Color.RED);
+                // Colora in verde la risposta corretta
+                for (int i = 0; i < answerRadioGroup.getChildCount(); i++) {
+                    RadioButton radioButton = (RadioButton) answerRadioGroup.getChildAt(i);
+                    String answerText = radioButton.getText().toString().substring(3);
+                    if (answerText.equals(currentQuestion.getCorrectAnswer())) {
+                        radioButton.setTextColor(Color.GREEN);
+                        break;  // Esci dal loop una volta trovata la risposta corretta
+                    }
+                }
+            }
+
+            // Passa alla prossima domanda
+            currentQuestionIndex++;
+            startGame();
+        } else {
+            Toast.makeText(Activity6_Chat.this, "Seleziona una risposta prima di confermare.", Toast.LENGTH_SHORT).show();
         }
-        else{
-            buttonSelected.setBackgroundResource(R.drawable.wrong_button_background);
-        }
-
-        // Passa alla prossima domanda
-        currentQuestionIndex++;
-        startGame(selectedDrink);
-    }
-
-    private void openFarewellingActivity(String selectedDrink) {
-        Intent intent = new Intent(this, Activity7_Farewelling.class);
-        intent.putExtra("selectedDrink", selectedDrink);
-        intent.putExtra("SESSION_ID",sessionID);
-        startActivity(intent);
-
     }
 }

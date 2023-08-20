@@ -141,6 +141,34 @@
             android:contentDescription="Logo"
             android:src="@drawable/pic2welcome" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/userToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/user"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewLoggedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Utente Loggato"
+                android:padding="8dp"
+                android:layout_toStartOf="@id/userToggle"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+
         <TextView
             android:id="@+id/textViewWelcome"
             android:layout_width="wrap_content"
@@ -148,9 +176,11 @@
             android:layout_below="@id/imageViewLogo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="Bentornato su RobotDrink!"
-            android:textColor="#000000"
-            android:textSize="22sp" />
+            android:text="Bentornato su RobotDrink"
+            android:textStyle="bold"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/textViewDescription"
@@ -159,14 +189,16 @@
             android:layout_below="@id/textViewWelcome"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text="Grazie per aver scelto la nostra app"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:text="Grazie per averci scelto"
             android:textColor="#757575"
             android:textSize="16sp" />
 
         <Button
             android:id="@+id/buttonChecknextState"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_below="@id/textViewDescription"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
@@ -174,30 +206,6 @@
             android:onClick="onClickQueue"
             android:padding="16dp"
             android:text="Accedi alla Coda"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/textViewOr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonChecknextState"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="oppure"
-            android:textColor="#757575"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/buttonLogOut"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewOr"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_design_general"
-            android:padding="16dp"
-            android:text="Esci"
-            android:onClick="onClickExit"
             android:textColor="#FFFFFF" />
 
     </RelativeLayout>

@@ -24,9 +24,7 @@ import android.content.DialogInterface;
 public class Activity1_New extends AppCompatActivity {
 
     // Dichiarazione delle variabili
-    private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private Runnable runnable;
+
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private Button buttonLogin;
@@ -35,21 +33,23 @@ public class Activity1_New extends AppCompatActivity {
     private Activity_SocketManager socket;
     private boolean isPasswordVisible = false;
     private ImageButton passwordToggle;
-    private String sessionID = "Guest", LOG_IN_RESPONSE = "LOG_IN_ERROR";
-
+    private String sessionID = "-1", user = "Guest";
+    private String LOG_IN_RESPONSE = "LOG_IN_ERROR";
+    private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
         // Inizializzazione delle variabili e dei componenti
-        initVariables();
+        connection();
         initUIComponents();
         setupListeners();
     }
 
-    // Metodo per inizializzare le variabili non legate all'interfaccia utente
-    private void initVariables() {
+    private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
         boolean connesso = socket.isConnected();
 
@@ -57,7 +57,6 @@ public class Activity1_New extends AppCompatActivity {
             showPopupMessage();
         }*/
 
-        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation); // Carica animazione per i pulsanti
         runnable = new Runnable() { // Azione da eseguire dopo l'inattività
             @Override
             public void run() {
@@ -66,9 +65,8 @@ public class Activity1_New extends AppCompatActivity {
             }
         };
     }
-
-    // Metodo per inizializzare i componenti dell'interfaccia utente
     private void initUIComponents() {
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         emailTextInputLayout = findViewById(R.id.emailTextInputLayout);
@@ -79,8 +77,6 @@ public class Activity1_New extends AppCompatActivity {
         textViewGuest = findViewById(R.id.buttonGuest);
         passwordToggle = findViewById(R.id.passwordToggle);
     }
-
-    // Metodo per configurare i listener dei vari componenti
     private void setupListeners() {
         setFocusChangeListener(editTextEmail);
         setFocusChangeListener(editTextPassword);
@@ -88,7 +84,6 @@ public class Activity1_New extends AppCompatActivity {
         setTouchListenerForAnimation(textViewSignUp);
         setTouchListenerForAnimation(textViewGuest);
     }
-
     private void setFocusChangeListener(View view) {
         view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -100,68 +95,68 @@ public class Activity1_New extends AppCompatActivity {
             }
         });
     }
-
     private void setTouchListenerForAnimation(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    resetInactivityTimer();
                     applyButtonAnimation(v);
                 }
                 return false;
             }
         });
     }
-
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(() -> v.clearAnimation(), 200);
     }
-
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity1_New.this, targetActivity);
         startActivity(intent);
     }
-
-    private void navigateToParam(Class<?> targetActivity, String param) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity1_New.this, targetActivity);
-        intent.putExtra(param, param);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
         startActivity(intent);
         finish();
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         resetInactivityTimer();
         return super.onTouchEvent(event);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         resetInactivityTimer();
     }
-
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
     }
+    private void startInactivityTimer() {
 
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
     public void onClickSignUp(View v) {
         resetInactivityTimer();
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
         startActivity(intent);
     }
-
     public void onClickGuest(View v) {
         resetInactivityTimer();
-        Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
-        sessionID = "Guest";
-        intent.putExtra("SESSION_ID", sessionID);
-        startActivity(intent);
-    }
+        sessionID = "-1";
+        user="Guest";
+        navigateToParam(Activity2_Welcome.class, sessionID, user);
 
+    }
     public void onClickAccedi(View v) {
         resetInactivityTimer();
         String email = editTextEmail.getText().toString().trim();
@@ -192,7 +187,7 @@ public class Activity1_New extends AppCompatActivity {
                     }
 
                     if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)){
-                        navigateToParam(Activity2_Welcome.class, sessionID);
+                        navigateToParam(Activity2_Welcome.class, sessionID, email);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -211,16 +206,6 @@ public class Activity1_New extends AppCompatActivity {
             }).start();
         }
     }
-
-    private void startInactivityTimer() {
-        handler.postDelayed(runnable, TIME_THRESHOLD);
-    }
-
-    private void resetInactivityTimer() {
-        handler.removeCallbacks(runnable);
-        startInactivityTimer();
-    }
-
     public void showPopupMessage() {
         runOnUiThread(new Runnable() {
             @Override
@@ -230,10 +215,9 @@ public class Activity1_New extends AppCompatActivity {
                         .setMessage("Attualmente i server sono offline, fai l'accesso come 'Ospite'!")
                         .setPositiveButton("Accedi come Ospite!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent(Activity1_New.this, Activity2_Welcome.class);
-                                sessionID = "Guest";
-                                intent.putExtra("SESSION_ID", sessionID);
-                                startActivity(intent);
+                                sessionID = "-1";
+                                user="Guest";
+                                navigateToParam(Activity2_Welcome.class, sessionID, user);
                                 dialog.dismiss();
                                 finish();
                             }
@@ -244,7 +228,6 @@ public class Activity1_New extends AppCompatActivity {
             }
         });
     }
-
     public void togglePasswordVisibility(View view) {
         if (isPasswordVisible) {
             editTextPassword.setTransformationMethod(new PasswordTransformationMethod());

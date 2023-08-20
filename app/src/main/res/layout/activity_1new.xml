@@ -141,6 +141,24 @@
             android:contentDescription="Logo"
             android:src="@drawable/pic1main" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/userToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/user"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"/>
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/textViewSignUp"
             android:layout_width="wrap_content"
@@ -183,6 +201,8 @@
                     android:padding="8dp"
                     android:src="@drawable/mail"
                     android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:contentDescription="Toggle Email Visibility"/>
             </RelativeLayout>
         </com.google.android.material.textfield.TextInputLayout>
@@ -218,6 +238,9 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:padding="8dp"
                     android:src="@drawable/hide"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:contentDescription="Toggle Password Visibility"
                     android:onClick="togglePasswordVisibility"/>
             </RelativeLayout>

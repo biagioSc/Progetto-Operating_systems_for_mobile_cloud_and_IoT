@@ -32,7 +32,22 @@ public class Activity9_Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_9signup);
 
-        // Inizializza gli elementi UI
+        connection();
+        initUIComponents();
+        setupListeners();
+
+        setUpComponent();
+    }
+    private void connection() {
+        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
+            @Override
+            public void run() {
+
+                navigateTo(Activity0_OutOfSight.class);
+            }
+        };
+    }
+    private void initUIComponents() {
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLastName = findViewById(R.id.editTextLastName);
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -40,7 +55,63 @@ public class Activity9_Signup extends AppCompatActivity {
         buttonRegisterContinue = findViewById(R.id.buttonRegisterContinue);
         textViewError = findViewById(R.id.textViewError2);
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+    }
+    private void setupListeners() {
+        setTouchListenerForAnimation(buttonRegisterContinue);
+    }
+    private void setTouchListenerForAnimation(View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    resetInactivityTimer();
+                    applyButtonAnimation(v);
+                }
+                return false;
+            }
+        });
+    }
+    private void applyButtonAnimation(View v) {
+        v.startAnimation(buttonAnimation);
+        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+    }
+    private void navigateTo(Class<?> targetActivity) {
+        Intent intent = new Intent(Activity9_Signup.this, targetActivity);
+        startActivity(intent);
+    }
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
+        Intent intent = new Intent(Activity9_Signup.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
+        intent.putExtra("param3", param3);
+        intent.putExtra("param4", param4);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+    private void startInactivityTimer() {
 
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
+    private void setUpComponent() {
         buttonRegisterContinue.setEnabled(false);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -73,62 +144,8 @@ public class Activity9_Signup extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-
-        startInactivityTimer();
-
-        buttonRegisterContinue.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
-
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
-                }
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        resetInactivityTimer();
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        resetInactivityTimer();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
-    }
-
-    private void startInactivityTimer() {
-        handler.postDelayed(runnable, TIME_THRESHOLD);
-    }
-
-    private void resetInactivityTimer() {
-        handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
-
-    // Imposta un listener per il pulsante di registrazione
-
     public void onClickRContinue(View view) {
         // Ottieni il testo dai campi di input
         String firstName = editTextFirstName.getText().toString().trim();
@@ -141,11 +158,6 @@ public class Activity9_Signup extends AppCompatActivity {
         boolean emailValido = !email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches();
         boolean passwordValida = password.length() >= 6;
 
-        Log.d("Activity9_Signup",nomeValido + " " + cognomeValido + " " + emailValido + " " + passwordValida);
-
-        // [SERVER] CONTROLLARE DATI
-
-        // Effettua il controllo sui campi obbligatori
         if (nomeValido==false || cognomeValido ==false || emailValido ==false || passwordValida==false) {
             textViewError.setText("Email e/o password errate");
             textViewError.setVisibility(View.VISIBLE);
@@ -153,19 +165,9 @@ public class Activity9_Signup extends AppCompatActivity {
         else{
             textViewError.setVisibility(View.INVISIBLE);
             buttonRegisterContinue.setEnabled(nomeValido && cognomeValido && emailValido && passwordValida);
-            openInterviewActivity(firstName, lastName, email, password);
+            navigateToParam(Activity9_Interview.class, firstName, lastName, email, password);
         }
 
-    }
-
-    // Metodo per aprire l'activity "Interview"
-    private void openInterviewActivity(String firstName, String lastName, String email, String password) {
-        Intent intent = new Intent(this, Activity9_Interview.class);
-        intent.putExtra("nome", firstName);
-        intent.putExtra("cognome", lastName);
-        intent.putExtra("email", email);
-        intent.putExtra("password", password);
-        startActivity(intent);
     }
 
     private void updateButtonState() {
@@ -175,7 +177,6 @@ public class Activity9_Signup extends AppCompatActivity {
                 !editTextEmail.getText().toString().isEmpty() &&
                 !editTextPassword.getText().toString().isEmpty();
 
-        // Abilita o disabilita il bottone in base allo stato dei campi EditText
         buttonRegisterContinue.setEnabled(allFieldsNotEmpty);
     }
 }

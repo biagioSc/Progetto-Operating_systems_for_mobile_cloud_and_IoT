@@ -36,49 +36,37 @@ public class Activity9_Interview extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-    private SocketManager socket;
+    private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_9interview);
 
-        Intent intent = getIntent();
-        nome = intent.getStringExtra("nome");
-        cognome = intent.getStringExtra("cognome");
-        email = intent.getStringExtra("email");
-        password = intent.getStringExtra("password");
+        connection();
+        initUIComponents();
+        setupListeners();
 
-        Log.d("Activity9_Interview",nome + " " + cognome + " " + email + " " + password);
-        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+        receiveParam();
+    }
+    private void connection() {
+        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        boolean connesso = socket.isConnected();
 
-        new Thread(new Runnable() {
+        /*if(connesso==false){
+            showPopupMessage();
+        }*/
+
+        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
             @Override
             public void run() {
-                while(true){
-                    try {
-                        socket = SocketManager.getInstance();
-                        socket.attemptConnection();
 
-                        if(socket.isConnected()){
-                            break;
-                        }else{
-                            throw new IOException();
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
-                    }
-
-                }
+                navigateTo(Activity0_OutOfSight.class);
             }
-        }).start();
-
+        };
+    }
+    private void initUIComponents() {
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         drinkCheckboxes = new CheckBox[]{
                 findViewById(R.id.checkBoxDrink1),
                 findViewById(R.id.checkBoxDrink2),
@@ -102,6 +90,73 @@ public class Activity9_Interview extends AppCompatActivity {
         };
 
         buttonSubmit = findViewById(R.id.buttonSubmit);
+
+    }
+    private void setupListeners() {
+        setTouchListenerForAnimation(buttonSubmit);
+    }
+    private void setTouchListenerForAnimation(View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    resetInactivityTimer();
+                    applyButtonAnimation(v);
+                }
+                return false;
+            }
+        });
+    }
+    private void applyButtonAnimation(View v) {
+        v.startAnimation(buttonAnimation);
+        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+    }
+    private void navigateTo(Class<?> targetActivity) {
+        Intent intent = new Intent(Activity9_Interview.this, targetActivity);
+        startActivity(intent);
+    }
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
+        Intent intent = new Intent(Activity9_Interview.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
+        intent.putExtra("param3", param3);
+        intent.putExtra("param4", param4);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        resetInactivityTimer();
+        return super.onTouchEvent(event);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        resetInactivityTimer();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+    private void startInactivityTimer() {
+
+        handler.postDelayed(runnable, TIME_THRESHOLD);
+    }
+    private void resetInactivityTimer() {
+        handler.removeCallbacks(runnable);
+        startInactivityTimer();
+    }
+    private void receiveParam() {
+        Intent intent = getIntent();
+        if (intent != null) {
+
+            nome = intent.getStringExtra("param1");
+            cognome = intent.getStringExtra("param2");
+            email = intent.getStringExtra("param3");
+            password = intent.getStringExtra("param4");
+        }
+
         buttonSubmit.setEnabled(false);
 
         for (CheckBox checkBox : drinkCheckboxes) {
@@ -133,160 +188,14 @@ public class Activity9_Interview extends AppCompatActivity {
                 }
             });
         }
-
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(Activity9_Interview.this, Activity0_OutOfSight.class);
-                startActivity(intent);
-            }
-        };
-
-        startInactivityTimer();
-
-        buttonSubmit.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Applica l'animazione di scala quando il bottone viene premuto
-                        v.startAnimation(buttonAnimation);
-
-                        // Avvia un Handler per ripristinare le dimensioni dopo un secondo
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Ripristina le dimensioni originali
-                                v.clearAnimation();
-                            }
-                        }, 200); // 1000 millisecondi = 1 secondo
-                        break;
-                }
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        resetInactivityTimer();
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        resetInactivityTimer();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
-    }
-
-    private void startInactivityTimer() {
-        handler.postDelayed(runnable, TIME_THRESHOLD);
-    }
-
-    private void resetInactivityTimer() {
-        handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
-
     public void onClickRegister(View v) {
         //[SERVER] mandare dati al server
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket.sendMessage("SIGN_UP");
-                    socket.sendMessage(email);
-                    socket.sendMessage(nome);
-
-                    socket.sendMessage(cognome);
-                    socket.sendMessage(password);
-
-                    int numeropreferezeInt=drinkSelections.size();
-                    String numeroprefrenzeString=Integer.toString(numeropreferezeInt);
-                    socket.sendMessage(numeroprefrenzeString);
-
-                    for(String drink : drinkSelections){
-                        socket.sendMessage(drink);
-
-                    }
-                    numeropreferezeInt=argSelections.size();
-                    numeroprefrenzeString=Integer.toString(numeropreferezeInt);
-                    socket.sendMessage(numeroprefrenzeString);
-
-                    for(String topic : argSelections){
-
-                        socket.sendMessage(topic);
-
-                    }
-
-
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-
-                String response = null;
-
-                response = socket.receiveMessage();
-
-
-                if(response != null)
-                {
-                    String finalResponse = response;
-
-                    if(finalResponse.equalsIgnoreCase(("SIGN_UP_ERROR"))){
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                    }
-                    else if(finalResponse.equalsIgnoreCase("SIGN_UP_SUCCESS")){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(Activity9_Interview.this,
-                                        "Registrazione completata",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Activity9_Interview.this,
-                                        Activity1_New.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-
-                    }
-
-                }else{
-                    Log.d("InterviewActivity","Il server ha inviato msg = null " +
-                            "come risposta alla signup");
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(Activity9_Interview.this, "Si è verificato un errore" +
-                                    " lato Server", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-
-            }
-        }).start();
-
         Intent newIntent = new Intent(Activity9_Interview.this, Activity1_New.class);
         startActivity(newIntent);
+        finish();
     }
-
     private void updateDrinkSelections() {
         drinkSelections.clear();
         for (CheckBox checkBox : drinkCheckboxes) {
@@ -295,7 +204,6 @@ public class Activity9_Interview extends AppCompatActivity {
             }
         }
     }
-
     private void updateArgSelections() {
         argSelections.clear();
         for (CheckBox checkBox : argCheckboxes) {
@@ -304,7 +212,6 @@ public class Activity9_Interview extends AppCompatActivity {
             }
         }
     }
-
     private void updateSubmitButtonState() {
         boolean isDrinkSelected = !drinkSelections.isEmpty();
         boolean isArgSelected = !argSelections.isEmpty() || argCheckboxes[7].isChecked();
@@ -320,4 +227,5 @@ public class Activity9_Interview extends AppCompatActivity {
             updateArgSelections();
         }
     }
+
 }

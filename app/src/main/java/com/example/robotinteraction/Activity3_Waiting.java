@@ -20,67 +20,89 @@ public class Activity3_Waiting extends AppCompatActivity {
     private TextView textViewQueueCount;
     private TextView textViewWaitTime;
     private ProgressBar progressBarWaiting;
-    private static final long TIME_THRESHOLD = 1200000; // 20 secondi
+    private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+    private TextView textViewLoggedIn;
+    private String sessionID = "-1", user = "Guest";
 
-    private String sessionID = null;
-
-    private SocketManager socket;
+    private Activity_SocketManager socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3waiting);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Log.d("Activity1_New", "[CONNECTION] Tentativo di connessione...");
+        connection();
+        initUIComponents();
 
-                        // Crea una nuova istanza di SocketManager e tenta la connessione.
-                        socket = SocketManager.getInstance();
-                        socket.attemptConnection();
+        receiveParam();
+        setUpComponent();
+    }
 
-                        if (socket.isConnected()) {
-                            Log.d("Activity1_New", "[CONNECTION] Connessione stabilita");
-                            break;
-                        } else {
-                            throw new IOException();
-                        }
+    private void connection() {
+        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        boolean connesso = socket.isConnected();
 
-                    } catch (Exception e) {
-                        Log.d("Activity1_New", "[CONNECTION] Connessione fallita");
-
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ie) {
-                            ie.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }).start();
-
-        // Get parameters from previous activity
-        Intent intent = getIntent();
-        queueCount = intent.getIntExtra("PARAM_NAME", 0);
-        sessionID = intent.getStringExtra("SESSION_ID");
-
+        /*if(connesso==false){
+            showPopupMessage();
+        }*/
+    }
+    private void initUIComponents() {
         textViewQueueCount = findViewById(R.id.textViewQueueCount);
         textViewWaitTime = findViewById(R.id.textViewWaitTime);
         progressBarWaiting = findViewById(R.id.progressBarWaiting);
+        textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
+    }
+    private void navigateTo(Class<?> targetActivity) {
+        Intent intent = new Intent(Activity3_Waiting.this, targetActivity);
+        startActivity(intent);
+    }
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2) {
+        Intent intent = new Intent(Activity3_Waiting.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
+        startActivity(intent);
+        finish();
+    }
+    private void receiveParam() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            queueCount = intent.getIntExtra("param3", 0);
+            sessionID = intent.getStringExtra("param1");
+            user = intent.getStringExtra("param2");
+
+            int atIndex = user.indexOf("@");
+
+            // Verificare se è presente il simbolo "@"
+            if (atIndex != -1) {
+                String username = user.substring(0, atIndex);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewLoggedIn.setText(username);
+                    }
+                });
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        textViewLoggedIn.setText(user);
+                    }
+                });
+            }
+        }
+    }
+    private void setUpComponent() {
 
         textViewQueueCount.setText("Persone in coda: " + queueCount);
 
-        queueTime = queueCount * 60; // Calculate queue time in seconds
+        queueTime = queueCount * 2; // Calculate queue time in seconds
         textViewWaitTime.setText("Tempo di attesa: " + queueTime + " secondi");
 
         progressBarWaiting.setMax(queueTime);
 
-        // Initialize and start the countdown timer
         new CountDownTimer(queueTime * 1000, 1000) {
             private int secondCounter = 0; // Variabile per il conteggio dei secondi
 
@@ -88,47 +110,19 @@ public class Activity3_Waiting extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 progressBarWaiting.setProgress((int) (queueTime - millisUntilFinished / 1000));
                 textViewWaitTime.setText("Tempo di attesa: " + (int) (millisUntilFinished / 1000) + " secondi");
-
-                // Incrementa il conteggio dei secondi
                 secondCounter++;
 
-                // Controlla se sono passati 30 secondi
-                if (secondCounter >= 30) {
-
-                    // [SERVER] CHIEDERE AGGIORNAMENTO A SERVER
-                    // Azzerare la variabile dei secondi
+                if (secondCounter >= 20) {
                     secondCounter = 0;
-
-                    // Diminuire il numero di persone in coda di 1
-                    //if(queueCount < queueCountActual){
-                        //queueCount--;
-                    //}
+                    queueCount--;
                     textViewQueueCount.setText("Persone in coda: " + queueCount);
                 }
             }
 
+
             @Override
             public void onFinish() {
-                // Handle countdown finish
-                // For example, navigate to the "Ordering" activity
-                Intent intent = new Intent(Activity3_Waiting.this, Activity4_Ordering.class);
-                intent.putExtra("SESSION_ID",sessionID);
-
-                // Informo il server dell'update da fare
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            socket.sendMessage("ADD_USER_ORDERING");
-                            socket.sendMessage(sessionID);
-
-                        }catch (IOException e){
-                            Log.d("Acitivty3_Waiting","Errore nella add_user_ordering");
-                        }
-                    }
-                }).start();
-
-                startActivity(intent);
+                navigateToParam(Activity4_Ordering.class, sessionID, user);
             }
         }.start();
 
@@ -140,35 +134,6 @@ public class Activity3_Waiting extends AppCompatActivity {
             }
         };
 
-        startInactivityTimer();
     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        resetInactivityTimer();
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        resetInactivityTimer();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        handler.removeCallbacks(runnable);
-    }
-
-    private void startInactivityTimer() {
-        handler.postDelayed(runnable, TIME_THRESHOLD);
-    }
-
-    private void resetInactivityTimer() {
-        handler.removeCallbacks(runnable);
-        startInactivityTimer();
-    }
-
 
 }

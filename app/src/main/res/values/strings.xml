@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="stato_text">STATO</string>
+    <string name="login_text">Login</string>
+    <string name="welcome_text">Welcome</string>
+    <string name="waiting_text">Waiting</string>
+    <string name="ordering_text">Ordering</string>
+    <string name="serving_text">Serving</string>
+    <string name="attesa_text">Attesa</string>
+    <string name="chatBot_text">ChatBot</string>
+    <string name="farewelling_text">Farewelling</string>
+    <string name="signup_text">Signup</string>
+    <string name="interview_text">Interview</string>
+    <string name="outofsight_text">Out Of Sight</string>
+    <string name="gone_text">Gone</string>
+    <string name="drink_preference_text">Che drink preferisci?</string>
+    <string name="topic_preference_text">Che argomenti preferisci?</string>
+    <string name="register_button_text">Registrati</string>
 </resources>
+

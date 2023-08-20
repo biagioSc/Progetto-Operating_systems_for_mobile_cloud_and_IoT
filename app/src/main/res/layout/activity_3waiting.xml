@@ -141,6 +141,33 @@
             android:contentDescription="Logo"
             android:src="@drawable/pic3waiting" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/userToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/user"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"/>
+
+            <TextView
+                android:id="@+id/textViewLoggedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Utente Loggato"
+                android:padding="8dp"
+                android:layout_toStartOf="@id/userToggle"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/textViewWaiting"
             android:layout_width="wrap_content"
