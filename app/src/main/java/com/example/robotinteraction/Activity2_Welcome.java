@@ -133,6 +133,7 @@ public class Activity2_Welcome extends Activity {
         intent.putExtra("param1",sessionID);
         intent.putExtra("param2",user);
         startActivity(intent);
+        finish();
     }
     private void receiveParam() {
         Intent intent = getIntent();

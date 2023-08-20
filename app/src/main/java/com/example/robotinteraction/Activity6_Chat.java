@@ -40,10 +40,10 @@ public class Activity6_Chat extends AppCompatActivity {
     private String[] selectedTopics = {"Storia", "Geografia"}; // Aggiungi gli argomenti desiderati
     private String sessionID = "-1", user = "Guest", selectedDrink;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
-    private static final long DELAY_BETWEEN_QUESTIONS = 5000; // 5 secondi
     private ProgressBar progressBar;
-    private static final long DELAY_BEFORE_NEXT_QUESTION = 10000; // 10 secondi
-
+    private List<Activity_Question> selectedQuestions = new ArrayList<>();
+    private static final long DELAY_BEFORE_NEXT_QUESTION = 1000; // Ritardo di 10 secondi
+    private static final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -177,9 +177,16 @@ public class Activity6_Chat extends AppCompatActivity {
     }
     private void setUpComponent() {
         initializeQuestionList();
-        progressBar.setMax(questionList.size());
-        progressBar.setProgress(currentQuestionIndex);
 
+        int totalQuestionsForSelectedTopics = 0;
+        for (Activity_Question question : questionList) {
+            if (isTopicSelected(question.getTopic())) {
+                totalQuestionsForSelectedTopics++;
+                selectedQuestions.add(question);
+            }
+        }
+        progressBar.setMax(totalQuestionsForSelectedTopics);
+        progressBar.setProgress(currentQuestionIndex);
         startGame();
     }
     private void initializeQuestionList() {
@@ -201,51 +208,33 @@ public class Activity6_Chat extends AppCompatActivity {
         questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
     }
     private void startGame() {
-        if (currentQuestionIndex < questionList.size()) {
-            Activity_Question currentQuestion = questionList.get(currentQuestionIndex);
+        resetRadioButtonTextColors(); // Imposta tutti i testi a nero
+        if (currentQuestionIndex < selectedQuestions.size()) {
+            confirmButton.setEnabled(true);
+            Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
+            textDomanda.setText(currentQuestion.getQuestion());
+            List<String> answerOptions = new ArrayList<>();
+            answerOptions.add(currentQuestion.getCorrectAnswer());
+            answerOptions.add(currentQuestion.getWrongAnswer1());
+            answerOptions.add(currentQuestion.getWrongAnswer2());
+            answerOptions.add(currentQuestion.getWrongAnswer3());
+            Collections.shuffle(answerOptions);
 
-            if (isTopicSelected(currentQuestion.getTopic())) {
-                textDomanda.setText(currentQuestion.getQuestion());
-                List<String> answerOptions = new ArrayList<>();
-                answerOptions.add(currentQuestion.getCorrectAnswer());
-                answerOptions.add(currentQuestion.getWrongAnswer1());
-                answerOptions.add(currentQuestion.getWrongAnswer2());
-                answerOptions.add(currentQuestion.getWrongAnswer3());
-                Collections.shuffle(answerOptions);
+            ((RadioButton) answerRadioGroup.getChildAt(0)).setText("A) " + answerOptions.get(0));
+            ((RadioButton) answerRadioGroup.getChildAt(1)).setText("B) " + answerOptions.get(1));
+            ((RadioButton) answerRadioGroup.getChildAt(2)).setText("C) " + answerOptions.get(2));
+            ((RadioButton) answerRadioGroup.getChildAt(3)).setText("D) " + answerOptions.get(3));
 
-                ((RadioButton) answerRadioGroup.getChildAt(0)).setText("A) " + answerOptions.get(0));
-                ((RadioButton) answerRadioGroup.getChildAt(1)).setText("B) " + answerOptions.get(1));
-                ((RadioButton) answerRadioGroup.getChildAt(2)).setText("C) " + answerOptions.get(2));
-                ((RadioButton) answerRadioGroup.getChildAt(3)).setText("D) " + answerOptions.get(3));
+            answerRadioGroup.clearCheck();
+            answerRadioGroup.setEnabled(true); // Abilita il gruppo di radiobutton
+            progressBar.setProgress(currentQuestionIndex + 1); // Aggiorna la ProgressBar
 
-                answerRadioGroup.clearCheck();
+            // Avvia il conteggio di tempo per la prossima domanda
 
-                answerRadioGroup.setEnabled(true); // Abilita il gruppo di radiobutton
-                //confirmButton.setVisibility(View.VISIBLE); // Mostra il pulsante di conferma
-                //confirmButton.setEnabled(false); // Disabilita il pulsante di conferma
-
-                progressBar.setProgress(currentQuestionIndex + 1); // Aggiorna la ProgressBar
-
-                // Avvia il conteggio di tempo per la prossima domanda
-                delayedStartNextQuestion();
-            } else {
-                currentQuestionIndex++;
-                startGame();
-            }
         } else {
             scoreTextView.setText("Hai finito il quiz. Punteggio: " + score);
-            navigateToParam(Activity2_Welcome.class, sessionID, user, selectedDrink);
+            //navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
         }
-    }
-    private void delayedStartNextQuestion() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Passa alla prossima domanda
-                currentQuestionIndex++;
-                startGame();
-            }
-        }, DELAY_BEFORE_NEXT_QUESTION);
     }
     private boolean isTopicSelected(String topic) {
         for (String selectedTopic : selectedTopics) {
@@ -256,6 +245,7 @@ public class Activity6_Chat extends AppCompatActivity {
         return false;
     }
     private void checkAnswer() {
+        int darkGreenColor = DARK_GREEN_COLOR;
         Activity_Question currentQuestion = questionList.get(currentQuestionIndex);
         int selectedRadioButtonId = answerRadioGroup.getCheckedRadioButtonId();
 
@@ -265,7 +255,7 @@ public class Activity6_Chat extends AppCompatActivity {
             if (selectedAnswer.equals(currentQuestion.getCorrectAnswer())) {
                 score++;
                 scoreTextView.setText("Score: " + score);
-                selectedRadioButton.setTextColor(Color.GREEN);
+                selectedRadioButton.setTextColor(darkGreenColor);
             } else {
                 selectedRadioButton.setTextColor(Color.RED);
                 // Colora in verde la risposta corretta
@@ -273,17 +263,49 @@ public class Activity6_Chat extends AppCompatActivity {
                     RadioButton radioButton = (RadioButton) answerRadioGroup.getChildAt(i);
                     String answerText = radioButton.getText().toString().substring(3);
                     if (answerText.equals(currentQuestion.getCorrectAnswer())) {
-                        radioButton.setTextColor(Color.GREEN);
+                        radioButton.setTextColor(darkGreenColor);
                         break;  // Esci dal loop una volta trovata la risposta corretta
                     }
                 }
             }
 
-            // Passa alla prossima domanda
             currentQuestionIndex++;
-            startGame();
+            confirmButton.setEnabled(false); // Disabilita il pulsante di conferma
+            delayedStartNextQuestion();
         } else {
             Toast.makeText(Activity6_Chat.this, "Seleziona una risposta prima di confermare.", Toast.LENGTH_SHORT).show();
         }
     }
+    private void delayedStartNextQuestion() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (currentQuestionIndex >= selectedQuestions.size()) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scoreTextView.setText("Hai finito il quiz. Punteggio: " + score);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
+                                }
+                            }, 2000); // Ritardo di 2 secondi prima della navigazione
+                        }
+                    }, 1000);
+
+                } else {
+                    startGame();
+                }
+            }
+        }, DELAY_BEFORE_NEXT_QUESTION);
+    }
+
+    private void resetRadioButtonTextColors() {
+        for (int i = 0; i < answerRadioGroup.getChildCount(); i++) {
+            RadioButton radioButton = (RadioButton) answerRadioGroup.getChildAt(i);
+            radioButton.setTextColor(Color.BLACK);
+        }
+    }
+
 }
