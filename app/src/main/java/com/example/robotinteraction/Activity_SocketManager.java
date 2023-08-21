@@ -66,8 +66,10 @@ public class Activity_SocketManager {
             @Override
             public void run() {
                 try {
-                    outputStream.write(message.getBytes());
-                    outputStream.flush();
+                    if (outputStream != null) {
+                        outputStream.write(message.getBytes());
+                        outputStream.flush();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     try {

@@ -44,8 +44,11 @@ public class Activity3_Waiting extends AppCompatActivity {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
         boolean connesso = socket.isConnected();
 
-        socket.send("ADD_USER_WAITING");
-
+        try {
+            socket.send("ADD_USER_WAITING");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         /*if(connesso==false){
             showPopupMessage();
         }*/
@@ -97,6 +100,8 @@ public class Activity3_Waiting extends AppCompatActivity {
         }
     }
     private void setUpComponent() {
+
+        //SERVER AGGIUNGERE LOGICA
 
         textViewQueueCount.setText("Persone in coda: " + queueCount);
 

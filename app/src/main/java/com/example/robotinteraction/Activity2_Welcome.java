@@ -114,15 +114,22 @@ public class Activity2_Welcome extends Activity {
     }
     public void onClickQueue(View v) {
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-        try{
-            socket.send("CHECK_USERS_ORDERING");
-            String num = socket.receive();
-            numPeopleInQueue = Integer.parseInt(num);
-        }catch (Exception e){
+        if("Guest".equals(user)){
             int min = 0;
             int max = 5;
             Random random = new Random();
             numPeopleInQueue = random.nextInt(max - min + 1) + min;
+        }else {
+            try {
+                socket.send("CHECK_USERS_ORDERING");
+                String num = socket.receive();
+                numPeopleInQueue = Integer.parseInt(num);
+            } catch (Exception e) {
+                int min = 0;
+                int max = 5;
+                Random random = new Random();
+                numPeopleInQueue = random.nextInt(max - min + 1) + min;
+            }
         }
         Intent intent;
         if (numPeopleInQueue < 2) {

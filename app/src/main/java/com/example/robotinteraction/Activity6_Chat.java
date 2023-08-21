@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class Activity6_Chat extends AppCompatActivity {
 
@@ -35,7 +36,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private RadioGroup answerRadioGroup;
     private Button confirmButton;
     private List<Activity_Question> questionList;
-    private int currentQuestionIndex = 0;
+    private int currentQuestionIndex = 0, totalQuestionsForSelectedTopics = 0;
     private int score = 0;
     private Animation buttonAnimation;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
@@ -48,6 +49,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private List<Activity_Question> selectedQuestions = new ArrayList<>();
     private static final long DELAY_BEFORE_NEXT_QUESTION = 1000; // Ritardo di 10 secondi
     private static final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
+    private static final int ORANGE = Color.parseColor("#FFA500"); // Colore verde scuro
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -183,7 +185,34 @@ public class Activity6_Chat extends AppCompatActivity {
     private void setUpComponent() {
         initializeQuestionList();
 
-        int totalQuestionsForSelectedTopics = 0;
+        if("Guest".equals(user)){
+            String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+            selectedTopics = new String[2];
+            Random random = new Random();
+
+            for (int i = 0; i < 2; i++) {
+                int randomIndex = random.nextInt(allTopics.length);
+                selectedTopics[i] = allTopics[randomIndex];
+            }
+        }else {
+            try {
+                socket.send("START_CHAT");
+                String inputString = socket.receive();
+                selectedTopics = inputString.split(" ");
+
+            } catch (Exception e) {
+                String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+
+                selectedTopics = new String[2];
+                Random random = new Random();
+
+                for (int i = 0; i < 2; i++) {
+                    int randomIndex = random.nextInt(allTopics.length);
+                    selectedTopics[i] = allTopics[randomIndex];
+                }
+            }
+        }
+
         for (Activity_Question question : questionList) {
             if (isTopicSelected(question.getTopic())) {
                 totalQuestionsForSelectedTopics++;
@@ -193,34 +222,37 @@ public class Activity6_Chat extends AppCompatActivity {
         progressBar.setMax(totalQuestionsForSelectedTopics);
         progressBar.setProgress(currentQuestionIndex);
         startGame();
-
-        try{
-            socket.send("START_CHAT");
-            String inputString = socket.receive();
-            selectedTopics = inputString.split(" ");
-
-        }catch (Exception e){
-            selectedTopics = new String[]{"Storia", "Geografia"};
-        }
     }
     private void initializeQuestionList() {
         questionList = new ArrayList<>();
+
         // Aggiungi le domande alla lista
-        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
-        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Storia", "Qual è l'evento più importante della storia?", "La Rivoluzione Industriale", "La scoperta dell'America", "La caduta dell'Impero Romano", "La Guerra Fredda"));
+        questionList.add(new Activity_Question("Storia", "Chi era il primo presidente degli Stati Uniti?", "George Washington", "Thomas Jefferson", "Benjamin Franklin", "Abraham Lincoln"));
+        questionList.add(new Activity_Question("Storia", "Dove è iniziata la prima guerra mondiale?", "Europa", "Asia", "Africa", "Americhe"));
+        questionList.add(new Activity_Question("Attualità", "Quale è il problema globale più urgente?", "Cambiamenti climatici", "Terrorismo", "Povertà", "Guerra nucleare"));
+        questionList.add(new Activity_Question("Attualità", "Chi è il presidente attuale degli Stati Uniti?", "Joe Biden", "Donald Trump", "Barack Obama", "George Bush"));
+        questionList.add(new Activity_Question("Attualità", "Qual è la capitale del Brasile?", "Brasilia", "Rio de Janeiro", "Sao Paulo", "Salvador"));
+        questionList.add(new Activity_Question("Geografia", "Qual è il fiume più lungo del mondo?", "Il Nilo", "Il Rio delle Amazzoni", "Il Mississippi", "Il Danubio"));
+        questionList.add(new Activity_Question("Geografia", "In quale paese si trova la Torre Eiffel?", "Francia", "Italia", "Spagna", "Germania"));
+        questionList.add(new Activity_Question("Geografia", "Qual è il deserto più vasto del pianeta?", "Il deserto dell'Antartide", "Il deserto del Sahara", "Il deserto di Gobi", "Il deserto di Atacama"));
+        questionList.add(new Activity_Question("Sport", "In quale sport si vince la Coppa Davis?", "Tennis", "Calcio", "Golf", "Basket"));
+        questionList.add(new Activity_Question("Sport", "Quale squadra ha vinto di più nella storia dei Campionati mondiali di calcio?", "Brasile", "Italia", "Germania", "Argentina"));
+        questionList.add(new Activity_Question("Sport", "Chi è considerato il più grande pugile di tutti i tempi?", "Muhammad Ali", "Mike Tyson", "Floyd Mayweather Jr.", "Rocky Marciano"));
+        questionList.add(new Activity_Question("Scienza", "Qual è la legge di gravità formulata da Isaac Newton?", "La legge di gravitazione universale", "La legge dei grandi numeri", "La legge dell'attrito", "La legge della conservazione dell'energia"));
+        questionList.add(new Activity_Question("Scienza", "Quale è l'elemento chimico più abbondante nell'universo?", "Idrogeno", "Ossigeno", "Elio", "Carbonio"));
+        questionList.add(new Activity_Question("Scienza", "Qual è l'unità di misura della corrente elettrica?", "Ampere", "Watt", "Volt", "Ohm"));
+        questionList.add(new Activity_Question("Informatica", "Cos'è un algoritmo?", "Una sequenza di istruzioni per risolvere un problema", "Un dispositivo hardware", "Un linguaggio di programmazione", "Un tipo di virus informatico"));
+        questionList.add(new Activity_Question("Informatica", "Chi è considerato il padre dell'informatica?", "Alan Turing", "Bill Gates", "Steve Jobs", "Tim Berners-Lee"));
+        questionList.add(new Activity_Question("Informatica", "Cosa significa HTML?", "HyperText Markup Language", "High Tech Modern Language", "Hyperlink and Text Manipulation Language", "Home Tool Markup Language"));
+        questionList.add(new Activity_Question("Musica", "Qual è il compositore di \"La Nona Sinfonia\"?", "Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Antonio Vivaldi"));
+        questionList.add(new Activity_Question("Musica", "Quale strumento è detto il \"Re degli strumenti\"?", "L'organo", "Il violino", "Il pianoforte", "La chitarra"));
+        questionList.add(new Activity_Question("Musica", "Qual è l'album più venduto di tutti i tempi?", "Thriller di Michael Jackson", "Back in Black degli AC/DC", "The Dark Side of the Moon dei Pink Floyd", "Their Greatest Hits (1971-1975) degli Eagles"));
+        questionList.add(new Activity_Question("Letteratura", "Chi è l'autore di \"1984\"?", "George Orwell", "Aldous Huxley", "Ray Bradbury", "J.D. Salinger"));
+        questionList.add(new Activity_Question("Letteratura", "Qual è l'opera più famosa di William Shakespeare?", "Romeo e Giulietta", "Il mercante di Venezia", "Macbeth", "Amleto"));
+        questionList.add(new Activity_Question("Letteratura", "Chi ha scritto \"Il Gattopardo\"?", "Giuseppe Tomasi di Lampedusa", "Italo Calvino", "Umberto Eco", "Luigi Pirandello"));
     }
+
     private void startGame() {
         resetRadioButtonTextColors(); // Imposta tutti i testi a nero
         if (currentQuestionIndex < selectedQuestions.size()) {
@@ -260,7 +292,7 @@ public class Activity6_Chat extends AppCompatActivity {
     }
     private void checkAnswer() {
         int darkGreenColor = DARK_GREEN_COLOR;
-        Activity_Question currentQuestion = questionList.get(currentQuestionIndex);
+        Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
         int selectedRadioButtonId = answerRadioGroup.getCheckedRadioButtonId();
 
         if (selectedRadioButtonId != -1) {
@@ -320,9 +352,19 @@ public class Activity6_Chat extends AppCompatActivity {
             public void run() {
                 LayoutInflater inflater = LayoutInflater.from(Activity6_Chat.this);
                 View customView = inflater.inflate(R.layout.activity_00popupchat, null);
+                int darkGreenColor = DARK_GREEN_COLOR;
+                int orange = ORANGE;
 
                 TextView scoreTextView = customView.findViewById(R.id.scoreTextView);
-                scoreTextView.setText(String.valueOf(score)); // Imposta il punteggio
+                if(score<3){
+                    scoreTextView.setTextColor(Color.RED);
+                }else if(score==3){
+                    scoreTextView.setTextColor(orange);
+                }else{
+                    scoreTextView.setTextColor(darkGreenColor);
+                }
+
+                scoreTextView.setText(String.valueOf(score + "/" + totalQuestionsForSelectedTopics)); // Imposta il punteggio
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Activity6_Chat.this);
                 builder.setCustomTitle(customView)
