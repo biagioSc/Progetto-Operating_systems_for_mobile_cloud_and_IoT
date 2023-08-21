@@ -162,7 +162,7 @@ int read_from_socket(int sockfd, char *buffer, int bufsize)
 
     // Remove newline character if present
     buffer[strcspn(buffer, "\n")] = '\0';
-    printf("Received: %s\n", buffer);
+    printf("Received: %s", buffer);
     return n;
 }
 
@@ -250,72 +250,92 @@ int check_user(PGconn *conn, char *email)
     return counterEmailCheck;
 }
 
+/**
+ * @brief Gestisce il processo di login di un utente.
+ * 
+ * @param sockfd Il socket descriptor utilizzato per comunicare con il client.
+ * @param conn Il connettore alla base di dati.
+ * @param buffer Il buffer contenente il comando del client e le credenziali.
+ * 
+ * @return Ritorna 0 se il login ha successo, -1 altrimenti.
+ */
 int handle_login(int sockfd, PGconn *conn, char *buffer)
 {
-    // L'email e la password sono nello stesso buffer separati da uno spazio
-    // Dopo il comando "LOG_IN"
+    // Buffer per l'email e la password
     char email[BUFFER_SIZE];
     char password[BUFFER_SIZE];
 
+    // Estrae email e password dal buffer
     sscanf(buffer, "LOG_IN %s %s", email, password);
 
-    // Stampa l'email e la password ricevute (per debug)
-    printf("Email e password: %s - %s\n", email, password);
+    // Stampa l'email e la password per il debug
+    printf("\nEmail e password: %s - %s\n", email, password);
 
-    // Crea una query SQL per ottenere la password dell'utente con l'email specificata
+    // Crea una query SQL per ottenere la password dell'utente con l'email fornita
     char query[BUFFER_SIZE * 2];
     sprintf(query, "SELECT password FROM users WHERE email='%s';", email);
 
-    // Esegue la query sul database
+    // Esegue la query
     PGresult *resLogin = PQexec(conn, query);
 
-    // Verifica se la query ha restituito dei risultati
+    // Controlla l'esito della query
     if (PQresultStatus(resLogin) != PGRES_TUPLES_OK || PQntuples(resLogin) != 1)
     {
-        // Se non ci sono risultati, significa che l'email non esiste nel database
         printf("Nessun dato trovato\n");
-        PQclear(resLogin); // Libera la memoria allocata per il risultato della query
-        write_to_socket(sockfd, "LOG_IN_ERROR"); // Invia un messaggio di errore al client
-        return -1; // Ritorna -1 per indicare un errore
+        PQclear(resLogin); // Libera la memoria del risultato
+        write_to_socket(sockfd, "LOG_IN_ERROR"); // Informa il client dell'errore
+        return -1;
     }
 
-    // Se la password inviata dal client corrisponde a quella nel database, l'utente viene autenticato
+    // Controlla se la password fornita corrisponde a quella nel database
     if (strcmp(password, PQgetvalue(resLogin, 0, 0)) == 0)
     {
-        // Stampa un messaggio di successo (per debug)
         printf("L'utente %s ha effettuato l'accesso correttamente\n", email);
 
-        // Ottiene l'ID dell'utente appena autenticato
+        // Ottiene l'ID dell'utente
         int id = getUserIdByEmail(email);
 
-        // Converte l'ID in una stringa per poterlo inviare al client
+        // Converte l'ID in una stringa
         char idString[BUFFER_SIZE];
         sprintf(idString,"%d",id);
 
-        // Combina il successo del login con l'ID in una sola risposta
+        // Crea una query per ottenere il nome dell'utente
+        sprintf(query,"SELECT name FROM users WHERE email='%s';",email);
+        PGresult *resName = PQexec(conn,query);
+
+        // Controlla l'esito della query per il nome
+        if (PQresultStatus(resName) != PGRES_TUPLES_OK || PQntuples(resName) != 1)
+        {
+            printf("Nessun dato trovato\n");
+            PQclear(resName); // Libera la memoria del risultato
+            write_to_socket(sockfd, "LOG_IN_ERROR"); // Informa il client dell'errore
+            return -1;
+        }
+
+        // Estrae il nome dall'esito della query
+        char *name = PQgetvalue(resName, 0, 0);
+
+        // Prepara la risposta da inviare al client
         char response[BUFFER_SIZE];
-        sprintf(response, "LOG_IN_SUCCESS %s", idString);
+        sprintf(response, "LOG_IN_SUCCESS %s %s", idString, name);
 
         printf("Invio: %s\n", response);
 
-
         write_to_socket(sockfd, response); // Invia la risposta al client
+        PQclear(resName);  // Libera la memoria del risultato
     }
     else
     {
-        // Se la password non corrisponde, stampa un messaggio di errore (per debug)
         printf("Password non valida per questa email %s \n", email);
-        PQclear(resLogin); // Libera la memoria allocata per il risultato della query
-        write_to_socket(sockfd, "LOG_IN_ERROR"); // Invia un messaggio di errore al client
-        return -1; // Ritorna -1 per indicare un errore
+        PQclear(resLogin); // Libera la memoria del risultato
+        write_to_socket(sockfd, "LOG_IN_ERROR"); // Informa il client dell'errore
+        return -1;
     }
 
-    // Libera la memoria allocata per il risultato della query (in caso di successo)
-    PQclear(resLogin);
-
-    // Ritorna 0 per indicare un'esecuzione corretta della funzione
-    return 0;
+    PQclear(resLogin); // Libera la memoria del risultato
+    return 0; // Indica che la funzione è stata eseguita correttamente
 }
+
 
 
 /**
@@ -332,8 +352,12 @@ int handle_welcoming(int sockfd, PGconn *conn)
     int users_in_ordering_state = check_state(conn);
     char users_in_ordering_state_string[10];
 
+    printf("\n[Welcoming] Ho recuperato il numero di utenti in ordering ed e': %d\n",users_in_ordering_state);
+
     //trasformo il numero degli utenti in stringa
     sprintf(users_in_ordering_state_string,"%d",users_in_ordering_state);
+
+    printf("[Welcoming] Invio al server: %s\n",users_in_ordering_state_string);
     //mando il numero degli utenti al client
     write_to_socket(sockfd,users_in_ordering_state_string);
 
@@ -726,7 +750,7 @@ void send_drinks_list(int sockfd, PGconn *conn) {
 
 
 
-void handle_ordering(int sockfd, PGconn *conn){
+void handle_suggest_drink_ordering(int sockfd, PGconn *conn){
 
     
     char user_session_id[10];
@@ -881,7 +905,7 @@ void *client_handler(void *socket_desc)
         int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
         if (n <= 0)
         {
-            printf(" ERRORE NELLA LETTURA DELLA SOCKET");
+            printf(" ERRORE NELLA LETTURA DELLA SOCKET\n");
             break;
         }
 
@@ -911,8 +935,8 @@ void *client_handler(void *socket_desc)
         else if (strcmp(buffer,"DRINK_DESCRIPTION") == 0){
             send_drink_description(conn,sockfd);
         }
-        else if (strcmp(buffer,"ORDERING") == 0){
-            handle_ordering(sockfd,conn);
+        else if (strcmp(buffer,"SUGG_DRINK") == 0){
+            handle_suggest_drink_ordering(sockfd,conn);
         }
         else if( strcmp(buffer,"USER_STOP_ORDERING") == 0){
             handle_user_stop_ordering(sockfd,conn);
