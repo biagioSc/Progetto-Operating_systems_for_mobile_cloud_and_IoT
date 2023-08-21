@@ -44,6 +44,8 @@ public class Activity3_Waiting extends AppCompatActivity {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
         boolean connesso = socket.isConnected();
 
+        socket.send("ADD_USER_WAITING");
+
         /*if(connesso==false){
             showPopupMessage();
         }*/

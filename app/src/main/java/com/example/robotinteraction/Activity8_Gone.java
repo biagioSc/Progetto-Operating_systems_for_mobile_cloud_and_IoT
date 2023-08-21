@@ -70,6 +70,7 @@ public class Activity8_Gone extends AppCompatActivity {
         }
     }
     public void onClickExit(View v) {
+        socket.send("USER_GONE");
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

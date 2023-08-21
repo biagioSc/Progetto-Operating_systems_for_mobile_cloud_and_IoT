@@ -23,6 +23,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import java.io.IOException;
+
 public class Activity1_New extends AppCompatActivity {
 
     // Dichiarazione delle variabili
@@ -40,6 +42,7 @@ public class Activity1_New extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+    private boolean connesso = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,18 +53,11 @@ public class Activity1_New extends AppCompatActivity {
         initUIComponents();
         setupListeners();
 
-        showPopupMessage();
         receiveParam();
     }
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
-
-        /*if(connesso==false){
-            showPopupMessage();
-        }*/
-
         runnable = new Runnable() { // Azione da eseguire dopo l'inattività
             @Override
             public void run() {
@@ -182,11 +178,51 @@ public class Activity1_New extends AppCompatActivity {
             textViewError.setText("Inserisci email e password!");
             textViewError.setVisibility(View.VISIBLE);
         } else {
-            textViewError.setVisibility(View.INVISIBLE);
-            navigateToParam(Activity2_Welcome.class, sessionID, user);
+             new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textViewError.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    try {
+                        socket.send("LOG_IN" + " " + email + " " + password);
+                        String response = socket.receive();
+                        String[] parts = response.split(" ");
+                        if (parts.length >= 3) {
+                            LOG_IN_RESPONSE = parts[0];
+                            sessionID = parts[1];
+                            user = parts[2];
+                        }
+
+                        if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
+                            navigateToParam(Activity2_Welcome.class, sessionID, user);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    textViewError.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    textViewError.setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                    }catch (Exception e){
+                        showPopupMessage();
+                    }
+                }
+            }).start();
         }
     }
-      public void showPopupMessage() {
+    public void showPopupMessage() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

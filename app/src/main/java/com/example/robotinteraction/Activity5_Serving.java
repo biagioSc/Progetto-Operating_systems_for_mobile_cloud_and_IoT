@@ -41,9 +41,9 @@ public class Activity5_Serving extends AppCompatActivity {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
         boolean connesso = socket.isConnected();
 
-    /*if(connesso==false){
-        showPopupMessage();
-    }*/
+        /*if(connesso==false){
+            showPopupMessage();
+        }*/
 
         runnable = new Runnable() { // Azione da eseguire dopo l'inattività
             @Override

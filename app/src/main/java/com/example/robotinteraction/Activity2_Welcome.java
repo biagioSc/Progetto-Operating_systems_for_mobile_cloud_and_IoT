@@ -114,17 +114,21 @@ public class Activity2_Welcome extends Activity {
     }
     public void onClickQueue(View v) {
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-        int min = 0;
-        int max = 5;
-        Random random = new Random();
-        //numPeopleInQueue = random.nextInt(max - min + 1) + min;
-        numPeopleInQueue = 2;
+        try{
+            socket.send("CHECK_USERS_ORDERING");
+            String num = socket.receive();
+            numPeopleInQueue = Integer.parseInt(num);
+        }catch (Exception e){
+            int min = 0;
+            int max = 5;
+            Random random = new Random();
+            numPeopleInQueue = random.nextInt(max - min + 1) + min;
+        }
         Intent intent;
         if (numPeopleInQueue < 2) {
             // Vai alla schermata di Ordering
             intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
         } else {
-            // Vai alla schermata di Waiting passando il numero di utenti in coda come parametro
             intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
             intent.putExtra("param3", numPeopleInQueue);
         }

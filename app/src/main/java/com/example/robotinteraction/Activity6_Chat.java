@@ -41,7 +41,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-    private String[] selectedTopics = {"Storia", "Geografia"}; // Aggiungi gli argomenti desiderati
+    private String[] selectedTopics; // Aggiungi gli argomenti desiderati
     private String sessionID = "-1", user = "Guest", selectedDrink;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private ProgressBar progressBar;
@@ -193,6 +193,15 @@ public class Activity6_Chat extends AppCompatActivity {
         progressBar.setMax(totalQuestionsForSelectedTopics);
         progressBar.setProgress(currentQuestionIndex);
         startGame();
+
+        try{
+            socket.send("START_CHAT");
+            String inputString = socket.receive();
+            selectedTopics = inputString.split(" ");
+
+        }catch (Exception e){
+            selectedTopics = new String[]{"Storia", "Geografia"};
+        }
     }
     private void initializeQuestionList() {
         questionList = new ArrayList<>();

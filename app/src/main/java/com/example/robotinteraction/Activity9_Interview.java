@@ -191,9 +191,61 @@ public class Activity9_Interview extends AppCompatActivity {
     }
     public void onClickRegister(View v) {
         //[SERVER] mandare dati al server
-        navigateToParam(Activity1_New.class, nome, email, password);
-        Toast.makeText(Activity9_Interview.this, "Registrazione avvenuta con successo!", Toast.LENGTH_SHORT).show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    socket.send("SIGN_UP");
+                    socket.send(email);
+                    socket.send(nome);
+                    socket.send(cognome);
+                    socket.send(password);
+                    int numeropreferezeInt=drinkSelections.size();
+                    String numeroprefrenzeString=Integer.toString(numeropreferezeInt);
+                    socket.send(numeroprefrenzeString);
+                    for(String drink : drinkSelections){
+                        socket.send(drink);
+                    }
+                    numeropreferezeInt=argSelections.size();
+                    numeroprefrenzeString=Integer.toString(numeropreferezeInt);
+                    socket.send(numeroprefrenzeString);
+                    for(String topic : argSelections){
+                        socket.send(topic);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                String response = null;
+                response = socket.receive();
+                if(response != null)
+                {
+                    String finalResponse = response;
+                    if(finalResponse.equalsIgnoreCase(("SIGN_UP_ERROR"))){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else if(finalResponse.equalsIgnoreCase("SIGN_UP_SUCCESS")){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                navigateToParam(Activity1_New.class, nome, email, password);
+                                Toast.makeText(Activity9_Interview.this,
+                                        "Registrazione completata", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                    }
+                }
+            }
+        });
+        //Toast.makeText(Activity9_Interview.this, "Registrazione avvenuta con successo!", Toast.LENGTH_SHORT).show();
     }
+
     private void updateDrinkSelections() {
         drinkSelections.clear();
         for (CheckBox checkBox : drinkCheckboxes) {

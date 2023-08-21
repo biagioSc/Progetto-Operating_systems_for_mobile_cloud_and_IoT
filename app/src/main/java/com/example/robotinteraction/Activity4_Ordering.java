@@ -32,7 +32,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private TextView textViewLoggedIn;
     private Random random = new Random();
-    private String sessionID = "-1", user = "Guest";
+    private String sessionID = "-1", user = "Guest", recommendedDrink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,8 @@ public class Activity4_Ordering extends AppCompatActivity {
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
         boolean connesso = socket.isConnected();
+
+        socket.send("ADD_USER_ORDERING");
 
         /*if(connesso==false){
             showPopupMessage();
@@ -96,6 +98,7 @@ public class Activity4_Ordering extends AppCompatActivity {
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
+        socket.send("USER_STOP_ORDERING");
         Intent intent = new Intent(Activity4_Ordering.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
@@ -166,17 +169,24 @@ public class Activity4_Ordering extends AppCompatActivity {
     }
     private void setUpComponent() {
 
-        // Aggiungi gli elementi alla lista dei drink
-        drinkList.add("Mojito");
-        drinkList.add("Martini");
-        drinkList.add("Midori");
-        drinkList.add("Manhattan");
-        drinkList.add("Negroni");
-        drinkList.add("Daiquiri");
-        drinkList.add("Pina Colada");
-        drinkList.add("Gin Lemon");
+        try{
+            socket.send("DRINK_LIST");
+            String inputString = socket.receive();
+            String[] subStrings = inputString.split(" ");
+            for (String subString : subStrings) {
+                drinkList.add(subString);
+            }
+        }catch (Exception e){
+            drinkList.add("Mojito");
+            drinkList.add("Martini");
+            drinkList.add("Midori");
+            drinkList.add("Manhattan");
+            drinkList.add("Negroni");
+            drinkList.add("Daiquiri");
+            drinkList.add("Pina Colada");
+            drinkList.add("Gin Lemon");
+        }
 
-        // Imposta il drink raccomandato casualmente
         setRandomRecommendedDrink();
 
         // Inizializza il dropdown menu con gli elementi dalla lista dei drink
@@ -186,8 +196,14 @@ public class Activity4_Ordering extends AppCompatActivity {
 
     }
     private void setRandomRecommendedDrink() {
-        int randomIndex = random.nextInt(drinkList.size());
-        String recommendedDrink = drinkList.get(randomIndex);
+        try{
+            socket.send("SUGG_DRINK");
+            recommendedDrink = socket.receive();
+        }catch (Exception e){
+            int randomIndex = random.nextInt(drinkList.size());
+            recommendedDrink = drinkList.get(randomIndex);
+        }
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

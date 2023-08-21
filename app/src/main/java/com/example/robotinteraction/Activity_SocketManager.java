@@ -19,7 +19,6 @@ public class Activity_SocketManager {
     private OutputStream outputStream;
     private static Activity_SocketManager instance ;
     private boolean isConnected = false; // Aggiunta della variabile di stato
-    private boolean isConnecting = false;
 
     private Activity_SocketManager() {
 
@@ -27,10 +26,7 @@ public class Activity_SocketManager {
     }
 
     private synchronized void connectToServer() {
-        if (isConnecting) {
-            return;
-        }
-        isConnecting = true;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -48,8 +44,12 @@ public class Activity_SocketManager {
                     } else if (e instanceof SocketTimeoutException) {
                         Log.e("Activity_SocketManager", "Timeout di connessione raggiunto");
                     }
+                    try {
+                        throw e;
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-                isConnecting = false;
             }
         }).start();
     }
@@ -61,7 +61,7 @@ public class Activity_SocketManager {
         return instance;
     }
 
-    public void send(final String message) {
+    public void send(final String message){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -70,6 +70,11 @@ public class Activity_SocketManager {
                     outputStream.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    try {
+                        throw e;
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         }).start();
@@ -85,15 +90,22 @@ public class Activity_SocketManager {
             if (receivedData != null) {
                 receivedData = receivedData.trim().replaceAll("\\n$", "");
             }
+            Log.d("ciao","try"+receivedData);
             return receivedData;
         } catch (IOException e) {
+            Log.d("ciao","cathc");
             e.printStackTrace();
-            return null;
+            try {
+                throw e;
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
     public boolean isConnected() {
-        return isConnected;
+
+        return socket != null && socket.isConnected();
     }
 
     public void close() {
