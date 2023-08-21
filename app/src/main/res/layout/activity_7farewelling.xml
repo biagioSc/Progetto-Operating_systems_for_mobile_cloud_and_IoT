@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -191,16 +192,37 @@
             android:layout_marginTop="8dp" />
 
         <!-- Aggiungiamo il nome del drink e la sua spiegazione -->
-        <TextView
-            android:id="@+id/textViewDrinkName"
-            android:layout_width="wrap_content"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome del Drink"
-            android:textSize="18sp"
-            android:textColor="#000000"
             android:layout_below="@id/textViewMessage"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp" />
+            android:layout_margin="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:textAlignment="center">
+
+                <TextView
+                    android:id="@+id/textViewDrinkName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Mojito"
+                    android:textAlignment="center"
+                    android:textColor="#020202"
+                    android:textSize="24sp"
+                    android:typeface="serif" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
 
         <TextView
             android:id="@+id/textViewDrinkDescription"
@@ -209,7 +231,7 @@
             android:text="Breve spiegazione del drink"
             android:textSize="16sp"
             android:textColor="#757575"
-            android:layout_below="@id/textViewDrinkName"
+            android:layout_below="@id/cardView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp" />
 

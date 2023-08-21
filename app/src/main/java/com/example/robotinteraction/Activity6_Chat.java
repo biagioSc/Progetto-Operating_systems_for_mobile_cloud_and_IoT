@@ -1,13 +1,17 @@
 package com.example.robotinteraction;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -27,7 +31,7 @@ import java.util.List;
 
 public class Activity6_Chat extends AppCompatActivity {
 
-    private TextView textDomanda, textViewLoggedIn, scoreTextView;
+    private TextView textDomanda, textViewLoggedIn, scoreTextView, scoreText;
     private RadioGroup answerRadioGroup;
     private Button confirmButton;
     private List<Activity_Question> questionList;
@@ -81,6 +85,7 @@ public class Activity6_Chat extends AppCompatActivity {
         scoreTextView = findViewById(R.id.scoreTextView);
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         progressBar = findViewById(R.id.timerProgressBar);
+        scoreText = findViewById(R.id.score);
 
     }
     private void setupListeners() {
@@ -284,13 +289,7 @@ public class Activity6_Chat extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            scoreTextView.setText("Hai finito il quiz. Punteggio: " + score);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
-                                }
-                            }, 2000); // Ritardo di 2 secondi prima della navigazione
+                            showPopupMessage();
                         }
                     }, 1000);
 
@@ -300,12 +299,44 @@ public class Activity6_Chat extends AppCompatActivity {
             }
         }, DELAY_BEFORE_NEXT_QUESTION);
     }
-
     private void resetRadioButtonTextColors() {
         for (int i = 0; i < answerRadioGroup.getChildCount(); i++) {
             RadioButton radioButton = (RadioButton) answerRadioGroup.getChildAt(i);
             radioButton.setTextColor(Color.BLACK);
         }
+    }
+    public void showPopupMessage() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LayoutInflater inflater = LayoutInflater.from(Activity6_Chat.this);
+                View customView = inflater.inflate(R.layout.activity_00popupchat, null);
+
+                TextView scoreTextView = customView.findViewById(R.id.scoreTextView);
+                scoreTextView.setText(String.valueOf(score)); // Imposta il punteggio
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Activity6_Chat.this);
+                builder.setCustomTitle(customView)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setTextColor(getResources().getColor(R.color.black)); // Sostituisci con il colore desiderato
+                    }
+                });
+
+                dialog.show();
+            }
+        });
     }
 
 }

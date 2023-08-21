@@ -39,7 +39,7 @@ public class Activity4_Ordering extends AppCompatActivity {
         setContentView(R.layout.activity_4ordering);
 
         // Inizializzazione dei componenti dell'interfaccia utente
-        textViewRecommendedDrink = findViewById(R.id.textViewRecommendedDrink);
+        textViewRecommendedDrink = findViewById(R.id.textViewDrinkName);
         spinnerDrinks = findViewById(R.id.spinnerDrinks);
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         buttonOrderRecommendedDrink = findViewById(R.id.buttonOrderRecommendedDrink);

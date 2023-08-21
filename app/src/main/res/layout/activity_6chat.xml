@@ -223,9 +223,9 @@
                 android:id="@+id/confirmButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/button_design_chat"
-                android:text="Conferma Risposta"
-                android:layout_marginTop="16dp"/>
+                android:text="Conferma Risposta" />
 
             <ProgressBar
                 android:id="@+id/timerProgressBar"
@@ -247,6 +247,18 @@
                 android:layout_marginTop="6dp"
                 android:text="Score: 0"
                 android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scoreTextView"
+                android:layout_centerHorizontal="true"
+                android:text="0"
+                android:visibility="invisible"
+                android:textAlignment="center"
+                android:textColor="#4CAF50"
+                android:textSize="34sp" />
         </LinearLayout>
 
 

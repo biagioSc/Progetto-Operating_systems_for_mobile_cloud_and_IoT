@@ -137,16 +137,29 @@
 
     <!-- Immagine in alto -->
 
-        <ImageView
-        android:id="@+id/imageViewHeader"
+    <ImageView
+    android:id="@+id/imageViewHeader"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    android:layout_centerHorizontal="true"
+    android:contentDescription="Logo"
+    android:src="@drawable/pic9signup"
+    tools:layout_editor_absoluteX="16dp"
+    tools:layout_editor_absoluteY="0dp"
+    tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Logo"
-        android:src="@drawable/pic9signup"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Inserisci i tuoi dati!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewHeader"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextFirstName"
@@ -156,7 +169,7 @@
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewHeader"
+        app:layout_constraintTop_toBottomOf="@id/text"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/edit_text_rounded_background"
@@ -228,7 +241,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_design_general"
         android:padding="16dp"

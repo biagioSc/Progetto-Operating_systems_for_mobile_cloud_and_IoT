@@ -115,12 +115,11 @@ public class Activity9_Interview extends AppCompatActivity {
         Intent intent = new Intent(Activity9_Interview.this, targetActivity);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
         Intent intent = new Intent(Activity9_Interview.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         intent.putExtra("param3", param3);
-        intent.putExtra("param4", param4);
         startActivity(intent);
         finish();
     }
@@ -192,9 +191,8 @@ public class Activity9_Interview extends AppCompatActivity {
     }
     public void onClickRegister(View v) {
         //[SERVER] mandare dati al server
-        Intent newIntent = new Intent(Activity9_Interview.this, Activity1_New.class);
-        startActivity(newIntent);
-        finish();
+        navigateToParam(Activity1_New.class, nome, email, password);
+        Toast.makeText(Activity9_Interview.this, "Registrazione avvenuta con successo!", Toast.LENGTH_SHORT).show();
     }
     private void updateDrinkSelections() {
         drinkSelections.clear();

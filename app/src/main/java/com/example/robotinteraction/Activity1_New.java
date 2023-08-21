@@ -2,12 +2,14 @@ package com.example.robotinteraction;
 
 // Import delle librerie necessarie
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -33,7 +35,7 @@ public class Activity1_New extends AppCompatActivity {
     private Activity_SocketManager socket;
     private boolean isPasswordVisible = false;
     private ImageButton passwordToggle;
-    private String sessionID = "-1", user = "Guest";
+    private String sessionID = "-1", user = "Guest", email, password;
     private String LOG_IN_RESPONSE = "LOG_IN_ERROR";
     private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -47,6 +49,8 @@ public class Activity1_New extends AppCompatActivity {
         connection();
         initUIComponents();
         setupListeners();
+        showPopupMessage();
+        receiveParam();
     }
 
     private void connection() {
@@ -145,6 +149,17 @@ public class Activity1_New extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
+    private void receiveParam() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            user = intent.getStringExtra("param1");
+            email = intent.getStringExtra("param2");
+            password = intent.getStringExtra("param3");
+
+            editTextEmail.setText(email);
+            editTextPassword.setText(password);
+        }
+    }
     public void onClickSignUp(View v) {
         resetInactivityTimer();
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
@@ -159,60 +174,26 @@ public class Activity1_New extends AppCompatActivity {
     }
     public void onClickAccedi(View v) {
         resetInactivityTimer();
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        email = editTextEmail.getText().toString().trim();
+        password = editTextPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            textViewError.setText("Inserisci email e password");
+            textViewError.setText("Inserisci email e password!");
             textViewError.setVisibility(View.VISIBLE);
         } else {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            textViewError.setVisibility(View.INVISIBLE);
-                        }
-                    });
-
-                    socket.send("LOG_IN"+" "+email+" "+password);
-                    String response = socket.receive();
-
-                    String[] parts = response.split(" ");
-
-                    if (parts.length >= 2) {
-                        LOG_IN_RESPONSE = parts[0];
-                        sessionID = parts[1];
-                    }
-
-                    if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)){
-                        navigateToParam(Activity2_Welcome.class, sessionID, email);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                textViewError.setVisibility(View.INVISIBLE);
-                            }
-                        });                       }
-                    else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                textViewError.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                }
-            }).start();
+            textViewError.setVisibility(View.INVISIBLE);
+            navigateToParam(Activity2_Welcome.class, sessionID, user);
         }
     }
-    public void showPopupMessage() {
+      public void showPopupMessage() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                LayoutInflater inflater = LayoutInflater.from(Activity1_New.this);
+                View customView = inflater.inflate(R.layout.activity_00popupguest, null);
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(Activity1_New.this);
-                builder.setTitle("Server offline")
-                        .setMessage("Attualmente i server sono offline, fai l'accesso come 'Ospite'!")
+                builder.setCustomTitle(customView)
                         .setPositiveButton("Accedi come Ospite!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 sessionID = "-1";
@@ -224,6 +205,16 @@ public class Activity1_New extends AppCompatActivity {
                         });
 
                 AlertDialog dialog = builder.create();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+                        final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
+                        int darkGreenColor = DARK_GREEN_COLOR;
+                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        positiveButton.setTextColor(darkGreenColor); // Sostituisci con il colore desiderato
+                    }
+                });
+
                 dialog.show();
             }
         });

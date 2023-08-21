@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -66,7 +64,7 @@ public class Activity4_Ordering extends AppCompatActivity {
         };
     }
     private void initUIComponents() {
-        textViewRecommendedDrink = findViewById(R.id.textViewRecommendedDrink);
+        textViewRecommendedDrink = findViewById(R.id.textViewDrinkName);
         spinnerDrinks = findViewById(R.id.spinnerDrinks);
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         buttonOrderRecommendedDrink = findViewById(R.id.buttonOrderRecommendedDrink);
