@@ -49,6 +49,7 @@ public class Activity1_New extends AppCompatActivity {
         connection();
         initUIComponents();
         setupListeners();
+
         showPopupMessage();
         receiveParam();
     }
