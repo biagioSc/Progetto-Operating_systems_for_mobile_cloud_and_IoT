@@ -7,11 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -256,7 +253,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private void startGame() {
         resetRadioButtonTextColors(); // Imposta tutti i testi a nero
         if (currentQuestionIndex < selectedQuestions.size()) {
-            confirmButton.setEnabled(true);
+            confirmButton.setEnabled(false);
             Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
             textDomanda.setText(currentQuestion.getQuestion());
             List<String> answerOptions = new ArrayList<>();
@@ -316,7 +313,7 @@ public class Activity6_Chat extends AppCompatActivity {
             }
 
             currentQuestionIndex++;
-            confirmButton.setEnabled(false); // Disabilita il pulsante di conferma
+            confirmButton.setEnabled(false);
             delayedStartNextQuestion();
         } else {
             Toast.makeText(Activity6_Chat.this, "Seleziona una risposta prima di confermare.", Toast.LENGTH_SHORT).show();

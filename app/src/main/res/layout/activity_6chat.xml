@@ -219,13 +219,22 @@
             </RadioGroup>
 
             <!-- Pulsante per confermare la risposta -->
+
             <Button
                 android:id="@+id/confirmButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/textViewOrderStatusMessage"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="6dp"
-                android:background="@drawable/button_design_chat"
-                android:text="Conferma Risposta" />
+                android:background="@drawable/button_design_general"
+                android:clickable="true"
+                android:cursorVisible="true"
+                android:padding="9dp"
+                android:text="Conferma Risposta"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
             <ProgressBar
                 android:id="@+id/timerProgressBar"

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class Activity5_Serving extends AppCompatActivity {
     private Animation buttonAnimation;
     private TextView textViewOrderStatusTitle, textViewOrderStatusMessage, textViewLoggedIn;
-    private Button buttonQuiz, buttonWaitingRoom;
+    private TextView buttonQuiz, buttonWaitingRoom;
     private String selectedDrink;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());

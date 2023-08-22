@@ -201,23 +201,28 @@
                     android:id="@+id/textViewDrinkName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text="Mojito"
                     android:textColor="#020202"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="20sp"
+                    android:textSize="28sp"
                     android:typeface="serif" />
 
-                <Button
+                <TextView
                     android:id="@+id/buttonOrderRecommendedDrink"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="onClickConsigliato"
                     android:layout_marginTop="16dp"
-                    android:text="Ordina"
                     android:background="@drawable/button_design_general"
+                    android:clickable="true"
+                    android:cursorVisible="true"
+                    android:onClick="onClickConsigliato"
+                    android:padding="13dp"
+                    android:text="Ordina"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -262,7 +267,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp" />
 
-        <Button
+        <TextView
             android:id="@+id/buttonOrder"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
@@ -271,12 +276,14 @@
             android:layout_marginTop="16dp"
             android:entries="@array/dropdown_items"
             android:background="@drawable/button_design_general"
+            android:clickable="true"
+            android:cursorVisible="true"
+            android:onClick="onClickOrdina"
             android:padding="12dp"
             android:text="Ordina"
-            android:onClick="onClickOrdina"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-
+            android:textSize="20sp" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
@@ -178,5 +177,7 @@ public class Activity9_Signup extends AppCompatActivity {
                 !editTextPassword.getText().toString().isEmpty();
 
         buttonRegisterContinue.setEnabled(allFieldsNotEmpty);
+
+
     }
 }

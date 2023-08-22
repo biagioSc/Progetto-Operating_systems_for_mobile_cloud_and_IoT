@@ -92,10 +92,9 @@ public class Activity_SocketManager {
             if (receivedData != null) {
                 receivedData = receivedData.trim().replaceAll("\\n$", "");
             }
-            Log.d("ciao","try"+receivedData);
+            Log.d("ciao","try" + receivedData);
             return receivedData;
         } catch (IOException e) {
-            Log.d("ciao","cathc");
             e.printStackTrace();
             try {
                 throw e;

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
 
 public class Activity8_Gone extends AppCompatActivity {
 
-    private Button buttonExit;
+    private TextView buttonExit;
     private Animation buttonAnimation;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest";

@@ -260,7 +260,7 @@
             android:textStyle="bold"
             android:visibility="invisible" />
 
-        <Button
+        <TextView
             android:id="@+id/buttonLogin"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -271,7 +271,11 @@
             android:onClick="onClickAccedi"
             android:padding="16dp"
             android:text="Accedi"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:clickable="true"
+            android:cursorVisible="true"/>
 
         <TextView
             android:id="@+id/buttonSignUp"

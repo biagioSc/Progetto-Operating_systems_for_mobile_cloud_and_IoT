@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,7 +27,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     private Spinner spinnerDrinks;  // Spinner per selezionare un drink dalla lista
     private List<String> drinkList = new ArrayList<>();  // Lista dei drink
     private Animation buttonAnimation;  // Animazione per i pulsanti
-    private Button buttonOrderRecommendedDrink, buttonOrder;  // Pulsanti per ordinare
+    private TextView buttonOrderRecommendedDrink, buttonOrder;  // Pulsanti per ordinare
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
     private Runnable runnable;  // Runnable per la logica del timer di inattività
@@ -49,21 +51,10 @@ public class Activity4_Ordering extends AppCompatActivity {
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
-
         socket.send("ADD_USER_ORDERING");
 
-        /*if(connesso==false){
-            showPopupMessage();
-        }*/
-
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        // Azione da eseguire dopo l'inattività
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         textViewRecommendedDrink = findViewById(R.id.textViewDrinkName);

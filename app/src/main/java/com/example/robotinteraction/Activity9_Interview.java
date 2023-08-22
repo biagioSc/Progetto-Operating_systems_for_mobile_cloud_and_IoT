@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,19 +52,7 @@ public class Activity9_Interview extends AppCompatActivity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
-
-        /*if(connesso==false){
-            showPopupMessage();
-        }*/
-
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -190,7 +179,6 @@ public class Activity9_Interview extends AppCompatActivity {
         startInactivityTimer();
     }
     public void onClickRegister(View v) {
-        //[SERVER] mandare dati al server
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -212,37 +200,38 @@ public class Activity9_Interview extends AppCompatActivity {
                     for(String topic : argSelections){
                         socket.send(topic);
                     }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                String response = null;
-                response = socket.receive();
-                if(response != null)
-                {
-                    String finalResponse = response;
-                    if(finalResponse.equalsIgnoreCase(("SIGN_UP_ERROR"))){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    else if(finalResponse.equalsIgnoreCase("SIGN_UP_SUCCESS")){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                navigateToParam(Activity1_New.class, nome, email, password);
-                                Toast.makeText(Activity9_Interview.this,
-                                        "Registrazione completata", Toast.LENGTH_LONG).show();
 
-                            }
-                        });
+                    String response = socket.receive();
+                    if(response != null){
+                        String finalResponse = response;
+                        if(finalResponse.equalsIgnoreCase(("SIGN_UP_ERROR"))){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        else if(finalResponse.equalsIgnoreCase("SIGN_UP_SUCCESS")){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    navigateToParam(Activity1_New.class, nome, email, password);
+                                    Toast.makeText(Activity9_Interview.this,
+                                            "Registrazione completata", Toast.LENGTH_LONG).show();
+
+                                }
+                            });
+                        }
                     }
+                }catch (Exception e){
+                    Toast.makeText(Activity9_Interview.this,"Registrazione fallita", Toast.LENGTH_SHORT).show();
+
+                    navigateToParam(Activity1_New.class, "ERROR", null, null);
                 }
             }
-        });
+        }).start();
         //Toast.makeText(Activity9_Interview.this, "Registrazione avvenuta con successo!", Toast.LENGTH_SHORT).show();
     }
 

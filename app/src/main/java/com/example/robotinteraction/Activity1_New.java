@@ -31,7 +31,7 @@ public class Activity1_New extends AppCompatActivity {
 
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
-    private Button buttonLogin;
+    private TextView buttonLogin;
     private TextView textViewError, textViewSignUp, textViewGuest;
     private Animation buttonAnimation;
     private Activity_SocketManager socket;
@@ -48,7 +48,6 @@ public class Activity1_New extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
-        // Inizializzazione delle variabili e dei componenti
         connection();
         initUIComponents();
         setupListeners();
@@ -58,13 +57,7 @@ public class Activity1_New extends AppCompatActivity {
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -86,13 +79,10 @@ public class Activity1_New extends AppCompatActivity {
         setTouchListenerForAnimation(textViewGuest);
     }
     private void setFocusChangeListener(View view) {
-        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    resetInactivityTimer();
-                    textViewError.setVisibility(View.INVISIBLE);
-                }
+        view.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                resetInactivityTimer();
+                textViewError.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -153,8 +143,12 @@ public class Activity1_New extends AppCompatActivity {
             email = intent.getStringExtra("param2");
             password = intent.getStringExtra("param3");
 
-            editTextEmail.setText(email);
-            editTextPassword.setText(password);
+            if("ERROR".equals(user)) {
+                showPopupMessage();
+            }else{
+                editTextEmail.setText(email);
+                editTextPassword.setText(password);
+            }
         }
     }
     public void onClickSignUp(View v) {
@@ -181,12 +175,7 @@ public class Activity1_New extends AppCompatActivity {
              new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            textViewError.setVisibility(View.INVISIBLE);
-                        }
-                    });
+                    runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
                     try {
                         socket.send("LOG_IN" + " " + email + " " + password);
                         String response = socket.receive();
@@ -196,24 +185,11 @@ public class Activity1_New extends AppCompatActivity {
                             sessionID = parts[1];
                             user = parts[2];
                         }
-
                         if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
                             navigateToParam(Activity2_Welcome.class, sessionID, user);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    textViewError.setVisibility(View.INVISIBLE);
-                                }
-                            });
+                            runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
                         } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    textViewError.setVisibility(View.VISIBLE);
-                                }
-                            });
+                            runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
                         }
                     }catch (Exception e){
                         showPopupMessage();
@@ -223,37 +199,29 @@ public class Activity1_New extends AppCompatActivity {
         }
     }
     public void showPopupMessage() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LayoutInflater inflater = LayoutInflater.from(Activity1_New.this);
-                View customView = inflater.inflate(R.layout.activity_00popupguest, null);
+        runOnUiThread(() -> {
+            LayoutInflater inflater = LayoutInflater.from(Activity1_New.this);
+            View customView = inflater.inflate(R.layout.activity_00popupguest, null);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Activity1_New.this);
-                builder.setCustomTitle(customView)
-                        .setPositiveButton("Accedi come Ospite!", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                sessionID = "-1";
-                                user="Guest";
-                                navigateToParam(Activity2_Welcome.class, sessionID, user);
-                                dialog.dismiss();
-                                finish();
-                            }
-                        });
+            AlertDialog.Builder builder = new AlertDialog.Builder(Activity1_New.this);
+            builder.setCustomTitle(customView)
+                    .setPositiveButton("Accedi come Ospite!", (dialog, id) -> {
+                        sessionID = "-1";
+                        user="Guest";
+                        navigateToParam(Activity2_Welcome.class, sessionID, user);
+                        dialog.dismiss();
+                        finish();
+                    });
 
-                AlertDialog dialog = builder.create();
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
-                        int darkGreenColor = DARK_GREEN_COLOR;
-                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                        positiveButton.setTextColor(darkGreenColor); // Sostituisci con il colore desiderato
-                    }
-                });
+            AlertDialog dialog = builder.create();
+            dialog.setOnShowListener(dialogInterface -> {
+                final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
+                int darkGreenColor = DARK_GREEN_COLOR;
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setTextColor(darkGreenColor); // Sostituisci con il colore desiderato
+            });
 
-                dialog.show();
-            }
+            dialog.show();
         });
     }
     public void togglePasswordVisibility(View view) {

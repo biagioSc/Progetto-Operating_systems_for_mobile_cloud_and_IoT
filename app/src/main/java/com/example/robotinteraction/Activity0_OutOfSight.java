@@ -13,7 +13,7 @@ public class Activity0_OutOfSight extends Activity {
 
     private TextView textViewTimerCount;
     private CountDownTimer countDownTimer;
-    private Button buttonRiprendi;
+    private TextView buttonRiprendi;
     private Animation buttonAnimation;
     private long timeLeftInMillis = 10000; // Tempo totale in millisecondi
     private final long countDownInterval = 1000; // Intervallo di aggiornamento in millisecondi

@@ -206,16 +206,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:orientation="vertical"
-                android:padding="10dp"
-                android:textAlignment="center">
+                android:gravity="center"
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/textViewDrinkName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Mojito"
-                    android:textAlignment="center"
                     android:textColor="#020202"
                     android:textSize="24sp"
                     android:typeface="serif" />
@@ -235,7 +234,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp" />
 
-        <Button
+        <TextView
             android:id="@+id/buttonRetrieve"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -246,7 +245,11 @@
             android:layout_below="@id/textViewDrinkDescription"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
-            android:padding="16dp" />
+            android:padding="14dp"
+            android:textAlignment="center"
+            android:clickable="true"
+            android:cursorVisible="true"
+            android:textSize="20sp"/>
 
     </RelativeLayout>
 </LinearLayout>

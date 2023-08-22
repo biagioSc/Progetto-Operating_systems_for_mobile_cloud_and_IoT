@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class Activity2_Welcome extends Activity {
 
-    private Button buttonCheckNextState;
+    private TextView buttonCheckNextState;
     private Animation buttonAnimation;
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
@@ -121,30 +121,54 @@ public class Activity2_Welcome extends Activity {
             numPeopleInQueue = random.nextInt(max - min + 1) + min;
         }else {
             try {
-                socket.send("CHECK_USERS_ORDERING");
-                String num = socket.receive();
-                numPeopleInQueue = Integer.parseInt(num);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        socket.send("CHECK_USERS_ORDERING");
+                        String num = socket.receive();
+                        numPeopleInQueue = Integer.parseInt(num);
+
+                        Intent intent;
+                        if (numPeopleInQueue < 2) {
+
+                            // Vai alla schermata di Ordering
+                            intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
+                        } else {
+                            intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
+                            intent.putExtra("param3", numPeopleInQueue);
+                        }
+
+                        // In entrambi i casi (if o else) passo il sessionID
+                        intent.putExtra("param1",sessionID);
+                        intent.putExtra("param2",user);
+                        startActivity(intent);
+                        finish();
+                    }
+                }).start();
             } catch (Exception e) {
                 int min = 0;
                 int max = 5;
                 Random random = new Random();
                 numPeopleInQueue = random.nextInt(max - min + 1) + min;
+
+                Intent intent;
+                if (numPeopleInQueue < 2) {
+
+                    // Vai alla schermata di Ordering
+                    intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
+                } else {
+                    intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
+                    intent.putExtra("param3", numPeopleInQueue);
+                }
+
+                // In entrambi i casi (if o else) passo il sessionID
+                intent.putExtra("param1",sessionID);
+                intent.putExtra("param2",user);
+                startActivity(intent);
+                finish();
+
             }
         }
-        Intent intent;
-        if (numPeopleInQueue < 2) {
-            // Vai alla schermata di Ordering
-            intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
-        } else {
-            intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
-            intent.putExtra("param3", numPeopleInQueue);
-        }
-
-        // In entrambi i casi (if o else) passo il sessionID
-        intent.putExtra("param1",sessionID);
-        intent.putExtra("param2",user);
-        startActivity(intent);
-        finish();
     }
     private void receiveParam() {
         Intent intent = getIntent();

@@ -2,7 +2,7 @@
     android:shape="rectangle">
 
     <!-- Colore di sfondo azzurro -->
-    <solid android:color="#ffffff" />
+    <solid android:color="#757575" />
 
     <!-- Bordi arrotondati -->
     <corners android:radius="24dp" />

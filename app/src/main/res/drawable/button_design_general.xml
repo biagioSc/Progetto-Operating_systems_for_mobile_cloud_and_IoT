@@ -9,6 +9,6 @@
 
     <!-- Dimensioni dei bordi -->
     <stroke
-        android:width="2dp"
+        android:width="3dp"
         android:color="#000000" />
 </shape>

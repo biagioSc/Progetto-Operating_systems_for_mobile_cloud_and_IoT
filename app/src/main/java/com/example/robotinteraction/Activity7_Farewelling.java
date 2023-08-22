@@ -19,7 +19,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
 
     private TextView textViewLoggedIn, textViewDrinkName, textViewDrinkDescription;
     private Animation buttonAnimation;
-    private Button buttonRetrieve;
+    private TextView buttonRetrieve;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;

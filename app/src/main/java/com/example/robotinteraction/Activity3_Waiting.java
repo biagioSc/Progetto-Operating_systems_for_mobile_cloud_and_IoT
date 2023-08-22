@@ -42,16 +42,6 @@ public class Activity3_Waiting extends AppCompatActivity {
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
-
-        try {
-            socket.send("ADD_USER_WAITING");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        /*if(connesso==false){
-            showPopupMessage();
-        }*/
     }
     private void initUIComponents() {
         textViewQueueCount = findViewById(R.id.textViewQueueCount);
@@ -73,9 +63,16 @@ public class Activity3_Waiting extends AppCompatActivity {
     private void receiveParam() {
         Intent intent = getIntent();
         if (intent != null) {
-            queueCount = intent.getIntExtra("param3", 0);
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
+            queueCount = intent.getIntExtra("param3", 0);
+
+            try {
+                socket.send("ADD_USER_WAITING");
+                socket.send(sessionID);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
 
             int atIndex = user.indexOf("@");
 
@@ -102,10 +99,9 @@ public class Activity3_Waiting extends AppCompatActivity {
     private void setUpComponent() {
 
         //SERVER AGGIUNGERE LOGICA
-
         textViewQueueCount.setText("Persone in coda: " + queueCount);
 
-        queueTime = queueCount * 2; // Calculate queue time in seconds
+        queueTime = queueCount * 10; // Calculate queue time in seconds
         textViewWaitTime.setText("Tempo di attesa: " + queueTime + " secondi");
 
         progressBarWaiting.setMax(queueTime);
@@ -115,17 +111,29 @@ public class Activity3_Waiting extends AppCompatActivity {
 
             @Override
             public void onTick(long millisUntilFinished) {
+
                 progressBarWaiting.setProgress((int) (queueTime - millisUntilFinished / 1000));
                 textViewWaitTime.setText("Tempo di attesa: " + (int) (millisUntilFinished / 1000) + " secondi");
                 secondCounter++;
 
-                if (secondCounter >= 20) {
+                if (secondCounter >= 10) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //socket.send("UPDATE_QUEUE");
+                            //final String receivedData = socket.receive();
+                            String receivedData = "0";
+                            Log.d("ciao",receivedData);
+                            if(Integer.parseInt(receivedData) != 0){
+                                queueCount = Integer.parseInt(receivedData);
+                            }
+                        }
+                    }).start();
                     secondCounter = 0;
                     queueCount--;
                     textViewQueueCount.setText("Persone in coda: " + queueCount);
                 }
             }
-
 
             @Override
             public void onFinish() {
