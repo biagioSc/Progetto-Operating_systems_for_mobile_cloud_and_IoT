@@ -34,6 +34,7 @@
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include "libpq-fe.h"
+#include <signal.h>
 
 #define BUFFER_SIZE 256
 #define MAX_TOPICS 100
@@ -88,8 +89,13 @@ int getUserIdByEmail(const char* email) {
         }
         currentUser = currentUser->next;
     }
-    return -1;  // Restituisce -1 se l'utente con l'email fornita non viene trovato
+
+    // Altrimenti creo l'utente
+    addUserToList(email);
+
+    return currentUserId;
 }
+
 
 
 const char* getEmailByUserId(int userId) {
@@ -207,6 +213,8 @@ int check_stateWaiting(PGconn *conn)
 
     int countWaiting = atoi(PQgetvalue(resWaiting, 0, 0));
 
+    printf("\n[Waiting] Numero di utenti in attesa: %d",countWaiting);
+
     PQclear(resWaiting);
 
     return countWaiting;
@@ -269,7 +277,7 @@ int handle_login(int sockfd, PGconn *conn, char *buffer)
     sscanf(buffer, "LOG_IN %s %s", email, password);
 
     // Stampa l'email e la password per il debug
-    printf("\nEmail e password: %s - %s\n", email, password);
+    printf("\n[Login] Email: %s & Password: %s \n", email, password);
 
     // Crea una query SQL per ottenere la password dell'utente con l'email fornita
     char query[BUFFER_SIZE * 2];
@@ -290,7 +298,7 @@ int handle_login(int sockfd, PGconn *conn, char *buffer)
     // Controlla se la password fornita corrisponde a quella nel database
     if (strcmp(password, PQgetvalue(resLogin, 0, 0)) == 0)
     {
-        printf("L'utente %s ha effettuato l'accesso correttamente\n", email);
+        printf("[Login]  %s ha effettuato l'accesso correttamente\n", email);
 
         // Ottiene l'ID dell'utente
         int id = getUserIdByEmail(email);
@@ -326,7 +334,7 @@ int handle_login(int sockfd, PGconn *conn, char *buffer)
     }
     else
     {
-        printf("Password non valida per questa email %s \n", email);
+        printf("[Login] Password errata per l'utente: %s \n", email);
         PQclear(resLogin); // Libera la memoria del risultato
         write_to_socket(sockfd, "LOG_IN_ERROR"); // Informa il client dell'errore
         return -1;
@@ -827,19 +835,21 @@ void handle_add_user_ordering(int sockfd,PGconn *conn){
     char setOrdering[BUFFER_SIZE];
     sprintf(setOrdering, "UPDATE users SET state='ORDERING' WHERE email='%s';", email);
     PQexec(conn, setOrdering);
-    printf("User %s is now in ordering state\n", email);
+    printf("\nUser %s is now in ordering state\n", email);
 
 }
 
 
 void handle_add_user_waiting(int sockfd,PGconn *conn){
-    char user_session_id[BUFFER_SIZE];
+    char user_session_id[10];
 
     // Ricevi l'ID della sessione dal client
     if(read_from_socket(sockfd, user_session_id, sizeof(user_session_id)) < 0) {
         perror("Errore nella lettura dell'ID della sessione dal client");
         return;
     }
+
+    printf("\nQuesto è lo user session id: %s\n",user_session_id);
 
     // Converti l'ID della sessione in un numero intero
     int session_id = atoi(user_session_id);
@@ -849,7 +859,7 @@ void handle_add_user_waiting(int sockfd,PGconn *conn){
     char setWaiting[BUFFER_SIZE];
     sprintf(setWaiting, "UPDATE users SET state='WAITING' WHERE email='%s';", email);
     PQexec(conn, setWaiting);
-    printf("User %s is now in waiting state\n", email);
+    printf("\nUser %s is now in waiting state\n", email);
 }
 
 
@@ -871,8 +881,21 @@ void handle_user_stop_ordering(int sockfd, PGconn *conn){
     char setIdle[BUFFER_SIZE];
     sprintf(setIdle, "UPDATE users SET state='IDLE' WHERE email='%s';", email);
     PQexec(conn, setIdle);
-    printf("User %s now stopped ordering state and is in idle\n", email);
+    printf("\nUser %s now stopped ordering state and is in idle\n", email);
 }
+
+
+void send_users_waiting(int sockfd, PGconn *conn){
+    int number_of_users_waiting = check_stateWaiting(conn);
+    char str_users_waiting[50];
+
+    sprintf(str_users_waiting, "%d", number_of_users_waiting);
+    printf("\nInvio numero di utenti in waiting pari a: %s\n",str_users_waiting);
+    write_to_socket(sockfd,str_users_waiting);
+
+    return;
+}
+
 
 
 /**
@@ -932,6 +955,9 @@ void *client_handler(void *socket_desc)
         else if (strcmp(buffer,"ADD_USER_WAITING") == 0){
             handle_add_user_waiting(sockfd,conn);
         }
+        else if (strcmp(buffer,"UPDATE_QUEUE") == 0){
+            send_users_waiting(sockfd,conn);
+        }
         else if (strcmp(buffer,"DRINK_DESCRIPTION") == 0){
             send_drink_description(conn,sockfd);
         }
@@ -958,17 +984,36 @@ void *client_handler(void *socket_desc)
     return NULL;
 }
 
+
+
+volatile sig_atomic_t interrupted = 0;  // Flag per il segnale
+
+void sigint_handler(int signum)
+{
+    interrupted = 1;
+}
+
 int main()
 {
     int sockfd, newsockfd, portno;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    int n;
     char *IP = "195.231.38.118"; // Indirizzo IP del server
+
+    // Registra il gestore di segnali
+    signal(SIGINT, sigint_handler);
 
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
     {
         perror("Error opening socket");
+        exit(1);
+    }
+
+    // Add SO_REUSEADDR option
+    int opt = 1;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
+    {
+        perror("Error setting SO_REUSEADDR on socket");
         exit(1);
     }
 
@@ -988,26 +1033,54 @@ int main()
     listen(sockfd, 5);
     clilen = sizeof(cli_addr);
     printf("Server in ascolto sulla porta %d\n", portno);
-    while (1)
+
+    fd_set readfds;
+    struct timeval timeout;
+
+    while (!interrupted)
     {
-        newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
-        if (newsockfd < 0)
+        FD_ZERO(&readfds);
+        FD_SET(sockfd, &readfds);
+        
+        timeout.tv_sec = 1;  // Controlla ogni secondo
+        timeout.tv_usec = 0;
+
+        int activity = select(sockfd + 1, &readfds, NULL, NULL, &timeout);
+
+        if (activity < 0)
         {
-            perror("Error on accept");
+            perror("select error");
             exit(1);
         }
 
-        pthread_t client_thread;
-        int *new_sock_ptr = malloc(sizeof(int));
-        *new_sock_ptr = newsockfd;
-        if (pthread_create(&client_thread, NULL, client_handler, new_sock_ptr) < 0)
+        if (activity == 0)
         {
-            perror("Error creating thread");
-            return 1;
+            // Nessuna attività, controlla il flag e continua
+            continue;
         }
-        // pthread_detach(client_thread); // Detach thread to prevent memory leaks
+
+        if (FD_ISSET(sockfd, &readfds))
+        {
+            newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
+            if (newsockfd < 0)
+            {
+                perror("Error on accept");
+                exit(1);
+            }
+
+            pthread_t client_thread;
+            int *new_sock_ptr = malloc(sizeof(int));
+            *new_sock_ptr = newsockfd;
+            if (pthread_create(&client_thread, NULL, client_handler, new_sock_ptr) < 0)
+            {
+                perror("Error creating thread");
+                return 1;
+            }
+            // pthread_detach(client_thread); // Detach thread to prevent memory leaks
+        }
     }
 
+    printf("\nRicevuto SIGINT. Chiudo la socket e termino...\n");
     close(sockfd);
     return 0;
 }
