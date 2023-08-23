@@ -86,11 +86,12 @@ public class Activity2_Welcome extends Activity {
         Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, int param3) {
         Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
-        if(param3 != null) intent.putExtra("param3", param3);
+        if(param3 != 0) intent.putExtra("param3", param3);
+
         startActivity(intent);
         finish();
     }
@@ -119,6 +120,7 @@ public class Activity2_Welcome extends Activity {
     }
     public void onClickQueue(View v) {
         resetInactivityTimer();
+
         if("Guest".equals(user)){
             int min = 0;
             int max = 5;
@@ -126,9 +128,9 @@ public class Activity2_Welcome extends Activity {
             numPeopleInQueue = random.nextInt(max - min + 1) + min;
 
             if (numPeopleInQueue < 2) {
-                navigateToParam(Activity4_Ordering.class, sessionID, user, null);
+                navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
             } else {
-                navigateToParam(Activity3_Waiting.class, sessionID, user, String.valueOf(numPeopleInQueue));
+                navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
             }
         }else {
             try {
@@ -138,9 +140,9 @@ public class Activity2_Welcome extends Activity {
                     numPeopleInQueue = Integer.parseInt(num);
 
                     if (numPeopleInQueue < 2) {
-                        navigateToParam(Activity4_Ordering.class, sessionID, user, null);
+                        navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
                     } else {
-                        navigateToParam(Activity3_Waiting.class, sessionID, user, String.valueOf(numPeopleInQueue));
+                        navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
                     }
                 }).start();
             } catch (Exception e) {
@@ -150,9 +152,9 @@ public class Activity2_Welcome extends Activity {
                 numPeopleInQueue = random.nextInt(max - min + 1) + min;
 
                 if (numPeopleInQueue < 2) {
-                    navigateToParam(Activity4_Ordering.class, sessionID, user, null);
+                    navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
                 } else {
-                    navigateToParam(Activity3_Waiting.class, sessionID, user, String.valueOf(numPeopleInQueue));
+                    navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
                 }
             }
         }

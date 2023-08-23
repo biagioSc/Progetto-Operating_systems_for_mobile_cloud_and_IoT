@@ -62,21 +62,18 @@ public class Activity_SocketManager {
     }
 
     public void send(final String message){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
+            try {
+                if (outputStream != null) {
+                    outputStream.write(message.getBytes());
+                    outputStream.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
                 try {
-                    if (outputStream != null) {
-                        outputStream.write(message.getBytes());
-                        outputStream.flush();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    try {
-                        throw e;
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    throw e;
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         }).start();
@@ -92,7 +89,7 @@ public class Activity_SocketManager {
             if (receivedData != null) {
                 receivedData = receivedData.trim().replaceAll("\\n$", "");
             }
-            Log.d("ciao","try" + receivedData);
+            Log.d("ciao","try " + receivedData);
             return receivedData;
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,22 +107,19 @@ public class Activity_SocketManager {
     }
 
     public void close() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (socket != null) {
-                        socket.close();
-                    }
-                    if (reader != null) {
-                        reader.close();
-                    }
-                    if (outputStream != null) {
-                        outputStream.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+        new Thread(() -> {
+            try {
+                if (socket != null) {
+                    socket.close();
                 }
+                if (reader != null) {
+                    reader.close();
+                }
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }).start();
     }

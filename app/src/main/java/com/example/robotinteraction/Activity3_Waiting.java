@@ -33,7 +33,6 @@ public class Activity3_Waiting extends AppCompatActivity {
 
         connection();
         initUIComponents();
-
         receiveParam();
         setUpComponent();
     }
@@ -81,13 +80,13 @@ public class Activity3_Waiting extends AppCompatActivity {
         }
     }
     private void setUpComponent() {
-
         textViewQueueCount.setText("Persone in coda: " + queueCount);
         queueTime = queueCount * 10; // Calculate queue time in seconds
         textViewWaitTime.setText("Tempo di attesa: " + queueTime + " secondi");
         progressBarWaiting.setMax(queueTime);
+        Log.d("ciao", String.valueOf(queueCount));
 
-        new CountDownTimer(queueTime * 1000L, 1000) {
+        new CountDownTimer(queueTime * 1000, 1000) {
             private int secondCounter = 0; // Variabile per il conteggio dei secondi
 
             @Override
@@ -116,7 +115,6 @@ public class Activity3_Waiting extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
                 navigateToParam(Activity4_Ordering.class, sessionID, user);
             }
         }.start();

@@ -80,6 +80,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
         Intent intent = new Intent(Activity7_Farewelling.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
+
         startActivity(intent);
         finish();
     }

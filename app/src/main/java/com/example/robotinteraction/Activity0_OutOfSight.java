@@ -40,6 +40,8 @@ public class Activity0_OutOfSight extends Activity {
             public void onFinish() {
                 // Avvia l'activity "Gone"
                 Intent intent = new Intent(Activity0_OutOfSight.this, Activity8_Gone.class);
+                intent.putExtra("param1", "");
+                intent.putExtra("param2", "");
                 startActivity(intent);
                 finish();
             }

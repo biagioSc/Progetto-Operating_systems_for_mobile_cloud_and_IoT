@@ -64,15 +64,16 @@ public class Activity8_Gone extends AppCompatActivity {
         if (intent != null) {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
+            Log.d("ciaoGone", user);
             int atIndex = user.indexOf("@");
 
             // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye + " " + username));
+                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + " " + username));
 
             } else {
-                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye + " " + user));
+                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + " " + user));
             }
         }
     }
