@@ -131,7 +131,11 @@ public class Activity7_Farewelling extends AppCompatActivity {
         if(!("Guest".equals(user))) {
             try {
                 socket.send("DRINK_DESCRIPTION");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(selectedDrink);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 innerResponseDescription = socket.receive();
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
 
             } catch (Exception e) {
                 innerResponseDescription = "Descrizione non disponibile!";

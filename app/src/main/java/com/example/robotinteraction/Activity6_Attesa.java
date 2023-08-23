@@ -76,7 +76,10 @@ public class Activity6_Attesa extends AppCompatActivity {
 
             public void onFinish() {
                 progressBarWaiting.setVisibility(ProgressBar.INVISIBLE);
-                runOnUiThread(() -> textViewPleaseWait.setText("Completato!"));
+                runOnUiThread(() -> {
+                    textViewPleaseWait.setText("Completato!");
+                    textViewTimeElapsed.setText("Il tuo drink è pronto");
+                });
                 navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
             }
         }.start();

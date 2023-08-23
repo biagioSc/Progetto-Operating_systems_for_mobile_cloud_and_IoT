@@ -23,7 +23,7 @@ public class Activity9_Signup extends AppCompatActivity {
     private Button buttonRegisterContinue;
     private TextView textViewError;
     private Animation buttonAnimation;
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     @Override

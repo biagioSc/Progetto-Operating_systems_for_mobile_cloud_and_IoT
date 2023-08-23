@@ -12,44 +12,37 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 public class Activity_SocketManager {
+    private static final String TAG = "Activity_SocketManager";
     private static final String SERVER_IP = "195.231.38.118";
     private static final int SERVER_PORT = 8080;
     private Socket socket;
     private BufferedReader reader;
     private OutputStream outputStream;
-    private static Activity_SocketManager instance ;
-    private boolean isConnected = false; // Aggiunta della variabile di stato
+    private static Activity_SocketManager instance;
+    private boolean isConnected = false;
 
     private Activity_SocketManager() {
-
         connectToServer();
     }
 
     private synchronized void connectToServer() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket = new Socket(SERVER_IP, SERVER_PORT);
-                    reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    outputStream = socket.getOutputStream();
-                    isConnected = true;
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e("Activity_SocketManager", "Errore durante la connessione al server: " + e.getMessage());
-                    if (e instanceof ConnectException) {
-                        Log.e("Activity_SocketManager", "Il server non è attivo o non raggiungibile");
-                    } else if (e instanceof SocketTimeoutException) {
-                        Log.e("Activity_SocketManager", "Timeout di connessione raggiunto");
-                    }
-                    try {
-                        throw e;
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+        new Thread(() -> {
+            try {
+                Log.d(TAG, "Connecting to the server...");
+                socket = new Socket(SERVER_IP, SERVER_PORT);
+                Log.d(TAG, "Connected to the server.");
+                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                outputStream = socket.getOutputStream();
+                isConnected = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e(TAG, "Error during connection: " + e.getMessage());
+                if (e instanceof ConnectException) {
+                    Log.e(TAG, "The server is not active or not reachable.");
+                } else if (e instanceof SocketTimeoutException) {
+                    Log.e(TAG, "Connection timeout reached.");
                 }
+                throw new RuntimeException(e);
             }
         }).start();
     }
@@ -61,27 +54,23 @@ public class Activity_SocketManager {
         return instance;
     }
 
-    public void send(final String message){
+    public void send(final String message) {
+        Log.d(TAG, "Sending message: " + message);
         new Thread(() -> {
             try {
                 if (outputStream != null) {
                     outputStream.write(message.getBytes());
                     outputStream.flush();
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                try {
-                    throw e;
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                throw new RuntimeException(e);
             }
         }).start();
     }
-
     public String receive() {
         try {
-            InputStream inputStream = socket.getInputStream(); // Supponiamo che tu abbia un oggetto Socket
+            InputStream inputStream = socket.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader in = new BufferedReader(inputStreamReader);
 
@@ -89,20 +78,18 @@ public class Activity_SocketManager {
             if (receivedData != null) {
                 receivedData = receivedData.trim().replaceAll("\\n$", "");
             }
-            Log.d("ciao","try " + receivedData);
-            return receivedData;
-        } catch (IOException e) {
-            e.printStackTrace();
-            try {
-                throw e;
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            if (receivedData != null) {
+                Log.d(TAG, "Received message: " + receivedData);
             }
+            return receivedData;
+        } catch (Exception e) {
+            Log.d(TAG, "Received message: CATCH");
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     public boolean isConnected() {
-
         return socket != null && socket.isConnected();
     }
 
@@ -111,6 +98,7 @@ public class Activity_SocketManager {
             try {
                 if (socket != null) {
                     socket.close();
+                    Log.d(TAG, "Socket closed.");
                 }
                 if (reader != null) {
                     reader.close();

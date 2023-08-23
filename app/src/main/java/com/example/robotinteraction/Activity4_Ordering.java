@@ -53,6 +53,7 @@ public class Activity4_Ordering extends AppCompatActivity {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
         try{
             socket.send("ADD_USER_ORDERING");
+            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -94,7 +95,12 @@ public class Activity4_Ordering extends AppCompatActivity {
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
         if(!("Guest".equals(user))) {
-            socket.send("USER_STOP_ORDERING");
+            try {
+                socket.send("USER_STOP_ORDERING");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         Intent intent = new Intent(Activity4_Ordering.this, targetActivity);
@@ -157,8 +163,10 @@ public class Activity4_Ordering extends AppCompatActivity {
         if(!("Guest".equals(user))) {
             try {
                 socket.send("DRINK_LIST");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 String inputString = socket.receive();
-                String[] subStrings = inputString.split(" ");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                String[] subStrings = inputString.split(",");
                 for (String subString : subStrings) {
                     drinkList.add(subString);
                 }
@@ -193,7 +201,9 @@ public class Activity4_Ordering extends AppCompatActivity {
         if(!("Guest".equals(user))) {
             try {
                 socket.send("SUGG_DRINK");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 recommendedDrink = socket.receive();
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
             } catch (Exception e) {
                 int randomIndex = random.nextInt(drinkList.size());
                 recommendedDrink = drinkList.get(randomIndex);

@@ -29,7 +29,7 @@ public class Activity9_Interview extends AppCompatActivity {
     private final List<String> drinkSelections = new ArrayList<>();
     private final List<String> argSelections = new ArrayList<>();
     private Animation buttonAnimation;
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
@@ -172,26 +172,38 @@ public class Activity9_Interview extends AppCompatActivity {
         startInactivityTimer();
     }
     public void onClickRegister(View v) {
+        // TODO: 24/08/2023 ROTELLINA CHE GIRA
+        buttonSubmit.setEnabled(false);
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 try {
                     socket.send("SIGN_UP");
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     socket.send(email);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     socket.send(nome);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     socket.send(cognome);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     socket.send(password);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     int numeropreferezeInt=drinkSelections.size();
                     String numeroprefrenzeString=Integer.toString(numeropreferezeInt);
                     socket.send(numeroprefrenzeString);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     for(String drink : drinkSelections){
                         socket.send(drink);
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     }
                     numeropreferezeInt=argSelections.size();
                     numeroprefrenzeString=Integer.toString(numeropreferezeInt);
                     socket.send(numeroprefrenzeString);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     for(String topic : argSelections){
                         socket.send(topic);
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     }
 
                     String response = socket.receive();
@@ -207,6 +219,10 @@ public class Activity9_Interview extends AppCompatActivity {
                                         "Registrazione completata", Toast.LENGTH_LONG).show();
 
                             });
+                        }else{
+                            navigateToParam(Activity1_New.class, "ERROR", null, null);
+                            runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,
+                                    "Registrazione fallita", Toast.LENGTH_LONG).show());
                         }
                     }
                 }catch (Exception e){

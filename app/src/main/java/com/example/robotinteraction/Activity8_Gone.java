@@ -64,7 +64,6 @@ public class Activity8_Gone extends AppCompatActivity {
         if (intent != null) {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
-            Log.d("ciaoGone", user);
             int atIndex = user.indexOf("@");
 
             // Verificare se è presente il simbolo "@"
@@ -79,7 +78,14 @@ public class Activity8_Gone extends AppCompatActivity {
     }
     public void onClickExit(View v) {
         if(!("Guest".equals(user))) {
-            socket.send("USER_GONE");
+            try {
+                socket.send("USER_GONE");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            socket.close();
         }
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
@@ -87,5 +93,6 @@ public class Activity8_Gone extends AppCompatActivity {
         startActivity(intent);
         finishAffinity();
         System.exit(0);
+
     }
 }

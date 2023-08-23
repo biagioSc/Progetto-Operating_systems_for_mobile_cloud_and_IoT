@@ -63,7 +63,9 @@ public class Activity3_Waiting extends AppCompatActivity {
             if(!("Guest".equals(user))) {
                 try {
                     socket.send("ADD_USER_WAITING");
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     socket.send(sessionID);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -99,6 +101,7 @@ public class Activity3_Waiting extends AppCompatActivity {
                 if (secondCounter >= 10) {
                     if(!("Guest".equals(user))) {
                         new Thread(() -> {
+                            // TODO: 24/08/2023 UPDATE_QUEUE 
                             //socket.send("UPDATE_QUEUE");
                             //final String receivedData = socket.receive();
                             String receivedData = "0";

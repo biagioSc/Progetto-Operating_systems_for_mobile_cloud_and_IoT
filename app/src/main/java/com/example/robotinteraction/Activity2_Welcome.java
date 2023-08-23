@@ -135,16 +135,25 @@ public class Activity2_Welcome extends Activity {
         }else {
             try {
                 new Thread(() -> {
-                    socket.send("CHECK_USERS_ORDERING");
-                    String num = socket.receive();
-                    numPeopleInQueue = Integer.parseInt(num);
+                    try {
+                        // TODO: 24/08/2023 ROTELLINA CHE GIRA
 
-                    if (numPeopleInQueue < 2) {
-                        navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
-                    } else {
-                        navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
+                        socket.send("CHECK_USERS_ORDERING");
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        String num = socket.receive();
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        numPeopleInQueue = Integer.parseInt(num);
+
+                        if (numPeopleInQueue < 2) {
+                            navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
+                        } else {
+                            navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                 }).start();
+
             } catch (Exception e) {
                 int min = 0;
                 int max = 5;

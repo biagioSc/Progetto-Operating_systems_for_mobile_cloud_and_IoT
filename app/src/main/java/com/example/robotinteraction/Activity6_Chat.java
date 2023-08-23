@@ -163,7 +163,11 @@ public class Activity6_Chat extends AppCompatActivity {
         }else {
             try {
                 socket.send("START_CHAT");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(sessionID);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 String inputString = socket.receive();
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 selectedTopics = inputString.split(" ");
 
             } catch (Exception e) {
@@ -288,7 +292,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private void delayedStartNextQuestion() {
         new Handler().postDelayed(() -> {
             if (currentQuestionIndex >= selectedQuestions.size()) {
-                new Handler().postDelayed(this::showPopupMessage, 1000);
+                new Handler().postDelayed(this::showPopupMessage, 200);
             } else {
                 startGame();
             }

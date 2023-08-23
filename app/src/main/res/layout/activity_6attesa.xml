@@ -180,16 +180,17 @@
         android:textColor="#000000"
         android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/textViewTimeElapsed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewWelcomeMessage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:text="Il tuo drink è quasi pronto"
-        android:textColor="#757575"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/textViewTimeElapsed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewWelcomeMessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:text="Il tuo drink è quasi pronto"
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="18sp" />
 
     <ProgressBar
         android:id="@+id/progressBarWaiting"
