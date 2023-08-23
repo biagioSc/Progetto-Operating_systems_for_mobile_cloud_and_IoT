@@ -168,7 +168,7 @@ int read_from_socket(int sockfd, char *buffer, int bufsize)
 
     // Remove newline character if present
     buffer[strcspn(buffer, "\n")] = '\0';
-    printf("Received: %s", buffer);
+    printf("Received: %s\n", buffer);
     return n;
 }
 
@@ -391,17 +391,17 @@ int handle_signup(int sockfd, PGconn *conn)
 
     if (check_user(conn, email) != 0)
     {
-        write_to_socket(sockfd, "EMAIL_ALREADY_USED");
+        printf("\n[SignUp] L'utente con email: %s esiste gia'\n",email);
+        signUpDone = 0;
     }
     else
     {
         //ricevo il nome dell'utente
         read_from_socket(sockfd, name, BUFFER_SIZE);
-        printf("Name: %s\n", name);
+        
 
         //ricevo il cognome dell'utente
         read_from_socket(sockfd, surname, BUFFER_SIZE);
-        printf("Surname: %s\n", surname);
 
         //ricevo la password e il numero di drink preferiti
         read_from_socket(sockfd, password, BUFFER_SIZE);
@@ -409,7 +409,6 @@ int handle_signup(int sockfd, PGconn *conn)
 
         //trasformo il numero dei drink da stringa ad intero
         drinksCounter = atoi(drinksCounterStr);
-        printf("Drinks counter: %d\n", drinksCounter);
 
         //terminazione per la stringa di drinks
         drinks[0] = '\0'; 
@@ -452,11 +451,13 @@ int handle_signup(int sockfd, PGconn *conn)
             }
         }
 
+        // Print di debug
+        printf("[SignUp] Nome: %s Cognome: %s Email: %s Password: %s\n\tDrinks: %s Topics: %s", name,surname,email,password,drinks,topics);
+
         // name, surname, email, password, favDrinks, favTopics INSERTION
         char query[BUFFER_SIZE * 4];
         sprintf(query, "INSERT INTO users (name, surname, email, password, \"favDrink\" , \"favTopics\", state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', 'IDLE');",
                 name, surname, email, password, drinks, topics);
-        printf("%s\n", query);
         PGresult *res = PQexec(conn, query);
 
         if (PQresultStatus(res) != PGRES_COMMAND_OK)
@@ -472,9 +473,13 @@ int handle_signup(int sockfd, PGconn *conn)
         {
             // Invio messaggio di successo al client
             write_to_socket(sockfd, "SIGN_UP_SUCCESS");
+            printf("\n[SignUp] Operazione completata con successo\n");
         }
-        else
+        else{
+            printf("\n[SignUp] Operazione non andata a buon fine\n");
             write_to_socket(sockfd, "SIGN_UP_ERROR");
+        }
+            
     }
 
     return 0; // Returns 0 if everything went well
@@ -510,11 +515,14 @@ char *suggest_drink(PGconn *conn, const char *email) {
         token = strtok(NULL, ",");
     }
 
+    printf("\nI drink suggeriti sono: %s\n",drinks);
+
     // Seleziono un drink casuale da suggerire all'utente
     if (numDrinks > 0) {
         int randomIndex = rand() % numDrinks;
         char *suggestedDrink = strdup(drinks[randomIndex]);
         PQclear(res);
+        printf("\nIl drink suggerito randomico e': %s\n",suggestedDrink);
         return suggestedDrink;
     } else {
         PQclear(res);
@@ -602,6 +610,8 @@ char *get_drinks_name(PGconn *conn) {
     }
     free(drinks);
 
+    printf("\nI drink unificati sono %s\n",drinks_unificati);
+
     return drinks_unificati;
 }
 
@@ -686,7 +696,7 @@ void handle_chat(int sockfd, PGconn *conn)
 void send_drink_description(PGconn *conn, int sockfd) {
     
     char query[BUFFER_SIZE];
-    char drink_name[10];
+    char drink_name[20];
     PGresult *res;
     char *description = NULL;
 
@@ -696,13 +706,8 @@ void send_drink_description(PGconn *conn, int sockfd) {
         return;
     }
 
-    // Controllo che la stringa inviatami non contenga caratteri particolari
-    for (int i = 0; drink_name[i]; i++) {
-        if (!isalnum(drink_name[i])) {
-            perror("Carattere non valido nel nome del drink");
-            return;
-        }
-    }
+    printf("\nil drink name che ho preso è: %s\n",drink_name);
+
 
     // Costruisco la query
     snprintf(query, sizeof(query), "SELECT description FROM drinks WHERE name='%s'", drink_name);
@@ -738,6 +743,9 @@ void send_drinks_list(int sockfd, PGconn *conn) {
     char *drinks_string = get_drinks_name(conn);
 
     if (drinks_string != NULL) {
+
+        printf("\nInvio lista dei drink: %s\n",drinks_string);
+
         // Invia la lista dei drink al client
         if (write_to_socket(sockfd, drinks_string) < 0) {
             perror("Errore nell'invio della lista dei drink al client");
@@ -859,7 +867,7 @@ void handle_add_user_waiting(int sockfd,PGconn *conn){
     char setWaiting[BUFFER_SIZE];
     sprintf(setWaiting, "UPDATE users SET state='WAITING' WHERE email='%s';", email);
     PQexec(conn, setWaiting);
-    printf("\nUser %s is now in waiting state\n", email);
+    printf("\n[Waiting] L'utente %s e' ora in stato di waiting\n", email);
 }
 
 
@@ -881,7 +889,7 @@ void handle_user_stop_ordering(int sockfd, PGconn *conn){
     char setIdle[BUFFER_SIZE];
     sprintf(setIdle, "UPDATE users SET state='IDLE' WHERE email='%s';", email);
     PQexec(conn, setIdle);
-    printf("\nUser %s now stopped ordering state and is in idle\n", email);
+    printf("\n[IDLE] L'utente %s ha concluso la fase di ordering ed è ora in idle\n", email);
 }
 
 
@@ -925,7 +933,7 @@ void *client_handler(void *socket_desc)
     printf("[Connessione] per il client %d avvenuta con successo\n", sockfd);
     while (1)
     {
-        int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);
+        int n = read_from_socket(sockfd, buffer, BUFFER_SIZE);        
         if (n <= 0)
         {
             printf(" ERRORE NELLA LETTURA DELLA SOCKET\n");
@@ -939,6 +947,7 @@ void *client_handler(void *socket_desc)
         }
         else if (strcmp(buffer, "SIGN_UP") == 0)
         {
+            printf("[SignUp] Il client ha avviato la fase di registrazione...\n");
             handle_signup(sockfd, conn);
         }
         else if (strcmp(buffer, "START_CHAT") == 0)
@@ -950,7 +959,7 @@ void *client_handler(void *socket_desc)
             handle_welcoming(sockfd, conn);
         }
         else if (strcmp(buffer,"ADD_USER_ORDERING") == 0){
-            handle_add_user_ordering(sockfd,conn);
+            //handle_add_user_ordering(sockfd,conn);
         }
         else if (strcmp(buffer,"ADD_USER_WAITING") == 0){
             handle_add_user_waiting(sockfd,conn);
@@ -962,13 +971,18 @@ void *client_handler(void *socket_desc)
             send_drink_description(conn,sockfd);
         }
         else if (strcmp(buffer,"SUGG_DRINK") == 0){
-            handle_suggest_drink_ordering(sockfd,conn);
+            //handle_suggest_drink_ordering(sockfd,conn);
+            char d[14]="ErasmoSuggerito";
+            printf("\ninvio il drink suggerito: %s\n",d);
+            write_to_socket(sockfd,d);
         }
         else if( strcmp(buffer,"USER_STOP_ORDERING") == 0){
             handle_user_stop_ordering(sockfd,conn);
         }
         else if (strcmp(buffer,"DRINK_LIST") == 0){
-            send_drinks_list(sockfd,conn);
+            //send_drinks_list(sockfd,conn);
+            printf("\nSono in drink_list\n");
+            write_to_socket(sockfd,"erasmo,franco,michele,biagio,antonio");
         }
         else if (strcmp(buffer,"USER_GONE") == 0){
             handle_gone(sockfd,conn);
@@ -1049,7 +1063,8 @@ int main()
 
         if (activity < 0)
         {
-            perror("select error");
+            perror("\n[INTERRUPT] Il server è stato interrotto correttamente");
+            close(sockfd);
             exit(1);
         }
 
