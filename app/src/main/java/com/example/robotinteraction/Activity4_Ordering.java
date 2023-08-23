@@ -51,7 +51,11 @@ public class Activity4_Ordering extends AppCompatActivity {
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        socket.send("ADD_USER_ORDERING");
+        try{
+            socket.send("ADD_USER_ORDERING");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         // Azione da eseguire dopo l'inattività
         runnable = () -> navigateTo(Activity0_OutOfSight.class);
@@ -82,14 +86,17 @@ public class Activity4_Ordering extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity4_Ordering.this, targetActivity);
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
-        socket.send("USER_STOP_ORDERING");
+        if(!("Guest".equals(user))) {
+            socket.send("USER_STOP_ORDERING");
+        }
+
         Intent intent = new Intent(Activity4_Ordering.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
@@ -138,36 +145,34 @@ public class Activity4_Ordering extends AppCompatActivity {
 
             int atIndex = user.indexOf("@");
 
-            // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewLoggedIn.setText(username);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(username));
             } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        textViewLoggedIn.setText(user);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(user));
             }
         }
     }
     private void setUpComponent() {
-
-        try{
-            socket.send("DRINK_LIST");
-            String inputString = socket.receive();
-            String[] subStrings = inputString.split(" ");
-            for (String subString : subStrings) {
-                drinkList.add(subString);
+        if(!("Guest".equals(user))) {
+            try {
+                socket.send("DRINK_LIST");
+                String inputString = socket.receive();
+                String[] subStrings = inputString.split(" ");
+                for (String subString : subStrings) {
+                    drinkList.add(subString);
+                }
+            } catch (Exception e) {
+                drinkList.add("Mojito");
+                drinkList.add("Martini");
+                drinkList.add("Midori");
+                drinkList.add("Manhattan");
+                drinkList.add("Negroni");
+                drinkList.add("Daiquiri");
+                drinkList.add("Pina Colada");
+                drinkList.add("Gin Lemon");
             }
-        }catch (Exception e){
+        }else{
             drinkList.add("Mojito");
             drinkList.add("Martini");
             drinkList.add("Midori");
@@ -177,30 +182,28 @@ public class Activity4_Ordering extends AppCompatActivity {
             drinkList.add("Pina Colada");
             drinkList.add("Gin Lemon");
         }
-
         setRandomRecommendedDrink();
 
-        // Inizializza il dropdown menu con gli elementi dalla lista dei drink
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDrinks.setAdapter(adapter);
 
     }
     private void setRandomRecommendedDrink() {
-        try{
-            socket.send("SUGG_DRINK");
-            recommendedDrink = socket.receive();
-        }catch (Exception e){
+        if(!("Guest".equals(user))) {
+            try {
+                socket.send("SUGG_DRINK");
+                recommendedDrink = socket.receive();
+            } catch (Exception e) {
+                int randomIndex = random.nextInt(drinkList.size());
+                recommendedDrink = drinkList.get(randomIndex);
+            }
+        }else{
             int randomIndex = random.nextInt(drinkList.size());
             recommendedDrink = drinkList.get(randomIndex);
         }
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                textViewRecommendedDrink.setText(recommendedDrink);
-            }
-        });
+        runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
     }
 
 }

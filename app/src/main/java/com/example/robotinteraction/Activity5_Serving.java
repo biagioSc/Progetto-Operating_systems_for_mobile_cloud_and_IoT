@@ -17,11 +17,10 @@ import java.io.IOException;
 
 public class Activity5_Serving extends AppCompatActivity {
     private Animation buttonAnimation;
-    private TextView textViewOrderStatusTitle, textViewOrderStatusMessage, textViewLoggedIn;
-    private TextView buttonQuiz, buttonWaitingRoom;
+    private TextView textViewOrderStatusTitle, textViewOrderStatusMessage, textViewLoggedIn, buttonQuiz, buttonWaitingRoom;
     private String selectedDrink;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest";
@@ -39,19 +38,7 @@ public class Activity5_Serving extends AppCompatActivity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
-
-        /*if(connesso==false){
-            showPopupMessage();
-        }*/
-
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
@@ -79,7 +66,7 @@ public class Activity5_Serving extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity5_Serving.this, targetActivity);
@@ -133,36 +120,21 @@ public class Activity5_Serving extends AppCompatActivity {
 
             int atIndex = user.indexOf("@");
 
-            // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewLoggedIn.setText(username);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(username));
             } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        textViewLoggedIn.setText(user);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(user));
             }
         }
     }
     private void setUpComponent() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        runOnUiThread(() -> {
 
-                textViewOrderStatusTitle.setText("In preparazione: \n" + selectedDrink);
+            textViewOrderStatusTitle.setText("In preparazione: \n" + selectedDrink);
 
-                if (selectedDrink != "") {
-                    textViewOrderStatusMessage.setText("Il tuo " + selectedDrink + " è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz.");
-                }
+            if (selectedDrink != "") {
+                textViewOrderStatusMessage.setText("Il tuo " + selectedDrink + " è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz.");
             }
         });
     }

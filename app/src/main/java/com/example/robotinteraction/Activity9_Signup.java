@@ -24,7 +24,7 @@ public class Activity9_Signup extends AppCompatActivity {
     private TextView textViewError;
     private Animation buttonAnimation;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +38,8 @@ public class Activity9_Signup extends AppCompatActivity {
         setUpComponent();
     }
     private void connection() {
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        // Azione da eseguire dopo l'inattività
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -56,6 +51,7 @@ public class Activity9_Signup extends AppCompatActivity {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
     }
     private void setupListeners() {
+
         setTouchListenerForAnimation(buttonRegisterContinue);
     }
     private void setTouchListenerForAnimation(View view) {
@@ -72,7 +68,7 @@ public class Activity9_Signup extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity9_Signup.this, targetActivity);
@@ -129,24 +125,15 @@ public class Activity9_Signup extends AppCompatActivity {
                 // Non necessario per questo caso
             }
         };
-        // Ottieni il testo dai campi di input
 
         editTextFirstName.addTextChangedListener(textWatcher);
         editTextLastName.addTextChangedListener(textWatcher);
         editTextEmail.addTextChangedListener(textWatcher);
         editTextPassword.addTextChangedListener(textWatcher);
 
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(Activity9_Signup.this, Activity0_OutOfSight.class);
-                startActivity(intent);
-            }
-        };
         startInactivityTimer();
     }
     public void onClickRContinue(View view) {
-        // Ottieni il testo dai campi di input
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
@@ -158,7 +145,7 @@ public class Activity9_Signup extends AppCompatActivity {
         boolean passwordValida = password.length() >= 6;
 
         if (nomeValido==false || cognomeValido ==false || emailValido ==false || passwordValida==false) {
-            textViewError.setText("Email e/o password errate");
+            textViewError.setText("Email e/o password non conformi");
             textViewError.setVisibility(View.VISIBLE);
         }
         else{
@@ -166,18 +153,14 @@ public class Activity9_Signup extends AppCompatActivity {
             buttonRegisterContinue.setEnabled(nomeValido && cognomeValido && emailValido && passwordValida);
             navigateToParam(Activity9_Interview.class, firstName, lastName, email, password);
         }
-
     }
 
     private void updateButtonState() {
-        // Verifica se tutti gli EditText non sono vuoti
         boolean allFieldsNotEmpty = !editTextFirstName.getText().toString().isEmpty() &&
                 !editTextLastName.getText().toString().isEmpty() &&
                 !editTextEmail.getText().toString().isEmpty() &&
                 !editTextPassword.getText().toString().isEmpty();
 
         buttonRegisterContinue.setEnabled(allFieldsNotEmpty);
-
-
     }
 }

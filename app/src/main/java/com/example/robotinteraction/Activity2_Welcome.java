@@ -20,7 +20,7 @@ public class Activity2_Welcome extends Activity {
     private TextView buttonCheckNextState;
     private Animation buttonAnimation;
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private String sessionID = "-1", user = "Guest";
     private Activity_SocketManager socket;
@@ -37,22 +37,9 @@ public class Activity2_Welcome extends Activity {
 
         receiveParam();
     }
-
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
-
-        /*if(connesso==false){
-            showPopupMessage();
-        }*/
-
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -60,7 +47,24 @@ public class Activity2_Welcome extends Activity {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
     }
     private void setupListeners() {
+
         setTouchListenerForAnimation(buttonCheckNextState);
+    }
+    private void receiveParam() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            sessionID = intent.getStringExtra("param1");
+            user = intent.getStringExtra("param2");
+
+            int atIndex = user.indexOf("@");
+
+            if (atIndex != -1) {
+                String username = user.substring(0, atIndex);
+                runOnUiThread(() -> textViewLoggedIn.setText(username));
+            } else {
+                runOnUiThread(() -> textViewLoggedIn.setText(user));
+            }
+        }
     }
     private void setTouchListenerForAnimation(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -76,16 +80,17 @@ public class Activity2_Welcome extends Activity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
         Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
+        if(param3 != null) intent.putExtra("param3", param3);
         startActivity(intent);
         finish();
     }
@@ -113,36 +118,29 @@ public class Activity2_Welcome extends Activity {
         startInactivityTimer();
     }
     public void onClickQueue(View v) {
-        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+        resetInactivityTimer();
         if("Guest".equals(user)){
             int min = 0;
             int max = 5;
             Random random = new Random();
             numPeopleInQueue = random.nextInt(max - min + 1) + min;
+
+            if (numPeopleInQueue < 2) {
+                navigateToParam(Activity4_Ordering.class, sessionID, user, null);
+            } else {
+                navigateToParam(Activity3_Waiting.class, sessionID, user, String.valueOf(numPeopleInQueue));
+            }
         }else {
             try {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        socket.send("CHECK_USERS_ORDERING");
-                        String num = socket.receive();
-                        numPeopleInQueue = Integer.parseInt(num);
+                new Thread(() -> {
+                    socket.send("CHECK_USERS_ORDERING");
+                    String num = socket.receive();
+                    numPeopleInQueue = Integer.parseInt(num);
 
-                        Intent intent;
-                        if (numPeopleInQueue < 2) {
-
-                            // Vai alla schermata di Ordering
-                            intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
-                        } else {
-                            intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
-                            intent.putExtra("param3", numPeopleInQueue);
-                        }
-
-                        // In entrambi i casi (if o else) passo il sessionID
-                        intent.putExtra("param1",sessionID);
-                        intent.putExtra("param2",user);
-                        startActivity(intent);
-                        finish();
+                    if (numPeopleInQueue < 2) {
+                        navigateToParam(Activity4_Ordering.class, sessionID, user, null);
+                    } else {
+                        navigateToParam(Activity3_Waiting.class, sessionID, user, String.valueOf(numPeopleInQueue));
                     }
                 }).start();
             } catch (Exception e) {
@@ -151,49 +149,11 @@ public class Activity2_Welcome extends Activity {
                 Random random = new Random();
                 numPeopleInQueue = random.nextInt(max - min + 1) + min;
 
-                Intent intent;
                 if (numPeopleInQueue < 2) {
-
-                    // Vai alla schermata di Ordering
-                    intent = new Intent(Activity2_Welcome.this, Activity4_Ordering.class);
+                    navigateToParam(Activity4_Ordering.class, sessionID, user, null);
                 } else {
-                    intent = new Intent(Activity2_Welcome.this, Activity3_Waiting.class);
-                    intent.putExtra("param3", numPeopleInQueue);
+                    navigateToParam(Activity3_Waiting.class, sessionID, user, String.valueOf(numPeopleInQueue));
                 }
-
-                // In entrambi i casi (if o else) passo il sessionID
-                intent.putExtra("param1",sessionID);
-                intent.putExtra("param2",user);
-                startActivity(intent);
-                finish();
-
-            }
-        }
-    }
-    private void receiveParam() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            sessionID = intent.getStringExtra("param1");
-            user = intent.getStringExtra("param2");
-
-            int atIndex = user.indexOf("@");
-
-            // Verificare se è presente il simbolo "@"
-            if (atIndex != -1) {
-                String username = user.substring(0, atIndex);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewLoggedIn.setText(username);
-                    }
-                });
-            } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewLoggedIn.setText(user);
-                    }
-                });
             }
         }
     }

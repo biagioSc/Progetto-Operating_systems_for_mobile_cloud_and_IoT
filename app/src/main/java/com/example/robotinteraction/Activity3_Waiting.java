@@ -20,8 +20,6 @@ public class Activity3_Waiting extends AppCompatActivity {
     private TextView textViewQueueCount;
     private TextView textViewWaitTime;
     private ProgressBar progressBarWaiting;
-    private static final long TIME_THRESHOLD = 60000; // 60 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private TextView textViewLoggedIn;
     private String sessionID = "-1", user = "Guest";
@@ -41,17 +39,13 @@ public class Activity3_Waiting extends AppCompatActivity {
     }
 
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Activity_SocketManager.getInstance();
     }
     private void initUIComponents() {
         textViewQueueCount = findViewById(R.id.textViewQueueCount);
         textViewWaitTime = findViewById(R.id.textViewWaitTime);
         progressBarWaiting = findViewById(R.id.progressBarWaiting);
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
-    }
-    private void navigateTo(Class<?> targetActivity) {
-        Intent intent = new Intent(Activity3_Waiting.this, targetActivity);
-        startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity3_Waiting.this, targetActivity);
@@ -67,46 +61,33 @@ public class Activity3_Waiting extends AppCompatActivity {
             user = intent.getStringExtra("param2");
             queueCount = intent.getIntExtra("param3", 0);
 
-            try {
-                socket.send("ADD_USER_WAITING");
-                socket.send(sessionID);
-            }catch (Exception e) {
-                e.printStackTrace();
+            if(!("Guest".equals(user))) {
+                try {
+                    socket.send("ADD_USER_WAITING");
+                    socket.send(sessionID);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             int atIndex = user.indexOf("@");
 
-            // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewLoggedIn.setText(username);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(username));
             } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        textViewLoggedIn.setText(user);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(user));
             }
         }
     }
     private void setUpComponent() {
 
-        //SERVER AGGIUNGERE LOGICA
         textViewQueueCount.setText("Persone in coda: " + queueCount);
-
         queueTime = queueCount * 10; // Calculate queue time in seconds
         textViewWaitTime.setText("Tempo di attesa: " + queueTime + " secondi");
-
         progressBarWaiting.setMax(queueTime);
 
-        new CountDownTimer(queueTime * 1000, 1000) {
+        new CountDownTimer(queueTime * 1000L, 1000) {
             private int secondCounter = 0; // Variabile per il conteggio dei secondi
 
             @Override
@@ -117,18 +98,16 @@ public class Activity3_Waiting extends AppCompatActivity {
                 secondCounter++;
 
                 if (secondCounter >= 10) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+                    if(!("Guest".equals(user))) {
+                        new Thread(() -> {
                             //socket.send("UPDATE_QUEUE");
                             //final String receivedData = socket.receive();
                             String receivedData = "0";
-                            Log.d("ciao",receivedData);
-                            if(Integer.parseInt(receivedData) != 0){
+                            if (Integer.parseInt(receivedData) != 0) {
                                 queueCount = Integer.parseInt(receivedData);
                             }
-                        }
-                    }).start();
+                        }).start();
+                    }
                     secondCounter = 0;
                     queueCount--;
                     textViewQueueCount.setText("Persone in coda: " + queueCount);
@@ -137,18 +116,10 @@ public class Activity3_Waiting extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+
                 navigateToParam(Activity4_Ordering.class, sessionID, user);
             }
         }.start();
-
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(Activity3_Waiting.this, Activity0_OutOfSight.class);
-                startActivity(intent);
-            }
-        };
-
     }
 
 }

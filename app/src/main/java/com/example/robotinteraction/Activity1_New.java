@@ -21,28 +21,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 
-import java.io.IOException;
 
 public class Activity1_New extends AppCompatActivity {
-
-    // Dichiarazione delle variabili
-
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
-    private TextView buttonLogin;
-    private TextView textViewError, textViewSignUp, textViewGuest;
+    private TextView buttonLogin, textViewError, textViewSignUp, textViewGuest;
     private Animation buttonAnimation;
     private Activity_SocketManager socket;
     private boolean isPasswordVisible = false;
     private ImageButton passwordToggle;
-    private String sessionID = "-1", user = "Guest", email, password;
-    private String LOG_IN_RESPONSE = "LOG_IN_ERROR";
+    private String sessionID = "-1", user = "Guest", email, password, LOG_IN_RESPONSE = "LOG_IN_ERROR";
     private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-    private boolean connesso = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +71,21 @@ public class Activity1_New extends AppCompatActivity {
         setTouchListenerForAnimation(textViewSignUp);
         setTouchListenerForAnimation(textViewGuest);
     }
+    private void receiveParam() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            user = intent.getStringExtra("param1");
+            email = intent.getStringExtra("param2");
+            password = intent.getStringExtra("param3");
+
+            if("ERROR".equals(user)) {
+                showPopupMessage();
+            }else{
+                editTextEmail.setText(email);
+                editTextPassword.setText(password);
+            }
+        }
+    }
     private void setFocusChangeListener(View view) {
         view.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -100,7 +108,7 @@ public class Activity1_New extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity1_New.this, targetActivity);
@@ -136,21 +144,6 @@ public class Activity1_New extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
-    private void receiveParam() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            user = intent.getStringExtra("param1");
-            email = intent.getStringExtra("param2");
-            password = intent.getStringExtra("param3");
-
-            if("ERROR".equals(user)) {
-                showPopupMessage();
-            }else{
-                editTextEmail.setText(email);
-                editTextPassword.setText(password);
-            }
-        }
-    }
     public void onClickSignUp(View v) {
         resetInactivityTimer();
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
@@ -172,30 +165,27 @@ public class Activity1_New extends AppCompatActivity {
             textViewError.setText("Inserisci email e password!");
             textViewError.setVisibility(View.VISIBLE);
         } else {
-             new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
-                    try {
-                        socket.send("LOG_IN" + " " + email + " " + password);
-                        String response = socket.receive();
-                        String[] parts = response.split(" ");
-                        if (parts.length >= 3) {
-                            LOG_IN_RESPONSE = parts[0];
-                            sessionID = parts[1];
-                            user = parts[2];
-                        }
-                        if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
-                            navigateToParam(Activity2_Welcome.class, sessionID, user);
-                            runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
-                        } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
-                            runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
-                        }
-                    }catch (Exception e){
-                        showPopupMessage();
-                    }
-                }
-            }).start();
+             new Thread(() -> {
+                 runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
+                 try {
+                     socket.send("LOG_IN" + " " + email + " " + password);
+                     String response = socket.receive();
+                     String[] parts = response.split(" ");
+                     if (parts.length >= 3) {
+                         LOG_IN_RESPONSE = parts[0];
+                         sessionID = parts[1];
+                         user = parts[2];
+                     }
+                     if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
+                         navigateToParam(Activity2_Welcome.class, sessionID, user);
+                         runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
+                     } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
+                         runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
+                     }
+                 }catch (Exception e){
+                     showPopupMessage();
+                 }
+             }).start();
         }
     }
     public void showPopupMessage() {
@@ -216,15 +206,15 @@ public class Activity1_New extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.setOnShowListener(dialogInterface -> {
                 final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
-                int darkGreenColor = DARK_GREEN_COLOR;
                 Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setTextColor(darkGreenColor); // Sostituisci con il colore desiderato
+                positiveButton.setTextColor(DARK_GREEN_COLOR); // Sostituisci con il colore desiderato
             });
 
             dialog.show();
         });
     }
     public void togglePasswordVisibility(View view) {
+        resetInactivityTimer();
         if (isPasswordVisible) {
             editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
             passwordToggle.setImageResource(R.drawable.hide);

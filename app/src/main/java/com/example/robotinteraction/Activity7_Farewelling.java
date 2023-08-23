@@ -41,19 +41,9 @@ public class Activity7_Farewelling extends AppCompatActivity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
 
-    /*if(connesso==false){
-        showPopupMessage();
-    }*/
-
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        // Azione da eseguire dopo l'inattività
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         textViewDrinkName = findViewById(R.id.textViewDrinkName);
@@ -80,7 +70,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity7_Farewelling.this, targetActivity);
@@ -128,42 +118,38 @@ public class Activity7_Farewelling extends AppCompatActivity {
             // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewLoggedIn.setText(username);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(username));
             } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        textViewLoggedIn.setText(user);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(user));
             }
         }
     }
     private void setUpComponent() {
-        final String innerResponseDescription = "descrizione";
+        String innerResponseDescription;
+
+        if(!("Guest".equals(user))) {
+            try {
+                socket.send("DRINK_DESCRIPTION");
+                innerResponseDescription = socket.receive();
+
+            } catch (Exception e) {
+                innerResponseDescription = "Descrizione non disponibile!";
+            }
+        }else{
+            innerResponseDescription = "Descrizione non disponibile!";
+        }
 
         if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    textViewDrinkName.setText(selectedDrink);
-                    textViewDrinkDescription.setText(innerResponseDescription);
-                }
+            String finalInnerResponseDescription = innerResponseDescription;
+            runOnUiThread(() -> {
+                textViewDrinkName.setText(selectedDrink);
+                textViewDrinkDescription.setText(finalInnerResponseDescription);
             });
 
         }else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    textViewDrinkName.setText(selectedDrink);
-                    textViewDrinkDescription.setText("");
-                }
+            runOnUiThread(() -> {
+                textViewDrinkName.setText(selectedDrink);
+                textViewDrinkDescription.setText("Descrizione non disponibile!");
             });
         }
     }

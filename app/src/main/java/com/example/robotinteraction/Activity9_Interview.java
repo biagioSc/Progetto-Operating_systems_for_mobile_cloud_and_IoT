@@ -4,19 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +26,11 @@ public class Activity9_Interview extends AppCompatActivity {
     private String cognome;
     private String email;
     private String password;
-    private List<String> drinkSelections = new ArrayList<>();
-    private List<String> argSelections = new ArrayList<>();
+    private final List<String> drinkSelections = new ArrayList<>();
+    private final List<String> argSelections = new ArrayList<>();
     private Animation buttonAnimation;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
 
@@ -82,6 +77,7 @@ public class Activity9_Interview extends AppCompatActivity {
 
     }
     private void setupListeners() {
+
         setTouchListenerForAnimation(buttonSubmit);
     }
     private void setTouchListenerForAnimation(View view) {
@@ -98,7 +94,7 @@ public class Activity9_Interview extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity9_Interview.this, targetActivity);
@@ -148,12 +144,9 @@ public class Activity9_Interview extends AppCompatActivity {
         buttonSubmit.setEnabled(false);
 
         for (CheckBox checkBox : drinkCheckboxes) {
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    updateDrinkSelections();
-                    updateSubmitButtonState();
-                }
+            checkBox.setOnClickListener(v -> {
+                updateDrinkSelections();
+                updateSubmitButtonState();
             });
         }
 
@@ -203,32 +196,23 @@ public class Activity9_Interview extends AppCompatActivity {
 
                     String response = socket.receive();
                     if(response != null){
-                        String finalResponse = response;
-                        if(finalResponse.equalsIgnoreCase(("SIGN_UP_ERROR"))){
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                        if(response.equalsIgnoreCase(("SIGN_UP_ERROR"))){
+                            runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
+                                    Toast.LENGTH_SHORT).show());
                         }
-                        else if(finalResponse.equalsIgnoreCase("SIGN_UP_SUCCESS")){
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    navigateToParam(Activity1_New.class, nome, email, password);
-                                    Toast.makeText(Activity9_Interview.this,
-                                            "Registrazione completata", Toast.LENGTH_LONG).show();
+                        else if(response.equalsIgnoreCase("SIGN_UP_SUCCESS")){
+                            runOnUiThread(() -> {
+                                navigateToParam(Activity1_New.class, nome, email, password);
+                                Toast.makeText(Activity9_Interview.this,
+                                        "Registrazione completata", Toast.LENGTH_LONG).show();
 
-                                }
                             });
                         }
                     }
                 }catch (Exception e){
-                    Toast.makeText(Activity9_Interview.this,"Registrazione fallita", Toast.LENGTH_SHORT).show();
-
                     navigateToParam(Activity1_New.class, "ERROR", null, null);
+                    runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,
+                            "Registrazione fallita", Toast.LENGTH_LONG).show());
                 }
             }
         }).start();

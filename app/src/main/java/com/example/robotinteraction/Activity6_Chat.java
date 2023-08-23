@@ -18,10 +18,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,8 +34,8 @@ public class Activity6_Chat extends AppCompatActivity {
     private int currentQuestionIndex = 0, totalQuestionsForSelectedTopics = 0;
     private int score = 0;
     private Animation buttonAnimation;
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private static final long TIME_THRESHOLD = 60000; // 20 secondi
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private String[] selectedTopics; // Aggiungi gli argomenti desiderati
     private String sessionID = "-1", user = "Guest", selectedDrink;
@@ -62,19 +60,7 @@ public class Activity6_Chat extends AppCompatActivity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        boolean connesso = socket.isConnected();
-
-        /*if(connesso==false){
-            showPopupMessage();
-        }*/
-
-        runnable = new Runnable() { // Azione da eseguire dopo l'inattività
-            @Override
-            public void run() {
-
-                navigateTo(Activity0_OutOfSight.class);
-            }
-        };
+        runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -85,12 +71,10 @@ public class Activity6_Chat extends AppCompatActivity {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         progressBar = findViewById(R.id.timerProgressBar);
         scoreText = findViewById(R.id.score);
-
     }
     private void setupListeners() {
         setTouchListenerForAnimation(confirmButton);
         setOnClickListener(confirmButton);
-
     }
     private void setTouchListenerForAnimation(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -105,16 +89,12 @@ public class Activity6_Chat extends AppCompatActivity {
         });
     }
     private void setOnClickListener(View view) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAnswer();
-            }
-        });
+
+        view.setOnClickListener(v -> checkAnswer());
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(() -> v.clearAnimation(), 200);
+        new Handler().postDelayed(v::clearAnimation, 200);
     }
     private void navigateTo(Class<?> targetActivity) {
         Intent intent = new Intent(Activity6_Chat.this, targetActivity);
@@ -162,20 +142,9 @@ public class Activity6_Chat extends AppCompatActivity {
             // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textViewLoggedIn.setText(username);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(username));
             } else {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        textViewLoggedIn.setText(user);
-                    }
-                });
+                runOnUiThread(() -> textViewLoggedIn.setText(user));
             }
         }
     }
@@ -249,11 +218,10 @@ public class Activity6_Chat extends AppCompatActivity {
         questionList.add(new Activity_Question("Letteratura", "Qual è l'opera più famosa di William Shakespeare?", "Romeo e Giulietta", "Il mercante di Venezia", "Macbeth", "Amleto"));
         questionList.add(new Activity_Question("Letteratura", "Chi ha scritto \"Il Gattopardo\"?", "Giuseppe Tomasi di Lampedusa", "Italo Calvino", "Umberto Eco", "Luigi Pirandello"));
     }
-
     private void startGame() {
         resetRadioButtonTextColors(); // Imposta tutti i testi a nero
         if (currentQuestionIndex < selectedQuestions.size()) {
-            confirmButton.setEnabled(false);
+            confirmButton.setEnabled(true);
             Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
             textDomanda.setText(currentQuestion.getQuestion());
             List<String> answerOptions = new ArrayList<>();
@@ -271,8 +239,6 @@ public class Activity6_Chat extends AppCompatActivity {
             answerRadioGroup.clearCheck();
             answerRadioGroup.setEnabled(true); // Abilita il gruppo di radiobutton
             progressBar.setProgress(currentQuestionIndex + 1); // Aggiorna la ProgressBar
-
-            // Avvia il conteggio di tempo per la prossima domanda
 
         } else {
             scoreTextView.setText("Hai finito il quiz. Punteggio: " + score);
@@ -320,20 +286,11 @@ public class Activity6_Chat extends AppCompatActivity {
         }
     }
     private void delayedStartNextQuestion() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (currentQuestionIndex >= selectedQuestions.size()) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            showPopupMessage();
-                        }
-                    }, 1000);
-
-                } else {
-                    startGame();
-                }
+        new Handler().postDelayed(() -> {
+            if (currentQuestionIndex >= selectedQuestions.size()) {
+                new Handler().postDelayed(this::showPopupMessage, 1000);
+            } else {
+                startGame();
             }
         }, DELAY_BEFORE_NEXT_QUESTION);
     }
@@ -344,46 +301,38 @@ public class Activity6_Chat extends AppCompatActivity {
         }
     }
     public void showPopupMessage() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LayoutInflater inflater = LayoutInflater.from(Activity6_Chat.this);
-                View customView = inflater.inflate(R.layout.activity_00popupchat, null);
-                int darkGreenColor = DARK_GREEN_COLOR;
-                int orange = ORANGE;
+        runOnUiThread(() -> {
+            LayoutInflater inflater = LayoutInflater.from(Activity6_Chat.this);
+            View customView = inflater.inflate(R.layout.activity_00popupchat, null);
+            int darkGreenColor = DARK_GREEN_COLOR;
+            int orange = ORANGE;
 
-                TextView scoreTextView = customView.findViewById(R.id.scoreTextView);
-                if(score<3){
-                    scoreTextView.setTextColor(Color.RED);
-                }else if(score==3){
-                    scoreTextView.setTextColor(orange);
-                }else{
-                    scoreTextView.setTextColor(darkGreenColor);
-                }
-
-                scoreTextView.setText(String.valueOf(score + "/" + totalQuestionsForSelectedTopics)); // Imposta il punteggio
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(Activity6_Chat.this);
-                builder.setCustomTitle(customView)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
-                                dialog.dismiss();
-                                finish();
-                            }
-                        });
-
-                AlertDialog dialog = builder.create();
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialogInterface) {
-                        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                        positiveButton.setTextColor(getResources().getColor(R.color.black)); // Sostituisci con il colore desiderato
-                    }
-                });
-
-                dialog.show();
+            TextView scoreTextView = customView.findViewById(R.id.scoreTextView);
+            if(score<3){
+                scoreTextView.setTextColor(Color.RED);
+            }else if(score==3){
+                scoreTextView.setTextColor(orange);
+            }else{
+                scoreTextView.setTextColor(darkGreenColor);
             }
+
+            scoreTextView.setText(score + "/" + totalQuestionsForSelectedTopics); // Imposta il punteggio
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(Activity6_Chat.this);
+            builder.setCustomTitle(customView)
+                    .setPositiveButton("Ok", (dialog, id) -> {
+                        navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
+                        dialog.dismiss();
+                        finish();
+                    });
+
+            AlertDialog dialog = builder.create();
+            dialog.setOnShowListener(dialogInterface -> {
+                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setTextColor(getResources().getColor(R.color.black)); // Sostituisci con il colore desiderato
+            });
+
+            dialog.show();
         });
     }
 
