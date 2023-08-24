@@ -58,13 +58,26 @@ static int currentUserId = 0;
 
 
 
+// Funzione per rimuovere un utente dalla lista in base all'email
+void removeUserByEmail(const char* email) {
+    User *current = usersList;
+    User *prev = NULL;
 
-void addUserToList(const char* email) {
-    User* newUser = (User*) malloc(sizeof(User));
-    newUser->id = ++currentUserId;   
-    strcpy(newUser->email, email);
-    newUser->next = usersList;
-    usersList = newUser;
+    while(current != NULL) {
+        if(strcmp(current->email, email) == 0) {
+            if(prev == NULL) {
+                usersList = current->next;
+            } else {
+                prev->next = current->next;
+            }
+            free(current);
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+
+    currentUserId != 0 ? currentUserId-- : currentUserId;
 }
 
 
@@ -78,6 +91,31 @@ User* findUserByEmail(const char* email) {
     }
     return NULL;
 }
+
+void addUserToList(const char* email) {
+
+    // Controllo se l'utente è già presente
+    // Ciò può verificarsi in due situazioni:
+    // 1. Viene effettuato il login dello stesso utente su altri dispositivi contemporaneamente
+    // 2. E' stato premuto il pulsante stop su android studio e quindi il server non ha avuto modo
+    //      di eliminare dalla lista degli utenti online quell'utente.
+
+    User* newUser = NULL;
+
+    newUser = findUserByEmail(email);
+
+    // Se l'utente non è presente lo aggiungo
+    if(newUser == NULL){
+        newUser = (User*) malloc(sizeof(User));
+        newUser->id = ++currentUserId;   
+        strcpy(newUser->email, email);
+        newUser->next = usersList;
+        usersList = newUser;
+    }
+
+}
+
+
 
 
 
@@ -109,7 +147,10 @@ const char* getEmailByUserId(int userId) {
 }
 
 
-// Funzione per rimuovere un utente dalla lista
+
+
+
+// Funzione per rimuovere un utente dalla lista in base al suo id
 void removeUserFromList(int session_id) {
     User *current = usersList;
     User *prev = NULL;
@@ -467,7 +508,7 @@ int handle_signup(int sockfd, PGconn *conn)
 
         // name, surname, email, password, favDrinks, favTopics INSERTION
         char query[BUFFER_SIZE * 4];
-        sprintf(query, "INSERT INTO users (name, surname, email, password, \"favDrink\" , \"favTopics\", state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', 'IDLE');",
+        sprintf(query, "INSERT INTO users (name, surname, email, password, favdrink , favtopics, state) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', 'IDLE');",
                 name, surname, email, password, drinks, topics);
         PGresult *res = PQexec(conn, query);
 
@@ -502,10 +543,13 @@ int handle_signup(int sockfd, PGconn *conn)
  * @return char* A random drink from the favourite_drinks_list of the user.
  */
 char *suggest_drink(PGconn *conn, const char *email) {
-    char query[BUFFER_SIZE];
+    if (!conn || PQstatus(conn) == CONNECTION_BAD) {
+        printf("Connessione al database non valida o persa.\n");
+        return NULL;
+    }
 
-    // Suggerimento del drink basato sulle preferenze inserite dall'utente durante l'interview
-    sprintf(query, "SELECT favDrink FROM users WHERE email='%s'", email); 
+    char query[BUFFER_SIZE];
+    sprintf(query, "SELECT favdrink FROM users WHERE email='%s'", email);
     PGresult *res = PQexec(conn, query);
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
@@ -515,30 +559,37 @@ char *suggest_drink(PGconn *conn, const char *email) {
     }
 
     // Estraggo la lista dei drink preferiti
-    char *favDrinksStr = PQgetvalue(res, 0, 0);
+    char *favDrinksStr = strdup(PQgetvalue(res, 0, 0));
     char *drinks[15];
     int numDrinks = 0;
 
-    // Suddivido la stringa in singoli drink usando strtok (la suddivisione avviene tramite parametro ',')
     char *token = strtok(favDrinksStr, ",");
     while (token) {
-        drinks[numDrinks++] = token;
+        drinks[numDrinks++] = strdup(token);
         token = strtok(NULL, ",");
     }
 
-    printf("\nI drink suggeriti sono: %s\n",drinks);
+    // Stampiamo i drink preferiti
+    printf("\nI drink preferiti sono: ");
+    for (int i = 0; i < numDrinks; i++) {
+        printf("%s ", drinks[i]);
+    }
+    printf("\n");
 
-    // Seleziono un drink casuale da suggerire all'utente
+    char *suggestedDrink = NULL;
     if (numDrinks > 0) {
         int randomIndex = rand() % numDrinks;
-        char *suggestedDrink = strdup(drinks[randomIndex]);
-        PQclear(res);
-        printf("\nIl drink suggerito randomico e': %s\n",suggestedDrink);
-        return suggestedDrink;
-    } else {
-        PQclear(res);
-        return NULL;
+        suggestedDrink = strdup(drinks[randomIndex]);
+        printf("\nIl drink suggerito randomico e': %s\n", suggestedDrink);
     }
+
+    for (int i = 0; i < numDrinks; i++) {
+        free(drinks[i]);
+    }
+    free(favDrinksStr);
+    PQclear(res);
+
+    return suggestedDrink;
 }
 
 
@@ -627,10 +678,10 @@ char *get_drinks_name(PGconn *conn) {
 
 
 /**
- * @brief Ottiene tutti i topics dalla lista di argomenti nel database.
+ * @brief Ottiene tutti i topics preferiti di un utente
  * @param conn Il gestore di connessione al database.
  * @param email L'email dell'utente.
- * @return char* La stringa con tutti gli argomenti separati da ",".
+ * @return char* La stringa con tutti gli argomenti preferiti separati da ",".
  */
 char *get_topics(PGconn *conn, char *email)
 {
@@ -643,7 +694,7 @@ char *get_topics(PGconn *conn, char *email)
     char *favTopicsStr = NULL;
 
     // Costruisce la query SQL per estrarre i topics preferiti in base all'email fornita.
-    snprintf(query, sizeof(query), "SELECT favTopics FROM users WHERE email='%s'", email); // snprintf previene overflow
+    snprintf(query, sizeof(query), "SELECT favtopics FROM users WHERE email='%s'", email); // snprintf previene overflow
     PGresult *res = PQexec(conn, query);
 
     // Controlla se l'esecuzione della query ha avuto successo.
@@ -788,7 +839,9 @@ void send_drinks_list(int sockfd, PGconn *conn) {
 
         // Libera la memoria della stringa dei drink
         free(drinks_string);
-    } 
+    }else{
+        printf("\n[Drinks-List] Errore nella stringa unificata dei drink\n");
+    }
     
 }
 
@@ -796,13 +849,11 @@ void send_drinks_list(int sockfd, PGconn *conn) {
 
 
 
-void handle_suggest_drink_ordering(int sockfd, PGconn *conn){
-
-    
+void handle_suggest_drink_ordering(int sockfd, PGconn *conn) {
     char session_id_str[BUFFER_SIZE];
 
     // Ricevo il sessionID dal client
-    if(read_from_socket(sockfd,session_id_str,sizeof(session_id_str) < 0)){
+    if(read_from_socket(sockfd, session_id_str, sizeof(session_id_str)) < 0) {
         perror("Errore nella lettura del sessionID del client");
         return;
     }
@@ -810,31 +861,34 @@ void handle_suggest_drink_ordering(int sockfd, PGconn *conn){
     // Trasformo il session id in un numero intero
     int session_id = atoi(session_id_str);
 
-    // Controllo se il session id è valido
-    if(session_id < 0){
-        printf("\n[Sugg-Drink] Ho ricevuto un session id non valido: %d\n",session_id);
+    // Controllo se il session id è valido o se atoi ha fallito
+    if(session_id <= 0) {
+        printf("\n[Sugg-Drink] Ho ricevuto un session id non valido: %d\n", session_id);
         return;
     }
 
     // Effettuo la ricerca dell'email dell'utente in base al suo session ID
     char *email = getEmailByUserId(session_id);
 
-
     // Controllo se è stata trovata l'email dell'utente nella struttura
-    if(email == NULL){
+    if(email == NULL) {
         printf("\n[Sugg-Drink] Non e' stato possibile trovare l'utente nella struttura degli utenti online\n");
         return;
     }
 
     // Prendo il drink da suggerire
-    char *drink_to_suggest = suggest_drink(conn,email);
+    char *drink_to_suggest = suggest_drink(conn, email);
+    if(drink_to_suggest) {
+        printf("\n[Sugg-Drink] Invio al client il drink suggerito: %s\n", drink_to_suggest);
 
-    // Invio il drink suggerito in base alle sue preferenze e controllo eventuali errori
-    if(write_to_socket(sockfd,drink_to_suggest) < 0){
-         // Stampo un messaggio di errore in caso di problemi nell'invio
-        perror("Errore nell'invio del drink suggerito al client");
+        // Invio il drink suggerito in base alle sue preferenze e controllo eventuali errori
+        if(write_to_socket(sockfd, drink_to_suggest) < 0) {
+            // Stampo un messaggio di errore in caso di problemi nell'invio
+            perror("Errore nell'invio del drink suggerito al client");
+        }
+
+        free(drink_to_suggest); // Libera la memoria allocata in suggest_drink
     }
-
 }
 
 
@@ -849,6 +903,8 @@ void handle_gone(int sockfd, PGconn *conn) {
 
     // Converti l'ID della sessione in un numero intero
     int session_id = atoi(user_session_id);
+
+    printf("\n[Gone] Ho ricevuto session id:%d\n",session_id);
 
     // Controllo se il session id è valido
     if(session_id < 0){
@@ -1072,9 +1128,7 @@ void *client_handler(void *socket_desc)
             handle_user_stop_ordering(sockfd,conn);
         }
         else if (strcmp(buffer,"DRINK_LIST") == 0){
-            //send_drinks_list(sockfd,conn);
-            printf("\nSono in drink_list\n");
-            write_to_socket(sockfd,"erasmo,franco,michele,biagio,antonio");
+            send_drinks_list(sockfd,conn);
         }
         else if (strcmp(buffer,"USER_GONE") == 0){
             handle_gone(sockfd,conn);
@@ -1101,6 +1155,7 @@ void sigint_handler(int signum)
 
 int main()
 {
+    srand(time(NULL)); // per random drink da suggerire
     int sockfd, newsockfd, portno;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
