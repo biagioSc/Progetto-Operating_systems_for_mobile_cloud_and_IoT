@@ -41,7 +41,7 @@ public class Activity2_Welcome extends Activity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateToParam(Activity0_OutOfSight.class, sessionID, user, 0);
+        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -84,8 +84,10 @@ public class Activity2_Welcome extends Activity {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 200);
     }
-    private void navigateTo(Class<?> targetActivity) {
+    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, int param3) {
@@ -147,7 +149,6 @@ public class Activity2_Welcome extends Activity {
             try {
                 new Thread(() -> {
                     try {
-
                         socket.send("CHECK_USERS_ORDERING");
                         Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                         String num = socket.receive();

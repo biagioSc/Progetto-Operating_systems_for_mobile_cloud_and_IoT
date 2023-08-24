@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -162,6 +163,18 @@ public class Activity6_Chat extends AppCompatActivity {
                 int randomIndex = random.nextInt(allTopics.length);
                 selectedTopics[i] = allTopics[randomIndex];
             }
+
+            for (Activity_Question question : questionList) {
+                if (isTopicSelected(question.getTopic())) {
+                    totalQuestionsForSelectedTopics++;
+                    selectedQuestions.add(question);
+                }
+            }
+
+            progressBar.setMax(totalQuestionsForSelectedTopics);
+            progressBar.setProgress(currentQuestionIndex);
+            startGame();
+
         }else {
             new Thread(() -> {
                 try {
@@ -173,17 +186,41 @@ public class Activity6_Chat extends AppCompatActivity {
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     selectedTopics = inputString.split(",");
 
+                    if (selectedTopics.length < 2) {
+                        String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+                        Random random = new Random();
+                        int randomIndex = random.nextInt(allTopics.length);
+                        selectedTopics[1] = allTopics[randomIndex];
+                    }else if (selectedTopics.length > 2) {
+                        int elementsToRemove = selectedTopics.length - 2;
+                        Random random = new Random();
+                        for (int i = 0; i < elementsToRemove; i++) {
+                            int randomIndex = random.nextInt(selectedTopics.length);
+                            String[] newArray = new String[selectedTopics.length - 1];
+                            int newArrayIndex = 0;
+                            for (int j = 0; j < selectedTopics.length; j++) {
+                                if (j != randomIndex) {
+                                    newArray[newArrayIndex] = selectedTopics[j];
+                                    newArrayIndex++;
+                                }
+                            }
+                            selectedTopics = newArray;
+                        }
+                    }
+
                     for (Activity_Question question : questionList) {
                         if (isTopicSelected(question.getTopic())) {
                             totalQuestionsForSelectedTopics++;
                             selectedQuestions.add(question);
                         }
                     }
+
                     progressBar.setMax(totalQuestionsForSelectedTopics);
                     progressBar.setProgress(currentQuestionIndex);
                     startGame();
 
                 } catch (Exception e) {
+
                     String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
 
                     selectedTopics = new String[2];
@@ -202,6 +239,7 @@ public class Activity6_Chat extends AppCompatActivity {
                     progressBar.setMax(totalQuestionsForSelectedTopics);
                     progressBar.setProgress(currentQuestionIndex);
                     startGame();
+
                 }
             }).start();
 
@@ -239,10 +277,11 @@ public class Activity6_Chat extends AppCompatActivity {
     }
     private void startGame() {
         resetRadioButtonTextColors(); // Imposta tutti i testi a nero
+
         if (currentQuestionIndex < selectedQuestions.size()) {
             confirmButton.setEnabled(true);
             Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
-            textDomanda.setText(currentQuestion.getQuestion());
+            runOnUiThread(() -> textDomanda.setText(currentQuestion.getQuestion()));
             List<String> answerOptions = new ArrayList<>();
             answerOptions.add(currentQuestion.getCorrectAnswer());
             answerOptions.add(currentQuestion.getWrongAnswer1());

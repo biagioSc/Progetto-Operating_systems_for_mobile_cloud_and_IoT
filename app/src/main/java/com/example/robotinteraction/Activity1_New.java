@@ -22,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import android.app.AlertDialog;
 
-
+//todo tutti i bottoni non cliccabili dopo il primo tocco e i send alla schermata precedente
 public class Activity1_New extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
@@ -50,7 +50,7 @@ public class Activity1_New extends AppCompatActivity {
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateToParam(Activity0_OutOfSight.class, sessionID, user);
+        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -110,8 +110,10 @@ public class Activity1_New extends AppCompatActivity {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 200);
     }
-    private void navigateTo(Class<?> targetActivity) {
+    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity1_New.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2) {

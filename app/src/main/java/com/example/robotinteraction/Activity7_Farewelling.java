@@ -42,7 +42,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateToParam(Activity0_OutOfSight.class, sessionID, user);
+        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {
         textViewDrinkName = findViewById(R.id.textViewDrinkName);
@@ -71,8 +71,10 @@ public class Activity7_Farewelling extends AppCompatActivity {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 200);
     }
-    private void navigateTo(Class<?> targetActivity) {
+    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity7_Farewelling.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2) {
@@ -136,32 +138,57 @@ public class Activity7_Farewelling extends AppCompatActivity {
                     innerResponseDescription = socket.receive();
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
 
+                    if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
+                        String finalInnerResponseDescription = innerResponseDescription;
+                        runOnUiThread(() -> {
+                            textViewDrinkName.setText(selectedDrink);
+                            textViewDrinkDescription.setText(finalInnerResponseDescription);
+                        });
+
+                    }else {
+                        runOnUiThread(() -> {
+                            textViewDrinkName.setText(selectedDrink);
+                            textViewDrinkDescription.setText("Descrizione non disponibile!");
+                        });
+                    }
+
                 } catch (Exception e) {
                     innerResponseDescription = "Descrizione non disponibile!";
+                    if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
+                        String finalInnerResponseDescription = innerResponseDescription;
+                        runOnUiThread(() -> {
+                            textViewDrinkName.setText(selectedDrink);
+                            textViewDrinkDescription.setText(finalInnerResponseDescription);
+                        });
+
+                    }else {
+                        runOnUiThread(() -> {
+                            textViewDrinkName.setText(selectedDrink);
+                            textViewDrinkDescription.setText("Descrizione non disponibile!");
+                        });
+                    }
                 }
 
             }).start();
         }else{
             innerResponseDescription = "Descrizione non disponibile!";
-        }
+            if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
+                String finalInnerResponseDescription = innerResponseDescription;
+                runOnUiThread(() -> {
+                    textViewDrinkName.setText(selectedDrink);
+                    textViewDrinkDescription.setText(finalInnerResponseDescription);
+                });
 
-        if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
-            String finalInnerResponseDescription = innerResponseDescription;
-            runOnUiThread(() -> {
-                textViewDrinkName.setText(selectedDrink);
-                textViewDrinkDescription.setText(finalInnerResponseDescription);
-            });
-
-        }else {
-            runOnUiThread(() -> {
-                textViewDrinkName.setText(selectedDrink);
-                textViewDrinkDescription.setText("Descrizione non disponibile!");
-            });
+            }else {
+                runOnUiThread(() -> {
+                    textViewDrinkName.setText(selectedDrink);
+                    textViewDrinkDescription.setText("Descrizione non disponibile!");
+                });
+            }
         }
     }
     public void onClickRitira(View v) {
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         navigateToParam(Activity8_Gone.class, sessionID, user);
     }
-
 }
