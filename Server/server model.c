@@ -1129,13 +1129,19 @@ void *client_handler(void *socket_desc)
 
 volatile sig_atomic_t interrupted = 0;  // Flag per il segnale
 
+// Funzione di chiusura dedicata
+void cleanup_and_exit(int sockfd) {
+    printf("\nRicevuto SIGINT o terminazione del programma. Chiudo la socket...\n");
+    close(sockfd);
+    exit(0);
+}
+
 void sigint_handler(int signum)
 {
     interrupted = 1;
 }
 
-int main()
-{
+int main() {
     srand(time(NULL)); // per random drink da suggerire
     int sockfd, newsockfd, portno;
     socklen_t clilen;
@@ -1145,17 +1151,21 @@ int main()
     // Registra il gestore di segnali
     signal(SIGINT, sigint_handler);
 
-    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
-    {
+    if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("Error opening socket");
         exit(1);
     }
 
     // Add SO_REUSEADDR option
     int opt = 1;
-    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0)
-    {
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
         perror("Error setting SO_REUSEADDR on socket");
+        exit(1);
+    }
+
+    // Set SO_REUSEPORT
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
+        perror("Error setting SO_REUSEPORT on socket");
         exit(1);
     }
 
@@ -1166,8 +1176,7 @@ int main()
     serv_addr.sin_port = htons(portno);
     serv_addr.sin_addr.s_addr = inet_addr(IP);
 
-    if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1)
-    {
+    if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1) {
         perror("Error on binding");
         exit(1);
     }
@@ -1179,8 +1188,7 @@ int main()
     fd_set readfds;
     struct timeval timeout;
 
-    while (!interrupted)
-    {
+    while (!interrupted) {
         FD_ZERO(&readfds);
         FD_SET(sockfd, &readfds);
         
@@ -1189,24 +1197,19 @@ int main()
 
         int activity = select(sockfd + 1, &readfds, NULL, NULL, &timeout);
 
-        if (activity < 0)
-        {
+        if (activity < 0) {
             perror("\n[INTERRUPT] Il server è stato interrotto correttamente");
-            close(sockfd);
             exit(1);
         }
 
-        if (activity == 0)
-        {
+        if (activity == 0) {
             // Nessuna attività, controlla il flag e continua
             continue;
         }
 
-        if (FD_ISSET(sockfd, &readfds))
-        {
+        if (FD_ISSET(sockfd, &readfds)) {
             newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, &clilen);
-            if (newsockfd < 0)
-            {
+            if (newsockfd < 0) {
                 perror("Error on accept");
                 exit(1);
             }
@@ -1214,8 +1217,7 @@ int main()
             pthread_t client_thread;
             int *new_sock_ptr = malloc(sizeof(int));
             *new_sock_ptr = newsockfd;
-            if (pthread_create(&client_thread, NULL, client_handler, new_sock_ptr) < 0)
-            {
+            if (pthread_create(&client_thread, NULL, client_handler, new_sock_ptr) < 0) {
                 perror("Error creating thread");
                 return 1;
             }
@@ -1223,7 +1225,9 @@ int main()
         }
     }
 
-    printf("\nRicevuto SIGINT. Chiudo la socket e termino...\n");
-    close(sockfd);
-    return 0;
+    // Chiamata alla funzione di chiusura alla fine del main
+    cleanup_and_exit(sockfd);
+    
+    // Questa riga non sarà mai raggiunta a causa della chiamata a exit() nella funzione cleanup_and_exit
+    return 0;  
 }
