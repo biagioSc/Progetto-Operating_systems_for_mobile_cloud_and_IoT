@@ -8,12 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 
 public class Activity8_Gone extends AppCompatActivity {
 
@@ -81,6 +78,10 @@ public class Activity8_Gone extends AppCompatActivity {
             try {
                 socket.send("USER_GONE");
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                if(Integer.parseInt(sessionID) != 0) {
+                    socket.send(sessionID);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

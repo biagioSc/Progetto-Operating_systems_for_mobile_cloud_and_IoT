@@ -17,6 +17,7 @@ public class Activity0_OutOfSight extends Activity {
     private Animation buttonAnimation;
     private long timeLeftInMillis = 10000; // Tempo totale in millisecondi
     private final long countDownInterval = 1000; // Intervallo di aggiornamento in millisecondi
+    private String sessionID = "-1", user = "Guest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,8 @@ public class Activity0_OutOfSight extends Activity {
         setContentView(R.layout.activity_0outofsight);
 
         initUIComponents();
+        receiveParam();
+
         startCountdown();
     }
     private void initUIComponents() {
@@ -40,8 +43,8 @@ public class Activity0_OutOfSight extends Activity {
             public void onFinish() {
                 // Avvia l'activity "Gone"
                 Intent intent = new Intent(Activity0_OutOfSight.this, Activity8_Gone.class);
-                intent.putExtra("param1", "");
-                intent.putExtra("param2", "");
+                intent.putExtra("param1", sessionID);
+                intent.putExtra("param2", user);
                 startActivity(intent);
                 finish();
             }
@@ -61,6 +64,13 @@ public class Activity0_OutOfSight extends Activity {
         // Assicurati di annullare il countdown quando l'activity viene distrutta
         if (countDownTimer != null) {
             countDownTimer.cancel();
+        }
+    }
+    private void receiveParam() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            sessionID = intent.getStringExtra("param1");
+            user = intent.getStringExtra("param2");
         }
     }
     public void onClickRiprendi(View v) {

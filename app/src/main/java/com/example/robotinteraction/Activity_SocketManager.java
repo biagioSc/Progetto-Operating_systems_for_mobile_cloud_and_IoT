@@ -75,7 +75,6 @@ public class Activity_SocketManager {
             BufferedReader in = new BufferedReader(inputStreamReader);
 
             String receivedData = in.readLine();
-            Log.d(TAG, "Received message: " + receivedData);
 
             if (receivedData != null) {
                 receivedData = receivedData.trim().replaceAll("\\n$", "");

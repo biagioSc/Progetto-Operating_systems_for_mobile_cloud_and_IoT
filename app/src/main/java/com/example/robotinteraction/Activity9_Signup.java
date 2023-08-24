@@ -38,8 +38,7 @@ public class Activity9_Signup extends AppCompatActivity {
         setUpComponent();
     }
     private void connection() {
-        // Azione da eseguire dopo l'inattività
-        runnable = () -> navigateTo(Activity0_OutOfSight.class);
+        runnable = () -> navigateTo(Activity0_OutOfSight.class, "0", null);
     }
     private void initUIComponents() {
         editTextFirstName = findViewById(R.id.editTextFirstName);
@@ -70,8 +69,10 @@ public class Activity9_Signup extends AppCompatActivity {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 200);
     }
-    private void navigateTo(Class<?> targetActivity) {
+    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity9_Signup.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {

@@ -42,9 +42,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-
-        // Azione da eseguire dopo l'inattività
-        runnable = () -> navigateTo(Activity0_OutOfSight.class);
+        runnable = () -> navigateToParam(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {
         textViewDrinkName = findViewById(R.id.textViewDrinkName);

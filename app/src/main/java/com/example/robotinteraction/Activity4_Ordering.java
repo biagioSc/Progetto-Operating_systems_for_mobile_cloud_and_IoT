@@ -26,15 +26,15 @@ public class Activity4_Ordering extends AppCompatActivity {
 
     private TextView textViewRecommendedDrink;  // TextView per visualizzare il drink raccomandato
     private Spinner spinnerDrinks;  // Spinner per selezionare un drink dalla lista
-    private List<String> drinkList = new ArrayList<>();  // Lista dei drink
+    private final List<String> drinkList = new ArrayList<>();  // Lista dei drink
     private Animation buttonAnimation;  // Animazione per i pulsanti
     private TextView buttonOrderRecommendedDrink, buttonOrder;  // Pulsanti per ordinare
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
+    private final Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
     private Runnable runnable;  // Runnable per la logica del timer di inattività
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private TextView textViewLoggedIn;
-    private Random random = new Random();
+    private final Random random = new Random();
     private String sessionID = "-1", user = "Guest", recommendedDrink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class Activity4_Ordering extends AppCompatActivity {
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateTo(Activity0_OutOfSight.class);
+        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {
         textViewRecommendedDrink = findViewById(R.id.textViewDrinkName);
@@ -82,8 +82,10 @@ public class Activity4_Ordering extends AppCompatActivity {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 200);
     }
-    private void navigateTo(Class<?> targetActivity) {
+    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity4_Ordering.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
@@ -185,7 +187,14 @@ public class Activity4_Ordering extends AppCompatActivity {
                     drinkList.add("Daiquiri");
                     drinkList.add("Pina Colada");
                     drinkList.add("Gin Lemon");
+                    drinkList.add("Spritz");
+
                 }
+
+                setRandomRecommendedDrink();
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                runOnUiThread(() -> spinnerDrinks.setAdapter(adapter));
             }).start();
         }else{
             drinkList.add("Mojito");
@@ -196,12 +205,14 @@ public class Activity4_Ordering extends AppCompatActivity {
             drinkList.add("Daiquiri");
             drinkList.add("Pina Colada");
             drinkList.add("Gin Lemon");
-        }
-        setRandomRecommendedDrink();
+            drinkList.add("Spritz");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDrinks.setAdapter(adapter);
+            setRandomRecommendedDrink();
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerDrinks.setAdapter(adapter);
+        }
 
     }
     private void setRandomRecommendedDrink() {
@@ -210,19 +221,24 @@ public class Activity4_Ordering extends AppCompatActivity {
                 try {
                     socket.send("SUGG_DRINK");
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    socket.send(sessionID);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     recommendedDrink = socket.receive();
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
+
                 } catch (Exception e) {
                     int randomIndex = random.nextInt(drinkList.size());
                     recommendedDrink = drinkList.get(randomIndex);
+                    runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
                 }
             }).start();
         }else{
             int randomIndex = random.nextInt(drinkList.size());
             recommendedDrink = drinkList.get(randomIndex);
-        }
+            runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
 
-        runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
+        }
     }
 
 }

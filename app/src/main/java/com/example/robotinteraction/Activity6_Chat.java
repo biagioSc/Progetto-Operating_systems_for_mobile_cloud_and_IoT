@@ -60,7 +60,7 @@ public class Activity6_Chat extends AppCompatActivity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateTo(Activity0_OutOfSight.class);
+        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -96,8 +96,10 @@ public class Activity6_Chat extends AppCompatActivity {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 200);
     }
-    private void navigateTo(Class<?> targetActivity) {
+    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity6_Chat.this, targetActivity);
+        intent.putExtra("param1", param1);
+        intent.putExtra("param2", param2);
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
@@ -169,7 +171,17 @@ public class Activity6_Chat extends AppCompatActivity {
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                     String inputString = socket.receive();
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    selectedTopics = inputString.split(" ");
+                    selectedTopics = inputString.split(",");
+
+                    for (Activity_Question question : questionList) {
+                        if (isTopicSelected(question.getTopic())) {
+                            totalQuestionsForSelectedTopics++;
+                            selectedQuestions.add(question);
+                        }
+                    }
+                    progressBar.setMax(totalQuestionsForSelectedTopics);
+                    progressBar.setProgress(currentQuestionIndex);
+                    startGame();
 
                 } catch (Exception e) {
                     String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
@@ -181,20 +193,20 @@ public class Activity6_Chat extends AppCompatActivity {
                         int randomIndex = random.nextInt(allTopics.length);
                         selectedTopics[i] = allTopics[randomIndex];
                     }
+                    for (Activity_Question question : questionList) {
+                        if (isTopicSelected(question.getTopic())) {
+                            totalQuestionsForSelectedTopics++;
+                            selectedQuestions.add(question);
+                        }
+                    }
+                    progressBar.setMax(totalQuestionsForSelectedTopics);
+                    progressBar.setProgress(currentQuestionIndex);
+                    startGame();
                 }
             }).start();
 
         }
 
-        for (Activity_Question question : questionList) {
-            if (isTopicSelected(question.getTopic())) {
-                totalQuestionsForSelectedTopics++;
-                selectedQuestions.add(question);
-            }
-        }
-        progressBar.setMax(totalQuestionsForSelectedTopics);
-        progressBar.setProgress(currentQuestionIndex);
-        startGame();
     }
     private void initializeQuestionList() {
         questionList = new ArrayList<>();

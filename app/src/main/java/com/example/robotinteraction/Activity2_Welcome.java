@@ -41,7 +41,7 @@ public class Activity2_Welcome extends Activity {
     }
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateTo(Activity0_OutOfSight.class);
+        runnable = () -> navigateToParam(Activity0_OutOfSight.class, sessionID, user, 0);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
