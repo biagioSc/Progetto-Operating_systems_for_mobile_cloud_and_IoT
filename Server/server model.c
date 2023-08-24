@@ -54,7 +54,7 @@ typedef struct User {
 // Variabile globale di riferimento
 User* usersList = NULL;
 
-int currentUserId = 0; 
+static int currentUserId = 0; 
 
 
 
@@ -90,10 +90,9 @@ int getUserIdByEmail(const char* email) {
         currentUser = currentUser->next;
     }
 
-    // Altrimenti creo l'utente
-    addUserToList(email);
 
-    return currentUserId;
+    // Ritorno -1 se non ho trovato l'id dell'utente
+    return -1;
 }
 
 
@@ -128,6 +127,9 @@ void removeUserFromList(int session_id) {
         prev = current;
         current = current->next;
     }
+
+    currentUserId != 0 ? currentUserId-- : currentUserId;
+
 }
 
 
@@ -213,11 +215,13 @@ int check_stateWaiting(PGconn *conn)
 
     int countWaiting = atoi(PQgetvalue(resWaiting, 0, 0));
 
-    printf("\n[Waiting] Numero di utenti in attesa: %d",countWaiting);
+    printf("\n[Check-Waiting] Numero di utenti in attesa: %d",countWaiting);
 
     PQclear(resWaiting);
 
-    return countWaiting;
+    if(countWaiting >= 0)
+        return countWaiting;
+    return -1;
 }
 /**
  * @brief Checks how many users are in the state of ordering.
@@ -300,8 +304,16 @@ int handle_login(int sockfd, PGconn *conn, char *buffer)
     {
         printf("[Login]  %s ha effettuato l'accesso correttamente\n", email);
 
-        // Ottiene l'ID dell'utente
+        // Aggiungo l'utente alla lista di utenti online
+        addUserToList(email);
+        // Recupero l'id di sessione che gli è stato assegnato
         int id = getUserIdByEmail(email);
+
+        // Se l'id è negativo, c'è stato un errore
+        if(id < 0){
+            printf("\n[Login] Non è stato possibile assegnare un id valido alla sessione dell'utente\n");
+            return -1;
+        }
 
         // Converte l'ID in una stringa
         char idString[BUFFER_SIZE];
@@ -323,7 +335,7 @@ int handle_login(int sockfd, PGconn *conn, char *buffer)
         // Estrae il nome dall'esito della query
         char *name = PQgetvalue(resName, 0, 0);
 
-        // Prepara la risposta da inviare al client
+        // Prepara la risposta da inviare al client nel formato: "MSG ID Name"
         char response[BUFFER_SIZE];
         sprintf(response, "LOG_IN_SUCCESS %s %s", idString, name);
 
@@ -360,12 +372,11 @@ int handle_welcoming(int sockfd, PGconn *conn)
     int users_in_ordering_state = check_state(conn);
     char users_in_ordering_state_string[10];
 
-    printf("\n[Welcoming] Ho recuperato il numero di utenti in ordering ed e': %d\n",users_in_ordering_state);
+    printf("\n[Welcoming] Il numero di utenti in ordering e': %d\n",users_in_ordering_state);
 
     //trasformo il numero degli utenti in stringa
     sprintf(users_in_ordering_state_string,"%d",users_in_ordering_state);
 
-    printf("[Welcoming] Invio al server: %s\n",users_in_ordering_state_string);
     //mando il numero degli utenti al client
     write_to_socket(sockfd,users_in_ordering_state_string);
 
@@ -493,7 +504,7 @@ int handle_signup(int sockfd, PGconn *conn)
 char *suggest_drink(PGconn *conn, const char *email) {
     char query[BUFFER_SIZE];
 
-    // Suggerimento del drink basato sullep preferenze inserite dall'utente durante l'interview
+    // Suggerimento del drink basato sulle preferenze inserite dall'utente durante l'interview
     sprintf(query, "SELECT favDrink FROM users WHERE email='%s'", email); 
     PGresult *res = PQexec(conn, query);
 
@@ -610,39 +621,49 @@ char *get_drinks_name(PGconn *conn) {
     }
     free(drinks);
 
-    printf("\nI drink unificati sono %s\n",drinks_unificati);
-
     return drinks_unificati;
 }
 
 
 
 /**
- * @brief Gets all the topics from the database list of topics.
- * @param conn The database connection handle.
- * @return char * The string with all the topics separated by ",".
+ * @brief Ottiene tutti i topics dalla lista di argomenti nel database.
+ * @param conn Il gestore di connessione al database.
+ * @param email L'email dell'utente.
+ * @return char* La stringa con tutti gli argomenti separati da ",".
  */
 char *get_topics(PGconn *conn, char *email)
 {
+    if (!conn || !email) {
+        printf("\n[Get-Topics] Connessione al database o email non fornita.\n");
+        return NULL;
+    }
+
     char query[BUFFER_SIZE];
+    char *favTopicsStr = NULL;
 
     // Costruisce la query SQL per estrarre i topics preferiti in base all'email fornita.
-    sprintf(query, "SELECT favTopics FROM users WHERE email='%s'", email); 
+    snprintf(query, sizeof(query), "SELECT favTopics FROM users WHERE email='%s'", email); // snprintf previene overflow
     PGresult *res = PQexec(conn, query);
 
     // Controlla se l'esecuzione della query ha avuto successo.
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-        printf("L'esecuzione della query non è riuscita: %s\n", PQerrorMessage(conn));
+        printf("[Get-Topics]L'esecuzione della query non è riuscita: %s\n", PQerrorMessage(conn));
         PQclear(res);
         return NULL;
     }
 
-    // Estrae e ritorna direttamente la stringa dei topics preferiti.
-    char *favTopicsStr = strdup(PQgetvalue(res, 0, 0));
+    // Verifica se PQgetvalue restituisce un valore valido.
+    if (PQgetvalue(res, 0, 0) != NULL) {
+        favTopicsStr = strdup(PQgetvalue(res, 0, 0));
+    } else {
+        printf("Nessun argomento trovato per l'email fornita.\n");
+    }
 
     PQclear(res);
     return favTopicsStr;
 }
+
 
 /**
  * @brief Handles the chat start procedure.
@@ -653,35 +674,46 @@ char *get_topics(PGconn *conn, char *email)
 void handle_chat(int sockfd, PGconn *conn)
 {
     char buffer[BUFFER_SIZE];
+    char session_id_str[BUFFER_SIZE];
     char message[BUFFER_SIZE];
     
     // Leggi il sessionId dell'utente dal socket.
-    char *userSessionId = read_from_socket(sockfd, buffer, BUFFER_SIZE);
-    if (!userSessionId) {
-        perror("Errore durante la lettura del sessionId");
+
+    if(read_from_socket(sockfd,session_id_str, sizeof(session_id_str)) < 0){
+        perror("Errore nella lettura del drink inviato dal client");
+        return;
+    }
+
+    int session_id = atoi(session_id_str);
+
+    // Controllo se il session id è valido
+    if(session_id < 0){
+        printf("\n[Chat] Ho ricevuto un session id non valido: %d\n");
         return;
     }
     
     // Ottieni l'email associata all'ID di sessione.
-    char *email = getEmailByUserId(userSessionId);
-    if (!email) {
-        perror("Errore durante la ricerca dell'email");
+    char *email = getEmailByUserId(session_id);
+
+    // Controllo se l'utente è stato trovato nella struttura degli utenti online
+    if (email == NULL) {
+        printf("\n[Chat] Non e' stato possibile trovare l'utente nella struttura degli utenti online\n");
         return;
     }
     
     // Ottieni la stringa dei topics.
     char *unique_string_topics = get_topics(conn,email);
-    if (!unique_string_topics) {
+
+    if (unique_string_topics == NULL) {
+        printf("\n[Chat] Non e' stato possibile recuperare la stringa unica dei topics\n");
         perror("Errore durante il recupero dei topics");
         return;
     }
     
-    printf("Topics: %s\n", unique_string_topics);
+    printf("[Chat] Stringa dei topics recuperata: %s\n", unique_string_topics);
 
     // Invia la stringa dei topics al client.
-    if (!write_to_socket(sockfd, unique_string_topics)) {
-        perror("Errore durante l'invio dei topics");
-    }
+    write_to_socket(sockfd, unique_string_topics);
 }
 
 
@@ -696,9 +728,9 @@ void handle_chat(int sockfd, PGconn *conn)
 void send_drink_description(PGconn *conn, int sockfd) {
     
     char query[BUFFER_SIZE];
-    char drink_name[20];
+    char drink_name[30];
     PGresult *res;
-    char *description = NULL;
+    char *description;
 
     // Ricevo il nome del drink dal client
     if (read_from_socket(sockfd, drink_name, sizeof(drink_name)) < 0) {
@@ -706,8 +738,7 @@ void send_drink_description(PGconn *conn, int sockfd) {
         return;
     }
 
-    printf("\nil drink name che ho preso è: %s\n",drink_name);
-
+    printf("\n[Drink-Description] Richiesta descrizione per il drink: %s\n",drink_name);
 
     // Costruisco la query
     snprintf(query, sizeof(query), "SELECT description FROM drinks WHERE name='%s'", drink_name);
@@ -726,16 +757,20 @@ void send_drink_description(PGconn *conn, int sockfd) {
             // Stampo un messaggio di errore in caso di problemi nell'invio
             perror("Errore nell'invio della descrizione del drink al client");
         }
-    } else {
-        // Se non è stata trovata una descrizione, invio un messaggio di "non trovato" al client
-        write_to_socket(sockfd, "DRINK_DESCRIPTION_NOT_FOUND");
-    }
 
+        // Libero la memoria allocata da strdup
+        free(description);
+        
+    } else {
+        // Se non è stata trovata una descrizione, print di debug
+        printf("\n[Drink-Description] Non e' stato possibile trovare la descrizione del drink: %s\n",drink_name);
+    }
 
     PQclear(res);
 
     return;
 }
+
 
 
 void send_drinks_list(int sockfd, PGconn *conn) {
@@ -744,7 +779,7 @@ void send_drinks_list(int sockfd, PGconn *conn) {
 
     if (drinks_string != NULL) {
 
-        printf("\nInvio lista dei drink: %s\n",drinks_string);
+        printf("\n[Drinks-List] Inoltro lista dei drink: %s\n",drinks_string);
 
         // Invia la lista dei drink al client
         if (write_to_socket(sockfd, drinks_string) < 0) {
@@ -753,13 +788,8 @@ void send_drinks_list(int sockfd, PGconn *conn) {
 
         // Libera la memoria della stringa dei drink
         free(drinks_string);
-    } else {
-        // Gestisci l'errore se non è possibile ottenere la lista dei drink
-        const char *error_msg = "ERROR_DRINKS_LIST";
-        if (write_to_socket(sockfd, error_msg) < 0) {
-            perror("Errore nell'invio del messaggio di errore al client");
-        }
-    }
+    } 
+    
 }
 
 
@@ -769,16 +799,32 @@ void send_drinks_list(int sockfd, PGconn *conn) {
 void handle_suggest_drink_ordering(int sockfd, PGconn *conn){
 
     
-    char user_session_id[10];
+    char session_id_str[BUFFER_SIZE];
 
     // Ricevo il sessionID dal client
-    if(read_from_socket(sockfd,user_session_id,sizeof(user_session_id) < 0)){
+    if(read_from_socket(sockfd,session_id_str,sizeof(session_id_str) < 0)){
         perror("Errore nella lettura del sessionID del client");
         return;
     }
 
+    // Trasformo il session id in un numero intero
+    int session_id = atoi(session_id_str);
+
+    // Controllo se il session id è valido
+    if(session_id < 0){
+        printf("\n[Sugg-Drink] Ho ricevuto un session id non valido: %d\n",session_id);
+        return;
+    }
+
     // Effettuo la ricerca dell'email dell'utente in base al suo session ID
-    char *email = getEmailByUserId(user_session_id);
+    char *email = getEmailByUserId(session_id);
+
+
+    // Controllo se è stata trovata l'email dell'utente nella struttura
+    if(email == NULL){
+        printf("\n[Sugg-Drink] Non e' stato possibile trovare l'utente nella struttura degli utenti online\n");
+        return;
+    }
 
     // Prendo il drink da suggerire
     char *drink_to_suggest = suggest_drink(conn,email);
@@ -789,7 +835,6 @@ void handle_suggest_drink_ordering(int sockfd, PGconn *conn){
         perror("Errore nell'invio del drink suggerito al client");
     }
 
-    return;
 }
 
 
@@ -805,18 +850,31 @@ void handle_gone(int sockfd, PGconn *conn) {
     // Converti l'ID della sessione in un numero intero
     int session_id = atoi(user_session_id);
 
-    // Trova e rimuovi l'utente dalla lista degli utenti connessi
+    // Controllo se il session id è valido
+    if(session_id < 0){
+        printf("\n[Gone] Ho ricevuto un session id non valido: %d\n",session_id);
+        return;
+    }
+
+
+    // Prendo l'email dell'utente in base al suo session id
+   char * email = getEmailByUserId(session_id);
+
+   // Controllo se è stato trovato l'utente nella struttura
+   if(email == NULL){
+    printf("\n[Gone] Non e' stato possibile trovare l'utente nella struttura per gli utenti online\n");
+    return;
+   }
+
+    // Trova e rimuovo l'utente dalla lista degli utenti connessi
     removeUserFromList(session_id);
 
 
-    // Setto ad IDLE lo stato dell'utente
-    char * email = getEmailByUserId(session_id);
-
-    
+    // Metto in IDLE lo stato dell'utente sul database
     char setIdle[BUFFER_SIZE];
     sprintf(setIdle, "UPDATE users SET state='IDLE' WHERE email='%s';", email);
     PQexec(conn, setIdle);
-    printf("User %s is now in idle\n", email);
+    printf("[Gone] L'utente %s è uscito dall'applicazione\n", email);
 
 
     // Invia un messaggio di conferma al client
@@ -837,19 +895,31 @@ void handle_add_user_ordering(int sockfd,PGconn *conn){
     // Converti l'ID della sessione in un numero intero
     int session_id = atoi(user_session_id);
 
+    // Controllo se il session id è valido
+    if(session_id < 0){
+        printf("\n[Add-Ordering] Ho ricevuto un session id non valido: %d\n",session_id);
+        return;
+    }
+
     char *email = getEmailByUserId(session_id);
+
+    // Gestisco il caso in cui non viene trovato l'utente nella struttura
+    if(email == NULL){
+        printf("\n[Add-Ordering] Non e' stato possibile trovare l'utente nella struttura dati\n");
+        return;
+    }
 
 
     char setOrdering[BUFFER_SIZE];
     sprintf(setOrdering, "UPDATE users SET state='ORDERING' WHERE email='%s';", email);
     PQexec(conn, setOrdering);
-    printf("\nUser %s is now in ordering state\n", email);
+    printf("\n[Add-Ordering] L'utente %s e' ora nello stato di ordering\n", email);
 
 }
 
 
 void handle_add_user_waiting(int sockfd,PGconn *conn){
-    char user_session_id[10];
+    char user_session_id[BUFFER_SIZE];
 
     // Ricevi l'ID della sessione dal client
     if(read_from_socket(sockfd, user_session_id, sizeof(user_session_id)) < 0) {
@@ -857,17 +927,29 @@ void handle_add_user_waiting(int sockfd,PGconn *conn){
         return;
     }
 
-    printf("\nQuesto è lo user session id: %s\n",user_session_id);
 
     // Converti l'ID della sessione in un numero intero
     int session_id = atoi(user_session_id);
 
+    // Controllo se il session id è valido
+    if(session_id < 0){
+        printf("\n[Add-Waiting] Ho ricevuto un session id non valido: %d\n",session_id);
+        return;
+    }
+
     char *email = getEmailByUserId(session_id);
+
+
+    // Controllo se è stata trovata l'email dell'utente
+    if(email == NULL){
+        printf("\n[Add-Waiting] Non e' stato possibile recuperare l'utente nella struttura di utenti online\n");
+        return;
+    }
 
     char setWaiting[BUFFER_SIZE];
     sprintf(setWaiting, "UPDATE users SET state='WAITING' WHERE email='%s';", email);
     PQexec(conn, setWaiting);
-    printf("\n[Waiting] L'utente %s e' ora in stato di waiting\n", email);
+    printf("\n[Add-Waiting] L'utente %s e' ora in stato di waiting\n", email);
 }
 
 
@@ -884,12 +966,24 @@ void handle_user_stop_ordering(int sockfd, PGconn *conn){
     // Converti l'ID della sessione in un numero intero
     int session_id = atoi(user_session_id);
 
+    // Controllo se il session id è valido
+    if(session_id < 0){
+        printf("\n[Stop-Ordering] Ho ricevuto un session id non valido: %d\n",session_id);
+        return;
+    }
+
     char *email = getEmailByUserId(session_id);
+
+    // Controllo se è stata trovata l'email dell'utente
+    if(email == NULL){
+        printf("\n[Stop-Ordering] Non e' stato possibile recuperare l'utente nella struttura di utenti online\n");
+        return;
+    }
 
     char setIdle[BUFFER_SIZE];
     sprintf(setIdle, "UPDATE users SET state='IDLE' WHERE email='%s';", email);
     PQexec(conn, setIdle);
-    printf("\n[IDLE] L'utente %s ha concluso la fase di ordering ed è ora in idle\n", email);
+    printf("\n[Stop-Ordering] L'utente %s ha concluso la fase di ordering ed e' ora in idle\n", email);
 }
 
 
@@ -897,11 +991,12 @@ void send_users_waiting(int sockfd, PGconn *conn){
     int number_of_users_waiting = check_stateWaiting(conn);
     char str_users_waiting[50];
 
-    sprintf(str_users_waiting, "%d", number_of_users_waiting);
-    printf("\nInvio numero di utenti in waiting pari a: %s\n",str_users_waiting);
-    write_to_socket(sockfd,str_users_waiting);
+    if(number_of_users_waiting != -1){
+        sprintf(str_users_waiting, "%d", number_of_users_waiting);
+        write_to_socket(sockfd,str_users_waiting);
+    }
 
-    return;
+
 }
 
 
@@ -959,7 +1054,7 @@ void *client_handler(void *socket_desc)
             handle_welcoming(sockfd, conn);
         }
         else if (strcmp(buffer,"ADD_USER_ORDERING") == 0){
-            //handle_add_user_ordering(sockfd,conn);
+            handle_add_user_ordering(sockfd,conn);
         }
         else if (strcmp(buffer,"ADD_USER_WAITING") == 0){
             handle_add_user_waiting(sockfd,conn);
@@ -971,10 +1066,7 @@ void *client_handler(void *socket_desc)
             send_drink_description(conn,sockfd);
         }
         else if (strcmp(buffer,"SUGG_DRINK") == 0){
-            //handle_suggest_drink_ordering(sockfd,conn);
-            char d[14]="ErasmoSuggerito";
-            printf("\ninvio il drink suggerito: %s\n",d);
-            write_to_socket(sockfd,d);
+            handle_suggest_drink_ordering(sockfd,conn);
         }
         else if( strcmp(buffer,"USER_STOP_ORDERING") == 0){
             handle_user_stop_ordering(sockfd,conn);
