@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -51,14 +52,6 @@ public class Activity4_Ordering extends AppCompatActivity {
 
     private void connection() {
         socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
-        try{
-            socket.send("ADD_USER_ORDERING");
-            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        // Azione da eseguire dopo l'inattività
         runnable = () -> navigateTo(Activity0_OutOfSight.class);
     }
     private void initUIComponents() {
@@ -97,6 +90,8 @@ public class Activity4_Ordering extends AppCompatActivity {
         if(!("Guest".equals(user))) {
             try {
                 socket.send("USER_STOP_ORDERING");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(sessionID);
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -157,29 +152,41 @@ public class Activity4_Ordering extends AppCompatActivity {
             } else {
                 runOnUiThread(() -> textViewLoggedIn.setText(user));
             }
+            try{
+                socket.send("ADD_USER_ORDERING");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(sessionID);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
     private void setUpComponent() {
         if(!("Guest".equals(user))) {
-            try {
-                socket.send("DRINK_LIST");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                String inputString = socket.receive();
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                String[] subStrings = inputString.split(",");
-                for (String subString : subStrings) {
-                    drinkList.add(subString);
+            new Thread(() -> {
+                try {
+                    socket.send("DRINK_LIST");
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    String inputString = socket.receive();
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    String[] subStrings = inputString.split(",");
+                    for (String subString : subStrings) {
+                        drinkList.add(subString);
+                    }
+                } catch (Exception e) {
+                    drinkList.add("Mojito");
+                    drinkList.add("Martini");
+                    drinkList.add("Midori");
+                    drinkList.add("Manhattan");
+                    drinkList.add("Negroni");
+                    drinkList.add("Daiquiri");
+                    drinkList.add("Pina Colada");
+                    drinkList.add("Gin Lemon");
                 }
-            } catch (Exception e) {
-                drinkList.add("Mojito");
-                drinkList.add("Martini");
-                drinkList.add("Midori");
-                drinkList.add("Manhattan");
-                drinkList.add("Negroni");
-                drinkList.add("Daiquiri");
-                drinkList.add("Pina Colada");
-                drinkList.add("Gin Lemon");
-            }
+            }).start();
         }else{
             drinkList.add("Mojito");
             drinkList.add("Martini");
@@ -199,15 +206,17 @@ public class Activity4_Ordering extends AppCompatActivity {
     }
     private void setRandomRecommendedDrink() {
         if(!("Guest".equals(user))) {
-            try {
-                socket.send("SUGG_DRINK");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                recommendedDrink = socket.receive();
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-            } catch (Exception e) {
-                int randomIndex = random.nextInt(drinkList.size());
-                recommendedDrink = drinkList.get(randomIndex);
-            }
+            new Thread(() -> {
+                try {
+                    socket.send("SUGG_DRINK");
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    recommendedDrink = socket.receive();
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                } catch (Exception e) {
+                    int randomIndex = random.nextInt(drinkList.size());
+                    recommendedDrink = drinkList.get(randomIndex);
+                }
+            }).start();
         }else{
             int randomIndex = random.nextInt(drinkList.size());
             recommendedDrink = drinkList.get(randomIndex);

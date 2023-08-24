@@ -69,10 +69,10 @@ public class Activity8_Gone extends AppCompatActivity {
             // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + " " + username));
+                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username));
 
             } else {
-                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + " " + user));
+                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user));
             }
         }
     }

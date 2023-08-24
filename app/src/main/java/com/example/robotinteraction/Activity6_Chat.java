@@ -161,26 +161,29 @@ public class Activity6_Chat extends AppCompatActivity {
                 selectedTopics[i] = allTopics[randomIndex];
             }
         }else {
-            try {
-                socket.send("START_CHAT");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                socket.send(sessionID);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                String inputString = socket.receive();
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                selectedTopics = inputString.split(" ");
+            new Thread(() -> {
+                try {
+                    socket.send("START_CHAT");
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    socket.send(sessionID);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    String inputString = socket.receive();
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    selectedTopics = inputString.split(" ");
 
-            } catch (Exception e) {
-                String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+                } catch (Exception e) {
+                    String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
 
-                selectedTopics = new String[2];
-                Random random = new Random();
+                    selectedTopics = new String[2];
+                    Random random = new Random();
 
-                for (int i = 0; i < 2; i++) {
-                    int randomIndex = random.nextInt(allTopics.length);
-                    selectedTopics[i] = allTopics[randomIndex];
+                    for (int i = 0; i < 2; i++) {
+                        int randomIndex = random.nextInt(allTopics.length);
+                        selectedTopics[i] = allTopics[randomIndex];
+                    }
                 }
-            }
+            }).start();
+
         }
 
         for (Activity_Question question : questionList) {

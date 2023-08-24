@@ -24,7 +24,8 @@ public class Activity7_Farewelling extends AppCompatActivity {
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
-    private String sessionID = "-1", user = "Guest";
+    private String sessionID = "-1", user = "Guest", innerResponseDescription;
+    ;
     private String selectedDrink;
 
     @Override
@@ -126,20 +127,22 @@ public class Activity7_Farewelling extends AppCompatActivity {
         }
     }
     private void setUpComponent() {
-        String innerResponseDescription;
 
         if(!("Guest".equals(user))) {
-            try {
-                socket.send("DRINK_DESCRIPTION");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                socket.send(selectedDrink);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                innerResponseDescription = socket.receive();
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+            new Thread(() -> {
+                try {
+                    socket.send("DRINK_DESCRIPTION");
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    socket.send(selectedDrink);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    innerResponseDescription = socket.receive();
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
 
-            } catch (Exception e) {
-                innerResponseDescription = "Descrizione non disponibile!";
-            }
+                } catch (Exception e) {
+                    innerResponseDescription = "Descrizione non disponibile!";
+                }
+
+            }).start();
         }else{
             innerResponseDescription = "Descrizione non disponibile!";
         }

@@ -11,6 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,66 +174,78 @@ public class Activity9_Interview extends AppCompatActivity {
         startInactivityTimer();
     }
     public void onClickRegister(View v) {
-        // TODO: 24/08/2023 ROTELLINA CHE GIRA
+        resetInactivityTimer();
+
+        View loadingView = getLayoutInflater().inflate(R.layout.activity_000popuploading, null);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setView(loadingView);
+        dialogBuilder.setCancelable(false); // Evita la chiusura del messaggio di caricamento toccando al di fuori
+        AlertDialog loadingDialog = dialogBuilder.create();
+        loadingDialog.show();
+
         buttonSubmit.setEnabled(false);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 
-                try {
-                    socket.send("SIGN_UP");
+            try {
+                socket.send("SIGN_UP");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(email);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(nome);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(cognome);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(password);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                int numeropreferezeInt=drinkSelections.size();
+                String numeroprefrenzeString=Integer.toString(numeropreferezeInt);
+                socket.send(numeroprefrenzeString);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                for(String drink : drinkSelections){
+                    socket.send(drink);
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    socket.send(email);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    socket.send(nome);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    socket.send(cognome);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    socket.send(password);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    int numeropreferezeInt=drinkSelections.size();
-                    String numeroprefrenzeString=Integer.toString(numeropreferezeInt);
-                    socket.send(numeroprefrenzeString);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    for(String drink : drinkSelections){
-                        socket.send(drink);
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    }
-                    numeropreferezeInt=argSelections.size();
-                    numeroprefrenzeString=Integer.toString(numeropreferezeInt);
-                    socket.send(numeroprefrenzeString);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    for(String topic : argSelections){
-                        socket.send(topic);
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    }
-
-                    String response = socket.receive();
-                    if(response != null){
-                        if(response.equalsIgnoreCase(("SIGN_UP_ERROR"))){
-                            runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
-                                    Toast.LENGTH_SHORT).show());
-                        }
-                        else if(response.equalsIgnoreCase("SIGN_UP_SUCCESS")){
-                            runOnUiThread(() -> {
-                                navigateToParam(Activity1_New.class, nome, email, password);
-                                Toast.makeText(Activity9_Interview.this,
-                                        "Registrazione completata", Toast.LENGTH_LONG).show();
-
-                            });
-                        }else{
-                            navigateToParam(Activity1_New.class, "ERROR", null, null);
-                            runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,
-                                    "Registrazione fallita", Toast.LENGTH_LONG).show());
-                        }
-                    }
-                }catch (Exception e){
-                    navigateToParam(Activity1_New.class, "ERROR", null, null);
-                    runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,
-                            "Registrazione fallita", Toast.LENGTH_LONG).show());
                 }
+                numeropreferezeInt=argSelections.size();
+                numeroprefrenzeString=Integer.toString(numeropreferezeInt);
+                socket.send(numeroprefrenzeString);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                for(String topic : argSelections){
+                    socket.send(topic);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                }
+
+                String response = socket.receive();
+                if(response != null){
+                    if(response.equalsIgnoreCase(("SIGN_UP_ERROR"))){
+                        runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
+                                Toast.LENGTH_SHORT).show());
+                    }
+                    else if(response.equalsIgnoreCase("SIGN_UP_SUCCESS")){
+                        runOnUiThread(() -> {
+                            navigateToParam(Activity1_New.class, nome, email, password);
+                            Toast.makeText(Activity9_Interview.this,
+                                    "Registrazione completata", Toast.LENGTH_LONG).show();
+
+                        });
+                    }else{
+                        navigateToParam(Activity1_New.class, "ERROR", null, null);
+                        runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,
+                                "Registrazione fallita", Toast.LENGTH_LONG).show());
+                    }
+                }
+                runOnUiThread(() -> {
+                    loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
+                    buttonSubmit.setEnabled(true); // Riabilita il pulsante
+                    // Gestisci la risposta qui
+                });
+            }catch (Exception e){
+                loadingDialog.dismiss();
+                navigateToParam(Activity1_New.class, "ERROR", null, null);
+                runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,
+                        "Registrazione fallita", Toast.LENGTH_LONG).show());
             }
         }).start();
+
         //Toast.makeText(Activity9_Interview.this, "Registrazione avvenuta con successo!", Toast.LENGTH_SHORT).show();
     }
 

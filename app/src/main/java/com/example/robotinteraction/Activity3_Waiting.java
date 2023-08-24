@@ -101,7 +101,7 @@ public class Activity3_Waiting extends AppCompatActivity {
                 if (secondCounter >= 10) {
                     if(!("Guest".equals(user))) {
                         new Thread(() -> {
-                            // TODO: 24/08/2023 UPDATE_QUEUE 
+                            //TODO: 24/08/2023 UPDATE_QUEUE
                             //socket.send("UPDATE_QUEUE");
                             //final String receivedData = socket.receive();
                             String receivedData = "0";

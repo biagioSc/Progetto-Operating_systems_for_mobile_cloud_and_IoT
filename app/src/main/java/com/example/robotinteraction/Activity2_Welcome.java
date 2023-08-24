@@ -13,6 +13,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import java.util.Random;
 
 public class Activity2_Welcome extends Activity {
@@ -121,6 +123,15 @@ public class Activity2_Welcome extends Activity {
     public void onClickQueue(View v) {
         resetInactivityTimer();
 
+        View loadingView = getLayoutInflater().inflate(R.layout.activity_000popuploading, null);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setView(loadingView);
+        dialogBuilder.setCancelable(false); // Evita la chiusura del messaggio di caricamento toccando al di fuori
+        AlertDialog loadingDialog = dialogBuilder.create();
+        loadingDialog.show();
+
+        buttonCheckNextState.setClickable(false);
+
         if("Guest".equals(user)){
             int min = 0;
             int max = 5;
@@ -136,7 +147,6 @@ public class Activity2_Welcome extends Activity {
             try {
                 new Thread(() -> {
                     try {
-                        // TODO: 24/08/2023 ROTELLINA CHE GIRA
 
                         socket.send("CHECK_USERS_ORDERING");
                         Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
@@ -149,7 +159,12 @@ public class Activity2_Welcome extends Activity {
                         } else {
                             navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
                         }
-                    } catch (InterruptedException e) {
+                        runOnUiThread(() -> {
+                            loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
+                            buttonCheckNextState.setClickable(true);
+                        });
+                    }catch (Exception e){
+                        loadingDialog.dismiss();
                         throw new RuntimeException(e);
                     }
                 }).start();
