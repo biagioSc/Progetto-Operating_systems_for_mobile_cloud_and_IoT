@@ -76,8 +76,6 @@ void removeUserByEmail(const char* email) {
         prev = current;
         current = current->next;
     }
-
-    currentUserId != 0 ? currentUserId-- : currentUserId;
 }
 
 
@@ -168,8 +166,6 @@ void removeUserFromList(int session_id) {
         prev = current;
         current = current->next;
     }
-
-    currentUserId != 0 ? currentUserId-- : currentUserId;
 
 }
 
@@ -412,7 +408,7 @@ int handle_login(int sockfd, PGconn *conn, char *buffer)
 int handle_welcoming(int sockfd, PGconn *conn)
 {
 
-
+    // Controllo utenti in ordering
     int users_in_ordering_state = check_state(conn);
     char users_in_ordering_state_string[10];
 
@@ -895,12 +891,16 @@ void handle_gone(int sockfd, PGconn *conn) {
 
 
     // Prendo l'email dell'utente in base al suo session id
-   char * email = getEmailByUserId(session_id);
+    const char *email = getEmailByUserId(session_id);
+    char email_buffer[BUFFER_SIZE];
+
 
    // Controllo se è stato trovato l'utente nella struttura
    if(email == NULL){
     printf("\n[Gone] Non e' stato possibile trovare l'utente nella struttura per gli utenti online\n");
     return;
+   }else{
+    strcpy(email_buffer,email);
    }
 
     // Trova e rimuovo l'utente dalla lista degli utenti connessi
@@ -909,9 +909,9 @@ void handle_gone(int sockfd, PGconn *conn) {
 
     // Metto in IDLE lo stato dell'utente sul database
     char setIdle[BUFFER_SIZE];
-    sprintf(setIdle, "UPDATE users SET state='IDLE' WHERE email='%s';", email);
+    sprintf(setIdle, "UPDATE users SET state='IDLE' WHERE email='%s';", email_buffer);
     PQexec(conn, setIdle);
-    printf("[Gone] L'utente %s è uscito dall'applicazione\n", email);
+    printf("[Gone] L'utente %s è uscito dall'applicazione\n", email_buffer);
 
 
     // Invia un messaggio di conferma al client
@@ -1026,12 +1026,15 @@ void handle_user_stop_ordering(int sockfd, PGconn *conn){
 
 void send_users_waiting(int sockfd, PGconn *conn){
     int number_of_users_waiting = check_stateWaiting(conn);
-    char str_users_waiting[50];
+    char str_total_users[50];
+    int number_of_users_ordering = check_state(conn);
+    int total_users = number_of_users_ordering + number_of_users_waiting - 2;
 
-    if(number_of_users_waiting != -1){
-        sprintf(str_users_waiting, "%d", number_of_users_waiting);
-        write_to_socket(sockfd,str_users_waiting);
-    }
+
+    sprintf(str_total_users, "%d", total_users);
+    printf("\nInvio total users - 2 che equivale a: %s\n",str_total_users);
+    write_to_socket(sockfd,str_total_users);
+
 
 
 }
