@@ -36,6 +36,8 @@ public class Activity2_Welcome extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2welcome);
 
+        getWindow().setWindowAnimations(0);
+
         connection();
         initUIComponents();
         setupListeners();

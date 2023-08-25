@@ -30,6 +30,7 @@ public class Activity3_Waiting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3waiting);
+        getWindow().setWindowAnimations(0);
 
         connection();
         initUIComponents();
@@ -105,7 +106,7 @@ public class Activity3_Waiting extends AppCompatActivity {
                     if (secondCounter >= 10) {
                         secondCounter = 0;
                         queueCount--;
-                        runOnUiThread(() -> textViewQueueCount.setText("Persone in coda: " + queueCount));
+                        if(queueCount>-1) runOnUiThread(() -> textViewQueueCount.setText("Persone in coda: " + queueCount));
                     }
                 }
                 @Override

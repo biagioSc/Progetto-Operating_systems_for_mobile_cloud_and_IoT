@@ -40,6 +40,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_4ordering);
+        getWindow().setWindowAnimations(0);
 
         connection();
         initUIComponents();

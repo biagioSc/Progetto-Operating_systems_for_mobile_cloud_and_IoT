@@ -51,6 +51,7 @@ public class Activity6_Chat extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_6chat);
+        getWindow().setWindowAnimations(0);
 
         connection();
         initUIComponents();

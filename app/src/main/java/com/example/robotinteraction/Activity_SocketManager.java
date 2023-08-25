@@ -49,7 +49,11 @@ public class Activity_SocketManager {
 
     public static Activity_SocketManager getInstance() {
         if (instance == null) {
-            instance = new Activity_SocketManager();
+            try{
+                instance = new Activity_SocketManager();
+            }catch (Exception e){
+                instance = null;
+            }
         }
         return instance;
     }

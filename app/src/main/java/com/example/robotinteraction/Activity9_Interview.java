@@ -40,6 +40,7 @@ public class Activity9_Interview extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_9interview);
+        getWindow().setWindowAnimations(0);
 
         connection();
         initUIComponents();

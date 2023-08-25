@@ -23,6 +23,7 @@ public class Activity0_OutOfSight extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_0outofsight);
+        getWindow().setWindowAnimations(0);
 
         initUIComponents();
         receiveParam();

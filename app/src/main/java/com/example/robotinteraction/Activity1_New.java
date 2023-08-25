@@ -41,6 +41,8 @@ public class Activity1_New extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
 
+        getWindow().setWindowAnimations(0);
+
         connection();
         initUIComponents();
         setupListeners();

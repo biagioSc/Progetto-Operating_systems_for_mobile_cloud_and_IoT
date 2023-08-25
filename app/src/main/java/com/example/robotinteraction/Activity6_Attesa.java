@@ -22,6 +22,7 @@ public class Activity6_Attesa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_6attesa);
+        getWindow().setWindowAnimations(0);
 
         connection();
         initUIComponents();

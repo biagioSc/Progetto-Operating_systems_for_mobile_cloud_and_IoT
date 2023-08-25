@@ -23,6 +23,7 @@ public class Activity8_Gone extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_8gone);
+        getWindow().setWindowAnimations(0);
 
         connection();
         initUIComponents();
@@ -61,15 +62,17 @@ public class Activity8_Gone extends AppCompatActivity {
         if (intent != null) {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
-            int atIndex = user.indexOf("@");
+            int atIndex = -1;
+            if(user!=null){
+                atIndex = user.indexOf("@");
+                // Verificare se è presente il simbolo "@"
+                if (atIndex != -1) {
+                    String username = user.substring(0, atIndex);
+                    runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username));
 
-            // Verificare se è presente il simbolo "@"
-            if (atIndex != -1) {
-                String username = user.substring(0, atIndex);
-                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username));
-
-            } else {
-                runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user));
+                } else {
+                    runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user));
+                }
             }
         }
     }

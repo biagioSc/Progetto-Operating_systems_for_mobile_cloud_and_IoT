@@ -218,7 +218,6 @@
             android:layout_below="@id/textViewQueueCount"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text="Tempo di attesa: 0 minuti"
             android:textColor="#000000"
             android:textSize="16sp" />
 
