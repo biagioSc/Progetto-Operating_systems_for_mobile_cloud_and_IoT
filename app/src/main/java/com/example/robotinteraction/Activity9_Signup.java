@@ -134,7 +134,8 @@ public class Activity9_Signup extends AppCompatActivity {
 
         startInactivityTimer();
     }
-    public void onClickRContinue(View view) {
+    public void onClickRContinue(View v) {
+        v.setClickable(false);
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();

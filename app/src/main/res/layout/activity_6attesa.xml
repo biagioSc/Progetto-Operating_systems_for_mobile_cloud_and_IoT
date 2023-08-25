@@ -69,12 +69,12 @@
             android:id="@+id/item_attesa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="Attesa"
-            android:typeface="monospace"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#A1673AB7" />
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_chatBot"
@@ -133,13 +133,13 @@
         android:layout_weight="2"
         android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageViewWelcome"
-        android:layout_width="380dp"
-        android:layout_height="350dp"
-        android:contentDescription="Logo"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/pic6attesa" />
+        <ImageView
+            android:id="@+id/imageViewWelcome"
+            android:layout_width="380dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
+            android:src="@drawable/pic6attesa" />
 
         <RelativeLayout
             android:layout_width="match_parent"

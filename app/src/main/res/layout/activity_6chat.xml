@@ -77,12 +77,12 @@
             android:id="@+id/item_chatBot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="ChatBot"
-            android:typeface="monospace"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#A1673AB7"/>
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_farewelling"
@@ -136,9 +136,9 @@
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="380dp"
-            android:layout_height="350dp"
-            android:contentDescription="Logo"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
             android:src="@drawable/pic6chat" />
 
         <RelativeLayout
@@ -176,7 +176,6 @@
             android:paddingRight="16dp"
             android:paddingLeft="16dp">
 
-            <!-- Domanda -->
             <TextView
                 android:id="@+id/textDomanda"
                 android:layout_width="match_parent"
@@ -186,12 +185,28 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <!-- Domanda -->
+            <TextView
+                android:id="@+id/textTopics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textDomanda"
+                android:layout_marginTop="8dp"
+                android:text="Argomento"
+                android:textAlignment="viewStart"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <!-- Domanda -->
+
+
             <!-- Risposte -->
             <RadioGroup
                 android:id="@+id/answerRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="8dp">
 
                 <RadioButton
                     android:id="@+id/answerOptionA"

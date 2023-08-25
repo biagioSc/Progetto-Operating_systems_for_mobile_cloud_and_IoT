@@ -86,12 +86,12 @@
             android:id="@+id/item_farewelling"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="Farewelling"
-            android:typeface="monospace"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:background="#A1673AB7" />
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_signup"
@@ -137,9 +137,9 @@
         <ImageView
             android:id="@+id/imageViewDrink"
             android:layout_width="380dp"
-            android:layout_height="350dp"
-            android:contentDescription="Logo"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
             android:src="@drawable/pic7farewelling" />
 
         <RelativeLayout
@@ -227,14 +227,15 @@
 
         <TextView
             android:id="@+id/textViewDrinkDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:text="Breve spiegazione del drink"
-            android:textSize="16sp"
-            android:textColor="#757575"
             android:layout_below="@id/cardView"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:text="Breve spiegazione del drink"
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/buttonRetrieve"

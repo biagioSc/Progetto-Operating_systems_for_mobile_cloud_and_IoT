@@ -114,6 +114,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
             selectedDrink = intent.getStringExtra("param3");
+            innerResponseDescription = intent.getStringExtra("param4");
 
             int atIndex = user.indexOf("@");
 
@@ -127,67 +128,13 @@ public class Activity7_Farewelling extends AppCompatActivity {
         }
     }
     private void setUpComponent() {
-
-        if(!("Guest".equals(user))) {
-            new Thread(() -> {
-                try {
-                    socket.send("DRINK_DESCRIPTION");
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    socket.send(selectedDrink);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    innerResponseDescription = socket.receive();
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-
-                    if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
-                        String finalInnerResponseDescription = innerResponseDescription;
-                        runOnUiThread(() -> {
-                            textViewDrinkName.setText(selectedDrink);
-                            textViewDrinkDescription.setText(finalInnerResponseDescription);
-                        });
-
-                    }else {
-                        runOnUiThread(() -> {
-                            textViewDrinkName.setText(selectedDrink);
-                            textViewDrinkDescription.setText("Descrizione non disponibile!");
-                        });
-                    }
-
-                } catch (Exception e) {
-                    innerResponseDescription = "Descrizione non disponibile!";
-                    if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
-                        String finalInnerResponseDescription = innerResponseDescription;
-                        runOnUiThread(() -> {
-                            textViewDrinkName.setText(selectedDrink);
-                            textViewDrinkDescription.setText(finalInnerResponseDescription);
-                        });
-
-                    }else {
-                        runOnUiThread(() -> {
-                            textViewDrinkName.setText(selectedDrink);
-                            textViewDrinkDescription.setText("Descrizione non disponibile!");
-                        });
-                    }
-                }
-
-            }).start();
-        }else{
-            innerResponseDescription = "Descrizione non disponibile!";
-            if(innerResponseDescription != null && !innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")){
-                String finalInnerResponseDescription = innerResponseDescription;
-                runOnUiThread(() -> {
-                    textViewDrinkName.setText(selectedDrink);
-                    textViewDrinkDescription.setText(finalInnerResponseDescription);
-                });
-
-            }else {
-                runOnUiThread(() -> {
-                    textViewDrinkName.setText(selectedDrink);
-                    textViewDrinkDescription.setText("Descrizione non disponibile!");
-                });
-            }
-        }
+        runOnUiThread(() -> {
+            textViewDrinkName.setText(selectedDrink);
+            textViewDrinkDescription.setText(innerResponseDescription);
+        });
     }
     public void onClickRitira(View v) {
+        v.setClickable(false);
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         navigateToParam(Activity8_Gone.class, sessionID, user);
     }

@@ -75,6 +75,7 @@ public class Activity0_OutOfSight extends Activity {
     }
     public void onClickRiprendi(View v) {
         v.startAnimation(buttonAnimation);
+        v.setClickable(false);
         countDownTimer.cancel();
         finish();
     }

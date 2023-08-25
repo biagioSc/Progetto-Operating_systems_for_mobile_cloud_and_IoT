@@ -74,6 +74,7 @@ public class Activity8_Gone extends AppCompatActivity {
         }
     }
     public void onClickExit(View v) {
+        v.setClickable(false);
         if(!("Guest".equals(user))) {
             try {
                 socket.send("USER_GONE");

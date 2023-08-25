@@ -54,12 +54,12 @@
             android:id="@+id/item_ordering"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="Ordering"
-            android:typeface="monospace"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:background="#A1673AB7" />
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_serving"
@@ -139,7 +139,7 @@
         <ImageView
             android:id="@+id/imageViewLogo"
             android:layout_width="380dp"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="Logo"
             android:src="@drawable/pic4ordering" />
@@ -213,7 +213,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/button_design_general"
+                    android:background="@drawable/button_design_chat"
                     android:clickable="true"
                     android:cursorVisible="true"
                     android:onClick="onClickConsigliato"

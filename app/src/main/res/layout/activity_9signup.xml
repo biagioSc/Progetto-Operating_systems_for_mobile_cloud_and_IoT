@@ -95,7 +95,7 @@
             android:id="@+id/item_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A1673AB7"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="Signup"
             android:textSize="18sp"
@@ -140,13 +140,13 @@
         <ImageView
             android:id="@+id/imageViewHeader"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="Logo"
             android:src="@drawable/pic9signup"
+            tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="0dp"
-            tools:ignore="MissingConstraints" />
+            tools:layout_editor_absoluteY="0dp" />
 
         <TextView
             android:id="@+id/text"

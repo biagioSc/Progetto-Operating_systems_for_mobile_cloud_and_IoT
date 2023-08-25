@@ -131,11 +131,13 @@ public class Activity4_Ordering extends AppCompatActivity {
         startInactivityTimer();
     }
     public void onClickOrdina(View v) {
+        v.setClickable(false);
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         String selectedDrink = spinnerDrinks.getSelectedItem().toString();
         navigateToParam(Activity5_Serving.class, sessionID, user, selectedDrink);
     }
     public void onClickConsigliato(View v) {
+        v.setClickable(false);
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         String recommendedDrink = textViewRecommendedDrink.getText().toString();
         navigateToParam(Activity5_Serving.class, sessionID, user, recommendedDrink);
@@ -145,7 +147,13 @@ public class Activity4_Ordering extends AppCompatActivity {
         if (intent != null) {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
+            String inputString = intent.getStringExtra("param4");
+            recommendedDrink = intent.getStringExtra("param5");
 
+            String[] subStrings = inputString.split(",");
+            for (String subString : subStrings) {
+                drinkList.add(subString);
+            }
             int atIndex = user.indexOf("@");
 
             if (atIndex != -1) {
@@ -167,77 +175,16 @@ public class Activity4_Ordering extends AppCompatActivity {
         }
     }
     private void setUpComponent() {
-        if(!("Guest".equals(user))) {
-            new Thread(() -> {
-                try {
-                    socket.send("DRINK_LIST");
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    String inputString = socket.receive();
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    String[] subStrings = inputString.split(",");
-                    for (String subString : subStrings) {
-                        drinkList.add(subString);
-                    }
-                } catch (Exception e) {
-                    drinkList.add("Mojito");
-                    drinkList.add("Martini");
-                    drinkList.add("Midori");
-                    drinkList.add("Manhattan");
-                    drinkList.add("Negroni");
-                    drinkList.add("Daiquiri");
-                    drinkList.add("Pina Colada");
-                    drinkList.add("Gin Lemon");
-                    drinkList.add("Spritz");
-
-                }
-
-                setRandomRecommendedDrink();
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                runOnUiThread(() -> spinnerDrinks.setAdapter(adapter));
-            }).start();
-        }else{
-            drinkList.add("Mojito");
-            drinkList.add("Martini");
-            drinkList.add("Midori");
-            drinkList.add("Manhattan");
-            drinkList.add("Negroni");
-            drinkList.add("Daiquiri");
-            drinkList.add("Pina Colada");
-            drinkList.add("Gin Lemon");
-            drinkList.add("Spritz");
-
-            setRandomRecommendedDrink();
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerDrinks.setAdapter(adapter);
-        }
-
+        setRandomRecommendedDrink();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        runOnUiThread(() -> spinnerDrinks.setAdapter(adapter));
     }
     private void setRandomRecommendedDrink() {
         if(!("Guest".equals(user))) {
-            new Thread(() -> {
-                try {
-                    socket.send("SUGG_DRINK");
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    socket.send(sessionID);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    recommendedDrink = socket.receive();
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
-
-                } catch (Exception e) {
-                    int randomIndex = random.nextInt(drinkList.size());
-                    recommendedDrink = drinkList.get(randomIndex);
-                    runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
-                }
-            }).start();
-        }else{
-            int randomIndex = random.nextInt(drinkList.size());
-            recommendedDrink = drinkList.get(randomIndex);
             runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
-
+        }else{
+            runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
         }
     }
 

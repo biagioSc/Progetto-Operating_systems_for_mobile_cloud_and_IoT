@@ -45,7 +45,7 @@
             android:id="@+id/item_waiting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A1673AB7"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="Waiting"
             android:textSize="18sp"
@@ -136,7 +136,7 @@
         <ImageView
             android:id="@+id/imageViewLogo"
             android:layout_width="380dp"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="Logo"
             android:src="@drawable/pic3waiting" />

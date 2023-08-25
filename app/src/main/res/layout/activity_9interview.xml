@@ -102,7 +102,7 @@
             android:id="@+id/item_interview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A1673AB7"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="@string/interview_text"
             android:textSize="18sp"
@@ -137,7 +137,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="800dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="160dp"
             android:padding="16dp">
 
             <LinearLayout
@@ -321,14 +321,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/button_design_general"
-                    android:onClick="onClickRegister"
-                    android:text="@string/register_button_text"
-                    android:textColor="#FFFFFF"
-                    android:padding="14dp"
-                    android:textAlignment="center"
                     android:clickable="true"
                     android:cursorVisible="true"
-                    android:textSize="20sp"/>
+                    android:onClick="onClickRegister"
+                    android:padding="14dp"
+                    android:text="@string/register_button_text"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -336,7 +336,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="170dp"
             android:scaleType="centerCrop"
             android:src="@drawable/pic9interview" />
 

@@ -10,11 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Activity2_Welcome extends Activity {
@@ -24,7 +27,7 @@ public class Activity2_Welcome extends Activity {
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-    private String sessionID = "-1", user = "Guest";
+    private String sessionID = "-1", user = "Guest", inputString, recommendedDrink;
     private Activity_SocketManager socket;
     private TextView textViewLoggedIn;
     private int numPeopleInQueue = 0;
@@ -90,11 +93,13 @@ public class Activity2_Welcome extends Activity {
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, int param3) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, int param3, String param4, String param5) {
         Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         if(param3 != 0) intent.putExtra("param3", param3);
+        intent.putExtra("param4", param4);
+        intent.putExtra("param5", param5);
 
         startActivity(intent);
         finish();
@@ -124,6 +129,7 @@ public class Activity2_Welcome extends Activity {
     }
     public void onClickQueue(View v) {
         resetInactivityTimer();
+        v.setClickable(false);
 
         View loadingView = getLayoutInflater().inflate(R.layout.activity_000popuploading, null);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -139,11 +145,17 @@ public class Activity2_Welcome extends Activity {
             int max = 5;
             Random random = new Random();
             numPeopleInQueue = random.nextInt(max - min + 1) + min;
+            inputString = "Mojito,Martini,Midori,Manhattan,Negroni,Daiquiri,Pina Colada,Gin Lemon,Spritz";
+            String[] cocktails = inputString.split(",");
+
+            int randomIndex = random.nextInt(cocktails.length);
+
+            String randomCocktail = cocktails[randomIndex].trim();
 
             if (numPeopleInQueue < 2) {
-                navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
+                navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, randomCocktail);
             } else {
-                navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
+                navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue,inputString, randomCocktail);
             }
         }else {
             try {
@@ -155,15 +167,30 @@ public class Activity2_Welcome extends Activity {
                         Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                         numPeopleInQueue = Integer.parseInt(num);
 
-                        if (numPeopleInQueue < 2) {
-                            navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
-                        } else {
-                            navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
-                        }
+                        socket.send("DRINK_LIST");
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        inputString = socket.receive();
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        socket.send("SUGG_DRINK");
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        socket.send(sessionID);
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        recommendedDrink = socket.receive();
+                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+
+
                         runOnUiThread(() -> {
                             loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
                             buttonCheckNextState.setClickable(true);
                         });
+
+
+                        if (numPeopleInQueue < 2) {
+                            navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
+
+                        } else {
+                            navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue, inputString, recommendedDrink);
+                        }
                     }catch (Exception e){
                         loadingDialog.dismiss();
                         throw new RuntimeException(e);
@@ -175,11 +202,15 @@ public class Activity2_Welcome extends Activity {
                 int max = 5;
                 Random random = new Random();
                 numPeopleInQueue = random.nextInt(max - min + 1) + min;
+                inputString = "Mojito,Martini,Midori,Manhattan,Negroni,Daiquiri,Pina Colada,Gin Lemon,Spritz";
+                String[] cocktails = inputString.split(",");
+                int randomIndex = random.nextInt(cocktails.length);
+                recommendedDrink = cocktails[randomIndex].trim();
 
                 if (numPeopleInQueue < 2) {
-                    navigateToParam(Activity4_Ordering.class, sessionID, user, 0);
+                    navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
                 } else {
-                    navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue);
+                    navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue, inputString, recommendedDrink);
                 }
             }
         }

@@ -109,7 +109,7 @@
             android:id="@+id/item_outofsight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A1673AB7"
+            android:background="#C92196F3"
             android:padding="10dp"
             android:text="Out Of Sight"
             android:textSize="18sp"
@@ -138,9 +138,9 @@
         <ImageView
             android:id="@+id/imageViewStandby"
             android:layout_width="380dp"
-            android:layout_height="350dp"
-            android:contentDescription="Logo"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
             android:src="@drawable/picoutofsight" />
 
         <RelativeLayout

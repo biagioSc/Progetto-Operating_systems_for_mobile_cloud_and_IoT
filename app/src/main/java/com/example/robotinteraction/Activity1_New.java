@@ -147,11 +147,13 @@ public class Activity1_New extends AppCompatActivity {
         startInactivityTimer();
     }
     public void onClickSignUp(View v) {
+        v.setClickable(false);
         resetInactivityTimer();
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
         startActivity(intent);
     }
     public void onClickGuest(View v) {
+        v.setClickable(false);
         resetInactivityTimer();
         sessionID = "-1";
         user="Guest";
@@ -159,6 +161,7 @@ public class Activity1_New extends AppCompatActivity {
 
     }
     public void onClickAccedi(View v) {
+        v.setClickable(false);
         resetInactivityTimer();
         email = editTextEmail.getText().toString().trim();
         password = editTextPassword.getText().toString().trim();

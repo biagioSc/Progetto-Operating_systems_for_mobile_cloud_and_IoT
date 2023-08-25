@@ -14,6 +14,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class Activity5_Serving extends AppCompatActivity {
     private Animation buttonAnimation;
@@ -24,6 +28,8 @@ public class Activity5_Serving extends AppCompatActivity {
     private Runnable runnable;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest";
+    private String[] selectedTopics = new String[2]; // Aggiungi gli argomenti desiderati
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +80,13 @@ public class Activity5_Serving extends AppCompatActivity {
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String[] param4) {
         Intent intent = new Intent(Activity5_Serving.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         intent.putExtra("param3", param3);
+        intent.putExtra("param4", param4);
+
         startActivity(intent);
         finish();
     }
@@ -106,12 +114,85 @@ public class Activity5_Serving extends AppCompatActivity {
         startInactivityTimer();
     }
     public void onClickWait(View v) {
+        v.setClickable(false);
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-        navigateToParam(Activity6_Attesa.class, sessionID, user, selectedDrink);
+        navigateToParam(Activity6_Attesa.class, sessionID, user, selectedDrink,null);
     }
     public void onClickQuiz(View v) {
-        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-        navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink);
+        v.setClickable(false);
+        resetInactivityTimer();
+        if("Guest".equals(user)){
+            String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+            selectedTopics = new String[2];
+            Random random = new Random();
+
+            for (int i = 0; i < 2; i++) {
+                int randomIndex = random.nextInt(allTopics.length);
+                selectedTopics[i] = allTopics[randomIndex];
+            }
+            navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
+
+        }else {
+            new Thread(() -> {
+                try {
+                    socket.send("START_CHAT");
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    socket.send(sessionID);
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    String inputString = socket.receive();
+                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    selectedTopics = inputString.split(",");
+
+                    if (selectedTopics.length < 2) {
+                        String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+                        Random random = new Random();
+
+                        String newTopic;
+
+                        do {
+                            newTopic = allTopics[random.nextInt(allTopics.length)];
+                        } while (Arrays.asList(selectedTopics).contains(newTopic));
+
+                        String[] newSelectedTopics = Arrays.copyOf(selectedTopics, selectedTopics.length + 1);
+                        newSelectedTopics[newSelectedTopics.length - 1] = newTopic;
+
+                        selectedTopics = newSelectedTopics;
+                    }else if (selectedTopics.length > 2) {
+
+                        int elementsToRemove = selectedTopics.length - 2;
+                        Random random = new Random();
+                        for (int i = 0; i < elementsToRemove; i++) {
+                            int randomIndex = random.nextInt(selectedTopics.length);
+                            String[] newArray = new String[selectedTopics.length - 1];
+                            int newArrayIndex = 0;
+                            for (int j = 0; j < selectedTopics.length; j++) {
+                                if (j != randomIndex) {
+                                    newArray[newArrayIndex] = selectedTopics[j];
+                                    newArrayIndex++;
+                                }
+                            }
+                            selectedTopics = newArray;
+                        }
+                    }
+
+                    navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
+
+                } catch (Exception e) {
+
+                    String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+
+                    selectedTopics = new String[2];
+                    Random random = new Random();
+
+                    for (int i = 0; i < 2; i++) {
+                        int randomIndex = random.nextInt(allTopics.length);
+                        selectedTopics[i] = allTopics[randomIndex];
+                    }
+                    navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
+                }
+            }).start();
+
+        }
     }
     private void receiveParam() {
         Intent intent = getIntent();

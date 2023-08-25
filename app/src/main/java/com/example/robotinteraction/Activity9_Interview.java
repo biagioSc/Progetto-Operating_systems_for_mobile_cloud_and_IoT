@@ -176,6 +176,7 @@ public class Activity9_Interview extends AppCompatActivity {
         startInactivityTimer();
     }
     public void onClickRegister(View v) {
+        v.setClickable(false);
         resetInactivityTimer();
 
         View loadingView = getLayoutInflater().inflate(R.layout.activity_000popuploading, null);

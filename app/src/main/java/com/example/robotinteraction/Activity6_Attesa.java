@@ -17,7 +17,7 @@ public class Activity6_Attesa extends AppCompatActivity {
     private TextView textViewWaitTime;
     private String selectedDrink;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
-    private String sessionID = "-1", user = "Guest";
+    private String sessionID = "-1", user = "Guest", innerResponseDescription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +40,13 @@ public class Activity6_Attesa extends AppCompatActivity {
         textViewTimeElapsed = findViewById(R.id.textViewTimeElapsed);
 
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
         Intent intent = new Intent(Activity6_Attesa.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         intent.putExtra("param3", param3);
+        intent.putExtra("param4", param4);
+
         startActivity(intent);
         finish();
     }
@@ -68,7 +70,7 @@ public class Activity6_Attesa extends AppCompatActivity {
     private void setUpComponent(){
         textViewTimeElapsed.setText("Il tuo " + selectedDrink + " è quasi pronto");
 
-        new CountDownTimer(30000, 1000) {
+        new CountDownTimer(20000, 1000) {
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
                 runOnUiThread(() -> textViewWaitTime.setText("Tempo di attesa: " + seconds + " secondi"));
@@ -80,7 +82,29 @@ public class Activity6_Attesa extends AppCompatActivity {
                     textViewPleaseWait.setText("Completato!");
                     textViewTimeElapsed.setText("Il tuo drink è pronto");
                 });
-                navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
+                if(!("Guest".equals(user))) {
+                    new Thread(() -> {
+                        try {
+                            socket.send("DRINK_DESCRIPTION");
+                            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                            socket.send(selectedDrink);
+                            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                            innerResponseDescription = socket.receive();
+                            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+
+                            if(innerResponseDescription == null && innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
+                                innerResponseDescription = "Descrizione non disponibile!";
+                            }
+                        } catch (Exception e) {
+                            innerResponseDescription = "Descrizione non disponibile!";
+                        }
+                        navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
+
+                    }).start();
+                }else {
+                    innerResponseDescription = "Descrizione non disponibile!";
+                    navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
+                }
             }
         }.start();
     }

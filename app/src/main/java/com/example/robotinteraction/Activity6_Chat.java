@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class Activity6_Chat extends AppCompatActivity {
 
-    private TextView textDomanda, textViewLoggedIn, scoreTextView, scoreText;
+    private TextView textDomanda, textViewLoggedIn, scoreTextView, scoreText, textTopics;
     private RadioGroup answerRadioGroup;
     private Button confirmButton;
     private List<Activity_Question> questionList;
@@ -39,7 +39,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private String[] selectedTopics; // Aggiungi gli argomenti desiderati
-    private String sessionID = "-1", user = "Guest", selectedDrink;
+    private String sessionID = "-1", user = "Guest", selectedDrink, innerResponseDescription;
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private ProgressBar progressBar;
     private List<Activity_Question> selectedQuestions = new ArrayList<>();
@@ -72,6 +72,7 @@ public class Activity6_Chat extends AppCompatActivity {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         progressBar = findViewById(R.id.timerProgressBar);
         scoreText = findViewById(R.id.score);
+        textTopics = findViewById(R.id.textTopics);
     }
     private void setupListeners() {
         setTouchListenerForAnimation(confirmButton);
@@ -103,11 +104,13 @@ public class Activity6_Chat extends AppCompatActivity {
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
         Intent intent = new Intent(Activity6_Chat.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         intent.putExtra("param3", param3);
+        intent.putExtra("param4", param4);
+
         startActivity(intent);
         finish();
     }
@@ -140,6 +143,8 @@ public class Activity6_Chat extends AppCompatActivity {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
             selectedDrink = intent.getStringExtra("param3");
+            selectedTopics = intent.getStringArrayExtra("param4");
+
             int atIndex = user.indexOf("@");
 
             // Verificare se è presente il simbolo "@"
@@ -154,102 +159,19 @@ public class Activity6_Chat extends AppCompatActivity {
     private void setUpComponent() {
         initializeQuestionList();
 
-        if("Guest".equals(user)){
-            String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
-            selectedTopics = new String[2];
-            Random random = new Random();
-
-            for (int i = 0; i < 2; i++) {
-                int randomIndex = random.nextInt(allTopics.length);
-                selectedTopics[i] = allTopics[randomIndex];
+        for (Activity_Question question : questionList) {
+            if (isTopicSelected(question.getTopic())) {
+                totalQuestionsForSelectedTopics++;
+                selectedQuestions.add(question);
             }
-
-            for (Activity_Question question : questionList) {
-                if (isTopicSelected(question.getTopic())) {
-                    totalQuestionsForSelectedTopics++;
-                    selectedQuestions.add(question);
-                }
-            }
-
-            progressBar.setMax(totalQuestionsForSelectedTopics);
-            progressBar.setProgress(currentQuestionIndex);
-            startGame();
-
-        }else {
-            new Thread(() -> {
-                try {
-                    socket.send("START_CHAT");
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    socket.send(sessionID);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    String inputString = socket.receive();
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                    selectedTopics = inputString.split(",");
-
-                    if (selectedTopics.length < 2) {
-                        String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
-                        Random random = new Random();
-                        int randomIndex = random.nextInt(allTopics.length);
-                        selectedTopics[1] = allTopics[randomIndex];
-                    }else if (selectedTopics.length > 2) {
-                        int elementsToRemove = selectedTopics.length - 2;
-                        Random random = new Random();
-                        for (int i = 0; i < elementsToRemove; i++) {
-                            int randomIndex = random.nextInt(selectedTopics.length);
-                            String[] newArray = new String[selectedTopics.length - 1];
-                            int newArrayIndex = 0;
-                            for (int j = 0; j < selectedTopics.length; j++) {
-                                if (j != randomIndex) {
-                                    newArray[newArrayIndex] = selectedTopics[j];
-                                    newArrayIndex++;
-                                }
-                            }
-                            selectedTopics = newArray;
-                        }
-                    }
-
-                    for (Activity_Question question : questionList) {
-                        if (isTopicSelected(question.getTopic())) {
-                            totalQuestionsForSelectedTopics++;
-                            selectedQuestions.add(question);
-                        }
-                    }
-
-                    progressBar.setMax(totalQuestionsForSelectedTopics);
-                    progressBar.setProgress(currentQuestionIndex);
-                    startGame();
-
-                } catch (Exception e) {
-
-                    String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
-
-                    selectedTopics = new String[2];
-                    Random random = new Random();
-
-                    for (int i = 0; i < 2; i++) {
-                        int randomIndex = random.nextInt(allTopics.length);
-                        selectedTopics[i] = allTopics[randomIndex];
-                    }
-                    for (Activity_Question question : questionList) {
-                        if (isTopicSelected(question.getTopic())) {
-                            totalQuestionsForSelectedTopics++;
-                            selectedQuestions.add(question);
-                        }
-                    }
-                    progressBar.setMax(totalQuestionsForSelectedTopics);
-                    progressBar.setProgress(currentQuestionIndex);
-                    startGame();
-
-                }
-            }).start();
-
         }
-
+        progressBar.setMax(totalQuestionsForSelectedTopics);
+        progressBar.setProgress(currentQuestionIndex);
+        startGame();
     }
     private void initializeQuestionList() {
         questionList = new ArrayList<>();
 
-        // Aggiungi le domande alla lista
         questionList.add(new Activity_Question("Storia", "Qual è l'evento più importante della storia?", "La Rivoluzione Industriale", "La scoperta dell'America", "La caduta dell'Impero Romano", "La Guerra Fredda"));
         questionList.add(new Activity_Question("Storia", "Chi era il primo presidente degli Stati Uniti?", "George Washington", "Thomas Jefferson", "Benjamin Franklin", "Abraham Lincoln"));
         questionList.add(new Activity_Question("Storia", "Dove è iniziata la prima guerra mondiale?", "Europa", "Asia", "Africa", "Americhe"));
@@ -281,7 +203,10 @@ public class Activity6_Chat extends AppCompatActivity {
         if (currentQuestionIndex < selectedQuestions.size()) {
             confirmButton.setEnabled(true);
             Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
-            runOnUiThread(() -> textDomanda.setText(currentQuestion.getQuestion()));
+            runOnUiThread(() -> {
+                textDomanda.setText(currentQuestion.getQuestion());
+                textTopics.setText(currentQuestion.getTopic());
+            });
             List<String> answerOptions = new ArrayList<>();
             answerOptions.add(currentQuestion.getCorrectAnswer());
             answerOptions.add(currentQuestion.getWrongAnswer1());
@@ -325,7 +250,7 @@ public class Activity6_Chat extends AppCompatActivity {
                 selectedRadioButton.setTextColor(darkGreenColor);
             } else {
                 selectedRadioButton.setTextColor(Color.RED);
-                // Colora in verde la risposta corretta
+
                 for (int i = 0; i < answerRadioGroup.getChildCount(); i++) {
                     RadioButton radioButton = (RadioButton) answerRadioGroup.getChildAt(i);
                     String answerText = radioButton.getText().toString().substring(3);
@@ -379,9 +304,32 @@ public class Activity6_Chat extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(Activity6_Chat.this);
             builder.setCustomTitle(customView)
                     .setPositiveButton("Ok", (dialog, id) -> {
-                        navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
-                        dialog.dismiss();
-                        finish();
+                        if(!("Guest".equals(user))) {
+                            new Thread(() -> {
+                                try {
+                                    socket.send("DRINK_DESCRIPTION");
+                                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                                    socket.send(selectedDrink);
+                                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                                    innerResponseDescription = socket.receive();
+                                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+
+                                    if(innerResponseDescription == null && innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
+                                        innerResponseDescription = "Descrizione non disponibile!";
+                                    }
+                                } catch (Exception e) {
+                                    innerResponseDescription = "Descrizione non disponibile!";
+                                }
+                                navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
+                                dialog.dismiss();
+                                finish();
+                            }).start();
+                        }else{
+                            innerResponseDescription = "Descrizione non disponibile!";
+                            navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
+                            dialog.dismiss();
+                            finish();
+                        }
                     });
 
             AlertDialog dialog = builder.create();
