@@ -177,9 +177,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/imageViewLogo"
             android:layout_centerHorizontal="true"
-            android:text="Drink consigliato"
+            android:text="Ti consigliamo:"
             android:textColor="#000000"
-            android:textSize="24sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
@@ -202,9 +203,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="#020202"
-                    android:textSize="28sp"
-                    android:typeface="serif" />
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/buttonOrderRecommendedDrink"
@@ -213,15 +214,16 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/button_design_chat"
+                    android:background="@drawable/button_design_general"
                     android:clickable="true"
                     android:cursorVisible="true"
                     android:onClick="onClickConsigliato"
-                    android:padding="13dp"
+                    android:padding="8dp"
                     android:text="Ordina"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -233,8 +235,10 @@
             android:layout_below="@id/cardView"
             android:layout_centerHorizontal="true"
             android:text="oppure"
+            android:layout_marginTop="20dp"
             android:textColor="#757575"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textViewTitle2"
@@ -242,10 +246,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewOr"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="9dp"
-            android:text="Scegli il Tuo Drink"
+            android:layout_marginTop="20dp"
+            android:text="Scegli dalla lista:"
             android:textColor="#000000"
-            android:textSize="24sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/spinnerDrinks"
@@ -268,21 +273,22 @@
 
         <TextView
             android:id="@+id/buttonOrder"
-            android:layout_width="130dp"
+            android:layout_width="202dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/spinnerDrinks"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:entries="@array/dropdown_items"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_design_general"
             android:clickable="true"
             android:cursorVisible="true"
+            android:entries="@array/dropdown_items"
             android:onClick="onClickOrdina"
-            android:padding="12dp"
+            android:padding="10dp"
             android:text="Ordina"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </LinearLayout>

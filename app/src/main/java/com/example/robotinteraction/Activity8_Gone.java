@@ -1,13 +1,15 @@
 package com.example.robotinteraction;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +21,8 @@ public class Activity8_Gone extends AppCompatActivity {
     private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest";
     private TextView textViewGoodbye;
+    private TextView messageRating;
+    private TextView messageValutazione;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +42,60 @@ public class Activity8_Gone extends AppCompatActivity {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         buttonExit = findViewById(R.id.buttonExit);
         textViewGoodbye = findViewById(R.id.textViewGoodbye);
+        RatingBar ratingbar = findViewById(R.id.ratingBar);
+        messageRating = findViewById(R.id.textViewMessageRating);
+        messageValutazione = findViewById(R.id.textViewMessageValutazione);
+
+
+        if(Activity4_Ordering.beenInOrdering == true){
+            Activity4_Ordering.beenInOrdering = false;
+            ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    updateRatingString((int) rating);
+                }
+            });
+        }else{
+            ratingbar.setVisibility(View.GONE);
+            messageRating.setVisibility(View.GONE);
+            messageValutazione.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) buttonExit.getLayoutParams();
+            params.addRule(RelativeLayout.BELOW, R.id.textViewMessage);
+            buttonExit.setLayoutParams(params);
+        }
+
+
     }
+
+    private void updateRatingString(int rating) {
+        TextView ratingString = findViewById(R.id.textViewMessageRating);
+        switch (rating) {
+            case 1:
+                ratingString.setText("Scarsa!");
+                ratingString.setTextColor(Color.RED);
+                break;
+            case 2:
+                ratingString.setText("Abbastanza Bene!");
+                ratingString.setTextColor(Color.BLACK);
+                break;
+            case 3:
+                ratingString.setText("Bene!");
+                ratingString.setTextColor(Color.BLUE);
+                break;
+            case 4:
+                ratingString.setText("Molto Bene!");
+                ratingString.setTextColor(Color.MAGENTA);
+                break;
+            case 5:
+                ratingString.setText("Eccellente!");
+                ratingString.setTextColor(Color.GREEN);
+                break;
+            default:
+                ratingString.setText("");
+                break;
+        }
+    }
+
     private void setupListeners() {
         setTouchListenerForAnimation(buttonExit);
     }

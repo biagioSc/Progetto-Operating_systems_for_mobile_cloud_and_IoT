@@ -148,10 +148,12 @@
             android:layout_below="@id/imageViewLogo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="Arrivederci!"
+            android:text="Arrivederci"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="24sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
 
         <TextView
             android:id="@+id/textViewMessage"
@@ -160,27 +162,74 @@
             android:layout_below="@id/textViewGoodbye"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text="Grazie per aver utilizzato la nostra app."
+            android:text="Grazie per aver utilizzato la nostra App."
             android:textAlignment="center"
             android:textColor="#757575"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="italic"
+            />
 
-    <TextView
-        android:id="@+id/buttonExit"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Esci"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/button_design_general"
-        android:layout_below="@id/textViewMessage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:onClick="onClickExit"
-        android:padding="14dp"
-        android:textAlignment="center"
-        android:clickable="true"
-        android:cursorVisible="true"
-        android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/textViewMessageValutazione"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewMessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="Valuta la tua esperienza con RoboDrink."
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewMessageValutazione"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:numStars="5"
+            android:stepSize="1"
+            android:rating="0"
+            android:isIndicator="false"
+            android:progressTint="#CD8D16"/>
+
+
+        <TextView
+            android:id="@+id/textViewMessageRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ratingBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/buttonExit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewMessageRating"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/button_design_general"
+            android:clickable="true"
+            android:cursorVisible="true"
+            android:onClick="onClickExit"
+            android:padding="8dp"
+            android:text="Esci"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 </LinearLayout>

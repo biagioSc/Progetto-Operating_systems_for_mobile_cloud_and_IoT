@@ -164,8 +164,8 @@
             android:id="@+id/textViewSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Benvenuto in RoboDrink"
-            android:textSize="21sp"
+            android:text="Accedi a RoboDrink!"
+            android:textSize="20sp"
             android:layout_centerHorizontal="true"
             android:textStyle="bold"
             android:paddingLeft="2dp"
@@ -258,11 +258,12 @@
             android:layout_marginTop="7dp"
             android:background="@drawable/button_design_general"
             android:onClick="onClickAccedi"
-            android:padding="16dp"
+            android:padding="8dp"
             android:text="Accedi"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textAlignment="center"
+            android:textStyle="bold"
             android:clickable="true"
             android:cursorVisible="true"/>
 
@@ -278,20 +279,22 @@
             android:padding="8dp"
             android:text="Non hai un account? Registrati!"
             android:textColor="#1976D2"
-            android:textSize="16sp" />
+            android:textSize="12sp"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/buttonGuest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonSignUp"
+            android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
             android:clickable="true"
             android:onClick="onClickGuest"
             android:padding="8dp"
-            android:text="Accedi come Ospite!"
+            android:text="Accedi come Ospite"
             android:textColor="#757575"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 </LinearLayout>

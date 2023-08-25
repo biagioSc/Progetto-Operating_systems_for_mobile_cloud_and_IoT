@@ -175,9 +175,12 @@
             android:layout_below="@id/imageViewLogo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="In attesa del tuo turno..."
+            android:text="A breve potrai ordinare"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
 
         <ProgressBar
             android:id="@+id/progressBarWaiting"
@@ -198,7 +201,8 @@
             android:layout_marginTop="12dp"
             android:text="Attendere..."
             android:textColor="#757575"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textViewQueueCount"
@@ -209,7 +213,8 @@
             android:layout_marginTop="26dp"
             android:text="Persone in coda: 0"
             android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewWaitTime"

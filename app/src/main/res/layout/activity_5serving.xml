@@ -175,22 +175,24 @@
         android:layout_below="@id/imageViewOrderStatus"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="In preparazione:"
+        android:text="Ordine registrato"
         android:textAlignment="center"
         android:textColor="#000000"
-        android:textSize="24sp" />
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/textViewOrderStatusMessage"
-        android:layout_width="253dp"
-        android:layout_height="71dp"
-        android:layout_below="@id/textViewOrderStatusTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="Il tuo ordine è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz."
-        android:textAlignment="center"
-        android:textColor="#757575"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/textViewOrderStatusMessage"
+            android:layout_width="243dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/textViewOrderStatusTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="22dp"
+            android:text="Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz."
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
     <TextView
         android:id="@+id/buttonWaitingRoom"
@@ -202,12 +204,13 @@
         android:background="@drawable/button_design_general"
         android:layout_below="@id/textViewOrderStatusMessage"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:padding="14dp"
+        android:layout_marginTop="40dp"
+        android:padding="8dp"
         android:textAlignment="center"
         android:clickable="true"
         android:cursorVisible="true"
-        android:textSize="20sp"/>
+        android:textSize="15sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/buttonQuiz"
@@ -220,10 +223,11 @@
         android:layout_below="@id/buttonWaitingRoom"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:padding="14dp"
+        android:padding="8dp"
         android:textAlignment="center"
         android:clickable="true"
         android:cursorVisible="true"
-        android:textSize="20sp"/>
+        android:textSize="15sp"
+        android:textStyle="bold"/>
 </RelativeLayout>
 </LinearLayout>

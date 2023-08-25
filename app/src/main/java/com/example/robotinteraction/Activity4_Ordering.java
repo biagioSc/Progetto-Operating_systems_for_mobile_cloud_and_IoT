@@ -36,6 +36,8 @@ public class Activity4_Ordering extends AppCompatActivity {
     private TextView textViewLoggedIn;
     private final Random random = new Random();
     private String sessionID = "-1", user = "Guest", recommendedDrink;
+
+    public static boolean beenInOrdering = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class Activity4_Ordering extends AppCompatActivity {
         connection();
         initUIComponents();
         setupListeners();
+        beenInOrdering = true;
 
         receiveParam();
         setUpComponent();
