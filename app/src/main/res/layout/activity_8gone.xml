@@ -180,7 +180,7 @@
             android:text="Valuta la tua esperienza con RoboDrink."
             android:textAlignment="center"
             android:textColor="#757575"
-            android:textSize="14sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             />
 
@@ -219,7 +219,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewMessageRating"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/button_design_general"
             android:clickable="true"
             android:cursorVisible="true"

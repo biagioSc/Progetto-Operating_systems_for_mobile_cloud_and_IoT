@@ -218,10 +218,9 @@
                     android:gravity="center"
                     android:text="Mojito"
                     android:textAlignment="center"
-                    android:textColor="#CD8D16"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:typeface="monospace" />
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

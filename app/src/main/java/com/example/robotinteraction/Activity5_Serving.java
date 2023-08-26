@@ -215,10 +215,10 @@ public class Activity5_Serving extends AppCompatActivity {
     private void setUpComponent() {
         runOnUiThread(() -> {
 
-            textViewOrderStatusTitle.setText("In preparazione: \n" + selectedDrink);
+            textViewOrderStatusTitle.setText("Ordine registrato: \n" + selectedDrink);
 
             if (selectedDrink != "") {
-                textViewOrderStatusMessage.setText("Il tuo " + selectedDrink + " è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz.");
+                textViewOrderStatusMessage.setText("Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz.");
             }
         });
     }

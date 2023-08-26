@@ -196,7 +196,8 @@
             android:text="I nostri Robot saranno lieti
 
 
-            di gestire il tuo ordine."
+
+                            di gestire il tuo ordine."
             android:textColor="#757575"
             android:textSize="14sp"
             android:gravity="center"
@@ -214,6 +215,7 @@
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:text="Puoi aggiungerti alla coda
+
 
             cliccando il pulsante sottostante."
             android:textColor="#757575"

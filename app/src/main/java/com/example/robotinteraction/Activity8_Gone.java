@@ -69,26 +69,22 @@ public class Activity8_Gone extends AppCompatActivity {
 
     private void updateRatingString(int rating) {
         TextView ratingString = findViewById(R.id.textViewMessageRating);
+        ratingString.setTextColor(Color.BLACK);
         switch (rating) {
             case 1:
                 ratingString.setText("Scarsa!");
-                ratingString.setTextColor(Color.RED);
                 break;
             case 2:
                 ratingString.setText("Abbastanza Bene!");
-                ratingString.setTextColor(Color.BLACK);
                 break;
             case 3:
                 ratingString.setText("Bene!");
-                ratingString.setTextColor(Color.BLUE);
                 break;
             case 4:
                 ratingString.setText("Molto Bene!");
-                ratingString.setTextColor(Color.MAGENTA);
                 break;
             case 5:
                 ratingString.setText("Eccellente!");
-                ratingString.setTextColor(Color.GREEN);
                 break;
             default:
                 ratingString.setText("");

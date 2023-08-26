@@ -165,7 +165,7 @@
             android:id="@+id/editTextFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20"
+            android:layout_marginTop="20dp"
             android:hint="Nome"
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
