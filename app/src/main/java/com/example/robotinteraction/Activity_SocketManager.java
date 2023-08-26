@@ -22,7 +22,12 @@ public class Activity_SocketManager {
     private boolean isConnected = false;
 
     private Activity_SocketManager() {
-        connectToServer();
+
+        try{
+            connectToServer();
+        }catch (RuntimeException e){
+            instance = null;
+        }
     }
 
     private synchronized void connectToServer() {
