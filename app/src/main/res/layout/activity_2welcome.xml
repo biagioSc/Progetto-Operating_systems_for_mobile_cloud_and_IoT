@@ -186,27 +186,23 @@
 
         <TextView
             android:id="@+id/textViewDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewWelcome"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:text="I nostri Robot saranno lieti
-
-
-
-                            di gestire il tuo ordine."
+            android:text="I nostri Robot saranno lieti di gestire il tuo ordine."
             android:textColor="#757575"
             android:textSize="14sp"
-            android:gravity="center"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
 
         <TextView
             android:id="@+id/textViewDescription2"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewDescription"
             android:layout_centerHorizontal="true"
@@ -214,13 +210,10 @@
             android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
-            android:text="Puoi aggiungerti alla coda
-
-
-            cliccando il pulsante sottostante."
+            android:text="Puoi aggiungerti alla coda cliccando il pulsante sottostante."
             android:textColor="#757575"
             android:textSize="14sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/buttonChecknextState"
@@ -232,12 +225,12 @@
             android:background="@drawable/button_design_general"
             android:clickable="true"
             android:onClick="onClickQueue"
-            android:padding="8dp"
+            android:padding="10dp"
             android:text="Accedi alla Coda"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </LinearLayout>

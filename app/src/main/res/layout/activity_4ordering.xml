@@ -218,12 +218,12 @@
                     android:clickable="true"
                     android:cursorVisible="true"
                     android:onClick="onClickConsigliato"
-                    android:padding="8dp"
+                    android:padding="10dp"
                     android:text="Ordina"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="15sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -273,7 +273,7 @@
 
         <TextView
             android:id="@+id/buttonOrder"
-            android:layout_width="202dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/spinnerDrinks"
             android:layout_centerHorizontal="true"
@@ -285,6 +285,25 @@
             android:onClick="onClickOrdina"
             android:padding="10dp"
             android:text="Ordina"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/buttonExit"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonOrder"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_design_general"
+            android:clickable="true"
+            android:cursorVisible="true"
+            android:entries="@array/dropdown_items"
+            android:onClick="onClickExit"
+            android:padding="10dp"
+            android:text="Gone"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"

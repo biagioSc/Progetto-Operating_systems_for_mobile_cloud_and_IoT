@@ -28,7 +28,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     private Spinner spinnerDrinks;  // Spinner per selezionare un drink dalla lista
     private final List<String> drinkList = new ArrayList<>();  // Lista dei drink
     private Animation buttonAnimation;  // Animazione per i pulsanti
-    private TextView buttonOrderRecommendedDrink, buttonOrder;  // Pulsanti per ordinare
+    private TextView buttonOrderRecommendedDrink, buttonOrder, buttonExit;  // Pulsanti per ordinare
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
     private Runnable runnable;  // Runnable per la logica del timer di inattività
@@ -65,6 +65,7 @@ public class Activity4_Ordering extends AppCompatActivity {
         buttonOrderRecommendedDrink = findViewById(R.id.buttonOrderRecommendedDrink);
         buttonOrder = findViewById(R.id.buttonOrder);
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
+        buttonExit = findViewById(R.id.buttonExit);
     }
     private void setupListeners() {
         setTouchListenerForAnimation(buttonOrderRecommendedDrink);
@@ -145,6 +146,11 @@ public class Activity4_Ordering extends AppCompatActivity {
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
         String recommendedDrink = textViewRecommendedDrink.getText().toString();
         navigateToParam(Activity5_Serving.class, sessionID, user, recommendedDrink);
+    }
+    public void onClickExit(View v) {
+        v.setClickable(false);
+        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+        navigateTo(Activity8_Gone.class, sessionID, user);
     }
     private void receiveParam() {
         Intent intent = getIntent();

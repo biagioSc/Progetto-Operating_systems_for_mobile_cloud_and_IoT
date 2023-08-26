@@ -183,20 +183,16 @@
 
         <TextView
             android:id="@+id/textViewTimeElapsed"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewWelcomeMessage"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
-            android:text="I nostri Robot si stanno
-
-
-
-            occupando del tuo drink."
+            android:text="I nostri Robot si stanno occupando del tuo drink."
             android:textAlignment="center"
             android:textColor="#757575"
             android:textSize="14sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
     <ProgressBar
         android:id="@+id/progressBarWaiting"

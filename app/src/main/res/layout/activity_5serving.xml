@@ -183,8 +183,8 @@
 
         <TextView
             android:id="@+id/textViewOrderStatusMessage"
-            android:layout_width="243dp"
-            android:layout_height="42dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/textViewOrderStatusTitle"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="22dp"
@@ -194,40 +194,40 @@
             android:textSize="14sp"
             android:textStyle="italic" />
 
-    <TextView
-        android:id="@+id/buttonWaitingRoom"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Sala d'Attesa"
-        android:textColor="#FFFFFF"
-        android:onClick="onClickWait"
-        android:background="@drawable/button_design_general"
-        android:layout_below="@id/textViewOrderStatusMessage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:padding="8dp"
-        android:textAlignment="center"
-        android:clickable="true"
-        android:cursorVisible="true"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/buttonWaitingRoom"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewOrderStatusMessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_design_general"
+            android:clickable="true"
+            android:cursorVisible="true"
+            android:onClick="onClickWait"
+            android:padding="10dp"
+            android:text="Sala d'Attesa"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/buttonQuiz"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Quiz"
-        android:onClick="onClickQuiz"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/button_design_general"
-        android:layout_below="@id/buttonWaitingRoom"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:padding="8dp"
-        android:textAlignment="center"
-        android:clickable="true"
-        android:cursorVisible="true"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/buttonQuiz"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonWaitingRoom"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_design_general"
+            android:clickable="true"
+            android:cursorVisible="true"
+            android:onClick="onClickQuiz"
+            android:padding="10dp"
+            android:text="Quiz"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 </RelativeLayout>
 </LinearLayout>

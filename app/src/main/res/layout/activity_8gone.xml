@@ -157,7 +157,7 @@
 
         <TextView
             android:id="@+id/textViewMessage"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewGoodbye"
             android:layout_centerHorizontal="true"
@@ -166,13 +166,12 @@
             android:textAlignment="center"
             android:textColor="#757575"
             android:textSize="14sp"
-            android:textStyle="italic"
-            />
+            android:textStyle="italic" />
 
 
         <TextView
             android:id="@+id/textViewMessageValutazione"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewMessage"
             android:layout_centerHorizontal="true"
@@ -183,6 +182,7 @@
             android:textSize="17sp"
             android:textStyle="bold"
             />
+
 
 
         <RatingBar
@@ -215,7 +215,7 @@
 
         <TextView
             android:id="@+id/buttonExit"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewMessageRating"
             android:layout_centerHorizontal="true"
@@ -229,7 +229,7 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </LinearLayout>

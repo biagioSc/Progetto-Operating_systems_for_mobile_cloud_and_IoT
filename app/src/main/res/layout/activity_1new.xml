@@ -245,27 +245,27 @@
             android:text="Email e/o password errate"
             android:textAlignment="center"
             android:textColor="#FF0000"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="invisible" />
 
         <TextView
             android:id="@+id/buttonLogin"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewError"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="7dp"
             android:background="@drawable/button_design_general"
+            android:clickable="true"
+            android:cursorVisible="true"
             android:onClick="onClickAccedi"
-            android:padding="8dp"
+            android:padding="10dp"
             android:text="Accedi"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:clickable="true"
-            android:cursorVisible="true"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/buttonSignUp"
@@ -279,15 +279,14 @@
             android:padding="8dp"
             android:text="Non hai un account? Registrati!"
             android:textColor="#1976D2"
-            android:textSize="12sp"
-            android:textStyle="italic"/>
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/buttonGuest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/buttonSignUp"
-            android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
             android:clickable="true"
             android:onClick="onClickGuest"

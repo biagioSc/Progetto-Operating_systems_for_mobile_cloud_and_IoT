@@ -23,6 +23,9 @@ public class Activity8_Gone extends AppCompatActivity {
     private TextView textViewGoodbye;
     private TextView messageRating;
     private TextView messageValutazione;
+    private static final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
+    private static final int ORANGE = Color.parseColor("#FFA500"); // Colore verde scuro
+    private static final int BLUE = Color.parseColor("#C92196F3");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,12 +82,18 @@ public class Activity8_Gone extends AppCompatActivity {
                 break;
             case 3:
                 ratingString.setText("Bene!");
+                int blue = BLUE;
+                ratingString.setTextColor(blue);
                 break;
             case 4:
                 ratingString.setText("Molto Bene!");
+                int orange = ORANGE;
+                ratingString.setTextColor(orange);
                 break;
             case 5:
                 ratingString.setText("Eccellente!");
+                int darkGreenColor = DARK_GREEN_COLOR;
+                ratingString.setTextColor(darkGreenColor);
                 break;
             default:
                 ratingString.setText("");

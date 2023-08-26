@@ -174,6 +174,16 @@ public class Activity5_Serving extends AppCompatActivity {
                             }
                             selectedTopics = newArray;
                         }
+                    }else if("Nessuno".equals(selectedTopics[0])){
+                        String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+
+                        selectedTopics = new String[2];
+                        Random random = new Random();
+
+                        for (int i = 0; i < 2; i++) {
+                            int randomIndex = random.nextInt(allTopics.length);
+                            selectedTopics[i] = allTopics[randomIndex];
+                        }
                     }
 
                     navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
