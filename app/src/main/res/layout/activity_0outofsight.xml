@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -63,7 +62,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Serving"
-            android:typeface="monospace"/>
+            android:typeface="monospace" />
 
         <TextView
             android:id="@+id/item_attesa"
@@ -129,10 +128,10 @@
     <!-- Contenuto principale -->
 
     <RelativeLayout
-        android:background="#FFFFFF"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:background="#FFFFFF"
         android:orientation="vertical">
 
         <ImageView
@@ -154,20 +153,20 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:background="?android:attr/selectableItemBackground"
-                android:padding="8dp"
-                android:src="@drawable/user"
                 android:clickable="false"
                 android:contentDescription="Toggle Email Visibility"
-                android:paddingLeft="5dp"/>
+                android:padding="8dp"
+                android:paddingLeft="5dp"
+                android:src="@drawable/user" />
 
             <TextView
                 android:id="@+id/textViewLoggedIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Utente Loggato"
-                android:padding="8dp"
+                android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/emailToggle"
-                android:layout_centerVertical="true" />
+                android:padding="8dp"
+                android:text="Utente Loggato" />
         </RelativeLayout>
 
         <TextView
@@ -180,11 +179,11 @@
             android:text="Ti sei allontanato"
             android:textColor="#000000"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/buttonWaitingRoom"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textInfo"
             android:layout_centerHorizontal="true"
@@ -198,7 +197,7 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -212,13 +211,13 @@
                 android:id="@+id/textViewTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:fontFamily="sans-serif-light"
                 android:padding="8dp"
                 android:text="Tempo rimanente"
                 android:textColor="#020202"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="30dp"/>
+                android:textStyle="bold" />
 
             <!-- Conteggio numerico del timer -->
             <TextView
@@ -237,7 +236,6 @@
                 android:textStyle="bold" />
 
         </RelativeLayout>
-
 
 
     </RelativeLayout>
