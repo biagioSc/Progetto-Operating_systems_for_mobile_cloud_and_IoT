@@ -70,6 +70,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     private void setupListeners() {
         setTouchListenerForAnimation(buttonOrderRecommendedDrink);
         setTouchListenerForAnimation(buttonOrder);
+        setTouchListenerForAnimation(buttonExit);
     }
     private void setTouchListenerForAnimation(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
