@@ -881,7 +881,10 @@ void handle_gone(int sockfd, PGconn *conn) {
     // Converti l'ID della sessione in un numero intero
     int session_id = atoi(user_session_id);
 
-    printf("\n[Gone] Ho ricevuto session id:%d\n",session_id);
+    // Controllo se l'utente si è scollegato senza loggarsi
+    if(session_id == -1){
+        printf("\n[Gone] Utente non loggato disconnesso correttamente");
+    }
 
     // Controllo se il session id è valido
     if(session_id < 0){
