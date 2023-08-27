@@ -1,2 +1,0 @@
-Aggiungere barra laterale per tenere traccia dello stato ccorrente
-Aggiungere out of coso con timer + schermata per tornare allp stato 
