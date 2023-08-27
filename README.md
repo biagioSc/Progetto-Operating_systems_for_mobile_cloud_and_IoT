@@ -27,6 +27,8 @@
 
 🙎‍♂️  Erasmo Prosciutto
 
+🧑‍💼  Biagio Scotto di Covella
+
 👨‍💼  Antonio Lanuto
 
 
@@ -34,6 +36,8 @@
 ### 📬 *Contatti*
 
 @ e.prosciutto@studenti.unina.it
+
+@ b.scottodicovella@studenti.unina.it
 
 @ an.lanuto@studenti.unina.it
 
