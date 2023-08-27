@@ -1,4 +1,4 @@
-# 🔖 Progetto-LSO-2023: Stati di un Robot   <img src="robot-icon.png" align="right"/> 
+# 🔖 Progetto-LSO-2023: Stati di un Robot   <img src="robot_icon.png" align="right"/> 
 
 #### ↬ Sviluppo di una applicazione Android in Java, per cellulare o tablet e di un Server in C, con la finalità di gestire gli stati di un Robot attraverso una descrizione teorica basata su macchine a stati finiti.  
 
