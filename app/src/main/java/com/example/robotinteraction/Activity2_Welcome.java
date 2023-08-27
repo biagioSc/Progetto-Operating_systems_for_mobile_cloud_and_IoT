@@ -5,19 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Activity2_Welcome extends Activity {
@@ -28,7 +23,7 @@ public class Activity2_Welcome extends Activity {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private String sessionID = "-1", user = "Guest", inputString, recommendedDrink;
-    private Activity_SocketManager socket;
+    private Socket_Manager socket;
     private TextView textViewLoggedIn;
     private int numPeopleInQueue = 0;
     @Override
@@ -45,7 +40,7 @@ public class Activity2_Welcome extends Activity {
         receiveParam();
     }
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
         runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {

@@ -3,16 +3,10 @@ package com.example.robotinteraction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.IOException;
 
 public class Activity3_Waiting extends AppCompatActivity {
     private int queueCount = 0;
@@ -24,7 +18,7 @@ public class Activity3_Waiting extends AppCompatActivity {
     private TextView textViewLoggedIn;
     private String sessionID = "-1", user = "Guest", inputString, recommendedDrink;
 
-    private Activity_SocketManager socket;
+    private Socket_Manager socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +33,7 @@ public class Activity3_Waiting extends AppCompatActivity {
     }
 
     private void connection() {
-        socket = Activity_SocketManager.getInstance();
+        socket = Socket_Manager.getInstance();
     }
     private void initUIComponents() {
         textViewQueueCount = findViewById(R.id.textViewQueueCount);

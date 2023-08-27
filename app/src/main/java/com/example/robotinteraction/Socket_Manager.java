@@ -7,27 +7,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.ConnectException;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 
-public class Activity_SocketManager {
+public class Socket_Manager {
     private static final String TAG = "Activity_SocketManager";
     private static final String SERVER_IP = "195.231.38.118";
     private static final int SERVER_PORT = 8080;
     private Socket socket;
     private BufferedReader reader;
     private OutputStream outputStream;
-    private static Activity_SocketManager instance;
+    private static Socket_Manager instance;
     private boolean isConnected = false;
 
-    private Activity_SocketManager() {
-
-        try{
-            connectToServer();
-        }catch (RuntimeException e){
-            instance = null;
-        }
+    private Socket_Manager() {
+        connectToServer();
     }
 
     private synchronized void connectToServer() {
@@ -42,21 +35,15 @@ public class Activity_SocketManager {
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e(TAG, "Error during connection: " + e.getMessage());
-                if (e instanceof ConnectException) {
-                    Log.e(TAG, "The server is not active or not reachable.");
-                } else if (e instanceof SocketTimeoutException) {
-                    Log.e(TAG, "Connection timeout reached.");
-                }
-                throw new RuntimeException(e);
+                isConnected = false;
             }
         }).start();
     }
 
-    public static Activity_SocketManager getInstance() {
+    public static Socket_Manager getInstance() {
         if (instance == null) {
-            try{
-                instance = new Activity_SocketManager();
-            }catch (Exception e){
+            instance = new Socket_Manager();
+            if (!instance.isConnected) { // se la connessione fallisce
                 instance = null;
             }
         }
@@ -100,7 +87,7 @@ public class Activity_SocketManager {
     }
 
     public boolean isConnected() {
-        return socket != null && socket.isConnected();
+        return isConnected;
     }
 
     public void close() {

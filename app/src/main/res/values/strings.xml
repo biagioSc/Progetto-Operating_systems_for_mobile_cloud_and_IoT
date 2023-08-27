@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">RoboDrink</string>
     <string name="stato_text">STATO</string>
     <string name="login_text">Login</string>
     <string name="welcome_text">Welcome</string>

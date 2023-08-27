@@ -1,13 +1,11 @@
 package com.example.robotinteraction;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Activity6_Chat extends AppCompatActivity {
 
@@ -40,7 +37,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private Runnable runnable;
     private String[] selectedTopics; // Aggiungi gli argomenti desiderati
     private String sessionID = "-1", user = "Guest", selectedDrink, innerResponseDescription;
-    private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
+    private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private ProgressBar progressBar;
     private List<Activity_Question> selectedQuestions = new ArrayList<>();
     private static final long DELAY_BEFORE_NEXT_QUESTION = 1000; // Ritardo di 10 secondi
@@ -61,7 +58,7 @@ public class Activity6_Chat extends AppCompatActivity {
         setUpComponent();
     }
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
         runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {

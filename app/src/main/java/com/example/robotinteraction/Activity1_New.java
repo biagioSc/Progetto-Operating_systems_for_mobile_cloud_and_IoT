@@ -1,6 +1,8 @@
 package com.example.robotinteraction;
 
 // Import delle librerie necessarie
+
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,7 +10,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,9 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
-import android.app.AlertDialog;
+
 
 //todo tutti i bottoni non cliccabili dopo il primo tocco e i send alla schermata precedente
 public class Activity1_New extends AppCompatActivity {
@@ -28,7 +31,7 @@ public class Activity1_New extends AppCompatActivity {
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private TextView buttonLogin, textViewError, textViewSignUp, textViewGuest;
     private Animation buttonAnimation;
-    private Activity_SocketManager socket;
+    private Socket_Manager socket;
     private boolean isPasswordVisible = false;
     private ImageButton passwordToggle;
     private String sessionID = "-1", user = "Guest", email, password, LOG_IN_RESPONSE = "LOG_IN_ERROR";
@@ -51,7 +54,10 @@ public class Activity1_New extends AppCompatActivity {
     }
 
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
+        if (socket == null || !socket.isConnected()){
+            showPopupMessage();
+        }
         runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {
@@ -197,29 +203,32 @@ public class Activity1_New extends AppCompatActivity {
     }
     public void showPopupMessage() {
         runOnUiThread(() -> {
-            LayoutInflater inflater = LayoutInflater.from(Activity1_New.this);
-            View customView = inflater.inflate(R.layout.activity_00popupguest, null);
+            View customView = LayoutInflater.from(Activity1_New.this).inflate(R.layout.activity_00popupguest, null);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(Activity1_New.this);
-            builder.setCustomTitle(customView)
-                    .setPositiveButton("Accedi come Ospite!", (dialog, id) -> {
+            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(Activity1_New.this);
+            builder.setView(customView)
+                    .setPositiveButton("Accedi come Ospite", (dialog, id) -> {
                         sessionID = "-1";
-                        user="Guest";
+                        user = "Guest";
                         navigateToParam(Activity2_Welcome.class, sessionID, user);
                         dialog.dismiss();
                         finish();
+                    })
+                    .setNegativeButton("Annulla", (dialog, id) -> {
+                        // Nessuna azione per il pulsante annulla
                     });
 
-            AlertDialog dialog = builder.create();
+            androidx.appcompat.app.AlertDialog dialog = builder.create();
             dialog.setOnShowListener(dialogInterface -> {
-                final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
+                final int DARK_GREEN_COLOR = Color.parseColor("#00A859");
                 Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setTextColor(DARK_GREEN_COLOR); // Sostituisci con il colore desiderato
+                positiveButton.setTextColor(DARK_GREEN_COLOR);
             });
 
             dialog.show();
         });
     }
+
     public void togglePasswordVisibility(View view) {
         resetInactivityTimer();
         if (isPasswordVisible) {

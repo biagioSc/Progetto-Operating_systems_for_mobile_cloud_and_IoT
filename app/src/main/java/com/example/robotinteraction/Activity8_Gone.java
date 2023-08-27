@@ -1,6 +1,7 @@
 package com.example.robotinteraction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,14 +19,13 @@ public class Activity8_Gone extends AppCompatActivity {
 
     private TextView buttonExit;
     private Animation buttonAnimation;
-    private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
+    private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest";
     private TextView textViewGoodbye;
     private TextView messageRating;
     private TextView messageValutazione;
-    private static final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
-    private static final int ORANGE = Color.parseColor("#FFA500"); // Colore verde scuro
-    private static final int BLUE = Color.parseColor("#C92196F3");
+    private RatingBar ratingbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,40 +35,45 @@ public class Activity8_Gone extends AppCompatActivity {
         connection();
         initUIComponents();
         setupListeners();
-
         receiveParam();
+        ShowRatingBarIfVisitedOrdering(ratingbar,messageRating,messageValutazione,buttonExit);
     }
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         buttonExit = findViewById(R.id.buttonExit);
         textViewGoodbye = findViewById(R.id.textViewGoodbye);
-        RatingBar ratingbar = findViewById(R.id.ratingBar);
+        ratingbar = findViewById(R.id.ratingBar);
         messageRating = findViewById(R.id.textViewMessageRating);
         messageValutazione = findViewById(R.id.textViewMessageValutazione);
+    }
 
+    public void ShowRatingBarIfVisitedOrdering(final RatingBar ratingbar,
+                                                     final TextView messageRating,
+                                                     final TextView messageValutazione,
+                                                     final TextView buttonExit) {
+        // Recupera il valore del flag dalle SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
+        boolean userVisitedFirstActivity = sharedPreferences.getBoolean("user_visited_ordering_activity", false);
 
-        if(Activity4_Ordering.beenInOrdering == true){
-            Activity4_Ordering.beenInOrdering = false;
-            ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                @Override
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                    updateRatingString((int) rating);
-                }
-            });
-        }else{
+        if (userVisitedFirstActivity) {
+            // Imposta l'ascoltatore per la RatingBar
+            ratingbar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> updateRatingString((int) rating));
+        } else {
+            // Nasconde la RatingBar e i messaggi associati
             ratingbar.setVisibility(View.GONE);
             messageRating.setVisibility(View.GONE);
             messageValutazione.setVisibility(View.GONE);
+
+            // Aggiorna la posizione del pulsante di uscita
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) buttonExit.getLayoutParams();
             params.addRule(RelativeLayout.BELOW, R.id.textViewMessage);
             buttonExit.setLayoutParams(params);
         }
-
-
     }
+
 
     private void updateRatingString(int rating) {
         TextView ratingString = findViewById(R.id.textViewMessageRating);
@@ -82,18 +87,12 @@ public class Activity8_Gone extends AppCompatActivity {
                 break;
             case 3:
                 ratingString.setText("Bene!");
-                int blue = BLUE;
-                ratingString.setTextColor(blue);
                 break;
             case 4:
                 ratingString.setText("Molto Bene!");
-                int orange = ORANGE;
-                ratingString.setTextColor(orange);
                 break;
             case 5:
                 ratingString.setText("Eccellente!");
-                int darkGreenColor = DARK_GREEN_COLOR;
-                ratingString.setTextColor(darkGreenColor);
                 break;
             default:
                 ratingString.setText("");
@@ -105,14 +104,11 @@ public class Activity8_Gone extends AppCompatActivity {
         setTouchListenerForAnimation(buttonExit);
     }
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                applyButtonAnimation(v);
             }
+            return false;
         });
     }
     private void applyButtonAnimation(View v) {
@@ -125,22 +121,23 @@ public class Activity8_Gone extends AppCompatActivity {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
             int atIndex = -1;
-            if(user!=null){
+            if (user != null && !user.equals("ERROR")) {  // Verifica che user non sia nullo e non sia "ERROR"
                 atIndex = user.indexOf("@");
-                // Verificare se è presente il simbolo "@"
+                // Verifica se è presente il simbolo "@"
                 if (atIndex != -1) {
                     String username = user.substring(0, atIndex);
                     runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username));
-
                 } else {
                     runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user));
                 }
             }
         }
     }
+
     public void onClickExit(View v) {
+
         v.setClickable(false);
-        if(!("Guest".equals(user))) {
+        if(!("Guest".equals(user)) && socket != null) {
             try {
                 socket.send("USER_GONE");
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
@@ -151,7 +148,7 @@ public class Activity8_Gone extends AppCompatActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }else{
+        }else if(socket != null){
             socket.close();
         }
         Intent intent = new Intent(Intent.ACTION_MAIN);

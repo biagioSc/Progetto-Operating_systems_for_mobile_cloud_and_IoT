@@ -152,23 +152,35 @@
                 android:id="@+id/userToggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_marginEnd="1dp"
+                android:layout_toStartOf="@+id/textViewLoggedIn"
                 android:background="?android:attr/selectableItemBackground"
-                android:padding="8dp"
-                android:src="@drawable/user"
                 android:clickable="false"
                 android:contentDescription="Toggle Email Visibility"
-                android:paddingLeft="5dp"/>
+                android:padding="8dp"
+                android:paddingLeft="5dp"
+                android:src="@drawable/user" />
 
             <TextView
                 android:id="@+id/textViewLoggedIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Utente Loggato"
+                android:layout_marginEnd="0dp"
+                android:layout_toStartOf="@+id/buttonExit"
                 android:padding="8dp"
-                android:layout_toStartOf="@id/userToggle"
-                android:layout_centerVertical="true" />
+                android:text="Utente Loggato" />
+
+            <TextView
+                android:id="@+id/buttonExit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="1dp"
+                android:padding="8dp"
+                android:text="Esci"
+                android:onClick="onClickExit"/>
+
+
         </RelativeLayout>
 
         <TextView
@@ -285,25 +297,6 @@
             android:onClick="onClickOrdina"
             android:padding="10dp"
             android:text="Ordina"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/buttonExit"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonOrder"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_design_general"
-            android:clickable="true"
-            android:cursorVisible="true"
-            android:entries="@array/dropdown_items"
-            android:onClick="onClickExit"
-            android:padding="10dp"
-            android:text="Gone"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"

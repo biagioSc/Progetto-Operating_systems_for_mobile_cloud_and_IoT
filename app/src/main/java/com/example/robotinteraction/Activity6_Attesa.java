@@ -2,9 +2,6 @@ package com.example.robotinteraction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.MotionEvent;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,7 +13,7 @@ public class Activity6_Attesa extends AppCompatActivity {
     private TextView textViewPleaseWait, textViewLoggedIn, textViewTimeElapsed;
     private TextView textViewWaitTime;
     private String selectedDrink;
-    private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
+    private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest", innerResponseDescription;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +28,7 @@ public class Activity6_Attesa extends AppCompatActivity {
         setUpComponent();
     }
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
     }
     private void initUIComponents() {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);

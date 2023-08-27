@@ -1,22 +1,19 @@
 package com.example.robotinteraction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +29,11 @@ public class Activity4_Ordering extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
     private Runnable runnable;  // Runnable per la logica del timer di inattività
-    private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
+    private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private TextView textViewLoggedIn;
     private final Random random = new Random();
     private String sessionID = "-1", user = "Guest", recommendedDrink;
 
-    public static boolean beenInOrdering = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +43,13 @@ public class Activity4_Ordering extends AppCompatActivity {
         connection();
         initUIComponents();
         setupListeners();
-        beenInOrdering = true;
+
+        // Utente che potrà visualizzare la rating bar per le recensioni
+        // Imposta il flag a 'true' quando l'utente entra in questa Activity
+        SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("user_visited_ordering_activity", true);
+        editor.apply();
 
         receiveParam();
         setUpComponent();
@@ -55,7 +57,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     }
 
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
         runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
     private void initUIComponents() {

@@ -34,7 +34,7 @@ public class Activity9_Interview extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-    private Activity_SocketManager socket;  // Manager del socket per la comunicazione con il server
+    private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class Activity9_Interview extends AppCompatActivity {
         receiveParam();
     }
     private void connection() {
-        socket = Activity_SocketManager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
         runnable = () -> navigateTo(Activity0_OutOfSight.class, "0", null);
     }
     private void initUIComponents() {
