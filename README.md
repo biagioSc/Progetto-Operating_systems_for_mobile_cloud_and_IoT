@@ -15,6 +15,8 @@
 - Gone: l'utente è andato via.
 - Out-of-sight: l'utente si è allontanato temporaneamente.
 
+<img src="finate-state-machine.jpg" align="center"/>
+
 ## 📋 Organizzazione del lavoro
 
 - Tutta la documentazione sarà prodotta in Latex.
