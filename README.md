@@ -1,9 +1,46 @@
-# Robot-Interaction
+# 🔖 Progetto-LSO-2023: Stati di un Robot   <img src="icon.png" align="right"/> 
 
-• n utenti (client) devono interagire con un robot (server) • L'interazione tra un utente e un robot è gestita in base ad una state machine che mappa l'intera interazione dall'inizio alla fine. • I possibili stati di un robot possono essere:
+#### ↬ Sviluppo di una applicazione Android in Java, per cellulare o tablet e di un Server in C, con la finalità di gestire gli stati di un Robot attraverso una descrizione teorica basata su macchine a stati finiti.  
 
-• New : nuovo utente è arrivato • Welcoming: il robot lo saluta • Waiting: attende il suo turno • Ordering: il robot suggerisce un drink, il client può confermare o richiedere un altro • Serving: preparazione del drink • Interacting: durante la preparazione del drink, il robot può chiacchierare con l’utente di un qualche argomento • Non-interacting: il robot prepara il drink senza chiacchierare perché l’utente non è interessato a interagire oltre • Farewelling: il drink è pronto, il robot lo dice all’utente e saluta • Gone: il cliente è andato via • Out-of-sight: il cliente si è allontanato
+## 📑 *Possibili stati e loro descrizione*
 
-• Solo due utenti alla volta possono trovarsi nello stato di “ordering” e "serving" • Tutti gli altri utenti ricevono un messaggio di benvenuto, ma restano in attesa • Applicazione per cellulare o tablet
+- New: un nuovo utente è arrivo.
+- Welcoming: il robot saluta l'utente.
+- Waiting: l'utente attende il suo turno per ordinare.
+- Ordering: il robot suggerisce un drink, l'utente può confermare o richiederne un altro.
+- Serving: preparazione del drink richiesto.
+- Interacting: possibile fase di interazione con l'utente durante l'attesa per la preparazione del drink.
+- Non-Interacting: l'utente ha rifiutato la possibilità di interagire.
+- Farwelling: il drink è pronto e l'utente viene avvisato.
+- Gone: l'utente è andato via.
+- Out-of-sight: l'utente si è allontanato temporaneamente.
 
-• [Opzionale] Per una complessità maggiore, e quindi punti extra, si può: • Aggiungere registrazione/login degli utenti usando un database Mysql or PostgreSQL • Aggiungere alla registrazione un piccolo questionario per prendere info degli utenti, quali preferenze di drink o argomenti per la conversazione da usare nello stato di “ordering” e “interacting” rispettivamente • Gestione degli stati a partire dallo stato iniziale e da tutti gli stati
+## Organizzazione del lavoro
+
+- Tutta la documentazione sarà prodotta in Latex.
+- La condivisione del materiale avverrà tramite GitHub.
+- L'ambiente di sviluppo per l'applicativo sarà Android Studio.
+- Per la Base di Dati utilizzeremo il DBMS PostgreSQL.
+- Il Server e il DBMS si troverà su una macchina virtuale (VPS) con S.O. Ubuntu Linux.
+
+## ©️ *Sviluppatori*
+
+🙎‍♂️  Erasmo Prosciutto
+
+👨‍💼  Antonio Lanuto
+
+
+
+### 📬 *Contatti*
+
+@ e.prosciutto@studenti.unina.it
+
+@ an.lanuto@studenti.unina.it
+
+
+
+## 🏬 *Info*
+- Università degli Studi di Napoli: "Federico II" 
+- Dipartimento di Ingegneria Elettrica e delle Tecnologie dell'Informazione
+- Corso di Laurea in Informatica
+- Esame di Laboratorio di Sistemi Operativi
