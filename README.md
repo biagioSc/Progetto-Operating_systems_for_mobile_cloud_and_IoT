@@ -15,7 +15,7 @@
 - Gone: l'utente è andato via.
 - Out-of-sight: l'utente si è allontanato temporaneamente.
 
-## Organizzazione del lavoro
+## 📋 Organizzazione del lavoro
 
 - Tutta la documentazione sarà prodotta in Latex.
 - La condivisione del materiale avverrà tramite GitHub.
