@@ -56,7 +56,7 @@ public class Activity8_Gone extends AppCompatActivity {
                                                      final TextView buttonExit) {
         // Recupera il valore del flag dalle SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
-        boolean userVisitedFirstActivity = sharedPreferences.getBoolean("user_visited_ordering_activity", false);
+        boolean userVisitedFirstActivity = sharedPreferences.getBoolean("user_visited_farewelling_activity", false);
 
         if (userVisitedFirstActivity) {
             // Imposta l'ascoltatore per la RatingBar

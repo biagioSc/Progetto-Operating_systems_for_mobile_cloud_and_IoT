@@ -43,14 +43,6 @@ public class Activity4_Ordering extends AppCompatActivity {
         connection();
         initUIComponents();
         setupListeners();
-
-        // Utente che potrà visualizzare la rating bar per le recensioni
-        // Imposta il flag a 'true' quando l'utente entra in questa Activity
-        SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("user_visited_ordering_activity", true);
-        editor.apply();
-
         receiveParam();
         setUpComponent();
 

@@ -1,5 +1,6 @@
 package com.example.robotinteraction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,6 +34,13 @@ public class Activity7_Farewelling extends AppCompatActivity {
         connection();
         initUIComponents();
         setupListeners();
+
+        // Utente che potrà visualizzare la rating bar per le recensioni
+        // Imposta il flag a 'true' quando l'utente entra in questa Activity
+        SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("user_visited_farewelling_activity", true);
+        editor.apply();
 
         receiveParam();
         setUpComponent();
