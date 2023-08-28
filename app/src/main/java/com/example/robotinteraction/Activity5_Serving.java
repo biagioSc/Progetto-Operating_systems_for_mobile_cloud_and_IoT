@@ -1,14 +1,18 @@
 package com.example.robotinteraction;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -85,10 +89,12 @@ public class Activity5_Serving extends AppCompatActivity {
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 socket.send(sessionID);
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+            } catch (Exception e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Riprovo...", Toast.LENGTH_SHORT).show());
             }
         }
+
         Intent intent = new Intent(Activity5_Serving.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
@@ -239,5 +245,4 @@ public class Activity5_Serving extends AppCompatActivity {
             }
         });
     }
-
 }
