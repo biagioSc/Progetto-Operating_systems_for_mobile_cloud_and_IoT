@@ -183,15 +183,15 @@ public class Activity2_Welcome extends Activity {
 
 
                         runOnUiThread(() -> {
-                            loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
                             buttonCheckNextState.setClickable(true);
                         });
 
 
                         if (numPeopleInQueue < 2) {
+                            loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
                             navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
-
                         } else {
+                            loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
                             navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue, inputString, recommendedDrink);
                         }
                     }catch (Exception e){

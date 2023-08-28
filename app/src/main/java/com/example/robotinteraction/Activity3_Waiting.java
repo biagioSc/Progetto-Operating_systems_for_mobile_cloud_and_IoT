@@ -138,7 +138,10 @@ public class Activity3_Waiting extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     queueCount=0;
                     runOnUiThread(() -> textViewQueueCount.setText("Persone in coda: " + queueCount));
-                    navigateToParam(Activity4_Ordering.class, sessionID, user, inputString, recommendedDrink);
+                    showPopupMessage();
+                    new Handler().postDelayed(() -> {
+                        navigateToParam(Activity4_Ordering.class, sessionID, user, inputString, recommendedDrink);
+                    }, 3000);
                 }
             }).start();
         }
