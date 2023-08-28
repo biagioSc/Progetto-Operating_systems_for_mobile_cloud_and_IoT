@@ -305,6 +305,21 @@ int check_user(PGconn *conn, char *email)
     return counterEmailCheck;
 }
 
+
+// Funzione per contare il numero di utenti in serving
+int check_stateServing(PGconn *conn){
+
+    char checkServing[BUFFER_SIZE];
+    sprintf(checkServing, "SELECT COUNT(*) FROM users WHERE state='SERVING';");
+    PGresult *resServing = PQexec(conn, checkServing);
+
+    int count = atoi(PQgetvalue(resServing, 0, 0));
+
+    PQclear(resServing);
+
+    return count;
+}
+
 /**
  * @brief Gestisce il processo di login di un utente.
  * 
@@ -410,12 +425,15 @@ int handle_welcoming(int sockfd, PGconn *conn)
 
     // Controllo utenti in ordering
     int users_in_ordering_state = check_state(conn);
+    int users_in_waiting_state = check_stateWaiting(conn);
+    int users_in_serving_state = check_stateServing(conn);
+    int total_users = users_in_ordering_state + users_in_serving_state + users_in_waiting_state +1 -2;
     char users_in_ordering_state_string[10];
 
-    printf("[Welcoming] Il numero di utenti in ordering e': %d\n",users_in_ordering_state);
+    printf("\n[Welcoming] Il numero di utenti in ordering+serving+waiting-2 e': %d\n",total_users);
 
     //trasformo il numero degli utenti in stringa
-    sprintf(users_in_ordering_state_string,"%d",users_in_ordering_state);
+    sprintf(users_in_ordering_state_string,"%d",total_users);
 
     //mando il numero degli utenti al client
     write_to_socket(sockfd,users_in_ordering_state_string);
@@ -957,6 +975,14 @@ void handle_add_user_ordering(int sockfd,PGconn *conn){
 
 }
 
+void handle_add_user_serving(int sockfd, PGconn *conn, char *email){
+
+    char setServing[BUFFER_SIZE];
+    sprintf(setServing, "UPDATE users SET state='SERVING' WHERE email='%s';", email);
+    PQexec(conn, setServing);
+    printf("[Add-Serving] L'utente %s e' ora nello stato di serving\n", email);
+}
+
 
 void handle_add_user_waiting(int sockfd,PGconn *conn){
     char user_session_id[BUFFER_SIZE];
@@ -1020,10 +1046,42 @@ void handle_user_stop_ordering(int sockfd, PGconn *conn){
         return;
     }
 
+    // Aggiungo l'utente direttamente in serving
+    handle_add_user_serving(sockfd,conn,email);
+}
+
+void handle_user_stop_serving(int sockfd, PGconn *conn){
+
+    char user_session_id[BUFFER_SIZE];
+
+    // Ricevi l'ID della sessione dal client
+    if(read_from_socket(sockfd, user_session_id, sizeof(user_session_id)) < 0) {
+        perror("Errore nella lettura dell'ID della sessione dal client");
+        return;
+    }
+
+    // Converti l'ID della sessione in un numero intero
+    int session_id = atoi(user_session_id);
+
+    // Controllo se il session id è valido
+    if(session_id < 0){
+        printf("[Stop-Serving] Ho ricevuto un session id non valido: %d\n",session_id);
+        return;
+    }
+
+    char *email = getEmailByUserId(session_id);
+
+    // Controllo se è stata trovata l'email dell'utente
+    if(email == NULL){
+        printf("[Stop-Serving] Non e' stato possibile recuperare l'utente nella struttura di utenti online\n");
+        return;
+    }
+
     char setIdle[BUFFER_SIZE];
     sprintf(setIdle, "UPDATE users SET state='IDLE' WHERE email='%s';", email);
     PQexec(conn, setIdle);
-    printf("[Stop-Ordering] L'utente %s ha concluso la fase di ordering ed e' ora in idle\n", email);
+    printf("[Stop-Serving] L'utente %s ha concluso la fase di serving ed e' ora in idle\n", email);
+
 }
 
 
@@ -1031,7 +1089,8 @@ void send_users_waiting(int sockfd, PGconn *conn){
     int number_of_users_waiting = check_stateWaiting(conn);
     char str_total_users[50];
     int number_of_users_ordering = check_state(conn);
-    int total_users = number_of_users_ordering + number_of_users_waiting - 2;
+    int number_of_users_serving = check_stateServing(conn);
+    int total_users = number_of_users_ordering + number_of_users_waiting + number_of_users_serving-2;
 
 
     sprintf(str_total_users, "%d", total_users);
@@ -1041,6 +1100,8 @@ void send_users_waiting(int sockfd, PGconn *conn){
 
 
 }
+
+
 
 
 
@@ -1111,8 +1172,11 @@ void *client_handler(void *socket_desc)
         else if (strcmp(buffer,"SUGG_DRINK") == 0){
             handle_suggest_drink_ordering(sockfd,conn);
         }
-        else if( strcmp(buffer,"USER_STOP_ORDERING") == 0){
+        else if(strcmp(buffer,"USER_STOP_ORDERING") == 0){
             handle_user_stop_ordering(sockfd,conn);
+        }
+        else if(strcmp(buffer,"USER_STOP_SERVING") == 0){
+            handle_user_stop_serving(sockfd,conn);
         }
         else if (strcmp(buffer,"DRINK_LIST") == 0){
             send_drinks_list(sockfd,conn);
