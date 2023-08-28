@@ -223,6 +223,10 @@ public class Activity1_New extends AppCompatActivity {
                 final int DARK_GREEN_COLOR = Color.parseColor("#00A859");
                 Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 positiveButton.setTextColor(DARK_GREEN_COLOR);
+
+                Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                negativeButton.setTextColor(Color.RED);
+
             });
 
             dialog.show();
