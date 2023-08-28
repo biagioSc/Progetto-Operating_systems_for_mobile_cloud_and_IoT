@@ -207,6 +207,7 @@ public class Activity1_New extends AppCompatActivity {
 
             androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(Activity1_New.this);
             builder.setView(customView)
+                    .setCancelable(false)  // Evita la chiusura cliccando all'esterno
                     .setPositiveButton("Accedi come Ospite", (dialog, id) -> {
                         sessionID = "-1";
                         user = "Guest";
@@ -214,9 +215,13 @@ public class Activity1_New extends AppCompatActivity {
                         dialog.dismiss();
                         finish();
                     })
-                    .setNegativeButton("Annulla", (dialog, id) -> {
-                        // Nessuna azione per il pulsante annulla
-                    });
+                    .setCancelable(false)  // Evita la chiusura cliccando all'esterno
+                    .setNegativeButton("Esci", (dialog, id) -> {
+                        sessionID = "-1";
+                        user = "Guest";
+                        navigateToParam(Activity8_Gone.class, sessionID, user);
+                        dialog.dismiss();
+                        finish();                    });
 
             androidx.appcompat.app.AlertDialog dialog = builder.create();
             dialog.setOnShowListener(dialogInterface -> {

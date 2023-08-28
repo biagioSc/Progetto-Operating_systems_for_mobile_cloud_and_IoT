@@ -134,7 +134,8 @@ public class Activity2_Welcome extends Activity {
         dialogBuilder.setCancelable(false); // Evita la chiusura del messaggio di caricamento toccando al di fuori
         AlertDialog loadingDialog = dialogBuilder.create();
         loadingDialog.show();
-
+        loadingDialog.setCancelable(false);
+        
         buttonCheckNextState.setClickable(false);
 
         if("Guest".equals(user)){

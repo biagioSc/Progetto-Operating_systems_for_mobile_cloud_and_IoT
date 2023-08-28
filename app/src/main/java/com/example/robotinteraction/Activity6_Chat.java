@@ -301,6 +301,7 @@ public class Activity6_Chat extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Activity6_Chat.this);
             builder.setCustomTitle(customView)
+                    .setCancelable(false)  // Evita la chiusura cliccando all'esterno
                     .setPositiveButton("Ok", (dialog, id) -> {
                         if(!("Guest".equals(user))) {
                             new Thread(() -> {
