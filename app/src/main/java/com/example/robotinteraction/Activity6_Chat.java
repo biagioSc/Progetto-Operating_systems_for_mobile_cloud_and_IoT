@@ -25,7 +25,7 @@ import java.util.List;
 
 public class Activity6_Chat extends AppCompatActivity {
 
-    private TextView textDomanda, textViewLoggedIn, scoreTextView, scoreText, textTopics;
+    private TextView textDomanda, textViewLoggedIn, scoreTextView, scoreText;
     private RadioGroup answerRadioGroup;
     private Button confirmButton;
     private List<Activity_Question> questionList;
@@ -70,7 +70,6 @@ public class Activity6_Chat extends AppCompatActivity {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         progressBar = findViewById(R.id.timerProgressBar);
         scoreText = findViewById(R.id.score);
-        textTopics = findViewById(R.id.textTopics);
     }
     private void setupListeners() {
         setTouchListenerForAnimation(confirmButton);
@@ -202,8 +201,7 @@ public class Activity6_Chat extends AppCompatActivity {
             confirmButton.setEnabled(true);
             Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
             runOnUiThread(() -> {
-                textDomanda.setText(currentQuestion.getQuestion());
-                textTopics.setText(currentQuestion.getTopic());
+                textDomanda.setText(currentQuestion.getTopic() + ": " + currentQuestion.getQuestion());
             });
             List<String> answerOptions = new ArrayList<>();
             answerOptions.add(currentQuestion.getCorrectAnswer());

@@ -18,7 +18,6 @@
             android:id="@+id/tvSidebarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#C92196F3"
             android:padding="16dp"
             android:text="STATO"
             android:textAlignment="center"
@@ -184,21 +183,6 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <!-- Domanda -->
-            <TextView
-                android:id="@+id/textTopics"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textDomanda"
-                android:layout_marginTop="8dp"
-                android:text="Argomento"
-                android:textAlignment="viewStart"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-            <!-- Domanda -->
-
 
             <!-- Risposte -->
             <RadioGroup

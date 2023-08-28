@@ -3,6 +3,9 @@ package com.example.robotinteraction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -105,7 +108,10 @@ public class Activity3_Waiting extends AppCompatActivity {
                 }
                 @Override
                 public void onFinish() {
-                    navigateToParam(Activity4_Ordering.class, sessionID, user, inputString, recommendedDrink);
+                    showPopupMessage();
+                    new Handler().postDelayed(() -> {
+                        navigateToParam(Activity4_Ordering.class, sessionID, user, inputString, recommendedDrink);
+                    }, 3000);
                 }
             }.start();
         } else {
@@ -136,5 +142,18 @@ public class Activity3_Waiting extends AppCompatActivity {
                 }
             }).start();
         }
+    }
+    public void showPopupMessage() {
+        runOnUiThread(() -> {
+            LayoutInflater inflater = LayoutInflater.from(Activity3_Waiting.this);
+            View customView = inflater.inflate(R.layout.activity_00popupwelcome, null);
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Activity3_Waiting.this);
+            builder.setCustomTitle(customView)
+                    .setCancelable(false);
+
+            android.app.AlertDialog dialog = builder.create();
+            dialog.show();
+        });
     }
 }

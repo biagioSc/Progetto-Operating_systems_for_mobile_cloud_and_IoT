@@ -19,36 +19,47 @@ public class Socket_Manager {
     private static Socket_Manager instance;
     private boolean isConnected = false;
 
+    private ConnectionListener connectionListener;
+
     private Socket_Manager() {
         connectToServer();
+    }
+
+    public void setConnectionListener(ConnectionListener listener){
+        this.connectionListener = listener;
     }
 
     private synchronized void connectToServer() {
         new Thread(() -> {
             try {
-                Log.d(TAG, "Connecting to the server...");
+                Log.d(TAG, "Connessione al server...");
                 socket = new Socket(SERVER_IP, SERVER_PORT);
-                Log.d(TAG, "Connected to the server.");
+                Log.d(TAG, "Connesso al server.");
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 outputStream = socket.getOutputStream();
                 isConnected = true;
+                if (connectionListener != null) {
+                    connectionListener.onConnected();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-                Log.e(TAG, "Error during connection: " + e.getMessage());
+                Log.e(TAG, "Errore durante la connessione: " + e.getMessage());
                 isConnected = false;
+                if (connectionListener != null) {
+                    connectionListener.onConnectionFailed(e.getMessage());
+                }
             }
         }).start();
     }
 
+
     public static Socket_Manager getInstance() {
         if (instance == null) {
             instance = new Socket_Manager();
-            if (!instance.isConnected) { // se la connessione fallisce
-                instance = null;
-            }
         }
         return instance;
     }
+
 
     public void send(final String message) {
         Log.d(TAG, "Sending message: " + message);
@@ -87,7 +98,7 @@ public class Socket_Manager {
     }
 
     public boolean isConnected() {
-        return isConnected;
+        return (socket != null && !socket.isClosed());
     }
 
     public void close() {

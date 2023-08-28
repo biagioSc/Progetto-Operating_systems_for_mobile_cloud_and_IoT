@@ -10,5 +10,5 @@
     <!-- Dimensioni dei bordi -->
     <stroke
         android:width="3dp"
-        android:color="#000000" />
+        android:color="#B81A85F3" />
 </shape>

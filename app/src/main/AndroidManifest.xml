@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/application_icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RobotInteraction"
+        android:theme="@style/AppTheme_Custom"
         tools:targetApi="31">
         <meta-data
             android:name="com.google.android.actions"

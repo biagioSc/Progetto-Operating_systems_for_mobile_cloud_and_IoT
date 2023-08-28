@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,8 @@ import java.util.Random;
 
 public class Activity5_Serving extends AppCompatActivity {
     private Animation buttonAnimation;
-    private TextView textViewOrderStatusTitle, textViewOrderStatusMessage, textViewLoggedIn, buttonQuiz, buttonWaitingRoom;
+    private TextView textViewOrderStatusTitle, textViewOrderStatusMessage, textViewLoggedIn;
+    private Button buttonQuiz, buttonWaitingRoom;
     private String selectedDrink;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -77,6 +79,16 @@ public class Activity5_Serving extends AppCompatActivity {
         startActivity(intent);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String[] param4) {
+        if(!("Guest".equals(user))) {
+            try {
+                socket.send("USER_STOP_SERVING");
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                socket.send(sessionID);
+                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         Intent intent = new Intent(Activity5_Serving.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);

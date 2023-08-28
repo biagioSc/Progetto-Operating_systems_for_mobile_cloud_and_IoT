@@ -19,7 +19,6 @@
             android:id="@+id/tvSidebarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#C92196F3"
             android:padding="16dp"
             android:text="STATO"
             android:textAlignment="center"
@@ -219,7 +218,7 @@
                     android:textSize="22sp"
                     android:textStyle="normal" />
 
-                <TextView
+                <Button
                     android:id="@+id/buttonOrderRecommendedDrink"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
@@ -283,7 +282,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp" />
 
-        <TextView
+        <Button
             android:id="@+id/buttonOrder"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

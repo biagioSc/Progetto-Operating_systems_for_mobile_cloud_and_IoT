@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -17,7 +19,7 @@ import java.util.Random;
 
 public class Activity2_Welcome extends Activity {
 
-    private TextView buttonCheckNextState;
+    private Button buttonCheckNextState;
     private Animation buttonAnimation;
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -45,8 +47,8 @@ public class Activity2_Welcome extends Activity {
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
-        buttonCheckNextState = findViewById(R.id.buttonChecknextState);
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
+        buttonCheckNextState = findViewById(R.id.buttonChecknextState);
     }
     private void setupListeners() {
 
@@ -128,19 +130,19 @@ public class Activity2_Welcome extends Activity {
         resetInactivityTimer();
         v.setClickable(false);
 
-        View loadingView = getLayoutInflater().inflate(R.layout.activity_000popuploading, null);
+        View loadingView = getLayoutInflater().inflate(R.layout.activity_00popuploading, null);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setView(loadingView);
         dialogBuilder.setCancelable(false); // Evita la chiusura del messaggio di caricamento toccando al di fuori
         AlertDialog loadingDialog = dialogBuilder.create();
         loadingDialog.show();
         loadingDialog.setCancelable(false);
-        
+
         buttonCheckNextState.setClickable(false);
 
         if("Guest".equals(user)){
             int min = 0;
-            int max = 5;
+            int max = 3;
             Random random = new Random();
             numPeopleInQueue = random.nextInt(max - min + 1) + min;
             inputString = "Mojito,Martini,Midori,Manhattan,Negroni,Daiquiri,Pina Colada,Gin Lemon,Spritz";
@@ -151,7 +153,10 @@ public class Activity2_Welcome extends Activity {
             String randomCocktail = cocktails[randomIndex].trim();
 
             if (numPeopleInQueue < 2) {
-                navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, randomCocktail);
+                showPopupMessage();
+                new Handler().postDelayed(() -> {
+                    navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, randomCocktail);
+                }, 3000);
             } else {
                 navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue,inputString, randomCocktail);
             }
@@ -197,7 +202,7 @@ public class Activity2_Welcome extends Activity {
 
             } catch (Exception e) {
                 int min = 0;
-                int max = 5;
+                int max = 3;
                 Random random = new Random();
                 numPeopleInQueue = random.nextInt(max - min + 1) + min;
                 inputString = "Mojito,Martini,Midori,Manhattan,Negroni,Daiquiri,Pina Colada,Gin Lemon,Spritz";
@@ -213,5 +218,17 @@ public class Activity2_Welcome extends Activity {
             }
         }
     }
+    public void showPopupMessage() {
+        runOnUiThread(() -> {
+            LayoutInflater inflater = LayoutInflater.from(Activity2_Welcome.this);
+            View customView = inflater.inflate(R.layout.activity_00popupwelcome, null);
 
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Activity2_Welcome.this);
+            builder.setCustomTitle(customView)
+                    .setCancelable(false);
+
+            android.app.AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+    }
 }

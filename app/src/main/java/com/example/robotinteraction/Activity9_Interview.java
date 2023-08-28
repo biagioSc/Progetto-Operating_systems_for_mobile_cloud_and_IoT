@@ -180,7 +180,7 @@ public class Activity9_Interview extends AppCompatActivity {
         v.setClickable(false);
         resetInactivityTimer();
 
-        View loadingView = getLayoutInflater().inflate(R.layout.activity_000popuploading, null);
+        View loadingView = getLayoutInflater().inflate(R.layout.activity_00popuploading, null);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setView(loadingView);
         dialogBuilder.setCancelable(false); // Evita la chiusura del messaggio di caricamento toccando al di fuori

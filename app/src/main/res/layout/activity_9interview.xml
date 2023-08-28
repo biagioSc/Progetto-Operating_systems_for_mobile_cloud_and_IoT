@@ -19,7 +19,6 @@
             android:id="@+id/tvSidebarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#C92196F3"
             android:padding="16dp"
             android:text="@string/stato_text"
             android:textAlignment="center"

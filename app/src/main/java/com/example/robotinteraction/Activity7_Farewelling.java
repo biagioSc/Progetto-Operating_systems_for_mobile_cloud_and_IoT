@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
 
     private TextView textViewLoggedIn, textViewDrinkName, textViewDrinkDescription;
     private Animation buttonAnimation;
-    private TextView buttonRetrieve;
+    private Button buttonRetrieve;
     private static final long TIME_THRESHOLD = 20000; // 20 secondi
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
@@ -35,13 +36,6 @@ public class Activity7_Farewelling extends AppCompatActivity {
         initUIComponents();
         setupListeners();
 
-        // Utente che potrà visualizzare la rating bar per le recensioni
-        // Imposta il flag a 'true' quando l'utente entra in questa Activity
-        SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("user_visited_farewelling_activity", true);
-        editor.apply();
-
         receiveParam();
         setUpComponent();
     }
@@ -55,7 +49,6 @@ public class Activity7_Farewelling extends AppCompatActivity {
         textViewDrinkDescription = findViewById(R.id.textViewDrinkDescription);
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
-
     }
     private void setupListeners() {
         setTouchListenerForAnimation(buttonRetrieve);
@@ -82,11 +75,11 @@ public class Activity7_Farewelling extends AppCompatActivity {
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2) {
+    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
         Intent intent = new Intent(Activity7_Farewelling.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
-
+        intent.putExtra("param3", param3);
         startActivity(intent);
         finish();
     }
@@ -141,6 +134,6 @@ public class Activity7_Farewelling extends AppCompatActivity {
     public void onClickRitira(View v) {
         v.setClickable(false);
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-        navigateToParam(Activity8_Gone.class, sessionID, user);
+        navigateToParam(Activity8_Gone.class, sessionID, user, "FAREWELLING");
     }
 }

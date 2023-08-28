@@ -46,6 +46,7 @@ public class Activity0_OutOfSight extends Activity {
                 Intent intent = new Intent(Activity0_OutOfSight.this, Activity8_Gone.class);
                 intent.putExtra("param1", sessionID);
                 intent.putExtra("param2", user);
+                intent.putExtra("param3", "OOS");
                 startActivity(intent);
                 finish();
             }

@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,10 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Activity8_Gone extends AppCompatActivity {
 
-    private TextView buttonExit;
+    private Button buttonExit;
     private Animation buttonAnimation;
     private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
-    private String sessionID = "-1", user = "Guest";
+    private String sessionID = "-1", user = "Guest", activity = "";
     private TextView textViewGoodbye;
     private TextView messageRating;
     private TextView messageValutazione;
@@ -54,18 +55,15 @@ public class Activity8_Gone extends AppCompatActivity {
                                                      final TextView messageRating,
                                                      final TextView messageValutazione,
                                                      final TextView buttonExit) {
-        // Recupera il valore del flag dalle SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("MyApp", MODE_PRIVATE);
-        boolean userVisitedFirstActivity = sharedPreferences.getBoolean("user_visited_farewelling_activity", false);
 
-        if (userVisitedFirstActivity) {
+        if ("FAREWELLING".equals(activity)) {
             // Imposta l'ascoltatore per la RatingBar
             ratingbar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> updateRatingString((int) rating));
         } else {
             // Nasconde la RatingBar e i messaggi associati
-            ratingbar.setVisibility(View.GONE);
-            messageRating.setVisibility(View.GONE);
-            messageValutazione.setVisibility(View.GONE);
+            ratingbar.setVisibility(View.INVISIBLE);
+            messageRating.setVisibility(View.INVISIBLE);
+            messageValutazione.setVisibility(View.INVISIBLE);
 
             // Aggiorna la posizione del pulsante di uscita
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) buttonExit.getLayoutParams();
@@ -120,6 +118,8 @@ public class Activity8_Gone extends AppCompatActivity {
         if (intent != null) {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
+            activity = intent.getStringExtra("param3");
+
             int atIndex = -1;
             if (user != null && !user.equals("ERROR")) {  // Verifica che user non sia nullo e non sia "ERROR"
                 atIndex = user.indexOf("@");

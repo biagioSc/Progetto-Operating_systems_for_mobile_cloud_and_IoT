@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,11 +22,11 @@ import java.util.Random;
 
 public class Activity4_Ordering extends AppCompatActivity {
 
-    private TextView textViewRecommendedDrink;  // TextView per visualizzare il drink raccomandato
+    private TextView textViewRecommendedDrink, buttonExit;  // TextView per visualizzare il drink raccomandato
     private Spinner spinnerDrinks;  // Spinner per selezionare un drink dalla lista
     private final List<String> drinkList = new ArrayList<>();  // Lista dei drink
     private Animation buttonAnimation;  // Animazione per i pulsanti
-    private TextView buttonOrderRecommendedDrink, buttonOrder, buttonExit;  // Pulsanti per ordinare
+    private Button buttonOrderRecommendedDrink, buttonOrder;  // Pulsanti per ordinare
     private static final long TIME_THRESHOLD = 60000; // 60 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
     private Runnable runnable;  // Runnable per la logica del timer di inattività
@@ -145,7 +146,7 @@ public class Activity4_Ordering extends AppCompatActivity {
     public void onClickExit(View v) {
         v.setClickable(false);
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-        navigateTo(Activity8_Gone.class, sessionID, user);
+        navigateToParam(Activity8_Gone.class, sessionID, user, "ORDERING");
     }
     private void receiveParam() {
         Intent intent = getIntent();
@@ -176,7 +177,6 @@ public class Activity4_Ordering extends AppCompatActivity {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
     }
     private void setUpComponent() {

@@ -2,6 +2,7 @@ package com.example.robotinteraction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -80,30 +81,34 @@ public class Activity6_Attesa extends AppCompatActivity {
                     textViewPleaseWait.setText("Completato!");
                     textViewTimeElapsed.setText("Il tuo drink è pronto");
                 });
-                if(!("Guest".equals(user))) {
-                    new Thread(() -> {
-                        try {
-                            socket.send("DRINK_DESCRIPTION");
-                            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                            socket.send(selectedDrink);
-                            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
-                            innerResponseDescription = socket.receive();
-                            Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
 
-                            if(innerResponseDescription == null && innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
+                new Handler().postDelayed(() -> {
+                    if(!("Guest".equals(user))) {
+                        new Thread(() -> {
+                            try {
+                                socket.send("DRINK_DESCRIPTION");
+                                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                                socket.send(selectedDrink);
+                                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                                innerResponseDescription = socket.receive();
+                                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+
+                                if(innerResponseDescription == null || innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
+                                    innerResponseDescription = "Descrizione non disponibile!";
+                                }
+                            } catch (Exception e) {
                                 innerResponseDescription = "Descrizione non disponibile!";
                             }
-                        } catch (Exception e) {
-                            innerResponseDescription = "Descrizione non disponibile!";
-                        }
-                        navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
+                            navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
 
-                    }).start();
-                }else {
-                    innerResponseDescription = "Descrizione non disponibile!";
-                    navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
-                }
+                        }).start();
+                    } else {
+                        innerResponseDescription = "Descrizione non disponibile!";
+                        navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
+                    }
+                }, 3000); // 3000 millisecondi corrispondono a 3 secondi
             }
+
         }.start();
     }
 
