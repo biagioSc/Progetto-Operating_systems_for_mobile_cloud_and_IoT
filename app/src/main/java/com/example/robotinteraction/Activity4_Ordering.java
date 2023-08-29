@@ -94,9 +94,9 @@ public class Activity4_Ordering extends AppCompatActivity {
         if(!("Guest".equals(user))) {
             try {
                 socket.send("USER_STOP_ORDERING");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 socket.send(sessionID);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
@@ -173,9 +173,9 @@ public class Activity4_Ordering extends AppCompatActivity {
             }
             try{
                 socket.send("ADD_USER_ORDERING");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 socket.send(sessionID);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
 
             }catch (Exception e){
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());

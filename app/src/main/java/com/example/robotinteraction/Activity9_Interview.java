@@ -192,30 +192,30 @@ public class Activity9_Interview extends AppCompatActivity {
 
             try {
                 socket.send("SIGN_UP");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 socket.send(email);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 socket.send(nome);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 socket.send(cognome);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 socket.send(password);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 int numeropreferezeInt=drinkSelections.size();
                 String numeroprefrenzeString=Integer.toString(numeropreferezeInt);
                 socket.send(numeroprefrenzeString);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 for(String drink : drinkSelections){
                     socket.send(drink);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                 }
                 numeropreferezeInt=argSelections.size();
                 numeroprefrenzeString=Integer.toString(numeropreferezeInt);
                 socket.send(numeroprefrenzeString);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 for(String topic : argSelections){
                     socket.send(topic);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                 }
 
                 String response = socket.receive();

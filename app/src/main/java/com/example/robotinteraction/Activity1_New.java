@@ -206,7 +206,9 @@ public class Activity1_New extends AppCompatActivity {
                 try {
                     if (isServerConnected) {  // Controllo aggiunto per evitare NullPointerException
                         socket.send("LOG_IN" + " " + email + " " + password);
+                        Thread.sleep(500);
                         String response = socket.receive();
+                        Thread.sleep(500);
                         String[] parts = response.split(" ");
                         if (parts.length >= 3) {
                             LOG_IN_RESPONSE = parts[0];

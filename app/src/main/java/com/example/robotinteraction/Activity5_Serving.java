@@ -86,9 +86,9 @@ public class Activity5_Serving extends AppCompatActivity {
         if(!("Guest".equals(user))) {
             try {
                 socket.send("USER_STOP_SERVING");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 socket.send(sessionID);
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
 
             } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
@@ -152,11 +152,11 @@ public class Activity5_Serving extends AppCompatActivity {
             new Thread(() -> {
                 try {
                     socket.send("START_CHAT");
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                     socket.send(sessionID);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                     String inputString = socket.receive();
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                     selectedTopics = inputString.split(",");
 
                     if (selectedTopics.length < 2) {

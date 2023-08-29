@@ -88,11 +88,11 @@ public class Activity6_Attesa extends AppCompatActivity {
                         new Thread(() -> {
                             try {
                                 socket.send("DRINK_DESCRIPTION");
-                                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                                Thread.sleep(500);
                                 socket.send(selectedDrink);
-                                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                                Thread.sleep(500);
                                 innerResponseDescription = socket.receive();
-                                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                                Thread.sleep(500);
 
                                 if(innerResponseDescription == null || innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
                                     innerResponseDescription = "Descrizione non disponibile!";

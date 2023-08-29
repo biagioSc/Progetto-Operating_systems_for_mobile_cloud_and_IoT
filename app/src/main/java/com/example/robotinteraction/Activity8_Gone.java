@@ -142,10 +142,10 @@ public class Activity8_Gone extends AppCompatActivity {
         if(!("Guest".equals(user)) && socket != null) {
             try {
                 socket.send("USER_GONE");
-                Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                Thread.sleep(500);
                 if(Integer.parseInt(sessionID) != 0) {
                     socket.send(sessionID);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                 }
             } catch (InterruptedException e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());

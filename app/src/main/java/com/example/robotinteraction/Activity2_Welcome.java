@@ -168,21 +168,21 @@ public class Activity2_Welcome extends Activity {
                 new Thread(() -> {
                     try {
                         socket.send("CHECK_USERS_ORDERING");
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        Thread.sleep(500);
                         String num = socket.receive();
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        Thread.sleep(500);
                         numPeopleInQueue = Integer.parseInt(num);
 
                         socket.send("DRINK_LIST");
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        Thread.sleep(500);
                         inputString = socket.receive();
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        Thread.sleep(500);
                         socket.send("SUGG_DRINK");
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        Thread.sleep(500);
                         socket.send(sessionID);
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        Thread.sleep(500);
                         recommendedDrink = socket.receive();
-                        Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                        Thread.sleep(500);
 
 
                         runOnUiThread(() -> {

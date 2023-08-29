@@ -66,9 +66,9 @@ public class Activity3_Waiting extends AppCompatActivity {
             if(!("Guest".equals(user))) {
                 try {
                     socket.send("ADD_USER_WAITING");
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                     socket.send(sessionID);
-                    Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
+                    Thread.sleep(500);
                 } catch (Exception e) {
                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                     sessionID = "-1";
@@ -122,9 +122,9 @@ public class Activity3_Waiting extends AppCompatActivity {
                 try {
                     while (true) {
                         socket.send("UPDATE_QUEUE");
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                         String receivedData = socket.receive();
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
 
                         queueCount = Integer.parseInt(receivedData);
 
