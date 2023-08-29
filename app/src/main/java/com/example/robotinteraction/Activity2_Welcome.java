@@ -217,7 +217,10 @@ public class Activity2_Welcome extends Activity {
                 recommendedDrink = cocktails[randomIndex].trim();
 
                 if (numPeopleInQueue < 2) {
-                    navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
+                    showPopupMessage();
+                    new Handler().postDelayed(() -> {
+                        navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
+                    }, 3000);
                 } else {
                     navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue, inputString, recommendedDrink);
                 }
@@ -235,6 +238,14 @@ public class Activity2_Welcome extends Activity {
 
             android.app.AlertDialog dialog = builder.create();
             dialog.show();
+
+            // Chiudi il popup dopo 5 secondi
+            new Handler().postDelayed(() -> {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }, 3000); // 5000 millisecondi = 5 secondi
         });
     }
+
 }

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,7 +62,6 @@ public class Activity1_New extends AppCompatActivity {
     }
     private void initializeSocketAndSetCallback() {
         socket = Socket_Manager.getInstance();  // Aggiunto
-        Log.d("Activity_SocketManager", String.valueOf(socket));
         if (socket != null) {
             socket.setConnectionListener(new ConnectionListener() {
                 @Override
@@ -189,6 +189,12 @@ public class Activity1_New extends AppCompatActivity {
         sessionID = "-1";
         user="Guest";
         navigateToParam(Activity2_Welcome.class, sessionID, user,"");
+        try {
+            socket.close();
+        } catch (Exception e) {
+            sessionID = "-1";
+            user = "Guest";
+        }
 
     }
     public void onClickAccedi(View v) {
@@ -204,28 +210,24 @@ public class Activity1_New extends AppCompatActivity {
             new Thread(() -> {
                 runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
                 try {
-                    if (isServerConnected) {  // Controllo aggiunto per evitare NullPointerException
-                        socket.send("LOG_IN" + " " + email + " " + password);
-                        Thread.sleep(500);
-                        String response = socket.receive();
-                        Thread.sleep(500);
-                        String[] parts = response.split(" ");
-                        if (parts.length >= 3) {
-                            LOG_IN_RESPONSE = parts[0];
-                            sessionID = parts[1];
-                            user = parts[2];
-                        }
-                        if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
-                            navigateToParam(Activity2_Welcome.class, sessionID, user,"");
-                            runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
-                        } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
-                            runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
-                        }
-                    } else {
-                        // La connessione è fallita, mostra il popup
-                        showPopupMessage();
+                    socket.send("LOG_IN" + " " + email + " " + password);
+                    Thread.sleep(500);
+                    String response = socket.receive();
+                    Thread.sleep(500);
+                    String[] parts = response.split(" ");
+                    if (parts.length >= 3) {
+                        LOG_IN_RESPONSE = parts[0];
+                        sessionID = parts[1];
+                        user = parts[2];
+                    }
+                    if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
+                        navigateToParam(Activity2_Welcome.class, sessionID, user,"");
+                        runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
+                    } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
+                        runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     // Se c'è un'eccezione, mostra il popup
                     showPopupMessage();
                 }

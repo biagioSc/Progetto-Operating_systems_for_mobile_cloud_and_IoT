@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -156,21 +157,18 @@ public class Activity9_Interview extends AppCompatActivity {
         }
 
         for (CheckBox checkBox : argCheckboxes) {
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            checkBox.setOnClickListener(v -> {
+                updateArgSelections();
+                updateSubmitButtonState();
+
+                if (checkBox.getId() == R.id.checkBoxArg8 && checkBox.isChecked()) {
+                    for (CheckBox argCheckBox : argCheckboxes) {
+                        if (argCheckBox != checkBox) {
+                            argCheckBox.setChecked(false);
+                        }
+                    }
                     updateArgSelections();
                     updateSubmitButtonState();
-
-                    if (checkBox.getId() == R.id.checkBoxArg8 && checkBox.isChecked()) {
-                        for (CheckBox argCheckBox : argCheckboxes) {
-                            if (argCheckBox != checkBox) {
-                                argCheckBox.setChecked(false);
-                            }
-                        }
-                        updateArgSelections();
-                        updateSubmitButtonState();
-                    }
                 }
             });
         }
@@ -219,12 +217,14 @@ public class Activity9_Interview extends AppCompatActivity {
                 }
 
                 String response = socket.receive();
+
                 if(response != null){
-                    if(response.equalsIgnoreCase(("SIGN_UP_ERROR"))){
+                    if(response.equals(("SIGN_UP_ERROR"))){
+                        navigateToParam(Activity1_New.class, "ERROR", null, null);
                         runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,"Registrazione fallita",
                                 Toast.LENGTH_SHORT).show());
                     }
-                    else if(response.equalsIgnoreCase("SIGN_UP_SUCCESS")){
+                    else if(response.equals("SIGN_UP_SUCCESS")){
                         runOnUiThread(() -> {
                             navigateToParam(Activity1_New.class, nome, email, password);
                             Toast.makeText(Activity9_Interview.this,

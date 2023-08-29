@@ -171,16 +171,18 @@ public class Activity4_Ordering extends AppCompatActivity {
             } else {
                 runOnUiThread(() -> textViewLoggedIn.setText(user));
             }
-            try{
-                socket.send("ADD_USER_ORDERING");
-                Thread.sleep(500);
-                socket.send(sessionID);
-                Thread.sleep(500);
+            if(!("Guest".equals(user))) {
+                try {
+                    socket.send("ADD_USER_ORDERING");
+                    Thread.sleep(500);
+                    socket.send(sessionID);
+                    Thread.sleep(500);
 
-            }catch (Exception e){
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
-                sessionID = "-1";
-                user = "Guest";
+                } catch (Exception e) {
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                    sessionID = "-1";
+                    user = "Guest";
+                }
             }
         }
     }

@@ -163,6 +163,14 @@ public class Activity3_Waiting extends AppCompatActivity {
 
             android.app.AlertDialog dialog = builder.create();
             dialog.show();
+
+            // Chiudi il popup dopo 5 secondi
+            new Handler().postDelayed(() -> {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }, 3000); // 5000 millisecondi = 5 secondi
         });
     }
+
 }
