@@ -254,7 +254,8 @@ public class Activity1_New extends AppCompatActivity {
                         user = "Guest";
                         navigateToParam(Activity8_Gone.class, sessionID, user, "NEW");
                         dialog.dismiss();
-                        finish();                    });
+                        finish();
+                    });
 
             androidx.appcompat.app.AlertDialog dialog = builder.create();
             dialog.setOnShowListener(dialogInterface -> {

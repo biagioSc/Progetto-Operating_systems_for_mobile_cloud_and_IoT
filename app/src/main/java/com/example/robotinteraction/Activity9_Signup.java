@@ -150,6 +150,7 @@ public class Activity9_Signup extends AppCompatActivity {
         if (nomeValido==false || cognomeValido ==false || emailValido ==false || passwordValida==false) {
             textViewError.setText("Email e/o password non conformi");
             textViewError.setVisibility(View.VISIBLE);
+            v.setClickable(true);
         }
         else{
             textViewError.setVisibility(View.INVISIBLE);
