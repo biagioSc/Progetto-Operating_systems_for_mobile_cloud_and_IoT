@@ -12,10 +12,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
 import java.util.Random;
+
+import kotlin.UShort;
 
 public class Activity2_Welcome extends Activity {
 
@@ -201,6 +204,9 @@ public class Activity2_Welcome extends Activity {
                 }).start();
 
             } catch (Exception e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
                 int min = 0;
                 int max = 3;
                 Random random = new Random();

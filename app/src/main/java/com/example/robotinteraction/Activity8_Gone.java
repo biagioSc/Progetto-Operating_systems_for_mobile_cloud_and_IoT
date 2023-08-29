@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -146,7 +148,9 @@ public class Activity8_Gone extends AppCompatActivity {
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 }
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
             }
         }else if(socket != null){
             socket.close();

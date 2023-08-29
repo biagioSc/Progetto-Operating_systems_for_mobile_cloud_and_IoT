@@ -322,6 +322,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/button_design_general"
+                    android:focusable="true"
                     android:clickable="true"
                     android:cursorVisible="true"
                     android:onClick="onClickRegister"

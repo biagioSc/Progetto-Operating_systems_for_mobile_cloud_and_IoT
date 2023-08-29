@@ -243,6 +243,7 @@ public class Activity9_Interview extends AppCompatActivity {
                     // Gestisci la risposta qui
                 });
             }catch (Exception e){
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 loadingDialog.dismiss();
                 navigateToParam(Activity1_New.class, "ERROR", null, null);
                 runOnUiThread(() -> Toast.makeText(Activity9_Interview.this,

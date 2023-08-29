@@ -315,6 +315,9 @@ public class Activity6_Chat extends AppCompatActivity {
                                         innerResponseDescription = "Descrizione non disponibile!";
                                     }
                                 } catch (Exception e) {
+                                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                                    sessionID = "-1";
+                                    user = "Guest";
                                     innerResponseDescription = "Descrizione non disponibile!";
                                 }
                                 navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);

@@ -250,6 +250,7 @@
             android:textColor="#FFFFFF"
             android:padding="8dp"
             android:textAlignment="center"
+            android:focusable="true"
             android:clickable="true"
             android:cursorVisible="true"
             android:textSize="15sp"

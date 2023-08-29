@@ -220,6 +220,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:background="@drawable/button_design_general"
+            android:focusable="true"
             android:clickable="true"
             android:cursorVisible="true"
             android:onClick="onClickExit"

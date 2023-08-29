@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,7 +70,9 @@ public class Activity3_Waiting extends AppCompatActivity {
                     socket.send(sessionID);
                     Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                    sessionID = "-1";
+                    user = "Guest";
                 }
             }
 
@@ -136,6 +139,9 @@ public class Activity3_Waiting extends AppCompatActivity {
                         }
                     }
                 } catch (InterruptedException e) {
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                    sessionID = "-1";
+                    user = "Guest";
                     queueCount=0;
                     runOnUiThread(() -> textViewQueueCount.setText("Persone in coda: " + queueCount));
                     showPopupMessage();

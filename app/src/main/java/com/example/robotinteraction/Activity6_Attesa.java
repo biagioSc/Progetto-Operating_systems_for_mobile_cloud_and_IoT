@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -97,6 +98,9 @@ public class Activity6_Attesa extends AppCompatActivity {
                                     innerResponseDescription = "Descrizione non disponibile!";
                                 }
                             } catch (Exception e) {
+                                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                                sessionID = "-1";
+                                user = "Guest";
                                 innerResponseDescription = "Descrizione non disponibile!";
                             }
                             navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);

@@ -91,7 +91,9 @@ public class Activity5_Serving extends AppCompatActivity {
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
 
             } catch (Exception e) {
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Riprovo...", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
             }
         }
 
@@ -202,6 +204,9 @@ public class Activity5_Serving extends AppCompatActivity {
                     navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
 
                 } catch (Exception e) {
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                    sessionID = "-1";
+                    user = "Guest";
 
                     String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
 

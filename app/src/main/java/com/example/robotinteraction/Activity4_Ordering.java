@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -97,7 +98,9 @@ public class Activity4_Ordering extends AppCompatActivity {
                 socket.send(sessionID);
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
             }
         }
 
@@ -175,7 +178,9 @@ public class Activity4_Ordering extends AppCompatActivity {
                 Thread.sleep(1000); // Aggiungi un ritardo di 1000 millisecondi tra ogni invio
 
             }catch (Exception e){
-                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
             }
         }
     }
