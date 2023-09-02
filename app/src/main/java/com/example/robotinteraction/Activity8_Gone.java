@@ -160,7 +160,7 @@ public class Activity8_Gone extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finishAffinity();
-        System.exit(0);
+        finish();
 
     }
 }
