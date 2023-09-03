@@ -24,7 +24,7 @@ public class Activity5_Serving extends AppCompatActivity {
     private TextView textViewOrderStatusTitle, textViewOrderStatusMessage, textViewLoggedIn;
     private Button buttonQuiz, buttonWaitingRoom;
     private String selectedDrink;
-    private static final long TIME_THRESHOLD = 20000; // 20 secondi
+    private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
