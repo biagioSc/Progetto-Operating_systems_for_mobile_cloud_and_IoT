@@ -204,6 +204,7 @@ int read_from_socket(int sockfd, char *buffer, int bufsize)
 
     // Remove newline character if present
     buffer[strcspn(buffer, "\n")] = '\0';
+    printf("[Read] %s\n",buffer);
     return n;
 }
 
@@ -228,6 +229,7 @@ int write_to_socket(int sockfd, const char *message)
         perror("Errore nella scrittura della socket\n");
         return -1;
     }
+    printf("[Send] %s\n",message);
     fflush(stdout); // Forzo l'invio immediato dei dati sulla socket
     return n;
 }
@@ -415,13 +417,22 @@ void handle_welcoming(int sockfd, PGconn *conn)
     int total_users = users_in_ordering_state + users_in_serving_state + users_in_waiting_state +1 -2;
     char users_in_ordering_state_string[10];
 
-    printf("[Welcoming] Il numero di utenti in ordering+serving+waiting-2 e': %d\n",total_users);
+    if(users_in_ordering_state+users_in_serving_state+users_in_waiting_state == 0)
+    {
+        sprintf(users_in_ordering_state_string,"%d",users_in_ordering_state+users_in_serving_state+users_in_waiting_state);
+        write_to_socket(sockfd,users_in_ordering_state_string);
+        printf("[Welcoming] Nessun utente in attesa, procedere con la fase di ordering.\n");
+    }else{
 
-    //trasformo il numero degli utenti in stringa
-    sprintf(users_in_ordering_state_string,"%d",total_users);
+        printf("[Welcoming] Il numero di utenti in attesa e': %d\n",total_users);
 
-    //mando il numero degli utenti al client
-    write_to_socket(sockfd,users_in_ordering_state_string);
+        //trasformo il numero degli utenti in stringa
+        sprintf(users_in_ordering_state_string,"%d",total_users);
+
+        //mando il numero degli utenti al client
+        write_to_socket(sockfd,users_in_ordering_state_string);
+    }
+
 }
 
 /**
@@ -554,7 +565,7 @@ char *suggest_drink(PGconn *conn, const char *email) {
     // Stampiamo i drink preferiti
     printf("[Sugg-Drink] Drink preferiti dell'utente %s: ",email);
     for (int i = 0; i < numDrinks; i++) {
-        printf("%s ", drinks[i]);
+        printf("%s,", drinks[i]);
     }
     printf("\n");
 
@@ -1108,7 +1119,7 @@ void handle_user_stop_serving(int sockfd, PGconn *conn){
 
 
 /**
- * @brief Inivia al client il numero di utenti attualmente in waiting.
+ * @brief Inivia al client il numero di utenti attualmente in attesa.
  * @param conn Il gestore della connessione con il database.
  * @param sockfd Il socket file descriptor.
  * @return void
@@ -1121,7 +1132,7 @@ void send_users_waiting(int sockfd, PGconn *conn){
     int total_users = number_of_users_ordering + number_of_users_waiting + number_of_users_serving-2;
 
     sprintf(str_total_users, "%d", total_users);
-    printf("Invio total users - 2 che equivale a: %s\n",str_total_users);
+    printf("[Queue-Update] Utenti in attesa: %s\n",str_total_users);
     write_to_socket(sockfd,str_total_users);
 }
 
