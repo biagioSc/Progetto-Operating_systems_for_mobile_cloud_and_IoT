@@ -18,6 +18,7 @@ public class Activity0_OutOfSight extends Activity {
     private long timeLeftInMillis = 10000; // Tempo totale in millisecondi
     private final long countDownInterval = 1000; // Intervallo di aggiornamento in millisecondi
     private String sessionID = "-1", user = "Guest";
+    private TextView textViewLoggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class Activity0_OutOfSight extends Activity {
     private void initUIComponents() {
         textViewTimerCount = findViewById(R.id.textViewTimerCount);
         buttonRiprendi = findViewById(R.id.buttonWaitingRoom);
+        textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
     }
     private void startCountdown() {
@@ -73,6 +75,15 @@ public class Activity0_OutOfSight extends Activity {
         if (intent != null) {
             sessionID = intent.getStringExtra("param1");
             user = intent.getStringExtra("param2");
+        }
+
+        int atIndex = user.indexOf("@");
+
+        if (atIndex != -1) {
+            String username = user.substring(0, atIndex);
+            runOnUiThread(() -> textViewLoggedIn.setText(username));
+        } else {
+            runOnUiThread(() -> textViewLoggedIn.setText(user));
         }
     }
     public void onClickRiprendi(View v) {
