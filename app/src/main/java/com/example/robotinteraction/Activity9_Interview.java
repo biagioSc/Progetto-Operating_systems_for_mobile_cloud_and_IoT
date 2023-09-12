@@ -98,7 +98,7 @@ public class Activity9_Interview extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 200);
+        new Handler().postDelayed(v::clearAnimation, 100);
     }
     private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity9_Interview.this, targetActivity);

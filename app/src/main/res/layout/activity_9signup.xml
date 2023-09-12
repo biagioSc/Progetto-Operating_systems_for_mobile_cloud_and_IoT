@@ -147,6 +147,25 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="0dp" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/exitToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/exit"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"/>
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/text"
             android:layout_width="match_parent"

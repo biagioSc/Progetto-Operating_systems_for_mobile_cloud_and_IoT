@@ -113,7 +113,7 @@ public class Activity8_Gone extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 200);
+        new Handler().postDelayed(v::clearAnimation, 100);
     }
     private void receiveParam() {
         Intent intent = getIntent();

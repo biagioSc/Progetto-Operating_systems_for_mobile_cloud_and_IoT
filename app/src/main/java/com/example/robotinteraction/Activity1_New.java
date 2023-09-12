@@ -138,7 +138,7 @@ public class Activity1_New extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 200);
+        new Handler().postDelayed(v::clearAnimation, 100);
     }
     private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity1_New.this, targetActivity);
@@ -182,6 +182,7 @@ public class Activity1_New extends AppCompatActivity {
         resetInactivityTimer();
         Intent intent = new Intent(Activity1_New.this, Activity9_Signup.class);
         startActivity(intent);
+        finish();
     }
     public void onClickGuest(View v) {
         v.setClickable(false);
@@ -211,9 +212,9 @@ public class Activity1_New extends AppCompatActivity {
                 runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
                 try {
                     socket.send("LOG_IN" + " " + email + " " + password);
-                    Thread.sleep(500);
+                    Thread.sleep(250);
                     String response = socket.receive();
-                    Thread.sleep(500);
+                    Thread.sleep(250);
                     String[] parts = response.split(" ");
                     if (parts.length >= 3) {
                         LOG_IN_RESPONSE = parts[0];

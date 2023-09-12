@@ -93,7 +93,7 @@ public class Activity6_Chat extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 200);
+        new Handler().postDelayed(v::clearAnimation, 100);
     }
     private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity6_Chat.this, targetActivity);

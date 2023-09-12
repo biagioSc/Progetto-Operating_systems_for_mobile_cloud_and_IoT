@@ -87,7 +87,7 @@ public class Activity2_Welcome extends Activity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 200);
+        new Handler().postDelayed(v::clearAnimation, 100);
     }
     private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
@@ -243,7 +243,7 @@ public class Activity2_Welcome extends Activity {
                 if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
-            }, 3000); // 5000 millisecondi = 5 secondi
+            }, 4000); // 5000 millisecondi = 5 secondi
         });
     }
 
