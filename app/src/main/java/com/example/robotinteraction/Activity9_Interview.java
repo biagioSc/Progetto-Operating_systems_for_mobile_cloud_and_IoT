@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -36,6 +37,8 @@ public class Activity9_Interview extends AppCompatActivity {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
+    private ImageButton exitButton;
+    private String sessionID = "-1", user = "Guest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class Activity9_Interview extends AppCompatActivity {
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+        exitButton = findViewById(R.id.exitToggle);
         drinkCheckboxes = new CheckBox[]{
                 findViewById(R.id.checkBoxDrink1),
                 findViewById(R.id.checkBoxDrink2),
@@ -81,7 +85,7 @@ public class Activity9_Interview extends AppCompatActivity {
 
     }
     private void setupListeners() {
-
+        setTouchListenerForAnimation(exitButton);
         setTouchListenerForAnimation(buttonSubmit);
     }
     private void setTouchListenerForAnimation(View view) {
@@ -285,5 +289,31 @@ public class Activity9_Interview extends AppCompatActivity {
             updateArgSelections();
         }
     }
+    public void ExitInterview(View v) {
 
+        v.setClickable(false);
+        if(!("Guest".equals(user)) && socket != null) {
+            try {
+                socket.send("USER_GONE");
+                Thread.sleep(500);
+                if(Integer.parseInt(sessionID) != 0) {
+                    socket.send(sessionID);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
+            }
+        }else if(socket != null){
+            socket.close();
+        }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finishAffinity();
+        finish();
+
+    }
 }

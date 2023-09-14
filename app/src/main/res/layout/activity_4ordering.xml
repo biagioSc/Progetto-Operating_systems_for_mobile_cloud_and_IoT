@@ -157,6 +157,7 @@
                 android:padding="8dp"
                 android:src="@drawable/exit"
                 android:clickable="false"
+                android:onClick="ExitOrdering"
                 android:contentDescription="Toggle Email Visibility"
                 android:paddingLeft="5dp"/>
 

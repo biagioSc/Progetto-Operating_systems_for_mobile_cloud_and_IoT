@@ -3,6 +3,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +20,9 @@ public class Activity6_Attesa extends AppCompatActivity {
     private TextView textViewPleaseWait, textViewLoggedIn, textViewTimeElapsed;
     private TextView textViewWaitTime;
     private String selectedDrink;
+    private ImageButton exitButton;
+    private Animation buttonAnimation;
+
     private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest", innerResponseDescription;
     @Override
@@ -25,7 +33,7 @@ public class Activity6_Attesa extends AppCompatActivity {
 
         connection();
         initUIComponents();
-
+        setupListeners();
         receiveParam();
         setUpComponent();
     }
@@ -38,7 +46,27 @@ public class Activity6_Attesa extends AppCompatActivity {
         textViewPleaseWait = findViewById(R.id.textViewPleaseWait);
         textViewWaitTime = findViewById(R.id.textViewWaitTime);
         textViewTimeElapsed = findViewById(R.id.textViewTimeElapsed);
+        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+        exitButton = findViewById(R.id.exitToggle);
 
+    }
+    private void setupListeners() {
+        setTouchListenerForAnimation(exitButton);
+    }
+    private void setTouchListenerForAnimation(View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    applyButtonAnimation(v);
+                }
+                return false;
+            }
+        });
+    }
+    private void applyButtonAnimation(View v) {
+        v.startAnimation(buttonAnimation);
+        new Handler().postDelayed(v::clearAnimation, 100);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
         Intent intent = new Intent(Activity6_Attesa.this, targetActivity);
@@ -114,6 +142,34 @@ public class Activity6_Attesa extends AppCompatActivity {
             }
 
         }.start();
+    }
+
+    public void ExitAttesa(View v) {
+
+        v.setClickable(false);
+        if(!("Guest".equals(user)) && socket != null) {
+            try {
+                socket.send("USER_GONE");
+                Thread.sleep(500);
+                if(Integer.parseInt(sessionID) != 0) {
+                    socket.send(sessionID);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
+            }
+        }else if(socket != null){
+            socket.close();
+        }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finishAffinity();
+        finish();
+
     }
 
 }

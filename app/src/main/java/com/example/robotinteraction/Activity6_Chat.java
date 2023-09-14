@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,6 +32,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private List<Activity_Question> questionList;
     private int currentQuestionIndex = 0, totalQuestionsForSelectedTopics = 0;
     private int score = 0;
+    private ImageButton exitButton;
     private Animation buttonAnimation;
     private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -70,10 +72,12 @@ public class Activity6_Chat extends AppCompatActivity {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         progressBar = findViewById(R.id.timerProgressBar);
         scoreText = findViewById(R.id.score);
+        exitButton = findViewById(R.id.exitToggle);
     }
     private void setupListeners() {
         setTouchListenerForAnimation(confirmButton);
         setOnClickListener(confirmButton);
+        setTouchListenerForAnimation(exitButton);
     }
     private void setTouchListenerForAnimation(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -342,5 +346,31 @@ public class Activity6_Chat extends AppCompatActivity {
             dialog.show();
         });
     }
+    public void ExitChat(View v) {
 
+        v.setClickable(false);
+        if(!("Guest".equals(user)) && socket != null) {
+            try {
+                socket.send("USER_GONE");
+                Thread.sleep(500);
+                if(Integer.parseInt(sessionID) != 0) {
+                    socket.send(sessionID);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
+            }
+        }else if(socket != null){
+            socket.close();
+        }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finishAffinity();
+        finish();
+
+    }
 }

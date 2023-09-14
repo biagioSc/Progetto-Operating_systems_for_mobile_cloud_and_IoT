@@ -13,7 +13,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +28,9 @@ public class Activity9_Signup extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+    private String sessionID = "-1", user = "Guest";
+    private ImageButton exitButton;
+    private Socket_Manager socket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,7 @@ public class Activity9_Signup extends AppCompatActivity {
         setUpComponent();
     }
     private void connection() {
+        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
         runnable = () -> navigateTo(Activity0_OutOfSight.class, "0", null);
     }
     private void initUIComponents() {
@@ -49,9 +55,10 @@ public class Activity9_Signup extends AppCompatActivity {
         buttonRegisterContinue = findViewById(R.id.buttonRegisterContinue);
         textViewError = findViewById(R.id.textViewError2);
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
+        exitButton = findViewById(R.id.exitToggle);
     }
     private void setupListeners() {
-
+        setTouchListenerForAnimation(exitButton);
         setTouchListenerForAnimation(buttonRegisterContinue);
     }
     private void setTouchListenerForAnimation(View view) {
@@ -166,5 +173,32 @@ public class Activity9_Signup extends AppCompatActivity {
                 !editTextPassword.getText().toString().isEmpty();
 
         buttonRegisterContinue.setEnabled(allFieldsNotEmpty);
+    }
+    public void ExitSignup(View v) {
+
+        v.setClickable(false);
+        if(!("Guest".equals(user)) && socket != null) {
+            try {
+                socket.send("USER_GONE");
+                Thread.sleep(500);
+                if(Integer.parseInt(sessionID) != 0) {
+                    socket.send(sessionID);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
+            }
+        }else if(socket != null){
+            socket.close();
+        }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finishAffinity();
+        finish();
+
     }
 }

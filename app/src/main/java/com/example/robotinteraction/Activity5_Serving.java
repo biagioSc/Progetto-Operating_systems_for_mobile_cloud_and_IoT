@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ public class Activity5_Serving extends AppCompatActivity {
     private Animation buttonAnimation;
     private TextView textViewOrderStatusTitle, textViewOrderStatusMessage, textViewLoggedIn;
     private Button buttonQuiz, buttonWaitingRoom;
+    private ImageButton exitButton;
+
     private String selectedDrink;
     private static final long TIME_THRESHOLD = 60000; // 20 secondi
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -55,10 +58,12 @@ public class Activity5_Serving extends AppCompatActivity {
         buttonWaitingRoom = findViewById(R.id.buttonWaitingRoom);
         textViewOrderStatusTitle = findViewById(R.id.textViewOrderStatusTitle);
         textViewOrderStatusMessage = findViewById(R.id.textViewOrderStatusMessage);
+        exitButton = findViewById(R.id.exitToggle);
     }
     private void setupListeners() {
         setTouchListenerForAnimation(buttonQuiz);
         setTouchListenerForAnimation(buttonWaitingRoom);
+        setTouchListenerForAnimation(exitButton);
     }
     private void setTouchListenerForAnimation(View view) {
         view.setOnTouchListener(new View.OnTouchListener() {
@@ -249,5 +254,33 @@ public class Activity5_Serving extends AppCompatActivity {
                 textViewOrderStatusMessage.setText("Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz.");
             }
         });
+    }
+
+    public void ExitServing(View v) {
+
+        v.setClickable(false);
+        if(!("Guest".equals(user)) && socket != null) {
+            try {
+                socket.send("USER_GONE");
+                Thread.sleep(500);
+                if(Integer.parseInt(sessionID) != 0) {
+                    socket.send(sessionID);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
+            }
+        }else if(socket != null){
+            socket.close();
+        }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finishAffinity();
+        finish();
+
     }
 }

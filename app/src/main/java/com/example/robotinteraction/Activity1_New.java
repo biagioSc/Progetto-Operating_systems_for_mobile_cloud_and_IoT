@@ -35,7 +35,7 @@ public class Activity1_New extends AppCompatActivity {
     private Animation buttonAnimation;
     private Socket_Manager socket;
     private boolean isPasswordVisible = false;
-    private ImageButton passwordToggle;
+    private ImageButton passwordToggle, exitButton;
     private String sessionID = "-1", user = "Guest", email, password, LOG_IN_RESPONSE = "LOG_IN_ERROR";
     private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -93,11 +93,13 @@ public class Activity1_New extends AppCompatActivity {
         textViewSignUp = findViewById(R.id.buttonSignUp);
         textViewGuest = findViewById(R.id.buttonGuest);
         passwordToggle = findViewById(R.id.passwordToggle);
+        exitButton = findViewById(R.id.exitToggle);
     }
     private void setupListeners() {
         setFocusChangeListener(editTextEmail);
         setFocusChangeListener(editTextPassword);
         setTouchListenerForAnimation(buttonLogin);
+        setTouchListenerForAnimation(exitButton);
         setTouchListenerForAnimation(textViewSignUp);
         setTouchListenerForAnimation(textViewGuest);
     }
@@ -284,6 +286,34 @@ public class Activity1_New extends AppCompatActivity {
         }
         isPasswordVisible = !isPasswordVisible;
         editTextPassword.setSelection(editTextPassword.getText().length());
+    }
+
+    public void ExitNew(View v) {
+
+        v.setClickable(false);
+        if(!("Guest".equals(user)) && socket != null) {
+            try {
+                socket.send("USER_GONE");
+                Thread.sleep(500);
+                if(Integer.parseInt(sessionID) != 0) {
+                    socket.send(sessionID);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                sessionID = "-1";
+                user = "Guest";
+            }
+        }else if(socket != null){
+            socket.close();
+        }
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finishAffinity();
+        finish();
+
     }
 
 }

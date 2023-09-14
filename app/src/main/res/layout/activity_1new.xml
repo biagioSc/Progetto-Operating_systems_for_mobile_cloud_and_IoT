@@ -156,7 +156,8 @@
                 android:src="@drawable/exit"
                 android:clickable="false"
                 android:contentDescription="Toggle Email Visibility"
-                android:paddingLeft="5dp"/>
+                android:paddingLeft="5dp"
+                android:onClick="ExitNew"/>
 
             <ImageButton
                 android:id="@+id/userToggle"

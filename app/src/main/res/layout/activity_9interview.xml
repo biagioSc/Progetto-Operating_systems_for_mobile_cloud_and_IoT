@@ -356,6 +356,7 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:padding="8dp"
                 android:src="@drawable/exit"
+                android:onClick="ExitInterview"
                 android:clickable="false"
                 android:contentDescription="Toggle Email Visibility"
                 android:paddingLeft="5dp"/>
