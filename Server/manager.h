@@ -1,3 +1,5 @@
+#ifndef MANAGER_H
+#define MANAGER_H
 
 /**
  * @brief Gestisce le richieste dei vari client che si collegano.
@@ -5,3 +7,5 @@
  * @return void
  */
 void *client_handler(void *socket_desc);
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef IMPORTS_H
+#define IMPORTS_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -32,3 +35,5 @@ User* usersList = NULL; // Variabile globale di riferimento per la lista
 static int currentUserId = 0; // Contatore per il sessionID dell'utente
 
 volatile sig_atomic_t interrupted = 0;  // Flag per il segnale
+
+#endif

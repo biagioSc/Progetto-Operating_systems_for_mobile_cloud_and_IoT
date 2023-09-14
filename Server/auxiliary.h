@@ -1,4 +1,5 @@
-
+#ifndef AUXILIARY_H
+#define AUXILIARY_H
 
 /**
  * @brief Controlla se esiste un utente sul database registrato con la stessa email.
@@ -40,3 +41,5 @@ char *get_topics(PGconn *conn, char *email);
 void cleanup_and_exit(int sockfd);
 
 void sigint_handler(int signum);
+
+#endif

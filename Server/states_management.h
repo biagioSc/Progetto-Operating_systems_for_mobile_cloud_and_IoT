@@ -1,4 +1,7 @@
 
+#ifndef STATES_H
+#define STATES_H
+
 /**
  * @brief Gestisce il processo di login di un utente.
  * @param sockfd Il socket descriptor utilizzato per comunicare con il client.
@@ -142,3 +145,5 @@ int check_state_ordering(PGconn *conn);
  * @return int Il numero di utenti nello stato di serving.
  */
 int check_state_serving(PGconn *conn);
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef CONNECTIONS_H
+#define CONNECTIONS_H
+
 
 /**
  * @brief Connessione al database Postgre
@@ -21,3 +24,5 @@ int read_from_socket(int sockfd, char *buffer, int bufsize);
  * @return int Il numero di bytes scritti, -1 in caso di errore.
  */
 int write_to_socket(int sockfd, const char *message);
+
+#endif

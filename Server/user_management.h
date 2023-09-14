@@ -1,5 +1,8 @@
 
 
+#ifndef USER_H
+#define USER_H
+
 /**
  * @brief Rimuove un utente dalla struttura dati locale in base alla sua email 
  * @param email L'email dell'utente
@@ -45,3 +48,6 @@ const char* getEmailByUserId(int userId);
  * @return void
  */
 void removeUserFromList(int session_id);
+
+
+#endif
