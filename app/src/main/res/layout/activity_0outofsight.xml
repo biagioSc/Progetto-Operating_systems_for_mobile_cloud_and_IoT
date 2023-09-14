@@ -163,10 +163,9 @@
                 android:id="@+id/textViewLoggedIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Utente Loggato"
-                android:padding="8dp"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/userToggle"
-                android:layout_centerVertical="true" />
+                android:padding="8dp" />
         </RelativeLayout>
 
         <TextView

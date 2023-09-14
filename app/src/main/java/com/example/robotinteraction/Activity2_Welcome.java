@@ -192,7 +192,7 @@ public class Activity2_Welcome extends Activity {
                             buttonCheckNextState.setClickable(true);
                         });
 
-                        if (numPeopleInQueue < 2) {
+                        if (numPeopleInQueue < 1) {
                             loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
                             navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
                         } else {
