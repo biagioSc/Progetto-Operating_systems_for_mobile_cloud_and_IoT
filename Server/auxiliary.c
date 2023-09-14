@@ -1,6 +1,8 @@
 
 #include "imports.h"
 #include "auxiliary.h"
+extern usersList;
+extern interrupted;
 
 /**
  * @brief Controlla se esiste un utente sul database registrato con la stessa email.

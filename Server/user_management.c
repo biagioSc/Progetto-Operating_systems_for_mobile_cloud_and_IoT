@@ -1,7 +1,8 @@
 
 #include "imports.h"
 #include "user_management.h"
-
+extern usersList;
+extern currentUserId;
 
 /**
  * @brief Rimuove un utente dalla struttura dati locale in base alla sua email 

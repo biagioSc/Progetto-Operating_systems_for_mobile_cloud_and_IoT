@@ -7,6 +7,10 @@
 #include "manager.h"
 
 
+User* usersList = NULL; // Variabile globale di riferimento per la lista
+int currentUserId = 0; // Contatore per il sessionID dell'utente
+
+volatile sig_atomic_t interrupted = 0;  // Flag per il segnale
 
 int main() {
     srand(time(NULL)); // per random drink da suggerire
