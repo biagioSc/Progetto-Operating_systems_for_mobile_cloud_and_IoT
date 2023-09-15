@@ -174,7 +174,17 @@ void removeUserFromList(int session_id) {
  */
 PGconn *connect_to_db()
 {
-    PGconn *conn = PQconnectdb("dbname=robotapp user=postgres password=WalterBalzano01! hostaddr=195.231.38.118 port=5432");
+    char conninfo[512];
+    
+    snprintf(conninfo, sizeof(conninfo), 
+             "dbname=%s user=%s password=%s hostaddr=%s port=%s", 
+             getenv("DB_NAME"), 
+             getenv("DB_USER"), 
+             getenv("DB_PASSWORD"), 
+             getenv("DB_HOSTADDR"), 
+             getenv("DB_PORT"));
+             
+    PGconn *conn = PQconnectdb(conninfo);
     if (PQstatus(conn) == CONNECTION_BAD)
     {
         fprintf(stderr, "Connessione al database fallita: %s\n", PQerrorMessage(conn));
@@ -1246,7 +1256,7 @@ int main() {
     int sockfd, newsockfd, portno;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    char *IP = "195.231.38.118"; // Indirizzo IP del server
+    char *IP = getenv("DB_HOSTADDR");; // Indirizzo IP del server
 
     // Registra il gestore di segnali
     signal(SIGINT, sigint_handler);

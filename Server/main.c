@@ -17,7 +17,7 @@ int main() {
     int sockfd, newsockfd, portno;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    char *IP = "195.231.38.118"; // Indirizzo IP del server
+    char *IP = getenv("DB_HOSTADDR"); // Indirizzo IP del server
 
     // Registra il gestore di segnali
     signal(SIGINT, sigint_handler);
