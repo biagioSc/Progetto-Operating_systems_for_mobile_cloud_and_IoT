@@ -155,6 +155,10 @@ public class Activity3_Waiting extends AppCompatActivity {
                         String receivedData = socket.receive();
                         Thread.sleep(500);
 
+                        if(receivedData=="[ERROR]"){
+                            throw new Exception();
+                        }
+
                         queueCount = Integer.parseInt(receivedData);
 
                         if (queueCount > 0) {
@@ -167,7 +171,7 @@ public class Activity3_Waiting extends AppCompatActivity {
                             break; // Esci dal ciclo se la coda è vuota
                         }
                     }
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                     sessionID = "-1";
                     user = "Guest";
@@ -213,7 +217,7 @@ public class Activity3_Waiting extends AppCompatActivity {
                     socket.send(sessionID);
                     Thread.sleep(500);
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";

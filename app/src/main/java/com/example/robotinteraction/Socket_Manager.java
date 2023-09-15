@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Socket_Manager {
     private static final String TAG = "Activity_SocketManager";
@@ -60,8 +61,7 @@ public class Socket_Manager {
         return instance;
     }
 
-
-    public void send(final String message) {
+    public void send(final String message) throws Exception{
         Log.d(TAG, "Sending message: " + message);
         new Thread(() -> {
             try {
@@ -70,12 +70,14 @@ public class Socket_Manager {
                     outputStream.flush();
                 }
             } catch (Exception e) {
+                // Gestisci altre eccezioni in modo generico
                 e.printStackTrace();
-                throw new RuntimeException(e);
+                //throw new RuntimeException(e);
             }
         }).start();
     }
-    public String receive() {
+
+    public String receive() throws Exception {
         try {
             InputStream inputStream = socket.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -93,7 +95,9 @@ public class Socket_Manager {
         } catch (Exception e) {
             Log.d(TAG, "Received message: CATCH");
             e.printStackTrace();
-            throw new RuntimeException(e);
+            String receivedData = "[ERROR]";
+            return receivedData;
+            //throw new Exception(e);
         }
     }
 

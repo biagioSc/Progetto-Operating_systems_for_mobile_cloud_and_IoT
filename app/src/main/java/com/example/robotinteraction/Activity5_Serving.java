@@ -162,6 +162,11 @@ public class Activity5_Serving extends AppCompatActivity {
                     Thread.sleep(500);
                     String inputString = socket.receive();
                     Thread.sleep(500);
+
+                    if(inputString=="[ERROR]"){
+                        throw new Exception();
+                    }
+
                     selectedTopics = inputString.split(",");
 
                     if (selectedTopics.length < 2) {
@@ -267,7 +272,7 @@ public class Activity5_Serving extends AppCompatActivity {
                     socket.send(sessionID);
                     Thread.sleep(500);
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";

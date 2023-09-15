@@ -122,6 +122,10 @@ public class Activity6_Attesa extends AppCompatActivity {
                                 innerResponseDescription = socket.receive();
                                 Thread.sleep(500);
 
+                                if(innerResponseDescription=="[ERROR]"){
+                                    throw new Exception();
+                                }
+
                                 if(innerResponseDescription == null || innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
                                     innerResponseDescription = "Descrizione non disponibile!";
                                 }
@@ -155,7 +159,7 @@ public class Activity6_Attesa extends AppCompatActivity {
                     socket.send(sessionID);
                     Thread.sleep(500);
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";

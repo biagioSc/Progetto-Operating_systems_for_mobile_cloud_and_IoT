@@ -217,6 +217,9 @@ public class Activity1_New extends AppCompatActivity {
                     Thread.sleep(250);
                     String response = socket.receive();
                     Thread.sleep(250);
+                    if(response=="[ERROR]"){
+                        throw new Exception();
+                    }
                     String[] parts = response.split(" ");
                     if (parts.length >= 3) {
                         LOG_IN_RESPONSE = parts[0];
@@ -227,6 +230,7 @@ public class Activity1_New extends AppCompatActivity {
                         navigateToParam(Activity2_Welcome.class, sessionID, user,"");
                         runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
                     } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
+                        v.setClickable(true);
                         runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
                     }
                 } catch (Exception e) {
@@ -299,7 +303,7 @@ public class Activity1_New extends AppCompatActivity {
                     socket.send(sessionID);
                     Thread.sleep(500);
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";

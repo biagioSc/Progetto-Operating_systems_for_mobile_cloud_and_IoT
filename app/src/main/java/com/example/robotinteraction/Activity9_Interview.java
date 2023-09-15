@@ -222,6 +222,10 @@ public class Activity9_Interview extends AppCompatActivity {
 
                 String response = socket.receive();
 
+                if(response=="[ERROR]"){
+                    throw new Exception();
+                }
+
                 if(response != null){
                     if(response.equals(("SIGN_UP_ERROR"))){
                         navigateToParam(Activity1_New.class, "ERROR", null, null);
@@ -300,7 +304,7 @@ public class Activity9_Interview extends AppCompatActivity {
                     socket.send(sessionID);
                     Thread.sleep(500);
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";

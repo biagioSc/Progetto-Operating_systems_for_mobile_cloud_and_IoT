@@ -99,7 +99,7 @@ public class Activity4_Ordering extends AppCompatActivity {
                 Thread.sleep(500);
                 socket.send(sessionID);
                 Thread.sleep(500);
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";
@@ -195,11 +195,7 @@ public class Activity4_Ordering extends AppCompatActivity {
         runOnUiThread(() -> spinnerDrinks.setAdapter(adapter));
     }
     private void setRandomRecommendedDrink() {
-        if(!("Guest".equals(user))) {
-            runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
-        }else{
-            runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
-        }
+        runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
     }
 
     public void ExitOrdering(View v) {
@@ -213,7 +209,7 @@ public class Activity4_Ordering extends AppCompatActivity {
                     socket.send(sessionID);
                     Thread.sleep(500);
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";
