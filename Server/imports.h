@@ -31,9 +31,6 @@ typedef struct User {
 } User;
 
 
-User* usersList = NULL; // Variabile globale di riferimento per la lista
-static int currentUserId = 0; // Contatore per il sessionID dell'utente
 
-volatile sig_atomic_t interrupted = 0;  // Flag per il segnale
 
 #endif

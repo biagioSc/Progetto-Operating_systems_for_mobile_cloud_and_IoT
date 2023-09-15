@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:background="#C92196F3"
             android:padding="10dp"
-            android:text="Attesa"
+            android:text="Processing"
             android:textSize="18sp"
             android:textStyle="bold"
             android:typeface="monospace" />
