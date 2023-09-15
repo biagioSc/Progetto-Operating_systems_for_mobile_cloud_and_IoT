@@ -15,4 +15,4 @@
 local.properties
 /.idea/.name
 .idea/misc.xml
-.env
+*.env
