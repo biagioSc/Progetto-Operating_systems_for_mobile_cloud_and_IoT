@@ -1,0 +1,15 @@
+DOMANDE FORMALI:
+-Consumo energetico prima e dopo l'intervento di refactoring
+-Qual è l'oggetto sperimentale? Nostra app
+-Domanda: qual è il consumo energetico?
+-Metriche: che cosa misuriamo-> come lo misuriamo
+	Che cosa misuriamo? Consumo energetico nel tempo
+	Misura campionata ogni tot di tempo -> consumo totale
+	Metrica: dati elaborabili, energia totale
+-Setup: come si fa l'esperimento
+	in che condizioni lo proviamo, parità di condizioni
+	fare n prove, risultato variabile aleatoria (10 prove prima 10 dopo e confronti medie e deviazioi standard)
+	espresso test recorder
+
+Metodologia del refactoring puo essere abbattere picchi, proviamo ad abbatterli vediamo che succede
+
