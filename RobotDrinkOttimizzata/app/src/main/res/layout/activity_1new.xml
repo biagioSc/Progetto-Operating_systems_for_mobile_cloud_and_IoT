@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <!-- Barra laterale -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#232196F3"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvSidebarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:padding="16dp"
+            android:text="STATO"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/item_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C92196F3"
+            android:padding="10dp"
+            android:text="Login"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Welcome"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_waiting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Waiting"
+            android:typeface="monospace"/>
+
+        <TextView
+            android:id="@+id/item_ordering"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Ordering"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_serving"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Serving"
+            android:typeface="monospace"/>
+
+        <TextView
+            android:id="@+id/item_attesa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Processing"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_chatBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="ChatBot"
+            android:typeface="monospace"/>
+
+        <TextView
+            android:id="@+id/item_farewelling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Farewelling"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Signup"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_interview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Interview"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_outofsight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Out Of Sight"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Gone"
+            android:typeface="monospace"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="380dp"
+            android:layout_height="300dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="Logo"
+            android:src="@drawable/pic1main" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/exitToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/exit"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"
+                android:onClick="ExitNew"/>
+
+            <ImageButton
+                android:id="@+id/userToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
+                android:src="@drawable/user"
+                android:clickable="false"
+                android:contentDescription="Toggle Email Visibility"
+                android:paddingLeft="5dp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textViewSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accedi a RoboDrink!"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_below="@id/imageViewLogo" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            android:layout_width="240dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewSignUp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/text_rounded_border"
+                    android:drawableEnd="@drawable/mail"/>
+            </RelativeLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            android:layout_width="240dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emailTextInputLayout"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:background="@drawable/text_rounded_border"
+                    android:drawablePadding="8dp"/>
+
+                <ImageButton
+                    android:id="@+id/passwordToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="false"
+                    android:contentDescription="Toggle Password Visibility"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:onClick="togglePasswordVisibility"
+                    android:padding="8dp"
+                    android:src="@drawable/hide" />
+            </RelativeLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/passwordTextInputLayout"
+            android:layout_marginTop="2dp"
+            android:padding="8dp"
+            android:text="Email e/o password errate"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewError"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/button_design_general"
+            android:clickable="true"
+            android:focusable="true"
+            android:cursorVisible="true"
+            android:onClick="onClickAccedi"
+            android:padding="10dp"
+            android:text="@string/accedi"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/buttonSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonLogin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onClickSignUp"
+            android:padding="8dp"
+            android:text="@string/non_hai_un_account_registrati"
+            android:textColor="#1976D2"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/buttonGuest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonSignUp"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onClickGuest"
+            android:padding="8dp"
+            android:text="@string/accedi_come_ospite"
+            android:textColor="#757575"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+</LinearLayout>
