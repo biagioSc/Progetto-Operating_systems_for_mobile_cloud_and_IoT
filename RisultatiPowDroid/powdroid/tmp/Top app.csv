@@ -1,0 +1,3 @@
+metric,type,start_time,end_time,value,opt
+Top app,service,1657388909602,1657389079939,com.example.dirtsystemec,10408
+Top app,service,1657389079939,1657389170692,com.miui.home,10044

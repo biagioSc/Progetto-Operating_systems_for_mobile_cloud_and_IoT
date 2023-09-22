@@ -1,0 +1,418 @@
+metric,type,start_time,end_time,value,opt
+Wakelock_in,service,1657388909610,1657388909611,*telephony-radio*,1001
+Wakelock_in,service,1657388909611,1657388909616,*telephony-radio*,1000
+Wakelock_in,service,1657388909616,1657388909630,*telephony-radio*,1001
+Wakelock_in,service,1657388909602,1657388911539,AudioMix,1041
+Wakelock_in,service,1657388911734,1657388911748,AudioMix,1041
+Wakelock_in,service,1657388911748,1657388911939,AudioMix,10408
+Wakelock_in,service,1657388911939,1657388914146,AudioMix,1041
+Wakelock_in,service,1657388914146,1657388914299,AudioMix,10408
+Wakelock_in,service,1657388914299,1657388916635,AudioMix,1041
+Wakelock_in,service,1657388916635,1657388916819,AudioMix,10408
+Wakelock_in,service,1657388916819,1657388919829,AudioMix,1041
+Wakelock_in,service,1657388920051,1657388920059,AudioMix,1041
+Wakelock_in,service,1657388920631,1657388920638,Icing,10065
+Wakelock_in,service,1657388920638,1657388920642,Icing,10019
+Wakelock_in,service,1657388920658,1657388920680,CMWakeLock,10019
+Wakelock_in,service,1657388920060,1657388920737,AudioMix,10408
+Wakelock_in,service,1657388920786,1657388920811,Icing,10019
+Wakelock_in,service,1657388920578,1657388921334,AudioMix,1041
+Wakelock_in,service,1657388921335,1657388921738,AudioMix,10408
+JobScheduler,service,1657388920677,1657388921761,com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService,10119
+Wakelock_in,service,1657388921297,1657388921761,*job*/com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService,10119
+JobScheduler,service,1657388921790,1657388921946,com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService,10119
+Wakelock_in,service,1657388921793,1657388921946,*job*/com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService,10119
+Wakelock_in,service,1657388922991,1657388922993,Wakeful StateMachine: GeofencerStateMachine,10019
+Wakelock_in,service,1657388922994,1657388922996,Wakeful StateMachine: GeofencerStateMachine,10019
+Wakelock_in,service,1657388921739,1657388923582,AudioMix,1041
+JobScheduler,service,1657388924009,1657388924361,com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService,10119
+Mobile signal strength,string,1657388909602,1657388924362,poor,
+Wakelock_in,service,1657388924010,1657388924362,*job*/com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService,10119
+Wakelock_in,service,1657388925690,1657388925706,CMWakeLock,10019
+Voltage,int,1657388909602,1657388925870,3822,
+Coulomb charge,int,1657388909602,1657388925870,1163,
+Wakelock_in,service,1657388927000,1657388927009,AudioMix,1041
+Wakelock_in,service,1657388927011,1657388927200,AudioMix,10408
+Voltage,int,1657388925870,1657388928342,3780,
+Coulomb charge,int,1657388925870,1657388928342,1157,
+Wakelock_in,service,1657388927201,1657388929407,AudioMix,1041
+Wakelock_in,service,1657388929407,1657388929584,AudioMix,10408
+Mobile signal strength,string,1657388924362,1657388931655,none,
+Wakelock_in,service,1657388929584,1657388931655,AudioMix,1041
+Battery Level,int,1657388909602,1657388934192,58,
+Coulomb charge,int,1657388928342,1657388934192,1156,
+Alarm,service,1657388936065,1657388936068,*walarm*:android.intent.action.HMCoreService.KEEP_ALIVE,10346
+Alarm,service,1657388936066,1657388936068,*alarm*:miui.intent.action.powerkeeper_alarm,1000
+Alarm,service,1657388936067,1657388936069,*alarm*:com.miui.powercenter.action.BATTERYHISTORY_CHECKRESET,1000
+Wakelock_in,service,1657388936088,1657388936089,*telephony-radio*,1001
+Wakelock_in,service,1657388936064,1657388936090,NetworkStats,1000
+Alarm,service,1657388936061,1657388936094,*alarm*:com.android.server.action.NETWORK_STATS_POLL,1000
+Wakelock_in,service,1657388936062,1657388936094,*alarm*:com.android.server.action.NETWORK_STATS_POLL,1000
+Alarm,service,1657388936064,1657388936095,*walarm*:com.xiaomi.hm.health.WAKE_UP,10346
+Wakelock_in,service,1657388936094,1657388936095,*alarm*,10346
+Wakelock_in,service,1657388936089,1657388936097,*telephony-radio*,1000
+Alarm,service,1657388936067,1657388936108,*alarm*:com.google.android.gms.gcm.ACTION_CHECK_QUEUE,10019
+Wakelock_in,service,1657388936095,1657388936108,*alarm*,10019
+Wakelock_in,service,1657388936108,1657388936109,*telephony-radio*,1001
+Wakelock_in,service,1657388936156,1657388936156,*telephony-radio*,1001
+Wakelock_in,service,1657388936157,1657388936161,*telephony-radio*,1000
+Wakelock_in,service,1657388936162,1657388936167,*telephony-radio*,1001
+Wakelock_in,service,1657388936109,1657388936173,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936143,1657388936229,*gms_scheduler*/com.google.android.gms/.tapandpay.gcmtask.TapAndPayGcmTaskService,10019
+Wakelock_in,service,1657388936231,1657388936242,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936259,1657388936260,*telephony-radio*,1001
+Wakelock_in,service,1657388936260,1657388936263,*telephony-radio*,1000
+Wakelock_in,service,1657388936264,1657388936268,*telephony-radio*,1001
+Wakelock_in,service,1657388936243,1657388936352,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936275,1657388936353,*gms_scheduler*/com.google.android.gms/.gcm.HeartbeatAlarm$ConnectionInfoPersistService,10019
+Wakelock_in,service,1657388936354,1657388936362,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936363,1657388936399,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936388,1657388936415,*gms_scheduler*/com.google.android.gms/.gcm.HeartbeatAlarm$ConnectionInfoPersistService,10019
+Wakelock_in,service,1657388936417,1657388936422,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936462,1657388936470,AudioMix,1041
+Wakelock_in,service,1657388936426,1657388936479,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936455,1657388936487,*gms_scheduler*/com.google.android.gms/.common.stats.net.NetworkReportService,10019
+Wakelock_in,service,1657388936488,1657388936493,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936494,1657388936501,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936321,1657388936612,*gms_scheduler*/com.google.android.gms/.checkin.EventLogService,10019
+Wakelock_in,service,1657388936606,1657388936631,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10019
+Wakelock_in,service,1657388936613,1657388936637,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936640,1657388936650,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388936797,1657388936805,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10019
+Wakelock_in,service,1657388936470,1657388937143,AudioMix,10408
+Wakelock_in,service,1657388909602,1657388937761,AudioDirectOut,10408
+Wakelock_in,service,1657388937761,1657388937840,AudioDirectOut,1041
+Wakelock_in,service,1657388937144,1657388938174,AudioMix,1041
+Wakelock_in,service,1657388938175,1657388938918,AudioMix,10408
+Wakelock_in,service,1657388938918,1657388939475,AudioMix,1041
+Wakelock_in,service,1657388939475,1657388939874,AudioMix,10408
+Alarm,service,1657388939999,1657388940001,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1657388940000,1657388940001,*alarm*:TIME_TICK,1000
+Alarm,service,1657388941937,1657388941948,*alarm*:com.google.android.gms.gcm.ACTION_CHECK_QUEUE,10019
+Wakelock_in,service,1657388941938,1657388941949,*alarm*:com.google.android.gms.gcm.ACTION_CHECK_QUEUE,10019
+Wakelock_in,service,1657388941945,1657388941994,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388941982,1657388942164,*gms_scheduler*/com.google.android.gms/.clearcut.uploader.QosUploaderService,10019
+Wakelock_in,service,1657388942165,1657388942171,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388942172,1657388942180,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388939874,1657388942889,AudioMix,1041
+Alarm,service,1657388945296,1657388945308,*alarm*:com.google.android.gms.gcm.ACTION_CHECK_QUEUE,10019
+Wakelock_in,service,1657388945297,1657388945308,*alarm*:com.google.android.gms.gcm.ACTION_CHECK_QUEUE,10019
+Wakelock_in,service,1657388945302,1657388945361,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388945339,1657388945602,*gms_scheduler*/com.google.android.gms/.clearcut.uploader.QosUploaderService,10019
+Wakelock_in,service,1657388945603,1657388945612,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388945613,1657388945623,*gms_scheduler*:internal,10019
+Wakelock_in,service,1657388954624,1657388954624,AudioMix,1041
+Wakelock_in,service,1657388954624,1657388955301,AudioMix,10408
+Wakelock_in,service,1657388955301,1657388956332,AudioMix,1041
+Wakelock_in,service,1657388956332,1657388956996,AudioMix,10408
+Wakelock_in,service,1657388956996,1657388957892,AudioMix,1041
+Wakelock_in,service,1657388957893,1657388958319,AudioMix,10408
+Wakelock_in,service,1657388958319,1657388959820,AudioMix,1041
+Wakelock_in,service,1657388959821,1657388959995,AudioMix,10408
+Wakelock_in,service,1657388959995,1657388963013,AudioMix,1041
+Wakelock_in,service,1657388964243,1657388964244,AudioMix,1041
+Wakelock_in,service,1657388964244,1657388964436,AudioMix,10408
+Wakelock_in,service,1657388936122,1657388966127,LocWeather,10346
+Wakelock_in,service,1657388964436,1657388966700,AudioMix,1041
+Wakelock_in,service,1657388966700,1657388966877,AudioMix,10408
+Wakelock_in,service,1657388937841,1657388966992,AudioDirectOut,10408
+Wakelock_in,service,1657388966992,1657388967069,AudioDirectOut,1041
+Wakelock_in,service,1657388966877,1657388969887,AudioMix,1041
+Wakelock_in,service,1657388973356,1657388973359,AudioMix,1041
+Wakelock_in,service,1657388973359,1657388974029,AudioMix,10408
+Wakelock_in,service,1657388974030,1657388976286,AudioMix,1041
+Wakelock_in,service,1657388976289,1657388976709,AudioMix,10408
+Wakelock_in,service,1657388976710,1657388979726,AudioMix,1041
+Coulomb charge,int,1657388934192,1657388986227,1155,
+Wakelock_in,service,1657388986227,1657388987187,AudioMix,1041
+Wakelock_in,service,1657388987187,1657388987382,AudioMix,10408
+Wakelock_in,service,1657388987382,1657388990397,AudioMix,1041
+Wakelock_in,service,1657388991416,1657388991426,AudioMix,1041
+Wakelock_in,service,1657388991426,1657388992100,AudioMix,10408
+Wakelock_in,service,1657388992100,1657388993131,AudioMix,1041
+Wakelock_in,service,1657388993131,1657388993975,AudioMix,10408
+Wakelock_in,service,1657388993975,1657388994689,AudioMix,1041
+Wakelock_in,service,1657388994690,1657388995090,AudioMix,10408
+Wakelock_in,service,1657388967070,1657388996226,AudioDirectOut,10408
+Wakelock_in,service,1657388996226,1657388996307,AudioDirectOut,1041
+Wakelock_in,service,1657388995091,1657388998107,AudioMix,1041
+Alarm,service,1657388999999,1657389000001,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1657389000000,1657389000001,*alarm*:TIME_TICK,1000
+Alarm,service,1657389002757,1657389002770,*alarm*:com.google.android.location.fused.LOCATION_STATUS_ALARM_ACTION_ALARM_102,10019
+Wakelock_in,service,1657389002759,1657389002770,*alarm*:com.google.android.location.fused.LOCATION_STATUS_ALARM_ACTION_ALARM_102,10019
+Wakelock_in,service,1657389012407,1657389012421,AudioMix,1041
+Wakelock_in,service,1657389012421,1657389013100,AudioMix,10408
+Wakelock_in,service,1657389013101,1657389013457,AudioMix,1041
+Wakelock_in,service,1657389013458,1657389013880,AudioMix,10408
+Battery Level,int,1657388934192,1657389016111,57,
+Coulomb charge,int,1657388986227,1657389016111,1146,
+Wakelock_in,service,1657389013880,1657389016892,AudioMix,1041
+Wakelock_in,service,1657389017563,1657389017567,AudioMix,1041
+Wakelock_in,service,1657389017567,1657389017756,AudioMix,10408
+Wakelock_in,service,1657389017756,1657389020073,AudioMix,1041
+Wakelock_in,service,1657389020074,1657389020254,AudioMix,10408
+Wakelock_in,service,1657389020254,1657389023259,AudioMix,1041
+Wakelock_in,service,1657388996307,1657389025457,AudioDirectOut,10408
+Wakelock_in,service,1657389025457,1657389025535,AudioDirectOut,1041
+Coulomb charge,int,1657389016111,1657389028273,1141,
+Wakelock_in,service,1657389029459,1657389029461,AudioMix,1041
+Wakelock_in,service,1657389029462,1657389029685,AudioMix,10408
+Wakelock_in,service,1657389029686,1657389032691,AudioMix,1041
+Wakelock_in,service,1657389036813,1657389036826,AudioMix,1041
+Wakelock_in,service,1657389036827,1657389037509,AudioMix,10408
+Wakelock_in,service,1657389037509,1657389038542,AudioMix,1041
+Wakelock_in,service,1657389038543,1657389039189,AudioMix,10408
+Wakelock_in,service,1657389039189,1657389040091,AudioMix,1041
+Wakelock_in,service,1657389040091,1657389040529,AudioMix,10408
+Wakelock_in,service,1657388909602,1657389043415,AudioOffload,10408
+Long Wakelocks,service,1657388909602,1657389043416,AudioOffload,10408
+Wakelock_in,service,1657389043416,1657389043439,AudioOffload,1041
+Wakelock_in,service,1657389043439,1657389043440,AudioOffload,10408
+Wakelock_in,service,1657389043441,1657389043460,AudioOffload,1041
+Coulomb charge,int,1657389028273,1657389043541,1139,
+Wakelock_in,service,1657389040529,1657389043541,AudioMix,1041
+Wakelock_in,service,1657389049942,1657389049959,AudioMix,1041
+Wakelock_in,service,1657389049959,1657389050188,AudioMix,10408
+Wakelock_in,service,1657389050189,1657389052385,AudioMix,1041
+Wakelock_in,service,1657389052386,1657389052559,AudioMix,10408
+Wakelock_in,service,1657389025536,1657389054691,AudioDirectOut,10408
+Wakelock_in,service,1657389054691,1657389054770,AudioDirectOut,1041
+Wakelock_in,service,1657389052559,1657389054896,AudioMix,1041
+Wakelock_in,service,1657389054898,1657389055083,AudioMix,10408
+Wakelock_in,service,1657389055083,1657389055548,AudioMix,1041
+Wakelock_in,service,1657389055549,1657389056219,AudioMix,10408
+Wakelock_in,service,1657389056219,1657389057306,AudioMix,1041
+Wakelock_in,service,1657389057306,1657389058799,AudioMix,10408
+Wakelock_in,service,1657389058799,1657389059816,AudioMix,1041
+Wakelock_in,service,1657389059816,1657389059999,AudioMix,10408
+Alarm,service,1657389059999,1657389060001,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1657389060000,1657389060001,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1657389059999,1657389061566,AudioMix,1041
+Wakelock_in,service,1657389061566,1657389061719,AudioMix,10408
+Wakelock_in,service,1657389061719,1657389063537,AudioMix,1041
+Wakelock_in,service,1657389063537,1657389063719,AudioMix,10408
+Wakelock_in,service,1657389063719,1657389064735,AudioMix,1041
+Wakelock_in,service,1657389064736,1657389066559,AudioMix,10408
+Wakelock_in,service,1657389066559,1657389066684,AudioMix,1041
+Wakelock_in,service,1657389066685,1657389067339,AudioMix,10408
+Wakelock_in,service,1657389067339,1657389067476,AudioMix,1041
+Wakelock_in,service,1657389067476,1657389067659,AudioMix,10408
+Wakelock_in,service,1657389067659,1657389068095,AudioMix,1041
+Wakelock_in,service,1657389068096,1657389068279,AudioMix,10408
+Wakelock_in,service,1657389068280,1657389069144,AudioMix,1041
+Wakelock_in,service,1657389069144,1657389069319,AudioMix,10408
+Wakelock_in,service,1657389069319,1657389069726,AudioMix,1041
+Wakelock_in,service,1657389069727,1657389070399,AudioMix,10408
+Wakelock_in,service,1657389070399,1657389070815,AudioMix,1041
+Wakelock_in,service,1657389070816,1657389071479,AudioMix,10408
+Wakelock_in,service,1657389071479,1657389071615,AudioMix,1041
+Wakelock_in,service,1657389071616,1657389072279,AudioMix,10408
+Wakelock_in,service,1657389072279,1657389072295,AudioMix,1041
+Wakelock_in,service,1657389072296,1657389072483,AudioMix,10408
+Wakelock_in,service,1657389072484,1657389072976,AudioMix,1041
+Wakelock_in,service,1657389072977,1657389073639,AudioMix,10408
+Wakelock_in,service,1657389073639,1657389074536,AudioMix,1041
+Wakelock_in,service,1657389074536,1657389075819,AudioMix,10408
+Wakelock_in,service,1657389075819,1657389076238,AudioMix,1041
+Wakelock_in,service,1657389076239,1657389076418,AudioMix,10408
+Wakelock_in,service,1657389076418,1657389076925,AudioMix,1041
+Wakelock_in,service,1657389076926,1657389077579,AudioMix,10408
+Wakelock_in,service,1657389077579,1657389077599,AudioMix,1041
+Wakelock_in,service,1657389077600,1657389078004,AudioMix,10408
+Wakelock_in,service,1657389079813,1657389079814,*telephony-radio*,1001
+Wakelock_in,service,1657389079814,1657389079820,*telephony-radio*,1000
+Wakelock_in,service,1657389079821,1657389079832,*telephony-radio*,1001
+Top app,service,1657388909602,1657389079939,com.example.dirtsystemec,10408
+Wakelock_in,service,1657389043460,1657389079945,AudioOffload,10408
+Audio,bool,1657388909602,1657389079997,true,
+Wakelock_in,service,1657389054770,1657389079997,AudioDirectOut,10408
+Wakelock_in,service,1657389079930,1657389080066,*launch*,10044
+Active process,service,1657388909602,1657389080130,com.example.dirtsystemec,10408
+Package active,service,1657389080164,1657389080164,com.example.dirtsystemec,10408
+Wakelock_in,service,1657389080001,1657389080165,AWakeLock,1013
+Wakelock_in,service,1657389080177,1657389080178,Wakeful StateMachine: GeofencerStateMachine,10019
+Wakelock_in,service,1657389079998,1657389080208,AudioDirectOut,1041
+Brightness,int,1657388909602,1657389080223,1,
+Wakelock_in,service,1657389080195,1657389080223,MediaProvider,10033
+Wakelock_in,service,1657389079945,1657389080429,AudioOffload,1041
+Wakelock_in,service,1657389080522,1657389080523,Icing,10019
+Wakelock_in,service,1657389080523,1657389080524,Icing,10408
+Wakelock_in,service,1657389080591,1657389080591,Icing,10408
+Wakelock_in,service,1657389080591,1657389080623,Icing,10019
+Wakelock_in,service,1657389080887,1657389080923,NetworkStats,1000
+Wakelock_in,service,1657389078004,1657389081063,AudioMix,1041
+Mobile signal strength,string,1657388931655,1657389091094,poor,
+Mobile signal strength,string,1657389091094,1657389095601,none,
+Alarm,service,1657389119999,1657389120009,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1657389120007,1657389120009,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1657389130628,1657389130629,*telephony-radio*,1001
+Wakelock_in,service,1657389130644,1657389130661,NetworkStats,1000
+Wakelock_in,service,1657389130629,1657389131195,*telephony-radio*,1001
+Wakelock_in,service,1657389131195,1657389131204,*telephony-radio*,1001
+Wakelock_in,service,1657389131547,1657389131548,*telephony-radio*,1001
+Wakelock_in,service,1657389131548,1657389131553,*telephony-radio*,1001
+Wakelock_in,service,1657389131553,1657389131554,*telephony-radio*,1001
+Wakelock_in,service,1657389131555,1657389131555,*telephony-radio*,1001
+Wakelock_in,service,1657389131556,1657389131559,*telephony-radio*,1001
+Wakelock_in,service,1657389131559,1657389131559,*telephony-radio*,1001
+Wakelock_in,service,1657389131561,1657389131562,*telephony-radio*,1001
+Wakelock_in,service,1657389131562,1657389131567,*telephony-radio*,1001
+Wakelock_in,service,1657389131568,1657389131568,*telephony-radio*,1001
+Wakelock_in,service,1657389131571,1657389131572,*telephony-radio*,1001
+Wakelock_in,service,1657389131572,1657389131575,*telephony-radio*,1001
+Wakelock_in,service,1657389131575,1657389131576,*telephony-radio*,1001
+Wakelock_in,service,1657389131578,1657389131578,*telephony-radio*,1001
+Wakelock_in,service,1657389131578,1657389131584,*telephony-radio*,1001
+Wakelock_in,service,1657389131584,1657389131585,*telephony-radio*,1001
+Wakelock_in,service,1657389131587,1657389131587,*telephony-radio*,1001
+Wakelock_in,service,1657389131587,1657389131591,*telephony-radio*,1001
+Wakelock_in,service,1657389131591,1657389131592,*telephony-radio*,1001
+Wakelock_in,service,1657389131594,1657389131594,*telephony-radio*,1001
+Wakelock_in,service,1657389131595,1657389131600,*telephony-radio*,1001
+Wakelock_in,service,1657389131600,1657389131601,*telephony-radio*,1001
+Wakelock_in,service,1657389131605,1657389131606,*telephony-radio*,1001
+Wakelock_in,service,1657389131606,1657389131610,*telephony-radio*,1001
+Wakelock_in,service,1657389131610,1657389131611,*telephony-radio*,1001
+Wakelock_in,service,1657389131613,1657389131614,*telephony-radio*,1001
+Wakelock_in,service,1657389131614,1657389131619,*telephony-radio*,1001
+Wakelock_in,service,1657389131619,1657389131620,*telephony-radio*,1001
+Wakelock_in,service,1657389131621,1657389131622,*telephony-radio*,1001
+Wakelock_in,service,1657389131622,1657389131624,*telephony-radio*,1001
+Wakelock_in,service,1657389131624,1657389131625,*telephony-radio*,1001
+Wakelock_in,service,1657389131627,1657389131627,*telephony-radio*,1001
+Wakelock_in,service,1657389131627,1657389131630,*telephony-radio*,1001
+Wakelock_in,service,1657389131630,1657389131631,*telephony-radio*,1001
+Wakelock_in,service,1657389131634,1657389131635,*telephony-radio*,1001
+Wakelock_in,service,1657389131635,1657389131639,*telephony-radio*,1001
+Wakelock_in,service,1657389131639,1657389131640,*telephony-radio*,1001
+Wakelock_in,service,1657389131641,1657389131642,*telephony-radio*,1001
+Wakelock_in,service,1657389131642,1657389131644,*telephony-radio*,1001
+Wakelock_in,service,1657389131644,1657389131645,*telephony-radio*,1001
+Wakelock_in,service,1657389131647,1657389131647,*telephony-radio*,1001
+Wakelock_in,service,1657389131647,1657389131653,*telephony-radio*,1001
+Wakelock_in,service,1657389131653,1657389131654,*telephony-radio*,1001
+Wakelock_in,service,1657389131664,1657389131665,*telephony-radio*,1001
+Wakelock_in,service,1657389131665,1657389131669,*telephony-radio*,1001
+Wakelock_in,service,1657389131669,1657389131670,*telephony-radio*,1001
+Wakelock_in,service,1657389131671,1657389131672,*telephony-radio*,1001
+Wakelock_in,service,1657389131672,1657389131675,*telephony-radio*,1001
+Wakelock_in,service,1657389131675,1657389131675,*telephony-radio*,1001
+Voltage,int,1657388928342,1657389131915,3804,
+Coulomb charge,int,1657389043541,1657389131915,1136,
+Wakelock_in,service,1657389144883,1657389144884,*telephony-radio*,1001
+Wakelock_in,service,1657389144898,1657389144914,NetworkStats,1000
+Wakelock_in,service,1657389144885,1657389144918,*telephony-radio*,1001
+Wakelock_in,service,1657389144918,1657389144918,*telephony-radio*,1001
+Wakelock_in,service,1657389146663,1657389146664,*telephony-radio*,1001
+Wakelock_in,service,1657389146664,1657389146669,*telephony-radio*,1000
+Wakelock_in,service,1657389146669,1657389146690,*telephony-radio*,1001
+Wakelock_in,service,1657389148702,1657389148703,*telephony-radio*,1001
+Wakelock_in,service,1657389148703,1657389148714,*telephony-radio*,1000
+Wakelock_in,service,1657389148715,1657389148738,*telephony-radio*,1001
+Active process,service,1657389079705,1657389167246,com.google.process.gapps,10019
+Wakelock_in,service,1657389168772,1657389168773,*telephony-radio*,1001
+Wakelock_in,service,1657389168773,1657389168782,*telephony-radio*,1000
+Wakelock_in,service,1657389168782,1657389168816,*telephony-radio*,1001
+Wakelock_in,service,1657389170646,1657389170647,*telephony-radio*,1001
+Wakelock_in,service,1657389170647,1657389170655,*telephony-radio*,1000
+Wakelock_in,service,1657389170656,1657389170692,*telephony-radio*,1001
+Active process,service,1657388909602,1657389170692,com.facebook.services,10062
+Active process,service,1657388909602,1657389170692,com.google.android.gms,10019
+Active process,service,1657389079705,1657389170692,com.google.process.gservices,10019
+Plug,string,1657388909602,1657389170692,n,
+Active process,service,1657388909602,1657389170692,com.miui.notification:remote,1000
+Active process,service,1657388909602,1657389170692,system,10291
+Active process,service,1657388909602,1657389170692,com.miui.powerkeeper,1000
+Active process,service,1657388909602,1657389170692,com.google.android.inputmethod.latin,10112
+Active process,service,1657388909602,1657389170692,com.qualcomm.qti.services.secureui:sui_service,1000
+Active process,service,1657388920716,1657389170692,com.google.android.youtube #for# service {com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService},10119
+Active process,service,1657388924934,1657389170692,android.process.media #for# content provider {com.android.providers.media/com.android.providers.media.MediaProvider},10033
+Active process,service,1657389079705,1657389170692,com.google.android.googlequicksearchbox:search,10065
+Voltage,int,1657389131915,1657389170692,3845,
+Video,bool,1657388909602,1657389170692,true,
+Active process,service,1657388909602,1657389170692,com.android.nfc,1027
+Active process,service,1657388909602,1657389170692,com.xiaomi.mircs,10239
+Active process,service,1657388923258,1657389170692,com.google.android.apps.wellbeing #for# content provider {com.google.android.apps.wellbeing/com.google.android.apps.wellbeing.api.impl.WellbeingSettingsProvider},10252
+Active process,service,1657389079705,1657389170692,com.google.android.apps.wellbeing,10252
+Active process,service,1657389131292,1657389170692,com.android.cellbroadcastreceiver #for# broadcast {com.android.cellbroadcastreceiver/com.android.cellbroadcastreceiver.CellBroadcastReceiver},10025
+Temperature,int,1657388909602,1657389170692,375,
+CPU running,string,1657388909602,1657389170692,1657389170692~Unknown wakeup reason,
+Wifi multicast,bool,1657388909602,1657389170692,true,
+Active process,service,1657388909602,1657389170692,.pasr,1000
+Active process,service,1657388909602,1657389170692,com.android.phone,1001
+Active process,service,1657388909602,1657389170692,com.miui.home,10044
+Active process,service,1657388909602,1657389170692,com.miui.analytics,10137
+Active process,service,1657388909602,1657389170692,com.xiaomi.location.fused,1000
+Active process,service,1657388909602,1657389170692,com.qualcomm.qcrilmsgtunnel,1001
+Active process,service,1657388909602,1657389170692,com.goodix.fingerprint.setting,1000
+Foreground process,service,1657388909602,1657389170692,com.miui.securitycenter,1000
+Foreground process,service,1657388909602,1657389170692,com.huami.watch.hmwatchmanager,10346
+Charging status,string,1657388909602,1657389170692,d,
+Health,string,1657388909602,1657389170692,g,
+Active process,service,1657388909602,1657389170692,com.miui.core,10075
+Active process,service,1657388909602,1657389170692,com.tencent.soter.soterserver,1000
+Active process,service,1657388909602,1657389170692,com.qualcomm.telephony,10254
+Active process,service,1657388909602,1657389170692,com.miui.cloudservice,10138
+Active process,service,1657389079705,1657389170692,com.android.chrome:privileged_process0,10089
+Active process,service,1657388909602,1657389170692,.dataservices,1001
+Active process,service,1657388909602,1657389170692,com.xiaomi.xmsfkeeper,10282
+Active process,service,1657388909602,1657389170692,com.android.smspush,10079
+Active process,service,1657388909602,1657389170692,com.miui.daemon,1000
+Active process,service,1657389079705,1657389170692,com.google.android.apps.turbo,10058
+Active process,service,1657388909602,1657389170692,.qtidataservices,1001
+Active process,service,1657388909602,1657389170692,com.lbe.security.miui,10043
+Active process,service,1657388909602,1657389170692,com.android.se,1068
+Active process,service,1657388909602,1657389170692,com.mi.android.globalminusscreen,1000
+Active process,service,1657388909602,1657389170692,com.miui.securitycenter.remote,1000
+Active process,service,1657388919759,1657389170692,com.google.android.googlequicksearchbox:search #for# service {com.google.android.googlequicksearchbox/com.google.android.apps.gsa.publicsearch.PublicSearchService},10065
+Active process,service,1657388920620,1657389170692,com.google.android.apps.tachyon #for# service {com.google.android.apps.tachyon/com.google.android.apps.tachyon.clientapi.ClientApiService},10118
+Active process,service,1657388923202,1657389170692,com.android.chrome #for# service {com.android.chrome/org.chromium.chrome.browser.customtabs.CustomTabsConnectionService},10089
+Active process,service,1657389079705,1657389170692,android.process.media,10033
+Active process,service,1657389079705,1657389170692,com.google.android.youtube,10119
+Partial wakelock,service,1657388909602,1657389170692,unknown-wakelock-holder,
+Active process,service,1657388909602,1657389170692,com.android.systemui,1000
+Active process,service,1657389080506,1657389170692,com.google.android.permissioncontroller #for# broadcast {com.google.android.permissioncontroller/com.android.packageinstaller.permission.service.LocationAccessCheck$PackageResetHandler},10241
+Coulomb charge,int,1657389131915,1657389170692,1125,
+Active process,service,1657388909602,1657389170692,com.miui.aod,1000
+Active process,service,1657388909602,1657389170692,com.google.android.gms.persistent,10019
+Active process,service,1657388924908,1657389170692,com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 #for#  {com.android.chrome/org.chromium.content.app.SandboxedProcessService0:0},10089
+Active process,service,1657388925014,1657389170692,com.android.chrome:privileged_process0 #for# service {com.android.chrome/org.chromium.content.app.PrivilegedProcessService0},10089
+Wifi on,bool,1657388909602,1657389170692,true,
+Active process,service,1657388909602,1657389170692,com.qualcomm.qti.workloadclassifier,1000
+Active process,service,1657388909602,1657389170692,com.google.android.googlequicksearchbox:interactor,10065
+Foreground process,service,1657388909602,1657389170692,com.miui.mishare.connectivity,10240
+Active process,service,1657388920127,1657389170692,com.google.process.gservices #for# content provider {com.google.android.gsf/com.google.android.gsf.gservices.GservicesProvider},10019
+Active process,service,1657389079705,1657389170692,com.google.android.apps.tachyon,10118
+Active process,service,1657389162042,1657389170692,com.android.printspooler #for# service {com.android.printspooler/com.android.printspooler.model.PrintSpoolerService},10132
+Wifi radio,bool,1657388909602,1657389170692,true,
+Wifi supplicant,string,1657388909602,1657389170692,compl,
+Active process,service,1657388909602,1657389170692,com.miui.mishare.connectivity,10240
+Active process,service,1657388909602,1657389170692,com.miui.face,1000
+Foreground process,service,1657388909602,1657389170692,com.miui.notification,1000
+Brightness,int,1657389080223,1657389170692,0,
+Mobile signal strength,string,1657389095601,1657389170692,poor,
+Active process,service,1657388909602,1657389170692,com.miui.msa.global,10103
+Active process,service,1657389079705,1657389170692,com.android.chrome,10089
+Battery Level,int,1657389016111,1657389170692,56,
+Active process,service,1657388909602,1657389170692,com.xiaomi.mi_connect_service,1000
+Active process,service,1657388934247,1657389170692,com.google.android.apps.turbo #for# broadcast {com.google.android.apps.turbo/com.google.android.apps.turbo.nudges.broadcasts.BatteryStatusChangedReceiver},10058
+Wifi signal strength,string,1657388909602,1657389170692,great,
+Active process,service,1657388909602,1657389170692,com.modemdebug,1001
+Active process,service,1657388909602,1657389170692,com.huami.watch.hmwatchmanager,10346
+Top app,service,1657389079939,1657389170692,com.miui.home,10044
+Active process,service,1657389080716,1657389170692,com.miui.vsimcore #for# broadcast {com.miui.vsimcore/com.miui.vsimcore.AppInstallReceiver},1001
+Active process,service,1657389080982,1657389170692,com.google.android.apps.photos #for# broadcast {com.google.android.apps.photos/com.google.android.libraries.social.mediastoresync.reset.impl.MediaStoreClearedReceiver},10141
+Wifi running,bool,1657388909602,1657389170692,true,
+Active process,service,1657388909602,1657389170692,com.xiaomi.joyose,1000
+Active process,service,1657388909602,1657389170692,com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0,10103
+Active process,service,1657388909602,1657389170692,com.miui.notification,1000
+Active process,service,1657388909602,1657389170692,com.xiaomi.bluetooth,1002
+Active process,service,1657388909602,1657389170692,com.qualcomm.qti.telephonyservice,1001
+Wakelock_in,service,1657388909602,1657389170692,screen,-1
+Alarm,service,1657388936062,1657389170692,*walarm*:android.appwidget.action.APPWIDGET_UPDATE,1000
+Active process,service,1657389079705,1657389170692,com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0,10089
+Active process,service,1657389080221,1657389170692,com.google.android.documentsui #for# broadcast {com.google.android.documentsui/com.android.documentsui.PackageReceiver},10237
+Screen,bool,1657388909602,1657389170692,true,unknown screen on reason
+Active process,service,1657388909602,1657389170692,com.xiaomi.finddevice,9810
+Active process,service,1657388909602,1657389170692,com.xiaomi.xmsf,10102
+Active process,service,1657388920219,1657389170692,com.google.process.gapps #for# content provider {com.google.android.gsf/com.google.android.gsf.settings.GoogleSettingsProvider},10019
