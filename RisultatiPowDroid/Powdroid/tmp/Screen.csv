@@ -1,2 +1,2 @@
 metric,type,start_time,end_time,value,opt
-Screen,bool,1695721729156,1695722084065,true,android.server.power:PLUGGED:false
+Screen,bool,1695741139679,1695741465988,true,unknown screen on reason

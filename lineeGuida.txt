@@ -14,10 +14,14 @@ DOMANDE FORMALI:
 Metodologia del refactoring puo essere abbattere picchi, proviamo ad abbatterli vediamo che succede
 
 ------------------------------------
-Fare 5 test preottimizzazione
+Fare 5 per 5 scenari test preottimizzazione
 Creare grafici sui dati
+
 Apportare le ottimizzazioni
-Fare 5 test postottimizzazione
+
+Fare 5 per 5 scenari test postottimizzazione
 Creare grafici sui dati
+
 Tirare le conclusioni
+
 Descrivere il setup e creare eseguibili per la ripetibilità

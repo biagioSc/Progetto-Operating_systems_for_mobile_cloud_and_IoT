@@ -1,0 +1,379 @@
+Parsing C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\RisultatiPowDroid\Powdroid\dump/battery_device.zip~dumpstate-2023-09-26-17-16-21.txt
+2023/09/26 17:18:20 Errors encountered when getting package list: [error getting appID from string: strconv.Atoi: parsing "u0ai0": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai1": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai2": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai3": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai4": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai5": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai6": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai7": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai8": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai9": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai10": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai11": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai12": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai13": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai14": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai15": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai16": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai17": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai18": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai19": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai20": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai21": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai22": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai23": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai24": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai25": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai26": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai9000": invalid syntax]
+Unknown history key: Mrc / 0
+Unknown history key: Wrc / 0
+Unknown history key: +Ud / 
+Unknown history key: +Chtp / 
+Unknown history key: -Chtp / 
+Unknown history key: -Ud / 
+Unknown history key: +Chtp / 
+Unknown history key: -Chtp / 
+Unknown history key: +Chtp / 
+Unknown history key: -Chtp / 
+Unknown history key: Empty / 
+Unknown history key: +Ud / 
+Unknown history key: +Chtp / 
+Unknown history key: -Chtp / 
+Errors encountered:
+** Error in 9,h,0,Bl=34,Bs=c,Bh=g,Bp=u,Bt=338,Bv=3798,Bcc=1353,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=4,Wsp=compl,+bles,+Chtp with Mrc=0 : unknown key Mrc
+** Error in 9,h,0,Bl=34,Bs=c,Bh=g,Bp=u,Bt=338,Bv=3798,Bcc=1353,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=4,Wsp=compl,+bles,+Chtp with Wrc=0 : unknown key Wrc
+** Error in 9,h,0,Bl=34,Bs=c,Bh=g,Bp=u,Bt=338,Bv=3798,Bcc=1353,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=4,Wsp=compl,+bles,+Chtp with +Ud : unknown key Ud
+** Error in 9,h,0,Bl=34,Bs=c,Bh=g,Bp=u,Bt=338,Bv=3798,Bcc=1353,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=4,Wsp=compl,+bles,+Chtp with +Chtp : unknown key Chtp
+** Error in 9,h,0,-Chtp,Epr=0 with -Chtp : unknown key Chtp
+** Error in 9,h,1950,-Ud,+Chtp,+Epr=57 with -Ud : unknown key Ud
+** Error in 9,h,1950,-Ud,+Chtp,+Epr=57 with +Chtp : unknown key Chtp
+** Error in 9,h,307,-Chtp,+Epr=58 with -Chtp : unknown key Chtp
+** Error in 9,h,5255,Wss=3,+Chtp,+Ewl=81 with +Chtp : unknown key Chtp
+** Error in 9,h,46,-Chtp,Ecn=82 with -Chtp : unknown key Chtp
+** Error in 9,h,0,Dpst=0,0,0,0,0,0,Empty with Empty : unknown key Empty
+** Error in 9,h,0,+Ewl=40 with +Ewl=40 : two positive transitions seen for "Wakelock_in"
+** Error in 9,h,0,-a,+Ud,+Chtp,+Ewl=161 with +Ud : unknown key Ud
+** Error in 9,h,0,-a,+Ud,+Chtp,+Ewl=161 with +Chtp : unknown key Chtp
+** Error in 9,h,1274,-Chtp,-Ewl=161 with -Chtp : unknown key Chtp
+** Error in 9,h,2278,+Epr=57 with +Epr=57 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=64 with +Epr=64 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=144 with +Epr=144 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=0 with +Epr=0 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=126 with +Epr=126 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=85 with +Epr=85 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=1 with +Epr=1 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=2 with +Epr=2 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=3 with +Epr=3 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=4 with +Epr=4 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=5 with +Epr=5 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=155 with +Epr=155 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=6 with +Epr=6 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=116 with +Epr=116 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=7 with +Epr=7 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=63 with +Epr=63 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=8 with +Epr=8 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=143 with +Epr=143 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=9 with +Epr=9 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=10 with +Epr=10 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=11 with +Epr=11 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=132 with +Epr=132 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=111 with +Epr=111 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=67 with +Epr=67 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=60 with +Epr=60 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=65 with +Epr=65 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=12 with +Epr=12 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=13 with +Epr=13 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=141 with +Epr=141 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=14 with +Epr=14 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=15 with +Epr=15 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=58 with +Epr=58 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=16 with +Epr=16 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=53 with +Epr=53 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=17 with +Epr=17 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=18 with +Epr=18 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=107 with +Epr=107 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=19 with +Epr=19 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=108 with +Epr=108 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=140 with +Epr=140 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=42 with +Epr=42 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=20 with +Epr=20 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=21 with +Epr=21 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=22 with +Epr=22 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=55 with +Epr=55 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=134 with +Epr=134 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=76 with +Epr=76 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=48 with +Epr=48 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=61 with +Epr=61 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=124 with +Epr=124 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=84 with +Epr=84 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=23 with +Epr=23 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=44 with +Epr=44 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=24 with +Epr=24 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=25 with +Epr=25 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=62 with +Epr=62 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=80 with +Epr=80 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=75 with +Epr=75 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=71 with +Epr=71 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=26 with +Epr=26 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=27 with +Epr=27 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=70 with +Epr=70 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=28 with +Epr=28 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=29 with +Epr=29 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=30 with +Epr=30 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=89 with +Epr=89 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=31 with +Epr=31 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=138 with +Epr=138 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=32 with +Epr=32 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=33 with +Epr=33 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=34 with +Epr=34 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=35 with +Epr=35 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=59 with +Epr=59 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=104 with +Epr=104 : two positive transitions seen for "Active process"
+
+Number of summaries  1 
+
+Summary Period: ( 1695741143016 - 1695741360058 )  : 2023-09-26 17:12:23.016 +0200 CEST  -  2023-09-26 17:16:00.058 +0200 CEST
+Date:  2023-09-26
+Reason: CHARGING
+Total Summary Duration  3m37.042s
+BatteryLevel Drop  34 -> 33 = 1
+Drop rate per hour : 16.59 pct/hr
+
+                    ScreenOn: => Rate (per hr): (16.59 ,    3600.00 secs)	 Total: (    1,            3m37.042s,            3m37.042s)
+                  CPURunning: => Rate (per hr): (16.59 ,    3600.00 secs)	 Total: (    1,            3m37.042s,            3m37.042s)
+                     RadioOn: => Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                     PhoneCall=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                         GpsOn=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                  WifiFullLock=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                      WifiScan=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+               WifiMulticastOn=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                      WifiOn: => Rate (per hr): (16.59 ,    3600.00 secs)	 Total: (    1,            3m37.042s,            3m37.042s)
+                     WifiRadio=> Rate (per hr): (16.59 ,    3600.00 secs)	 Total: (    1,            3m37.042s,            3m37.042s)
+                   WifiRunning=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                     PhoneScan=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                       BLEScan=> Rate (per hr): (16.59 ,    3600.00 secs)	 Total: (    1,            3m37.042s,            3m37.042s)
+                      SensorOn=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                    PluggedIn:=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                      AudioOn:=> Rate (per hr): (16.59 ,       1.16 secs)	 Total: (    1,                 70ms,                 70ms)
+                     CameraOn:=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                 FlashlightOn:=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                      VideoOn:=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+                   ChargingOn:=> Rate (per hr): ( 0.00 ,       0.00 secs)	 Total: (    0,                   0s,                   0s)
+IdleMode 
+---------------------
+                                                                              default => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+DataConnectionSummary 
+---------------------
+                                                                              default => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+ConnectivitySummary 
+---------------------
+                                                                TYPE_WIFI:"CONNECTED" => Rate (per hr): (16.59 ,    3013.94 secs)	Total: (    1,             3m1.709s,             3m1.709s)
+
+WakeLockSummary 
+---------------------
+                                                              unknown-wakelock-holder => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+WakeLockDetailedSummary 
+---------------------
+                                                                             "screen" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                 "SmartThings:WakeLock for KeepAlive" => Rate (per hr): (16.59 ,     663.88 secs)	Total: (    1,              40.025s,              40.025s)
+        "*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService" => Rate (per hr): (16.59 ,     498.59 secs)	Total: (    1,               30.06s,               30.06s)
+                                                                           "*launch*" => Rate (per hr): (215.63 ,      77.01 secs)	Total: (   13,               4.643s,                1.61s)
+"*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain" => Rate (per hr): (165.87 ,      76.86 secs)	Total: (   10,               4.634s,               1.288s)
+                                                          "com.whatsapp:sendinactive" => Rate (per hr): (16.59 ,      49.86 secs)	Total: (    1,               3.006s,               3.006s)
+                                                                              "Icing" => Rate (per hr): (149.28 ,      43.84 secs)	Total: (    9,               2.643s,               2.312s)
+                                                                       "NetworkStats" => Rate (per hr): (199.04 ,      18.11 secs)	Total: (   12,               1.092s,                412ms)
+  "*job*/com.facebook.appmanager/com.facebook.oxygen.common.jobqueue.JobQueueService" => Rate (per hr): (16.59 ,       7.31 secs)	Total: (    1,                441ms,                441ms)
+"IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$GmsReceiverIntentOperation" => Rate (per hr): (66.35 ,       6.65 secs)	Total: (    4,                401ms,                252ms)
+"IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation" => Rate (per hr): (99.52 ,       5.03 secs)	Total: (    6,                303ms,                112ms)
+                                                                           "GCM_WORK" => Rate (per hr): (398.08 ,       3.42 secs)	Total: (   24,                206ms,                 49ms)
+                                                           "*gms_scheduler*:internal" => Rate (per hr): (116.11 ,       3.30 secs)	Total: (    7,                199ms,                 60ms)
+"*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService" => Rate (per hr): (16.59 ,       3.18 secs)	Total: (    1,                192ms,                192ms)
+                                                   "*job*/com.whatsapp/.AlarmService" => Rate (per hr): (33.17 ,       1.86 secs)	Total: (    2,                112ms,                 93ms)
+                                                                  "*telephony-radio*" => Rate (per hr): (447.84 ,       1.74 secs)	Total: (   27,                105ms,                 16ms)
+                                 "com.samsung.android.bixby.wakeup:DspControlService" => Rate (per hr): (16.59 ,       1.73 secs)	Total: (    1,                104ms,                104ms)
+"*job*/com.sec.android.app.shealth/com.samsung.android.app.shealth.wearable.packageinfo.PackageInformationJobIntentService" => Rate (per hr): (33.17 ,       1.46 secs)	Total: (    2,                 88ms,                 75ms)
+                                                                           "AudioMix" => Rate (per hr): (33.17 ,       1.38 secs)	Total: (    2,                 83ms,                 70ms)
+                                                   "com.whatsapp:NtpAction#updateNtp" => Rate (per hr): (16.59 ,       1.29 secs)	Total: (    1,                 78ms,                 78ms)
+                                                                        "NlpWakeLock" => Rate (per hr): (16.59 ,       1.21 secs)	Total: (    1,                 73ms,                 73ms)
+"*job*/com.samsung.android.app.routines/.domainmodel.metadata.impl.MetadataLoaderJobService" => Rate (per hr): (33.17 ,       0.88 secs)	Total: (    2,                 53ms,                 46ms)
+                               "*alarm*:com.android.server.action.NETWORK_STATS_POLL" => Rate (per hr): (16.59 ,       0.86 secs)	Total: (    1,                 52ms,                 52ms)
+        "*gms_scheduler*/com.google.android.gms/.stats.PlatformStatsCollectorService" => Rate (per hr): (16.59 ,       0.70 secs)	Total: (    1,                 42ms,                 42ms)
+"*job*/com.facebook.appmanager/com.facebook.oxygen.appmanager.update.core.UpdateService" => Rate (per hr): (33.17 ,       0.68 secs)	Total: (    2,                 41ms,                 39ms)
+"*job*/com.samsung.android.smartsuggestions/com.samsung.android.app.deepsky.donation.receiver.PackageChangeJobService" => Rate (per hr): (99.52 ,       0.56 secs)	Total: (    6,                 34ms,                 19ms)
+                                      "*walarm*:com.whatsapp.alarm.AVAILABLE_TIMEOUT" => Rate (per hr): (16.59 ,       0.53 secs)	Total: (    1,                 32ms,                 32ms)
+                                                   "*alarm*:DetectMovementSPListener" => Rate (per hr): (49.76 ,       0.51 secs)	Total: (    3,                 31ms,                 17ms)
+"*alarm*:com.facebook.rti.mqtt.common.b.p.ACTION_ALARM.PreloadedFBNS.com.facebook.services" => Rate (per hr): (16.59 ,       0.50 secs)	Total: (    1,                 30ms,                 30ms)
+                                 "*job*/com.whatsapp/.push.RegistrationIntentService" => Rate (per hr): (16.59 ,       0.38 secs)	Total: (    1,                 23ms,                 23ms)
+                                                              "*telephony-sem-radio*" => Rate (per hr): (149.28 ,       0.35 secs)	Total: (    9,                 21ms,                  6ms)
+                                "*walarm*:com.google.android.gms.gcm.HEARTBEAT_ALARM" => Rate (per hr): (16.59 ,       0.30 secs)	Total: (    1,                 18ms,                 18ms)
+                                                                           "GCM_READ" => Rate (per hr): (33.17 ,       0.28 secs)	Total: (    2,                 17ms,                  9ms)
+                                                                       "GCM_HB_ALARM" => Rate (per hr): (16.59 ,       0.27 secs)	Total: (    1,                 16ms,                 16ms)
+         "*alarm*:WakingExecutorService.ACTION_ALARM.com.facebook.katana.Mqtt_Wakeup" => Rate (per hr): (16.59 ,       0.25 secs)	Total: (    1,                 15ms,                 15ms)
+  "*job*/com.osp.app.signin/androidx.work.impl.background.systemjob.SystemJobService" => Rate (per hr): (16.59 ,       0.23 secs)	Total: (    1,                 14ms,                 14ms)
+                                                                            "*alarm*" => Rate (per hr): (33.17 ,       0.22 secs)	Total: (    2,                 13ms,                 11ms)
+                                                                  "*alarm*:TIME_TICK" => Rate (per hr): (66.35 ,       0.15 secs)	Total: (    4,                  9ms,                  3ms)
+                                                     "nearby:ENWearableDeviceManager" => Rate (per hr): (33.17 ,       0.13 secs)	Total: (    2,                  8ms,                  5ms)
+                           "*job*/com.whatsapp/.crash.upload.ExceptionsUploadService" => Rate (per hr): (16.59 ,       0.10 secs)	Total: (    1,                  6ms,                  6ms)
+ "*job*/com.samsung.android.smartsuggestions/.extservice.util.LocalPackageJobService" => Rate (per hr): (33.17 ,       0.07 secs)	Total: (    2,                  4ms,                  3ms)
+                                        "Wakeful StateMachine: GeofencerStateMachine" => Rate (per hr): (16.59 ,       0.05 secs)	Total: (    1,                  3ms,                  3ms)
+                                                                "*alarm*:*job.delay*" => Rate (per hr): (16.59 ,       0.02 secs)	Total: (    1,                  1ms,                  1ms)
+
+TopApplicationSummary 
+---------------------
+                                                       "com.sec.android.app.launcher" => Rate (per hr): (66.35 ,    2154.77 secs)	Total: (    4,              2m9.91s,            1m13.896s)
+                                                       "com.example.robotinteraction" => Rate (per hr): (16.59 ,    1339.55 secs)	Total: (    1,            1m20.761s,            1m20.761s)
+                                                                       "com.whatsapp" => Rate (per hr): (16.59 ,      68.07 secs)	Total: (    1,               4.104s,               4.104s)
+                                                                "com.facebook.katana" => Rate (per hr): (16.59 ,      36.51 secs)	Total: (    1,               2.201s,               2.201s)
+
+TotalSyncTime: 0s, TotalSyncNum: 0
+ForegroundProcessSummary 
+---------------------
+                                                        "com.sec.android.app.shealth" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+HealthSummary 
+---------------------
+                                                                                    g => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+PlugTypeSummary 
+---------------------
+                                                                                    n => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+ChargingStatusSummary 
+---------------------
+                                                                                    d => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+PhoneStateSummary 
+---------------------
+                                                                              default => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+ActiveProcessSummary 
+---------------------
+                                                              "android.process.media" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                 "com.sec.android.app.shealth:remote" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                               "com.samsung.android.smartsuggestions" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                                 "com.sec.imsservice" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                               "com.android.systemui" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                      "com.samsung.android.mcfserver" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                  "com.samsung.android.beaconmanager" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                        "com.sec.android.app.dexonpc" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                   "com.android.cellbroadcastservice" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                          "com.samsung.android.mcfds" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                     "com.samsung.android.honeyboard" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                    "com.google.android.ext.services" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                 "com.google.android.googlequicksearchbox:interactor" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                    "com.samsung.android.allshare.service.mediashare" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                       "com.sec.android.app.launcher" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                              "com.sec.android.sdhms" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                                  "com.android.phone" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                      "com.samsung.android.smartface" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                                        "com.sec.sve" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                         "com.samsung.android.server.wifi.mobilewips" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                              "com.samsung.android.sm.devicesecurity" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                              "com.facebook.services" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                                 "android:drmService" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                         "com.samsung.android.app.cocktailbarservice" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                     "com.google.android.googlequicksearchbox:search" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                   "com.android.networkstack.process" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                                     "com.android.se" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                                    "com.android.nfc" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                        "com.samsung.sec.android.teegris.tui_service" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                    "com.samsung.android.samsungpass" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                       "com.sec.android.diagmonagent" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                  "com.google.android.gms.persistent" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                "com.samsung.android.oneconnect:Core" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                         "com.samsung.android.authfw" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                              "com.android.bluetooth" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                              "com.google.android.as" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                            "com.sec.location.nsflp2" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                 "com.android.providers.media.module" => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+                                                      "com.google.android.apps.turbo" => Rate (per hr): (16.59 ,    3597.28 secs)	Total: (    1,            3m36.878s,            3m36.878s)
+                                                           "com.samsung.android.lool" => Rate (per hr): (16.59 ,    3591.69 secs)	Total: (    1,            3m36.541s,            3m36.541s)
+                                                   "com.samsung.android.app.routines" => Rate (per hr): (16.59 ,    3539.46 secs)	Total: (    1,            3m33.392s,            3m33.392s)
+                                                        "com.samsung.android.mdx.kit" => Rate (per hr): (16.59 ,    3478.57 secs)	Total: (    1,            3m29.721s,            3m29.721s)
+                                                       "com.google.process.gservices" => Rate (per hr): (16.59 ,    3473.20 secs)	Total: (    1,            3m29.397s,            3m29.397s)
+                                                  "com.samsung.android.app.sharelive" => Rate (per hr): (16.59 ,    3471.01 secs)	Total: (    1,            3m29.265s,            3m29.265s)
+                                                         "com.samsung.android.scloud" => Rate (per hr): (16.59 ,    3459.08 secs)	Total: (    1,            3m28.546s,            3m28.546s)
+                                                                 "com.osp.app.signin" => Rate (per hr): (16.59 ,    3452.43 secs)	Total: (    1,            3m28.145s,            3m28.145s)
+                                                   "com.samsung.android.app.reminder" => Rate (per hr): (16.59 ,    3441.56 secs)	Total: (    1,             3m27.49s,             3m27.49s)
+                                                             "com.google.android.gms" => Rate (per hr): (16.59 ,    3437.53 secs)	Total: (    1,            3m27.247s,            3m27.247s)
+                                                      "com.samsung.android.app.notes" => Rate (per hr): (16.59 ,    3434.63 secs)	Total: (    1,            3m27.072s,            3m27.072s)
+                                           "com.samsung.android.service.peoplestripe" => Rate (per hr): (16.59 ,    3312.64 secs)	Total: (    1,            3m19.717s,            3m19.717s)
+                                                              "android.process.acore" => Rate (per hr): (16.59 ,    3308.07 secs)	Total: (    1,            3m19.442s,            3m19.442s)
+                                                            "com.samsung.android.fmm" => Rate (per hr): (16.59 ,    3146.70 secs)	Total: (    1,             3m9.713s,             3m9.713s)
+                                                               "com.android.settings" => Rate (per hr): (33.17 ,    3078.73 secs)	Total: (    2,             3m5.615s,             2m6.799s)
+                                                   "com.samsung.android.bixby.wakeup" => Rate (per hr): (16.59 ,    2981.02 secs)	Total: (    1,            2m59.724s,            2m59.724s)
+                                                    "com.samsung.android.bixby.agent" => Rate (per hr): (16.59 ,    2976.16 secs)	Total: (    1,            2m59.431s,            2m59.431s)
+                                                           "com.microsoft.appmanager" => Rate (per hr): (16.59 ,    2932.72 secs)	Total: (    1,            2m56.812s,            2m56.812s)
+                                                                       "com.whatsapp" => Rate (per hr): (16.59 ,    2758.21 secs)	Total: (    1,            2m46.291s,            2m46.291s)
+                                                       "com.samsung.android.game.gos" => Rate (per hr): (16.59 ,    2678.76 secs)	Total: (    1,            2m41.501s,            2m41.501s)
+                                                           "com.google.process.gapps" => Rate (per hr): (16.59 ,    2666.25 secs)	Total: (    1,            2m40.747s,            2m40.747s)
+                                                            "com.facebook.appmanager" => Rate (per hr): (16.59 ,    2665.19 secs)	Total: (    1,            2m40.683s,            2m40.683s)
+                                                                "com.facebook.system" => Rate (per hr): (16.59 ,    2660.07 secs)	Total: (    1,            2m40.374s,            2m40.374s)
+                                                            "com.samsung.android.mdx" => Rate (per hr): (16.59 ,    2588.33 secs)	Total: (    1,            2m36.049s,            2m36.049s)
+                                                     "com.android.vending:background" => Rate (per hr): (16.59 ,    2580.32 secs)	Total: (    1,            2m35.566s,            2m35.566s)
+                                         "com.google.android.projection.gearhead:car" => Rate (per hr): (16.59 ,    2362.34 secs)	Total: (    1,            2m22.424s,            2m22.424s)
+                                                               "com.android.keychain" => Rate (per hr): (16.59 ,    2112.81 secs)	Total: (    1,              2m7.38s,              2m7.38s)
+                                           "com.samsung.android.localeoverlaymanager" => Rate (per hr): (16.59 ,    2112.46 secs)	Total: (    1,             2m7.359s,             2m7.359s)
+                                            "com.google.android.permissioncontroller" => Rate (per hr): (16.59 ,    2109.51 secs)	Total: (    1,             2m7.181s,             2m7.181s)
+                                                        "com.android.settings:remote" => Rate (per hr): (16.59 ,    2107.90 secs)	Total: (    1,             2m7.084s,             2m7.084s)
+                                  "com.samsung.android.app.routines:RoutineUIProcess" => Rate (per hr): (16.59 ,    2099.46 secs)	Total: (    1,             2m6.575s,             2m6.575s)
+                                                        "com.samsung.android.dqagent" => Rate (per hr): (16.59 ,    2096.80 secs)	Total: (    1,             2m6.415s,             2m6.415s)
+                                                   "com.samsung.android.app.appsedge" => Rate (per hr): (16.59 ,    2077.48 secs)	Total: (    1,              2m5.25s,              2m5.25s)
+                                        "com.samsung.android.provider.filterprovider" => Rate (per hr): (16.59 ,    2070.01 secs)	Total: (    1,               2m4.8s,               2m4.8s)
+                                                   "com.samsung.android.bbc.bbcagent" => Rate (per hr): (16.59 ,    2062.53 secs)	Total: (    1,             2m4.349s,             2m4.349s)
+                                 "com.samsung.android.smartsuggestions:datacollector" => Rate (per hr): (16.59 ,    2056.79 secs)	Total: (    1,             2m4.003s,             2m4.003s)
+                                                      "com.samsung.android.sm.policy" => Rate (per hr): (16.59 ,    1978.44 secs)	Total: (    1,            1m59.279s,            1m59.279s)
+                                                       "com.example.robotinteraction" => Rate (per hr): (16.59 ,    1357.85 secs)	Total: (    1,            1m21.864s,            1m21.864s)
+                                            "com.samsung.android.samsungpassautofill" => Rate (per hr): (16.59 ,    1286.01 secs)	Total: (    1,            1m17.533s,            1m17.533s)
+                                                                "com.android.vending" => Rate (per hr): (165.87 ,     552.25 secs)	Total: (   10,              33.295s,               9.152s)
+                                                                "com.facebook.katana" => Rate (per hr): (16.59 ,      63.92 secs)	Total: (    1,               3.854s,               3.854s)
+                                    "com.samsung.android.app.galaxyfinder:appservice" => Rate (per hr): (33.17 ,      42.20 secs)	Total: (    2,               2.544s,               1.515s)
+
+ScheduledJobSummary 
+---------------------
+              "com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService" => Rate (per hr): (16.59 ,     499.72 secs)	Total: (    1,              30.128s,              30.128s)
+"com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain" => Rate (per hr): (165.87 ,     194.69 secs)	Total: (   10,              11.738s,               2.424s)
+        "com.facebook.appmanager/com.facebook.oxygen.common.jobqueue.JobQueueService" => Rate (per hr): (16.59 ,       7.31 secs)	Total: (    1,                441ms,                441ms)
+"com.samsung.android.app.routines/.domainmodel.metadata.impl.MetadataLoaderJobService" => Rate (per hr): (33.17 ,       4.69 secs)	Total: (    2,                283ms,                207ms)
+"com.sec.android.app.shealth/com.samsung.android.app.shealth.wearable.packageinfo.PackageInformationJobIntentService" => Rate (per hr): (33.17 ,       3.77 secs)	Total: (    2,                227ms,                181ms)
+                                       "com.whatsapp/.push.RegistrationIntentService" => Rate (per hr): (16.59 ,       3.65 secs)	Total: (    1,                220ms,                220ms)
+       "com.samsung.android.smartsuggestions/.extservice.util.LocalPackageJobService" => Rate (per hr): (33.17 ,       2.50 secs)	Total: (    2,                151ms,                105ms)
+                                                         "com.whatsapp/.AlarmService" => Rate (per hr): (33.17 ,       2.02 secs)	Total: (    2,                122ms,                 93ms)
+"com.samsung.android.smartsuggestions/com.samsung.android.app.deepsky.donation.receiver.PackageChangeJobService" => Rate (per hr): (82.93 ,       1.09 secs)	Total: (    5,                 66ms,                 19ms)
+   "com.facebook.appmanager/com.facebook.oxygen.appmanager.update.core.UpdateService" => Rate (per hr): (33.17 ,       0.70 secs)	Total: (    2,                 42ms,                 40ms)
+        "com.osp.app.signin/androidx.work.impl.background.systemjob.SystemJobService" => Rate (per hr): (16.59 ,       0.33 secs)	Total: (    1,                 20ms,                 20ms)
+                                 "com.whatsapp/.crash.upload.ExceptionsUploadService" => Rate (per hr): (16.59 ,       0.12 secs)	Total: (    1,                  7ms,                  7ms)
+
+TmpWhiteListSummary 
+---------------------
+                                                                   "package verifier" => Rate (per hr): (66.35 ,    1129.48 secs)	Total: (    4,             1m8.096s,              17.046s)
+                                                                           "keychain" => Rate (per hr): (33.17 ,     995.93 secs)	Total: (    2,             1m0.044s,              30.023s)
+"broadcast:u0a35:com.facebook.rti.mqtt.common.b.p.ACTION_ALARM.PreloadedFBNS.com.facebook.services,reason:" => Rate (per hr): (16.59 ,     166.86 secs)	Total: (    1,               10.06s,               10.06s)
+                      "broadcast:u0a227:com.whatsapp.alarm.AVAILABLE_TIMEOUT,reason:" => Rate (per hr): (16.59 ,     166.63 secs)	Total: (    1,              10.046s,              10.046s)
+                 "broadcast:u0a44:com.google.android.gms.gcm.HEARTBEAT_ALARM,reason:" => Rate (per hr): (16.59 ,     166.03 secs)	Total: (    1,               10.01s,               10.01s)
+
+WifiSupplSummary 
+---------------------
+                                                                                compl => Rate (per hr): (16.59 ,    3600.00 secs)	Total: (    1,            3m37.042s,            3m37.042s)
+
+PhoneSignalStrengthSummary 
+---------------------
+                                                                                 good => Rate (per hr): (66.35 ,    2838.19 secs)	Total: (    4,            2m51.113s,            1m35.916s)
+                                                                                great => Rate (per hr): (49.76 ,     761.81 secs)	Total: (    3,              45.929s,              27.445s)
+
+WifiSignalStrengthSummary 
+---------------------
+                                                                                 good => Rate (per hr): (16.59 ,    3014.71 secs)	Total: (    1,             3m1.755s,             3m1.755s)
+                                                                                great => Rate (per hr): (16.59 ,     585.29 secs)	Total: (    1,              35.287s,              35.287s)
+
+AlarmSummary 
+---------------------
+                               "*alarm*:com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE" => Rate (per hr): (33.17 ,       1.23 secs)	Total: (    2,                 74ms,                 52ms)
+                               "*alarm*:com.android.server.action.NETWORK_STATS_POLL" => Rate (per hr): (16.59 ,       0.93 secs)	Total: (    1,                 56ms,                 56ms)
+                                                   "*alarm*:DetectMovementSPListener" => Rate (per hr): (49.76 ,       0.60 secs)	Total: (    3,                 36ms,                 17ms)
+                                      "*walarm*:com.whatsapp.alarm.AVAILABLE_TIMEOUT" => Rate (per hr): (16.59 ,       0.58 secs)	Total: (    1,                 35ms,                 35ms)
+                                                                  "*alarm*:TIME_TICK" => Rate (per hr): (66.35 ,       0.50 secs)	Total: (    4,                 30ms,                 10ms)
+"*alarm*:com.facebook.rti.mqtt.common.b.p.ACTION_ALARM.PreloadedFBNS.com.facebook.services" => Rate (per hr): (16.59 ,       0.50 secs)	Total: (    1,                 30ms,                 30ms)
+                                "*walarm*:com.google.android.gms.gcm.HEARTBEAT_ALARM" => Rate (per hr): (16.59 ,       0.48 secs)	Total: (    1,                 29ms,                 29ms)
+                                            "*alarm*:com.whatsapp.action.HOURLY_CRON" => Rate (per hr): (16.59 ,       0.43 secs)	Total: (    1,                 26ms,                 26ms)
+         "*alarm*:WakingExecutorService.ACTION_ALARM.com.facebook.katana.Mqtt_Wakeup" => Rate (per hr): (16.59 ,       0.25 secs)	Total: (    1,                 15ms,                 15ms)
+                    "*alarm*:com.samsung.android.game.gos/.service.MainIntentService" => Rate (per hr): (16.59 ,       0.18 secs)	Total: (    1,                 11ms,                 11ms)
+                                                                "*alarm*:*job.delay*" => Rate (per hr): (16.59 ,       0.02 secs)	Total: (    1,                  1ms,                  1ms)
+
+DcpuStatsSummary 
+--------------------------
+=> BatteryLevel: 34	 Duration:             1m30.35s	 UserTime:         0s	 SystemTime:         0s
+
+DpstStatsSummary 
+--------------------------
+=> BatteryLevel: 34	 Duration:             1m30.35s	 StatUserTime:         0s	 StatSystemTime:         0s	 StatIOWaitTime:         0s	 StatIrqTime:         0s	 StatSoftIrqTime:         0s	 StatIdlTime:         0s
+
+DpstOverallSummary 
+--------------------------
+	 Name:       sirq	 Duration:                   0s	
+	 Name:       idle	 Duration:                   0s	
+	 Name:        usr	 Duration:                   0s	
+	 Name:        sys	 Duration:                   0s	
+	 Name:         io	 Duration:                   0s	
+	 Name:        irq	 Duration:                   0s	
+
+
+

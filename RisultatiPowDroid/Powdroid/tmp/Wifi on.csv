@@ -1,1 +1,2 @@
 metric,type,start_time,end_time,value,opt
+Wifi on,bool,1695741139679,1695741465988,true,

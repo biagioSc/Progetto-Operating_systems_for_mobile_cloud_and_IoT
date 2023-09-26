@@ -1,6 +1,2 @@
 metric,type,start_time,end_time,value,opt
-Wifi radio,bool,1695721726241,1695721765107,true,
-Wifi radio,bool,1695721781099,1695721813700,true,
-Wifi radio,bool,1695721814557,1695722054721,true,
-Wifi radio,bool,1695722055318,1695722114833,true,
-Wifi radio,bool,1695722141986,1695722145535,true,
+Wifi radio,bool,1695741139679,1695741465988,true,
