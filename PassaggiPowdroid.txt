@@ -1,4 +1,0 @@
-avvia emulatore
-prompt: adb devices
-adb -s emulator-5554 shell ifconfig
-prendi ip: 192.168.232.2

@@ -61,7 +61,7 @@
             android:name=".Activity9_Interview" />
 
         <activity
-            android:name=".Activity_SocketManager" />
+            android:name=".Socket_Manager" />
 
 
 

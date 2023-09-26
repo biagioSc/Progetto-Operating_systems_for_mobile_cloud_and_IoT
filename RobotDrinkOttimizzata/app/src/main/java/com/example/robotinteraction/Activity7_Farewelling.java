@@ -65,11 +65,14 @@ public class Activity7_Farewelling extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     resetInactivityTimer();
                     applyButtonAnimation(v);
+                    v.performClick(); // Aggiungi questa riga per segnalare il clic
+                    return true; // Ritorna true invece di false
                 }
                 return false;
             }
         });
     }
+
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 100);
