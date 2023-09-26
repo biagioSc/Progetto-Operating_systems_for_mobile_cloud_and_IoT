@@ -1,0 +1,7 @@
+metric,type,start_time,end_time,value,opt
+Top app,service,1695721729156,1695721748701,com.sec.android.app.launcher,10113
+Top app,service,1695721748701,1695721781698,com.android.settings,1000
+Top app,service,1695721781698,1695721782579,com.android.systemui,10009
+Top app,service,1695721782579,1695721946995,com.android.settings,1000
+Top app,service,1695721947052,1695722029734,com.example.robotinteraction,10031
+Top app,service,1695722029734,1695722084065,com.sec.android.app.launcher,10113

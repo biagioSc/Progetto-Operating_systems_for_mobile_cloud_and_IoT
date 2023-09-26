@@ -264,6 +264,7 @@
             android:focusable="true"
             android:clickable="true"
             android:cursorVisible="true"
+            android:visibility="visible"
             android:onClick="onClickRitira"
             android:padding="8dp"
             android:text="Ritira"

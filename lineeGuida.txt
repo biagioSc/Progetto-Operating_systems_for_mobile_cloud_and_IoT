@@ -14,9 +14,10 @@ DOMANDE FORMALI:
 Metodologia del refactoring puo essere abbattere picchi, proviamo ad abbatterli vediamo che succede
 
 ------------------------------------
-Connettere powdroid all'emulatore
-Avviare una serie di 5 test con espresso recorder
+Fare 5 test preottimizzazione
+Creare grafici sui dati
 Apportare le ottimizzazioni
-Generare nuovi risultati con powdroid
+Fare 5 test postottimizzazione
+Creare grafici sui dati
 Tirare le conclusioni
 Descrivere il setup e creare eseguibili per la ripetibilità
