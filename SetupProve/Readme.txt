@@ -1,0 +1,1 @@
+Avviare test automatico e seguire le istruzioni

@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/dialog_background">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Server offline"
+        android:textAlignment="center"
+        android:textColor="#333333"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Attualmente i server sono offline, fai l'accesso come 'Ospite'!"
+        android:textAlignment="center"
+        android:textColor="#555555"
+        android:textSize="18sp" />
+
+</LinearLayout>

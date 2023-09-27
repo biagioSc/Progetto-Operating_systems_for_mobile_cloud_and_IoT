@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <!-- Barra laterale -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#232196F3"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvSidebarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C92196F3"
+            android:padding="16dp"
+            android:text="STATO"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/item_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Login"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Welcome"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_waiting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Waiting"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_ordering"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Ordering"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_serving"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Serving"
+            android:typeface="monospace"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#A1673AB7" />
+
+        <TextView
+            android:id="@+id/item_attesa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Attesa"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_chatBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="ChatBot"
+            android:typeface="monospace"/>
+
+        <TextView
+            android:id="@+id/item_farewelling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Farewelling"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Signup"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_interview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Interview"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_outofsight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Out Of Sight"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Gone"
+            android:typeface="monospace"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageViewOrderStatus"
+        android:layout_width="380dp"
+        android:layout_height="350dp"
+        android:contentDescription="Logo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/pic5serving" />
+
+        <TextView
+            android:id="@+id/textViewOrderStatusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewOrderStatus"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="In preparazione:"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textViewOrderStatusMessage"
+            android:layout_width="253dp"
+            android:layout_height="71dp"
+            android:layout_below="@id/textViewOrderStatusTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="22dp"
+            android:text="Il tuo ordine è attualmente in preparazione. Puoi attendere in sala d'attesa o intrattenerti rispondendo ai quiz."
+            android:textAlignment="center"
+            android:textColor="#757575"
+            android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/buttonWaitingRoom"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Sala d'Attesa"
+        android:textColor="#FFFFFF"
+        android:onClick="onClickWait"
+        android:background="@drawable/button_design_general"
+        android:layout_below="@id/textViewOrderStatusMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:padding="16dp" />
+
+    <Button
+        android:id="@+id/buttonQuiz"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Quiz"
+        android:onClick="onClickQuiz"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_design_general"
+        android:layout_below="@id/buttonWaitingRoom"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="16dp" />
+
+</RelativeLayout>
+</LinearLayout>

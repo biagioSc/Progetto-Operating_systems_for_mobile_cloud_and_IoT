@@ -1,0 +1,1 @@
+L'applicazione può essere utilizzata in modalità offline e online. Per la modalità offline utilizzare l'accesso come utente ospite. Per la modalità online utilizzare il normale accesso con email: alessandra.rossi@gmail.com e password: ProfRossi123

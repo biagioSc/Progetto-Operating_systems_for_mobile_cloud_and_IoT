@@ -1,0 +1,14 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Colore di sfondo azzurro -->
+    <solid android:color="#C92196F3" />
+
+    <!-- Bordi arrotondati -->
+    <corners android:radius="24dp" />
+
+    <!-- Dimensioni dei bordi -->
+    <stroke
+        android:width="3dp"
+        android:color="#B81A85F3" />
+</shape>

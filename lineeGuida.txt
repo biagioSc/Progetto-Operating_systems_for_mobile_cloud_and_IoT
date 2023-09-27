@@ -25,3 +25,6 @@ Creare grafici sui dati
 Tirare le conclusioni
 
 Descrivere il setup e creare eseguibili per la ripetibilità
+
+modificare powdroid per salvare file correttamente
+ 

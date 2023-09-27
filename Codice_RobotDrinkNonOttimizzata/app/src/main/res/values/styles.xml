@@ -1,0 +1,8 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <style name="AppTheme_Custom" parent="Theme.RobotInteraction">
+        <item name="colorPrimary">@color/customBlue</item>
+    </style>
+
+
+</resources>
