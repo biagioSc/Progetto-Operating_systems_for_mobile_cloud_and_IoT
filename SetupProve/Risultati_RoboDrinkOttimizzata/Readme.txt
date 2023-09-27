@@ -1,0 +1,1 @@
+Risultati test app ottimizzata
