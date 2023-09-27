@@ -48,6 +48,7 @@ scenario2 = "com.example.robotinteraction.testScenario2"
 scenario3 = "com.example.robotinteraction.testScenario3"
 scenario4 = "com.example.robotinteraction.testScenario4"
 scenario5 = "com.example.robotinteraction.testScenario5"
+scenario6 = "com.example.robotinteraction.testScenario6"
 
 print("Test disponibili:")
 print("[SCENARIO1] " + scenario1)
@@ -55,6 +56,7 @@ print("[SCENARIO2] " + scenario2)
 print("[SCENARIO3] " + scenario3)
 print("[SCENARIO4] " + scenario4)
 print("[SCENARIO5] " + scenario5)
+print("[SCENARIO6] " + scenario6)
 
 
 scelta = input("Inserisci un numero tra 1 e 5 per scegliere lo scenario di test: ")
@@ -85,6 +87,12 @@ elif scelta == 4:
 
 elif scelta == 5:
     print("[EXECUTE] Eseguo testScenario5.java")
+    subprocess.run(["adb", "shell", "am", "instrument", "-w",
+                    "-e", "class", scenario5,
+                    "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
+
+elif scelta == 6:
+    print("[EXECUTE] Eseguo testScenario6.java")
     subprocess.run(["adb", "shell", "am", "instrument", "-w",
                     "-e", "class", scenario5,
                     "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
