@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class testScenario2 {
+public class testScenario2NoOpt {
 
     @Rule
     public ActivityScenarioRule<Activity1_New> mActivityScenarioRule =

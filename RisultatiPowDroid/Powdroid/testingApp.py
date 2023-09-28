@@ -43,56 +43,52 @@ print("[CONNECTION] Connessione adb riuscita.")
 powdroid_process.stdin.write(b'\n')
 powdroid_process.stdin.flush()
 
-scenario1 = "com.example.robotinteraction.testScenario1"
-scenario2 = "com.example.robotinteraction.testScenario2"
-scenario3 = "com.example.robotinteraction.testScenario3"
-scenario4 = "com.example.robotinteraction.testScenario4"
-scenario5 = "com.example.robotinteraction.testScenario5"
-scenario6 = "com.example.robotinteraction.testScenario6"
+ottimizzata = input("[SCELTA] Vuoi eseguire il test sull'applicazione ottimizzata? (y/n): ").lower()
+
+if ottimizzata == "y":
+    #scenario2 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario2.java"
+    #scenario3 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario3.java"
+    #scenario5 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario5.java"
+    scenario2 = "com.example.robotinteraction.testScenario2Opt"
+    scenario3 = "com.example.robotinteraction.testScenario3Opt"
+    scenario5 = "com.example.robotinteraction.testScenario5Opt"
+
+elif ottimizzata == "n":
+    #scenario2 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkNonOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario2.java"
+    #scenario3 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkNonOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario3.java"
+    #scenario5 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkNonOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario5.java"
+    scenario2 = "com.example.robotinteraction.testScenario2NoOpt"
+    scenario3 = "com.example.robotinteraction.testScenario3NoOpt"
+    scenario5 = "com.example.robotinteraction.testScenario5NoOpt"
 
 print("Test disponibili:")
-print("[SCENARIO1] " + scenario1)
 print("[SCENARIO2] " + scenario2)
 print("[SCENARIO3] " + scenario3)
-print("[SCENARIO4] " + scenario4)
 print("[SCENARIO5] " + scenario5)
-print("[SCENARIO6] " + scenario6)
+'''
+scenario1 = "com.example.robotinteraction.testScenario2"
 
+# Ora esegui il comando adb in base alla scelta
+subprocess.run(["adb", "shell", "am", "instrument", "-w",
+                "-e", "class", scenario1,
+                "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
+'''
+scelta = input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
 
-scelta = input("Inserisci un numero tra 1 e 5 per scegliere lo scenario di test: ")
-
-if scelta == 1:
-    print("[EXECUTE] Eseguo testScenario1.java")
-    subprocess.run(["adb", "shell", "am", "instrument", "-w",
-                    "-e", "class", scenario1,
-                    "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
-
-elif scelta == 2:
-    print("[EXECUTE] Eseguo testScenario2.java")
+if scelta == "2":
+    print("[EXECUTE] Eseguo " + scenario2)
     subprocess.run(["adb", "shell", "am", "instrument", "-w",
                     "-e", "class", scenario2,
                     "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
 
-elif scelta == 3:
-    print("[EXECUTE] Eseguo testScenario3.java")
+elif scelta == "3":
+    print("[EXECUTE] Eseguo " + scenario3)
     subprocess.run(["adb", "shell", "am", "instrument", "-w",
                     "-e", "class", scenario3,
                     "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
 
-elif scelta == 4:
-    print("[EXECUTE] Eseguo testScenario4.java")
-    subprocess.run(["adb", "shell", "am", "instrument", "-w",
-                    "-e", "class", scenario4,
-                    "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
-
-elif scelta == 5:
-    print("[EXECUTE] Eseguo testScenario5.java")
-    subprocess.run(["adb", "shell", "am", "instrument", "-w",
-                    "-e", "class", scenario5,
-                    "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
-
-elif scelta == 6:
-    print("[EXECUTE] Eseguo testScenario6.java")
+elif scelta == "5":
+    print("[EXECUTE] Eseguo " + scenario5)
     subprocess.run(["adb", "shell", "am", "instrument", "-w",
                     "-e", "class", scenario5,
                     "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
@@ -105,7 +101,7 @@ powdroid_process.stdin.flush()
 subprocess.run(["adb", "disconnect"])
 
 while len(check_adb_devices()) != 1:
-    print("[CONNECT] Si prega di collegare il dispositivo Android.")
+    print("[CONNECT] Si prega di collegare il dispositivo Android per salvare i dati di powdroid.")
     time.sleep(10)
 
 print("[WAIT] Powdroid save data...")
