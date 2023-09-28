@@ -1,4 +1,0 @@
-metric,type,start_time,end_time,value,opt
-Top app,service,1695816708577,1695816727599,com.android.settings,1000
-Top app,service,1695816727599,1695816818707,com.example.robotinteraction,10031
-Top app,service,1695816818707,1695816919320,com.android.settings,1000

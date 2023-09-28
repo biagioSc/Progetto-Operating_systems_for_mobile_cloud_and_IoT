@@ -173,6 +173,7 @@ public class Activity6_Chat extends AppCompatActivity {
     private void initializeQuestionList() {
         questionList = new ArrayList<>();
 
+        /*
         questionList.add(new Activity_Question("Storia", "Qual è l'evento più importante della storia?", "La Rivoluzione Industriale", "La scoperta dell'America", "La caduta dell'Impero Romano", "La Guerra Fredda"));
         questionList.add(new Activity_Question("Storia", "Chi è stato il primo presidente degli Stati Uniti?", "George Washington", "Thomas Jefferson", "Benjamin Franklin", "Abraham Lincoln"));
         questionList.add(new Activity_Question("Storia", "Dove ha avuto inizio la Prima Guerra Mondiale?", "Europa", "Asia", "Africa", "Americhe"));
@@ -181,7 +182,6 @@ public class Activity6_Chat extends AppCompatActivity {
         questionList.add(new Activity_Question("Attualità", "Qual è la nuova valuta digitale proposta dalla BCE?", "Digital Euro", "Euro Coin", "Euro Digital", "Euro Bit"));
         questionList.add(new Activity_Question("Geografia", "Qual è la capitale del Brasile?", "Brasilia", "Rio de Janeiro", "Sao Paulo", "Salvador"));
         questionList.add(new Activity_Question("Geografia", "Qual è il fiume più lungo del mondo?", "Il Nilo", "Il Rio delle Amazzoni", "Il Mississippi", "Il Danubio"));
-        questionList.add(new Activity_Question("Geografia", "In quale paese si trova la Torre Eiffel?", "Francia", "Italia", "Spagna", "Germania"));
         questionList.add(new Activity_Question("Geografia", "Qual è il deserto più vasto del pianeta?", "Il deserto dell'Antartide", "Il deserto del Sahara", "Il deserto di Gobi", "Il deserto di Atacama"));
         questionList.add(new Activity_Question("Sport", "In quale sport si vince la Coppa Davis?", "Tennis", "Calcio", "Golf", "Basket"));
         questionList.add(new Activity_Question("Sport", "Quale squadra ha vinto di più nella storia dei Campionati mondiali di calcio?", "Brasile", "Italia", "Germania", "Argentina"));
@@ -198,6 +198,32 @@ public class Activity6_Chat extends AppCompatActivity {
         questionList.add(new Activity_Question("Letteratura", "Chi è l'autore di \"1984\"?", "George Orwell", "Aldous Huxley", "Ray Bradbury", "J.D. Salinger"));
         questionList.add(new Activity_Question("Letteratura", "Qual è l'opera più famosa di William Shakespeare?", "Romeo e Giulietta", "Il mercante di Venezia", "Macbeth", "Amleto"));
         questionList.add(new Activity_Question("Letteratura", "Chi ha scritto \"Il Gattopardo\"?", "Giuseppe Tomasi di Lampedusa", "Italo Calvino", "Umberto Eco", "Luigi Pirandello"));
+        */
+        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Storia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Attualità", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Geografia", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Sport", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Scienza", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Informatica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Letteratura", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Musica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Musica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+        questionList.add(new Activity_Question("Musica", "Domanda", "Risposta giusta", "Risposta sbagliata 1", "Risposta sbagliata 2", "Risposta sbagliata 3"));
+
     }
     private void startGame() {
         resetRadioButtonTextColors(); // Imposta tutti i testi a nero
@@ -213,7 +239,7 @@ public class Activity6_Chat extends AppCompatActivity {
             answerOptions.add(currentQuestion.getWrongAnswer1());
             answerOptions.add(currentQuestion.getWrongAnswer2());
             answerOptions.add(currentQuestion.getWrongAnswer3());
-            Collections.shuffle(answerOptions);
+            //Collections.shuffle(answerOptions);
 
             ((RadioButton) answerRadioGroup.getChildAt(0)).setText("A) " + answerOptions.get(0));
             ((RadioButton) answerRadioGroup.getChildAt(1)).setText("B) " + answerOptions.get(1));
