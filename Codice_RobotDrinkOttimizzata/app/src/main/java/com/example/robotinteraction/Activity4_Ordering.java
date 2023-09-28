@@ -1,10 +1,8 @@
 package com.example.robotinteraction;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,23 +18,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Activity4_Ordering extends AppCompatActivity {
 
-    private TextView textViewRecommendedDrink, buttonExit;  // TextView per visualizzare il drink raccomandato
-    private Spinner spinnerDrinks;  // Spinner per selezionare un drink dalla lista
-    private final List<String> drinkList = new ArrayList<>();  // Lista dei drink
-    private Animation buttonAnimation;  // Animazione per i pulsanti
-    private Button buttonOrderRecommendedDrink, buttonOrder;  // Pulsanti per ordinare
-    private static final long TIME_THRESHOLD = 60000; // 60 secondi
-    private final Handler handler = new Handler(Looper.getMainLooper());  // Handler per il timer di inattività
-    private Runnable runnable;  // Runnable per la logica del timer di inattività
-    private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
+    private TextView textViewRecommendedDrink;
+    private Spinner spinnerDrinks;
+    private final List<String> drinkList = new ArrayList<>();
+    private Animation buttonAnimation;
+    private Button buttonOrderRecommendedDrink, buttonOrder;
+    private static final long TIME_THRESHOLD = 60000;
+    private final Handler handler = new Handler();
+    private Runnable runnable;
+    private Socket_Manager socket;
     private TextView textViewLoggedIn;
-    private final Random random = new Random();
     private String sessionID = "-1", user = "Guest", recommendedDrink;
     private ImageButton exitButton;
+
+    private final View.OnTouchListener animationTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
+                applyButtonAnimation(v);
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +56,13 @@ public class Activity4_Ordering extends AppCompatActivity {
         setupListeners();
         receiveParam();
         setUpComponent();
-
     }
 
     private void connection() {
-        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance();
         runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
+
     private void initUIComponents() {
         textViewRecommendedDrink = findViewById(R.id.textViewDrinkName);
         spinnerDrinks = findViewById(R.id.spinnerDrinks);
@@ -65,33 +72,25 @@ public class Activity4_Ordering extends AppCompatActivity {
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         exitButton = findViewById(R.id.exitToggle);
     }
+
     private void setupListeners() {
-        setTouchListenerForAnimation(buttonOrderRecommendedDrink);
-        setTouchListenerForAnimation(buttonOrder);
-        setTouchListenerForAnimation(exitButton);
+        buttonOrderRecommendedDrink.setOnTouchListener(animationTouchListener);
+        buttonOrder.setOnTouchListener(animationTouchListener);
+        exitButton.setOnTouchListener(animationTouchListener);
     }
-    private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
-            }
-        });
-    }
+
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 100);
+        handler.postDelayed(v::clearAnimation, 100);
     }
+
     private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity4_Ordering.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
+
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
         if(!("Guest".equals(user))) {
             try {
@@ -113,46 +112,54 @@ public class Activity4_Ordering extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         resetInactivityTimer();
         return super.onTouchEvent(event);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         resetInactivityTimer();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
     }
-    private void startInactivityTimer() {
 
+    private void startInactivityTimer() {
         handler.postDelayed(runnable, TIME_THRESHOLD);
     }
+
     private void resetInactivityTimer() {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
+
     public void onClickOrdina(View v) {
         v.setClickable(false);
-        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+        resetInactivityTimer();
         String selectedDrink = spinnerDrinks.getSelectedItem().toString();
         navigateToParam(Activity5_Serving.class, sessionID, user, selectedDrink);
     }
+
     public void onClickConsigliato(View v) {
         v.setClickable(false);
-        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+        resetInactivityTimer();
         String recommendedDrink = textViewRecommendedDrink.getText().toString();
         navigateToParam(Activity5_Serving.class, sessionID, user, recommendedDrink);
     }
+
     public void onClickExit(View v) {
         v.setClickable(false);
-        resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
+        resetInactivityTimer();
         navigateToParam(Activity8_Gone.class, sessionID, user, "ORDERING");
     }
+
     private void receiveParam() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -169,9 +176,9 @@ public class Activity4_Ordering extends AppCompatActivity {
 
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(() -> textViewLoggedIn.setText(username));
+                textViewLoggedIn.setText(username);
             } else {
-                runOnUiThread(() -> textViewLoggedIn.setText(user));
+                textViewLoggedIn.setText(user);
             }
             if(!("Guest".equals(user))) {
                 try {
@@ -181,25 +188,23 @@ public class Activity4_Ordering extends AppCompatActivity {
                     Thread.sleep(500);
 
                 } catch (Exception e) {
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                    Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show();
                     sessionID = "-1";
                     user = "Guest";
                 }
             }
         }
     }
+
     private void setUpComponent() {
-        setRandomRecommendedDrink();
+        textViewRecommendedDrink.setText(recommendedDrink);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, drinkList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        runOnUiThread(() -> spinnerDrinks.setAdapter(adapter));
-    }
-    private void setRandomRecommendedDrink() {
-        runOnUiThread(() -> textViewRecommendedDrink.setText(recommendedDrink));
+        spinnerDrinks.setAdapter(adapter);
     }
 
     public void ExitOrdering(View v) {
-
         v.setClickable(false);
         if(!("Guest".equals(user)) && socket != null) {
             try {
@@ -210,11 +215,11 @@ public class Activity4_Ordering extends AppCompatActivity {
                     Thread.sleep(500);
                 }
             } catch (Exception e) {
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show();
                 sessionID = "-1";
                 user = "Guest";
             }
-        }else if(socket != null){
+        } else if(socket != null) {
             socket.close();
         }
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -223,7 +228,5 @@ public class Activity4_Ordering extends AppCompatActivity {
         startActivity(intent);
         finishAffinity();
         finish();
-
     }
-
 }

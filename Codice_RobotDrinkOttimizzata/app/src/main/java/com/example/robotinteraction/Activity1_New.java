@@ -1,7 +1,5 @@
 package com.example.robotinteraction;
 
-// Import delle librerie necessarie
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,80 +8,77 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.textfield.TextInputLayout;
 
-
 public class Activity1_New extends AppCompatActivity {
+
     private EditText editTextEmail, editTextPassword;
     private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private TextView textViewError, textViewSignUp, textViewGuest;
     private Button buttonLogin;
-    private Animation buttonAnimation;
     private Socket_Manager socket;
     private boolean isPasswordVisible = false;
     private ImageButton passwordToggle, exitButton;
     private String sessionID = "-1", user = "Guest", email, password, LOG_IN_RESPONSE = "LOG_IN_ERROR";
-    private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
+    private static final long TIME_THRESHOLD = 60000;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private boolean isServerConnected = false;
+    private int connectionAttempts = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_1new);
-
         getWindow().setWindowAnimations(0);
-
-        connection();
         initUIComponents();
+        connection();
         setupListeners();
-
         receiveParam();
     }
 
     private void connection() {
         initializeSocketAndSetCallback();
         runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
+        startInactivityTimer();
     }
+
     private void initializeSocketAndSetCallback() {
-        socket = Socket_Manager.getInstance();  // Aggiunto
+        socket = Socket_Manager.getInstance();
         if (socket != null) {
             socket.setConnectionListener(new ConnectionListener() {
                 @Override
                 public void onConnected() {
                     isServerConnected = true;
-                    // Aggiorna l'UI o fai altre operazioni qui se necessario
+                    connectionAttempts = 0;
                 }
 
                 @Override
                 public void onConnectionFailed(String errore) {
                     isServerConnected = false;
-                    // Mostra un popup o altre notifiche qui
-                    runOnUiThread(() -> showPopupMessage());
+                    connectionAttempts++;
+                    if (connectionAttempts < 3) {
+                        initializeSocketAndSetCallback();
+                    } else {
+                        runOnUiThread(() -> showPopupMessage());
+                    }
                 }
             });
         } else {
-            // Se l'istanza è null, mostra un popup
             runOnUiThread(() -> showPopupMessage());
         }
     }
+
     private void initUIComponents() {
-        buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         emailTextInputLayout = findViewById(R.id.emailTextInputLayout);
@@ -95,6 +90,7 @@ public class Activity1_New extends AppCompatActivity {
         passwordToggle = findViewById(R.id.passwordToggle);
         exitButton = findViewById(R.id.exitToggle);
     }
+
     private void setupListeners() {
         setFocusChangeListener(editTextEmail);
         setFocusChangeListener(editTextPassword);
@@ -103,6 +99,7 @@ public class Activity1_New extends AppCompatActivity {
         setTouchListenerForAnimation(textViewSignUp);
         setTouchListenerForAnimation(textViewGuest);
     }
+
     private void receiveParam() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -112,12 +109,13 @@ public class Activity1_New extends AppCompatActivity {
 
             if("ERROR".equals(user)) {
                 showPopupMessage();
-            }else{
+            } else {
                 editTextEmail.setText(email);
                 editTextPassword.setText(password);
             }
         }
     }
+
     private void setFocusChangeListener(View view) {
         view.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -126,28 +124,23 @@ public class Activity1_New extends AppCompatActivity {
             }
         });
     }
+
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
             }
+            return false;
         });
     }
-    private void applyButtonAnimation(View v) {
-        v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 100);
-    }
+
     private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity1_New.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
+
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
         Intent intent = new Intent(Activity1_New.this, targetActivity);
         intent.putExtra("param1", param1);
@@ -156,29 +149,34 @@ public class Activity1_New extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         resetInactivityTimer();
         return super.onTouchEvent(event);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         resetInactivityTimer();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
     }
-    private void startInactivityTimer() {
 
+    private void startInactivityTimer() {
         handler.postDelayed(runnable, TIME_THRESHOLD);
     }
+
     private void resetInactivityTimer() {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
+
     public void onClickSignUp(View v) {
         v.setClickable(false);
         resetInactivityTimer();
@@ -186,20 +184,20 @@ public class Activity1_New extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     public void onClickGuest(View v) {
         v.setClickable(false);
         resetInactivityTimer();
         sessionID = "-1";
         user="Guest";
         navigateToParam(Activity2_Welcome.class, sessionID, user,"");
-        try {
-            socket.close();
-        } catch (Exception e) {
-            sessionID = "-1";
-            user = "Guest";
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (Exception ignored) { }
         }
-
     }
+
     public void onClickAccedi(View v) {
         v.setClickable(false);
         resetInactivityTimer();
@@ -211,13 +209,11 @@ public class Activity1_New extends AppCompatActivity {
             textViewError.setVisibility(View.VISIBLE);
         } else {
             new Thread(() -> {
-                runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
                 try {
                     socket.send("LOG_IN" + " " + email + " " + password);
-                    Thread.sleep(250);
                     String response = socket.receive();
-                    Thread.sleep(250);
-                    if(response=="[ERROR]"){
+
+                    if("[ERROR]".equals(response)) {
                         throw new Exception();
                     }
                     String[] parts = response.split(" ");
@@ -228,55 +224,47 @@ public class Activity1_New extends AppCompatActivity {
                     }
                     if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
                         navigateToParam(Activity2_Welcome.class, sessionID, user,"");
-                        runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
                     } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
                         v.setClickable(true);
                         runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    // Se c'è un'eccezione, mostra il popup
-                    showPopupMessage();
+                    runOnUiThread(this::showPopupMessage);
                 }
             }).start();
         }
     }
+
     public void showPopupMessage() {
-        runOnUiThread(() -> {
-            View customView = LayoutInflater.from(Activity1_New.this).inflate(R.layout.activity_00popupguest, null);
+        View customView = LayoutInflater.from(Activity1_New.this).inflate(R.layout.activity_00popupguest, null);
 
-            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(Activity1_New.this);
-            builder.setView(customView)
-                    .setCancelable(false)  // Evita la chiusura cliccando all'esterno
-                    .setPositiveButton("Accedi come Ospite", (dialog, id) -> {
-                        sessionID = "-1";
-                        user = "Guest";
-                        navigateToParam(Activity2_Welcome.class, sessionID, user,"");
-                        dialog.dismiss();
-                        finish();
-                    })
-                    .setCancelable(false)  // Evita la chiusura cliccando all'esterno
-                    .setNegativeButton("Esci", (dialog, id) -> {
-                        sessionID = "-1";
-                        user = "Guest";
-                        navigateToParam(Activity8_Gone.class, sessionID, user, "NEW");
-                        dialog.dismiss();
-                        finish();
-                    });
+        AlertDialog.Builder builder = new AlertDialog.Builder(Activity1_New.this);
+        builder.setView(customView)
+                .setCancelable(false)
+                .setPositiveButton("Accedi come Ospite", (dialog, id) -> {
+                    sessionID = "-1";
+                    user = "Guest";
+                    navigateToParam(Activity2_Welcome.class, sessionID, user,"");
+                    dialog.dismiss();
+                    finish();
+                })
+                .setNegativeButton("Esci", (dialog, id) -> {
+                    sessionID = "-1";
+                    user = "Guest";
+                    navigateToParam(Activity8_Gone.class, sessionID, user, "NEW");
+                    dialog.dismiss();
+                    finish();
+                });
 
-            androidx.appcompat.app.AlertDialog dialog = builder.create();
-            dialog.setOnShowListener(dialogInterface -> {
-                final int DARK_GREEN_COLOR = Color.parseColor("#00A859");
-                Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setTextColor(DARK_GREEN_COLOR);
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(dialogInterface -> {
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setTextColor(Color.parseColor("#00A859"));
 
-                Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                negativeButton.setTextColor(Color.RED);
-
-            });
-
-            dialog.show();
+            Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+            negativeButton.setTextColor(Color.RED);
         });
+        dialog.show();
     }
 
     public void togglePasswordVisibility(View view) {
@@ -293,22 +281,18 @@ public class Activity1_New extends AppCompatActivity {
     }
 
     public void ExitNew(View v) {
-
         v.setClickable(false);
-        if(!("Guest".equals(user)) && socket != null) {
+        if(!"Guest".equals(user) && socket != null) {
             try {
                 socket.send("USER_GONE");
-                Thread.sleep(500);
                 if(Integer.parseInt(sessionID) != 0) {
                     socket.send(sessionID);
-                    Thread.sleep(500);
                 }
             } catch (Exception e) {
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                 sessionID = "-1";
                 user = "Guest";
             }
-        }else if(socket != null){
+        } else if(socket != null) {
             socket.close();
         }
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -317,7 +301,5 @@ public class Activity1_New extends AppCompatActivity {
         startActivity(intent);
         finishAffinity();
         finish();
-
     }
-
 }

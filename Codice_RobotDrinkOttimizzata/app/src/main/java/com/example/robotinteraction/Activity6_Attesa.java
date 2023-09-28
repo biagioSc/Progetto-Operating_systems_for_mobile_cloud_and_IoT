@@ -54,19 +54,16 @@ public class Activity6_Attesa extends AppCompatActivity {
         setTouchListenerForAnimation(exitButton);
     }
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                applyButtonAnimation(v);
             }
+            return false;
         });
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 100);
+        v.postDelayed(v::clearAnimation, 100);
     }
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
         Intent intent = new Intent(Activity6_Attesa.this, targetActivity);
@@ -89,27 +86,25 @@ public class Activity6_Attesa extends AppCompatActivity {
 
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(() -> textViewLoggedIn.setText(username));
+                textViewLoggedIn.setText(username);
             } else {
-                runOnUiThread(() -> textViewLoggedIn.setText(user));
+                textViewLoggedIn.setText(user);
             }
         }
     }
     private void setUpComponent(){
         textViewTimeElapsed.setText("Il tuo " + selectedDrink + " è quasi pronto");
 
-        new CountDownTimer(20000, 1000) {
+        CountDownTimer timer = new CountDownTimer(20000, 1000) {
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
-                runOnUiThread(() -> textViewWaitTime.setText("Tempo di attesa: " + seconds + " secondi"));
+                textViewWaitTime.setText("Tempo di attesa: " + seconds + " secondi");
             }
 
             public void onFinish() {
                 progressBarWaiting.setVisibility(ProgressBar.INVISIBLE);
-                runOnUiThread(() -> {
-                    textViewPleaseWait.setText("Completato!");
-                    textViewTimeElapsed.setText("Il tuo drink è pronto");
-                });
+                textViewPleaseWait.setText("Completato!");
+                textViewTimeElapsed.setText("Il tuo drink è pronto");
 
                 new Handler().postDelayed(() -> {
                     if(!("Guest".equals(user))) {

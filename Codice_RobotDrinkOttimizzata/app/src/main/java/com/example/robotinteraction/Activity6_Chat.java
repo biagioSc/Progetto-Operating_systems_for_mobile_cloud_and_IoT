@@ -21,8 +21,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 public class Activity6_Chat extends AppCompatActivity {
 
@@ -34,17 +37,19 @@ public class Activity6_Chat extends AppCompatActivity {
     private int score = 0;
     private ImageButton exitButton;
     private Animation buttonAnimation;
-    private static final long TIME_THRESHOLD = 60000; // 20 secondi
+    private static final long TIME_THRESHOLD = 60000;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-    private String[] selectedTopics; // Aggiungi gli argomenti desiderati
+    private Set<String> selectedTopicsSet;
     private String sessionID = "-1", user = "Guest", selectedDrink, innerResponseDescription;
-    private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
+    private Socket_Manager socket;
     private ProgressBar progressBar;
     private List<Activity_Question> selectedQuestions = new ArrayList<>();
-    private static final long DELAY_BEFORE_NEXT_QUESTION = 1000; // Ritardo di 10 secondi
-    private static final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
-    private static final int ORANGE = Color.parseColor("#FFA500"); // Colore verde scuro
+    private static final long DELAY_BEFORE_NEXT_QUESTION = 1000;
+    private static final int DARK_GREEN_COLOR = Color.parseColor("#00A859");
+    private static final int ORANGE = Color.parseColor("#FFA500");
+    private String[] selectedTopics;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,10 +64,12 @@ public class Activity6_Chat extends AppCompatActivity {
         receiveParam();
         setUpComponent();
     }
+
     private void connection() {
-        socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
+        socket = Socket_Manager.getInstance();
         runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
     }
+
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         textDomanda = findViewById(R.id.textDomanda);
@@ -74,37 +81,39 @@ public class Activity6_Chat extends AppCompatActivity {
         scoreText = findViewById(R.id.score);
         exitButton = findViewById(R.id.exitToggle);
     }
+
     private void setupListeners() {
         setTouchListenerForAnimation(confirmButton);
         setOnClickListener(confirmButton);
         setTouchListenerForAnimation(exitButton);
     }
+
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
+                applyButtonAnimation(v);
             }
+            return false;
         });
     }
-    private void setOnClickListener(View view) {
 
+    private void setOnClickListener(View view) {
         view.setOnClickListener(v -> checkAnswer());
     }
+
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 100);
     }
+
     private void navigateTo(Class<?> targetActivity, String param1, String param2) {
         Intent intent = new Intent(Activity6_Chat.this, targetActivity);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
+
     private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
         Intent intent = new Intent(Activity6_Chat.this, targetActivity);
         intent.putExtra("param1", param1);
@@ -115,29 +124,34 @@ public class Activity6_Chat extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         resetInactivityTimer();
         return super.onTouchEvent(event);
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         resetInactivityTimer();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
     }
-    private void startInactivityTimer() {
 
+    private void startInactivityTimer() {
         handler.postDelayed(runnable, TIME_THRESHOLD);
     }
+
     private void resetInactivityTimer() {
         handler.removeCallbacks(runnable);
         startInactivityTimer();
     }
+
     private void receiveParam() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -145,18 +159,18 @@ public class Activity6_Chat extends AppCompatActivity {
             user = intent.getStringExtra("param2");
             selectedDrink = intent.getStringExtra("param3");
             selectedTopics = intent.getStringArrayExtra("param4");
+            selectedTopicsSet = new HashSet<>(Arrays.asList(selectedTopics));
 
             int atIndex = user.indexOf("@");
-
-            // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(() -> textViewLoggedIn.setText(username));
+                textViewLoggedIn.setText(username);
             } else {
-                runOnUiThread(() -> textViewLoggedIn.setText(user));
+                textViewLoggedIn.setText(user);
             }
         }
     }
+
     private void setUpComponent() {
         initializeQuestionList();
 
@@ -170,6 +184,7 @@ public class Activity6_Chat extends AppCompatActivity {
         progressBar.setProgress(currentQuestionIndex);
         startGame();
     }
+
     private void initializeQuestionList() {
         questionList = new ArrayList<>();
 
@@ -181,7 +196,6 @@ public class Activity6_Chat extends AppCompatActivity {
         questionList.add(new Activity_Question("Attualità", "Qual è la nuova valuta digitale proposta dalla BCE?", "Digital Euro", "Euro Coin", "Euro Digital", "Euro Bit"));
         questionList.add(new Activity_Question("Geografia", "Qual è la capitale del Brasile?", "Brasilia", "Rio de Janeiro", "Sao Paulo", "Salvador"));
         questionList.add(new Activity_Question("Geografia", "Qual è il fiume più lungo del mondo?", "Il Nilo", "Il Rio delle Amazzoni", "Il Mississippi", "Il Danubio"));
-        questionList.add(new Activity_Question("Geografia", "In quale paese si trova la Torre Eiffel?", "Francia", "Italia", "Spagna", "Germania"));
         questionList.add(new Activity_Question("Geografia", "Qual è il deserto più vasto del pianeta?", "Il deserto dell'Antartide", "Il deserto del Sahara", "Il deserto di Gobi", "Il deserto di Atacama"));
         questionList.add(new Activity_Question("Sport", "In quale sport si vince la Coppa Davis?", "Tennis", "Calcio", "Golf", "Basket"));
         questionList.add(new Activity_Question("Sport", "Quale squadra ha vinto di più nella storia dei Campionati mondiali di calcio?", "Brasile", "Italia", "Germania", "Argentina"));
@@ -198,22 +212,24 @@ public class Activity6_Chat extends AppCompatActivity {
         questionList.add(new Activity_Question("Letteratura", "Chi è l'autore di \"1984\"?", "George Orwell", "Aldous Huxley", "Ray Bradbury", "J.D. Salinger"));
         questionList.add(new Activity_Question("Letteratura", "Qual è l'opera più famosa di William Shakespeare?", "Romeo e Giulietta", "Il mercante di Venezia", "Macbeth", "Amleto"));
         questionList.add(new Activity_Question("Letteratura", "Chi ha scritto \"Il Gattopardo\"?", "Giuseppe Tomasi di Lampedusa", "Italo Calvino", "Umberto Eco", "Luigi Pirandello"));
+
     }
+    private boolean isTopicSelected(String topic) {
+        return selectedTopicsSet.contains(topic);
+    }
+
     private void startGame() {
-        resetRadioButtonTextColors(); // Imposta tutti i testi a nero
+        resetRadioButtonTextColors();
 
         if (currentQuestionIndex < selectedQuestions.size()) {
             confirmButton.setEnabled(true);
             Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
-            runOnUiThread(() -> {
-                textDomanda.setText(currentQuestion.getTopic() + ": " + currentQuestion.getQuestion());
-            });
+            textDomanda.setText(currentQuestion.getTopic() + ": " + currentQuestion.getQuestion());
             List<String> answerOptions = new ArrayList<>();
             answerOptions.add(currentQuestion.getCorrectAnswer());
             answerOptions.add(currentQuestion.getWrongAnswer1());
             answerOptions.add(currentQuestion.getWrongAnswer2());
             answerOptions.add(currentQuestion.getWrongAnswer3());
-            Collections.shuffle(answerOptions);
 
             ((RadioButton) answerRadioGroup.getChildAt(0)).setText("A) " + answerOptions.get(0));
             ((RadioButton) answerRadioGroup.getChildAt(1)).setText("B) " + answerOptions.get(1));
@@ -221,24 +237,15 @@ public class Activity6_Chat extends AppCompatActivity {
             ((RadioButton) answerRadioGroup.getChildAt(3)).setText("D) " + answerOptions.get(3));
 
             answerRadioGroup.clearCheck();
-            answerRadioGroup.setEnabled(true); // Abilita il gruppo di radiobutton
-            progressBar.setProgress(currentQuestionIndex + 1); // Aggiorna la ProgressBar
-
+            answerRadioGroup.setEnabled(true);
+            progressBar.setProgress(currentQuestionIndex + 1);
         } else {
             scoreTextView.setText("Hai finito il quiz. Punteggio: " + score);
-            //navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
+            showPopupMessage();
         }
     }
-    private boolean isTopicSelected(String topic) {
-        for (String selectedTopic : selectedTopics) {
-            if (selectedTopic.equals(topic)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
     private void checkAnswer() {
-        int darkGreenColor = DARK_GREEN_COLOR;
         Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
         int selectedRadioButtonId = answerRadioGroup.getCheckedRadioButtonId();
 
@@ -248,36 +255,23 @@ public class Activity6_Chat extends AppCompatActivity {
             if (selectedAnswer.equals(currentQuestion.getCorrectAnswer())) {
                 score++;
                 scoreTextView.setText("Score: " + score);
-                selectedRadioButton.setTextColor(darkGreenColor);
+                selectedRadioButton.setTextColor(DARK_GREEN_COLOR);
             } else {
                 selectedRadioButton.setTextColor(Color.RED);
-
                 for (int i = 0; i < answerRadioGroup.getChildCount(); i++) {
                     RadioButton radioButton = (RadioButton) answerRadioGroup.getChildAt(i);
-                    String answerText = radioButton.getText().toString().substring(3);
-                    if (answerText.equals(currentQuestion.getCorrectAnswer())) {
-                        radioButton.setTextColor(darkGreenColor);
-                        break;  // Esci dal loop una volta trovata la risposta corretta
+                    if (radioButton.getText().toString().substring(3).equals(currentQuestion.getCorrectAnswer())) {
+                        radioButton.setTextColor(DARK_GREEN_COLOR);
+                        break;
                     }
                 }
             }
-
+            answerRadioGroup.setEnabled(false);
             currentQuestionIndex++;
-            confirmButton.setEnabled(false);
-            delayedStartNextQuestion();
-        } else {
-            Toast.makeText(Activity6_Chat.this, "Seleziona una risposta prima di confermare.", Toast.LENGTH_SHORT).show();
+            handler.postDelayed(this::startGame, DELAY_BEFORE_NEXT_QUESTION);
         }
     }
-    private void delayedStartNextQuestion() {
-        new Handler().postDelayed(() -> {
-            if (currentQuestionIndex >= selectedQuestions.size()) {
-                new Handler().postDelayed(this::showPopupMessage, 200);
-            } else {
-                startGame();
-            }
-        }, DELAY_BEFORE_NEXT_QUESTION);
-    }
+
     private void resetRadioButtonTextColors() {
         for (int i = 0; i < answerRadioGroup.getChildCount(); i++) {
             RadioButton radioButton = (RadioButton) answerRadioGroup.getChildAt(i);

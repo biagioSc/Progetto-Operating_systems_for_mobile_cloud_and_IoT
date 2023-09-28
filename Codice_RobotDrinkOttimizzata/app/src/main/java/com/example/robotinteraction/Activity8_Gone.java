@@ -39,7 +39,7 @@ public class Activity8_Gone extends AppCompatActivity {
         initUIComponents();
         setupListeners();
         receiveParam();
-        ShowRatingBarIfVisitedOrdering(ratingbar,messageRating,messageValutazione,buttonExit);
+        ShowRatingBarIfVisitedOrdering();
     }
     private void connection() {
         socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
@@ -53,11 +53,7 @@ public class Activity8_Gone extends AppCompatActivity {
         messageValutazione = findViewById(R.id.textViewMessageValutazione);
     }
 
-    public void ShowRatingBarIfVisitedOrdering(final RatingBar ratingbar,
-                                                     final TextView messageRating,
-                                                     final TextView messageValutazione,
-                                                     final TextView buttonExit) {
-
+    public void ShowRatingBarIfVisitedOrdering() {
         if ("FAREWELLING".equals(activity)) {
             // Imposta l'ascoltatore per la RatingBar
             ratingbar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> updateRatingString((int) rating));
@@ -66,7 +62,6 @@ public class Activity8_Gone extends AppCompatActivity {
             ratingbar.setVisibility(View.INVISIBLE);
             messageRating.setVisibility(View.INVISIBLE);
             messageValutazione.setVisibility(View.INVISIBLE);
-
             // Aggiorna la posizione del pulsante di uscita
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) buttonExit.getLayoutParams();
             params.addRule(RelativeLayout.BELOW, R.id.textViewMessage);
@@ -76,29 +71,29 @@ public class Activity8_Gone extends AppCompatActivity {
 
 
     private void updateRatingString(int rating) {
-        TextView ratingString = findViewById(R.id.textViewMessageRating);
-        ratingString.setTextColor(Color.BLACK);
+        messageRating.setTextColor(Color.BLACK);
         switch (rating) {
             case 1:
-                ratingString.setText("Scarsa!");
+                messageRating.setText("Scarsa!");
                 break;
             case 2:
-                ratingString.setText("Abbastanza Bene!");
+                messageRating.setText("Abbastanza Bene!");
                 break;
             case 3:
-                ratingString.setText("Bene!");
+                messageRating.setText("Bene!");
                 break;
             case 4:
-                ratingString.setText("Molto Bene!");
+                messageRating.setText("Molto Bene!");
                 break;
             case 5:
-                ratingString.setText("Eccellente!");
+                messageRating.setText("Eccellente!");
                 break;
             default:
-                ratingString.setText("");
+                messageRating.setText("");
                 break;
         }
     }
+
 
     private void setupListeners() {
         setTouchListenerForAnimation(buttonExit);
@@ -113,7 +108,7 @@ public class Activity8_Gone extends AppCompatActivity {
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
-        new Handler().postDelayed(v::clearAnimation, 100);
+        v.postDelayed(v::clearAnimation, 100);
     }
     private void receiveParam() {
         Intent intent = getIntent();
@@ -123,14 +118,14 @@ public class Activity8_Gone extends AppCompatActivity {
             activity = intent.getStringExtra("param3");
 
             int atIndex = -1;
-            if (user != null && !user.equals("ERROR")) {  // Verifica che user non sia nullo e non sia "ERROR"
+            if (user != null && !user.equals("ERROR")) {
                 atIndex = user.indexOf("@");
                 // Verifica se è presente il simbolo "@"
                 if (atIndex != -1) {
                     String username = user.substring(0, atIndex);
-                    runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username));
+                    textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username);
                 } else {
-                    runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user));
+                    textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user);
                 }
             }
         }

@@ -127,12 +127,13 @@ public class Activity7_Farewelling extends AppCompatActivity {
             // Verificare se è presente il simbolo "@"
             if (atIndex != -1) {
                 String username = user.substring(0, atIndex);
-                runOnUiThread(() -> textViewLoggedIn.setText(username));
+                textViewLoggedIn.setText(username);
             } else {
-                runOnUiThread(() -> textViewLoggedIn.setText(user));
+                textViewLoggedIn.setText(user);
             }
         }
     }
+
     private void setUpComponent() {
         runOnUiThread(() -> {
             textViewDrinkName.setText(selectedDrink);
