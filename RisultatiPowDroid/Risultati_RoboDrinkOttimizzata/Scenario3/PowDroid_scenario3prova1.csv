@@ -1,0 +1,86 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1696002222210,1696002222218,8,3852,1876,239.186765,0.921347,0.000532,0.007371,['com.android.settings'],True,False,False,True,True,False,False,False,['RILJ_ACK_WL' 'screen']
+1696002222218,1696002222223,5,3852,1876,239.186765,0.921347,0.000332,0.004607,['com.android.settings'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'RILJ_ACK_WL' 'screen']
+1696002222223,1696002222249,26,3852,1876,239.186765,0.921347,0.001727,0.023955,['com.android.settings'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'RILJ_ACK_WL' 'screen']
+1696002222249,1696002222252,3,3852,1876,239.186765,0.921347,0.000199,0.002764,['com.android.settings'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'RILJ_ACK_WL' 'screen']
+1696002222252,1696002222458,206,3852,1876,239.186765,0.921347,0.013687,0.189798,['com.android.settings'],True,False,False,True,True,False,False,False,['RILJ_ACK_WL' 'screen']
+1696002222458,1696002224078,1620,3852,1876,239.186765,0.921347,0.107634,1.492583,['com.android.settings'],True,False,False,True,True,False,False,False,['screen']
+1696002224078,1696002224089,11,3852,1876,239.186765,0.921347,0.000731,0.010135,['com.android.settings'],True,False,False,True,True,False,False,False,['IpReachabilityMonitor.wlan0' 'screen']
+1696002224089,1696002224093,4,3852,1876,239.186765,0.921347,0.000266,0.003685,['com.android.settings'],True,False,False,True,True,False,False,False,['GCM_WORK' 'IpReachabilityMonitor.wlan0' 'screen']
+1696002224093,1696002224994,901,3852,1876,239.186765,0.921347,0.059863,0.830134,['com.android.settings'],True,False,False,True,True,False,False,False,['IpReachabilityMonitor.wlan0' 'screen']
+1696002224994,1696002224999,5,3852,1876,239.186765,0.921347,0.000332,0.004607,['com.android.settings'],True,False,False,True,True,False,False,False,['GCM_WORK' 'IpReachabilityMonitor.wlan0' 'screen']
+1696002224999,1696002225028,29,3852,1876,239.186765,0.921347,0.001927,0.026719,['com.android.settings'],True,False,False,True,True,False,False,False,['IpReachabilityMonitor.wlan0' 'screen']
+1696002225028,1696002225029,1,3852,1876,239.186765,0.921347,0.000066,0.000921,['com.android.settings'],True,False,False,True,True,False,False,False,['GCM_WORK' 'IpReachabilityMonitor.wlan0' 'screen']
+1696002225029,1696002225050,21,3852,1876,239.186765,0.921347,0.001395,0.019348,['com.android.settings'],True,False,False,True,True,False,False,False,['IpReachabilityMonitor.wlan0' 'screen']
+1696002225050,1696002225051,1,3852,1876,239.186765,0.921347,0.000066,0.000921,['com.android.settings'],True,False,False,True,True,False,False,False,['GCM_WORK' 'IpReachabilityMonitor.wlan0' 'screen']
+1696002225051,1696002227094,2043,3852,1876,239.186765,0.921347,0.135738,1.882313,['com.android.settings'],True,False,False,True,True,False,False,False,['IpReachabilityMonitor.wlan0' 'screen']
+1696002227094,1696002227114,20,3852,1876,239.186765,0.921347,0.001329,0.018427,['com.android.settings'],True,False,False,True,True,False,False,False,['*launch*' 'IpReachabilityMonitor.wlan0' 'screen']
+1696002227114,1696002227448,334,3852,1876,239.186765,0.921347,0.022191,0.307730,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*launch*' 'IpReachabilityMonitor.wlan0' 'screen']
+1696002227448,1696002232173,4725,3852,1876,239.186765,0.921347,0.313933,4.353367,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['IpReachabilityMonitor.wlan0' 'screen']
+1696002232173,1696002233735,1562,3810,1876,239.186765,0.911302,0.103780,1.423453,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['IpReachabilityMonitor.wlan0' 'screen']
+1696002233735,1696002240027,6292,3810,1876,239.186765,0.911302,0.418045,5.733910,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002240027,1696002240028,1,3810,1876,239.186765,0.911302,0.000066,0.000911,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK' 'screen']
+1696002240028,1696002241409,1381,3810,1876,239.186765,0.911302,0.091755,1.258507,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002241409,1696002241411,2,3810,1876,239.186765,0.911302,0.000133,0.001823,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['GCM_READ' 'screen']
+1696002241411,1696002241412,1,3810,1876,239.186765,0.911302,0.000066,0.000911,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['GCM_READ' 'GCM_WORK' 'screen']
+1696002241412,1696002241444,32,3810,1876,239.186765,0.911302,0.002126,0.029162,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696002241444,1696002256644,15200,3810,1876,239.186765,0.911302,1.009900,13.851784,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002256644,1696002256651,7,3810,1876,239.186765,0.911302,0.000465,0.006379,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696002256651,1696002258597,1946,3810,1876,239.186765,0.911302,0.129294,1.773393,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002258597,1696002258753,156,3810,1876,239.186765,0.911302,0.010365,0.142163,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696002258753,1696002262370,3617,3810,1876,239.186765,0.911302,0.240316,3.296178,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002262370,1696002271044,8674,3810,1872,466.336345,1.776741,1.123612,15.411456,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002271044,1696002271520,476,3810,1872,466.336345,1.776741,0.061660,0.845729,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696002271520,1696002271521,1,3810,1872,466.336345,1.776741,0.000130,0.001777,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['RILJ_ACK_WL' '*launch*' 'screen']
+1696002271521,1696002271522,1,3810,1872,466.336345,1.776741,0.000130,0.001777,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'RILJ_ACK_WL' '*launch*' 'screen']
+1696002271522,1696002271538,16,3810,1872,466.336345,1.776741,0.002073,0.028428,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'RILJ_ACK_WL' '*launch*' 'screen']
+1696002271538,1696002271741,203,3810,1872,466.336345,1.776741,0.026296,0.360679,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['RILJ_ACK_WL' '*launch*' 'screen']
+1696002271741,1696002272251,510,3810,1872,466.336345,1.776741,0.066064,0.906138,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696002272251,1696002279134,6883,3810,1872,466.336345,1.776741,0.891609,12.229312,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002279134,1696002279137,3,3810,1872,466.336345,1.776741,0.000389,0.005330,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*alarm*:*CountQuotaTracker.cleanup*' 'screen']
+1696002279137,1696002279142,5,3810,1872,466.336345,1.776741,0.000648,0.008884,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*alarm*' 'screen']
+1696002279142,1696002279179,37,3810,1872,466.336345,1.776741,0.004793,0.065739,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['screen']
+1696002279179,1696002279764,585,3810,1872,466.336345,1.776741,0.075780,1.039394,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1696002279764,1696002280012,248,3810,1872,466.336345,1.776741,0.032125,0.440632,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ '*job*/it.vodafone.my190/co.acoustic.mobile.push.sdk.job.MceJobService'
+ 'screen']"
+1696002280012,1696002280013,1,3810,1872,466.336345,1.776741,0.000130,0.001777,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ '*job*/it.vodafone.my190/co.acoustic.mobile.push.sdk.job.MceJobService'
+ 'screen']"
+1696002280013,1696002280226,213,3810,1872,466.336345,1.776741,0.027592,0.378446,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ '*job*/it.vodafone.my190/co.acoustic.mobile.push.sdk.job.MceJobService'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002280226,1696002280315,89,3810,1872,466.336345,1.776741,0.011529,0.158130,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*job*/it.vodafone.my190/co.acoustic.mobile.push.sdk.job.MceJobService'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002280315,1696002280388,73,3810,1872,466.336345,1.776741,0.009456,0.129702,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002280388,1696002280393,5,3810,1872,466.336345,1.776741,0.000648,0.008884,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002280393,1696002280481,88,3810,1872,466.336345,1.776741,0.011399,0.156353,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002280481,1696002281388,907,3810,1872,466.336345,1.776741,0.117491,1.611505,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002281388,1696002281392,4,3810,1872,466.336345,1.776741,0.000518,0.007107,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['GCM_READ'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002281392,1696002281401,9,3810,1872,466.336345,1.776741,0.001166,0.015991,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['GCM_READ' 'GCM_WORK'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002281401,1696002281421,20,3810,1872,466.336345,1.776741,0.002591,0.035535,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['GCM_WORK'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'screen']"
+1696002281421,1696002281426,5,3810,1872,466.336345,1.776741,0.000648,0.008884,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['GCM_WORK'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'GOOGLE_C2DM' 'screen']"
+1696002281426,1696002281428,2,3810,1872,466.336345,1.776741,0.000259,0.003553,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'GOOGLE_C2DM' 'screen']"
+1696002281428,1696002281433,5,3810,1872,466.336345,1.776741,0.000648,0.008884,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['GCM_WORK'
+ '*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'GOOGLE_C2DM' 'screen']"
+1696002281433,1696002281963,530,3810,1872,466.336345,1.776741,0.068655,0.941673,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService'
+ 'GOOGLE_C2DM' 'screen']"

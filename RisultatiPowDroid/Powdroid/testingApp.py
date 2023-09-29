@@ -1,26 +1,6 @@
 import subprocess
 import time
 
-def list_installed_packages():
-    result = subprocess.run(['adb', 'shell', 'pm', 'list', 'packages'], capture_output=True, text=True)
-    return result.stdout.splitlines()
-
-def is_package_installed(package_name):
-    packages = list_installed_packages()
-    for pkg in packages:
-        if package_name in pkg:
-            return True
-    return False
-
-def install_app(apk_path):
-    subprocess.run(['adb', 'install', '-r', apk_path])
-
-def run_test(test_name):
-    subprocess.run(["adb", "shell", "am", "instrument", "-w", "-e", "class", test_name, "com.example.robotinteractionOttimizzata.test/androidx.test.runner.AndroidJUnitRunner"])
-
-def build_apks():
-    subprocess.run(["./gradlew", "assembleDebug", "assembleDebugAndroidTest"], cwd="/path/to/your/project")
-
 def check_adb_devices():
     adb_output = subprocess.check_output(['adb', 'devices']).decode('utf-8')
     devices = [line.split('\t')[0] for line in adb_output.splitlines() if '\tdevice' in line]
@@ -64,7 +44,7 @@ def testOptimizeApp():
     print("[SCENARIO3] testScenario3Opt.java")
     print("[SCENARIO5] testScenario5Opt.java")
 
-    scelta = "2" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
+    scelta = input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
 
     if scelta == "2":
         print("[EXECUTE] Eseguo testScenario2Opt.java")
@@ -210,29 +190,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
-
-
-import subprocess
-
-
-def main():
-    package_name = "com.example.robotinteractionOttimizzata"
-    apk_path_app = "/path/to/your/project/app/build/outputs/apk/debug/app-debug.apk"
-    apk_path_test = "/path/to/your/project/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
-    test_name = "com.example.robotinteractionOttimizzata.testScenario2Opt"
-
-    # Costruisci gli APK
-    build_apks()
-
-    # Installa l'APK dell'app e l'APK di test se non sono già installati
-    if not is_package_installed(package_name):
-        install_app(apk_path_app)
-        install_app(apk_path_test)
-
-    # Esegui i test
-    run_test(test_name)
-
-if __name__ == "__main__":
     main()
 

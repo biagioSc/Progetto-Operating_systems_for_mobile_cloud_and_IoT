@@ -1,2 +1,0 @@
-start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
-1695984913033,1695984940105,27072,3756,1401,234.455136,0.880613,1.763103,23.839968,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
