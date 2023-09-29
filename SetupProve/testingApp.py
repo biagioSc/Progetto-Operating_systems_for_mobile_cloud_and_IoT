@@ -140,7 +140,9 @@ def main():
 
     install = input("[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n)")
 
-    while install == "n"
+    while install == "n":
+        install = input(
+            "[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n)")
     testChoise = "y"
 
     while testChoise == "y":
