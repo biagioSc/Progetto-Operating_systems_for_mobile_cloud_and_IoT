@@ -1,4 +1,4 @@
-package com.example.robotinteraction;
+package com.example.robotinteractionOttimizzata;
 
 import android.app.Activity;
 import android.content.Intent;

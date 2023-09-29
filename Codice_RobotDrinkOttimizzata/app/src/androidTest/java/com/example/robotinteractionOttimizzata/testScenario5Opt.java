@@ -1,4 +1,4 @@
-package com.example.robotinteraction;
+package com.example.robotinteractionOttimizzata;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class testScenario5 {
+public class testScenario5Opt {
 
     @Rule
     public ActivityScenarioRule<Activity1_New> mActivityScenarioRule =
@@ -104,26 +104,6 @@ public class testScenario5 {
                                 6),
                         isDisplayed()));
         materialButton.perform(click());
-
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction button0 = onView(
-                allOf(withId(R.id.buttonWaitingRoom), withText("Riprendi"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                3),
-                        isDisplayed()));
-        button0.perform(click());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:

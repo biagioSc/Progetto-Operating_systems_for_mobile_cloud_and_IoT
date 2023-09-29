@@ -1,5 +1,5 @@
 // Classe SocketManager
-package com.example.robotinteraction;
+package com.example.robotinteractionOttimizzata;
 
 import android.util.Log;
 

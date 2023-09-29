@@ -1,7 +1,6 @@
-package com.example.robotinteraction;
+package com.example.robotinteractionOttimizzata;
 
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -9,18 +8,15 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -35,19 +31,19 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class testScenario2 {
+public class testScenario2Opt {
 
     @Rule
     public ActivityScenarioRule<Activity1_New> mActivityScenarioRule =
             new ActivityScenarioRule<>(Activity1_New.class);
 
     @Test
-    public void scenario2() {
+    public void activity1_NewTest2() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -76,7 +72,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -91,21 +87,11 @@ public class testScenario2 {
                         isDisplayed()));
         textInputEditText3.perform(replaceText("password"), closeSoftKeyboard());
 
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.passwordToggle), withContentDescription("Toggle Password Visibility"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.passwordTextInputLayout),
-                                        1),
-                                1),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
-
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -124,31 +110,12 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.buttonWaitingRoom), withText("Riprendi"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                3),
-                        isDisplayed()));
-        button.perform(click());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction button2 = onView(
                 allOf(withId(R.id.buttonChecknextState), withText("Accedi alla Coda"),
                         childAtPosition(
                                 childAtPosition(
@@ -156,59 +123,24 @@ public class testScenario2 {
                                         1),
                                 5),
                         isDisplayed()));
-        button2.perform(click());
+        button.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatSpinner = onView(
-                allOf(withId(R.id.spinnerDrinks),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                6),
-                        isDisplayed()));
-        appCompatSpinner.perform(click());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(250);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        DataInteraction appCompatCheckedTextView = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1);
-        appCompatCheckedTextView.perform(click());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.buttonOrder), withText("Ordina"),
+                allOf(withId(R.id.buttonOrderRecommendedDrink), withText("Ordina"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                8),
+                                        withId(R.id.cardView),
+                                        0),
+                                1),
                         isDisplayed()));
         materialButton2.perform(click());
 
@@ -216,7 +148,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -235,19 +167,19 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialRadioButton = onView(
-                allOf(withId(R.id.answerOptionB), withText("B) Guerra nucleare"),
+                allOf(withId(R.id.answerOptionA), withText("A) Risposta giusta"),
                         childAtPosition(
                                 allOf(withId(R.id.answerRadioGroup),
                                         childAtPosition(
                                                 withClassName(is("android.widget.LinearLayout")),
                                                 1)),
-                                1),
+                                0),
                         isDisplayed()));
         materialRadioButton.perform(click());
 
@@ -255,7 +187,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -274,19 +206,19 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialRadioButton2 = onView(
-                allOf(withId(R.id.answerOptionC), withText("C) Donald Trump"),
+                allOf(withId(R.id.answerOptionA), withText("A) Risposta giusta"),
                         childAtPosition(
                                 allOf(withId(R.id.answerRadioGroup),
                                         childAtPosition(
                                                 withClassName(is("android.widget.LinearLayout")),
                                                 1)),
-                                2),
+                                0),
                         isDisplayed()));
         materialRadioButton2.perform(click());
 
@@ -294,7 +226,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -313,19 +245,19 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialRadioButton3 = onView(
-                allOf(withId(R.id.answerOptionB), withText("B) Euro Digital"),
+                allOf(withId(R.id.answerOptionA), withText("A) Risposta giusta"),
                         childAtPosition(
                                 allOf(withId(R.id.answerRadioGroup),
                                         childAtPosition(
                                                 withClassName(is("android.widget.LinearLayout")),
                                                 1)),
-                                1),
+                                0),
                         isDisplayed()));
         materialRadioButton3.perform(click());
 
@@ -333,7 +265,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -352,19 +284,19 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialRadioButton4 = onView(
-                allOf(withId(R.id.answerOptionD), withText("D) Un linguaggio di programmazione"),
+                allOf(withId(R.id.answerOptionA), withText("A) Risposta giusta"),
                         childAtPosition(
                                 allOf(withId(R.id.answerRadioGroup),
                                         childAtPosition(
                                                 withClassName(is("android.widget.LinearLayout")),
                                                 1)),
-                                3),
+                                0),
                         isDisplayed()));
         materialRadioButton4.perform(click());
 
@@ -372,7 +304,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -391,19 +323,19 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialRadioButton5 = onView(
-                allOf(withId(R.id.answerOptionB), withText("B) Steve Jobs"),
+                allOf(withId(R.id.answerOptionA), withText("A) Risposta giusta"),
                         childAtPosition(
                                 allOf(withId(R.id.answerRadioGroup),
                                         childAtPosition(
                                                 withClassName(is("android.widget.LinearLayout")),
                                                 1)),
-                                1),
+                                0),
                         isDisplayed()));
         materialRadioButton5.perform(click());
 
@@ -411,7 +343,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -430,19 +362,19 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialRadioButton6 = onView(
-                allOf(withId(R.id.answerOptionC), withText("C) Home Tool Markup Language"),
+                allOf(withId(R.id.answerOptionA), withText("A) Risposta giusta"),
                         childAtPosition(
                                 allOf(withId(R.id.answerRadioGroup),
                                         childAtPosition(
                                                 withClassName(is("android.widget.LinearLayout")),
                                                 1)),
-                                2),
+                                0),
                         isDisplayed()));
         materialRadioButton6.perform(click());
 
@@ -450,7 +382,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -469,7 +401,7 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -487,13 +419,13 @@ public class testScenario2 {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(7000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         ViewInteraction materialButton11 = onView(
-                allOf(withId(R.id.buttonExit), withText("Esci"),
+                allOf(withId(R.id.buttonRetrieve), withText("Ritira"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.LinearLayout")),
@@ -501,6 +433,25 @@ public class testScenario2 {
                                 6),
                         isDisplayed()));
         materialButton11.perform(click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction materialButton12 = onView(
+                allOf(withId(R.id.buttonExit), withText("Esci"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        1),
+                                6),
+                        isDisplayed()));
+        materialButton12.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

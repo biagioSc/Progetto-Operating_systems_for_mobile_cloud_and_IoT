@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.robotinteraction'
+    namespace 'com.example.robotinteractionOttimizzata'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.robotinteraction"
+        applicationId "com.example.robotinteractionOttimizzata"
         minSdk 24
         targetSdk 33
         versionCode 1
