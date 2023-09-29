@@ -137,6 +137,10 @@ def main():
     print("[INFO] Ogni test potrebbe durare 150 secondi (2.30 minuti).")
 
     time.sleep(5)
+
+    install = input("[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n)")
+
+    while install == "n"
     testChoise = "y"
 
     while testChoise == "y":

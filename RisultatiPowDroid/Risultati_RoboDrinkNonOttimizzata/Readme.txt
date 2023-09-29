@@ -1,1 +1,1 @@
-Risultati test app non ottimizzata
+Risultati test app ottimizzata
