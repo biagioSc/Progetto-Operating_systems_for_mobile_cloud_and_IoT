@@ -19,7 +19,7 @@ def execute_powdroid():
 
 def connection_adb():
     print("[SETUP] Si prega di attivare il wireless dubugging sul dispositivo android.")
-    indirizzo_ip_cellulare = "192.168.5.33:46597" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: ")
+    indirizzo_ip_cellulare = "192.168.5.33:45887" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: ")
 
     while True:
         try:
@@ -34,7 +34,7 @@ def connection_adb():
     # Il ciclo esce solo quando la connessione adb ha successo
     print("[CONNECTION] Connessione adb riuscita.")
 
-def testOptimizeApp():
+def testOptimizeApp(tot):
     #scenario2 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario2.java"
     #scenario3 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario3.java"
     #scenario5 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario5.java"
@@ -47,8 +47,10 @@ def testOptimizeApp():
     print("[SCENARIO3] " + scenario3)
     print("[SCENARIO5] " + scenario5)
 
-    scelta = input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
-
+    if tot < 6:
+        scelta = "5" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
+    elif tot<11:
+        scelta = "2"
     if scelta == "2":
         print("[EXECUTE] Eseguo " + scenario2)
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
@@ -131,6 +133,7 @@ def openDirectory():
 
 
 def main():
+    tot = 0
     subprocess.run(["adb", "disconnect"])
     print("[SETUP] Si prega di attivare la modalità sviluppatore sul dispositivo android.")
     print("[SETUP] Si prega di attivare l'usb dubugging sul dispositivo android.")
@@ -140,7 +143,7 @@ def main():
     print("[SETUP] Si prega di disattivare lo spegnimento automatico dello schermo sul dispositivo android.")
     print("[SETUP] Si prega di non tenere in carica il dispositivo android durante l'esecuzione del test.")
     print("[SETUP] Si prega di chiudere tutte le app aperte sul dispositivo android.")
-    print("[INFO] Ogni test potrebbe durare 200 secondi (3.20 minuti).")
+    print("[INFO] Ogni test potrebbe durare 150 secondi (2.30 minuti).")
 
     time.sleep(5)
     testChoise = "y"
@@ -165,10 +168,11 @@ def main():
         # Invia un invio a powdroid.py x avviare sessione
         send_enter_powdroid(powdroid_process)
 
-        ottimizzata = input("[SCELTA] Vuoi eseguire il test sull'applicazione ottimizzata? (y/n): ").lower()
+        ottimizzata = "y" #input("[SCELTA] Vuoi eseguire il test sull'applicazione ottimizzata? (y/n): ").lower()
 
         if ottimizzata == "y":
-            testOptimizeApp()
+            tot = tot + 1
+            testOptimizeApp(tot)
 
         elif ottimizzata == "n":
             testNoOptimizeApp()

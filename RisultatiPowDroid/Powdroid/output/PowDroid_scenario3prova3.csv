@@ -1,0 +1,33 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1695985276172,1695985276174,2,3747,1369,233.569065,0.875183,0.000130,0.001750,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['GCM_WORK']
+1695985276174,1695985278015,1841,3747,1369,233.569065,0.875183,0.119445,1.611212,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985278015,1695985278029,14,3747,1369,233.569065,0.875183,0.000908,0.012253,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']
+1695985278029,1695985279240,1211,3747,1369,233.569065,0.875183,0.078570,1.059847,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985279240,1695985279247,7,3747,1369,233.569065,0.875183,0.000454,0.006126,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['GCM_WORK']
+1695985279247,1695985280138,891,3747,1369,233.569065,0.875183,0.057808,0.779788,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985280138,1695985280155,17,3747,1369,233.569065,0.875183,0.001103,0.014878,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*job*/com.instagram.android/com.facebook.common.errorreporting.memory.service.jobschedulercompat.igsvc.DumperUploadService']
+1695985280155,1695985286685,6530,3747,1369,233.569065,0.875183,0.423668,5.714947,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985286685,1695985306761,20076,3747,1369,233.569065,0.875183,1.302537,17.570180,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']
+1695985306761,1695985306907,146,3747,1369,233.569065,0.875183,0.009473,0.127777,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']"
+1695985306907,1695985308851,1944,3747,1369,233.569065,0.875183,0.126127,1.701356,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']
+1695985308851,1695985308891,40,3747,1369,233.569065,0.875183,0.002595,0.035007,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['NetworkStats'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']"
+1695985308891,1695985316280,7389,3747,1369,233.569065,0.875183,0.479401,6.466729,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']
+1695985316280,1695985316288,8,3747,1369,233.569065,0.875183,0.000519,0.007001,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,"['*alarm*:DetectMovementSPListener'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']"
+1695985316288,1695985316745,457,3747,1369,233.569065,0.875183,0.029650,0.399959,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']
+1695985316745,1695985316792,47,3747,1369,233.569065,0.875183,0.003049,0.041134,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985316792,1695985316806,14,3747,1369,233.569065,0.875183,0.000908,0.012253,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService']
+1695985316806,1695985319214,2408,3747,1369,233.569065,0.875183,0.156232,2.107441,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985319214,1695985320014,800,3747,1369,233.569065,0.875183,0.051904,0.700147,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*launch*']
+1695985320014,1695985320419,405,3747,1369,233.569065,0.875183,0.026277,0.354449,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*launch*']
+1695985320419,1695985325429,5010,3747,1369,233.569065,0.875183,0.325050,4.384668,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985325429,1695985325443,14,3747,1369,233.569065,0.875183,0.000908,0.012253,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['GCM_WORK']
+1695985325443,1695985328555,3112,3747,1369,233.569065,0.875183,0.201907,2.723570,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,0.0
+1695985328555,1695985328560,5,3747,1369,233.569065,0.875183,0.000324,0.004376,['com.example.robotinteractionOttimizzata'],True,False,False,True,True,False,False,False,['*launch*']
+1695985328560,1695985328668,108,3747,1369,233.569065,0.875183,0.007007,0.094520,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*']
+1695985328668,1695985331388,2720,3747,1369,233.569065,0.875183,0.176474,2.380499,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0
+1695985331388,1695985331392,4,3747,1369,233.569065,0.875183,0.000260,0.003501,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*alarm*:StatsCompanionService.pull'
+ 'com.android.server.stats.StatsCompanionService.PullingAlarmListener']"
+1695985331392,1695985331477,85,3747,1369,233.569065,0.875183,0.005515,0.074391,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['com.android.server.stats.StatsCompanionService.PullingAlarmListener']
