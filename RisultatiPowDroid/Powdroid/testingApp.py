@@ -1,6 +1,26 @@
 import subprocess
 import time
 
+def list_installed_packages():
+    result = subprocess.run(['adb', 'shell', 'pm', 'list', 'packages'], capture_output=True, text=True)
+    return result.stdout.splitlines()
+
+def is_package_installed(package_name):
+    packages = list_installed_packages()
+    for pkg in packages:
+        if package_name in pkg:
+            return True
+    return False
+
+def install_app(apk_path):
+    subprocess.run(['adb', 'install', '-r', apk_path])
+
+def run_test(test_name):
+    subprocess.run(["adb", "shell", "am", "instrument", "-w", "-e", "class", test_name, "com.example.robotinteractionOttimizzata.test/androidx.test.runner.AndroidJUnitRunner"])
+
+def build_apks():
+    subprocess.run(["./gradlew", "assembleDebug", "assembleDebugAndroidTest"], cwd="/path/to/your/project")
+
 def check_adb_devices():
     adb_output = subprocess.check_output(['adb', 'devices']).decode('utf-8')
     devices = [line.split('\t')[0] for line in adb_output.splitlines() if '\tdevice' in line]
@@ -19,7 +39,7 @@ def execute_powdroid():
 
 def connection_adb():
     print("[SETUP] Si prega di attivare il wireless dubugging sul dispositivo android.")
-    indirizzo_ip_cellulare = "192.168.5.33:45887" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: ")
+    indirizzo_ip_cellulare = input("[IPADDRESS] Inserisci indirizzo IP cellulare: (es. 192.168.5.33:34829)")
 
     while True:
         try:
@@ -34,72 +54,64 @@ def connection_adb():
     # Il ciclo esce solo quando la connessione adb ha successo
     print("[CONNECTION] Connessione adb riuscita.")
 
-def testOptimizeApp(tot):
-    #scenario2 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario2.java"
-    #scenario3 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario3.java"
-    #scenario5 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario5.java"
+def testOptimizeApp():
     scenario2 = "com.example.robotinteractionOttimizzata.testScenario2Opt"
     scenario3 = "com.example.robotinteractionOttimizzata.testScenario3Opt"
     scenario5 = "com.example.robotinteractionOttimizzata.testScenario5Opt"
 
     print("Test disponibili:")
-    print("[SCENARIO2] " + scenario2)
-    print("[SCENARIO3] " + scenario3)
-    print("[SCENARIO5] " + scenario5)
+    print("[SCENARIO2] testScenario2Opt.java")
+    print("[SCENARIO3] testScenario3Opt.java")
+    print("[SCENARIO5] testScenario5Opt.java")
 
-    if tot < 6:
-        scelta = "5" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
-    elif tot<11:
-        scelta = "2"
+    scelta = "2" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
+
     if scelta == "2":
-        print("[EXECUTE] Eseguo " + scenario2)
+        print("[EXECUTE] Eseguo testScenario2Opt.java")
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
                         "-e", "class", scenario2,
                         "com.example.robotinteractionOttimizzata.test/androidx.test.runner.AndroidJUnitRunner"])
 
     elif scelta == "3":
-        print("[EXECUTE] Eseguo " + scenario3)
+        print("[EXECUTE] Eseguo testScenario3Opt.java")
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
                         "-e", "class", scenario3,
                         "com.example.robotinteractionOttimizzata.test/androidx.test.runner.AndroidJUnitRunner"])
 
     elif scelta == "5":
-        print("[EXECUTE] Eseguo " + scenario5)
+        print("[EXECUTE] Eseguo testScenario5Opt.java")
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
                         "-e", "class", scenario5,
                         "com.example.robotinteractionOttimizzata.test/androidx.test.runner.AndroidJUnitRunner"])
 
 def testNoOptimizeApp():
-    #scenario2 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkNonOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario2.java"
-    #scenario3 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkNonOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario3.java"
-    #scenario5 = r"C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\Codice_RobotDrinkNonOttimizzata\app\src\androidTest\java\com\example\robotinteraction\testScenario5.java"
     scenario2 = "com.example.robotinteraction.testScenario2NoOpt"
     scenario3 = "com.example.robotinteraction.testScenario3NoOpt"
     scenario5 = "com.example.robotinteraction.testScenario5NoOpt"
 
 
     print("Test disponibili:")
-    print("[SCENARIO2] " + scenario2)
-    print("[SCENARIO3] " + scenario3)
-    print("[SCENARIO5] " + scenario5)
+    print("[SCENARIO2] testScenario2NoOpt.java")
+    print("[SCENARIO3] testScenario3NoOpt.java")
+    print("[SCENARIO5] testScenario5NoOpt.java")
 
 
     scelta = input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
 
     if scelta == "2":
-        print("[EXECUTE] Eseguo " + scenario2)
+        print("[EXECUTE] Eseguo testScenario2NoOpt.java")
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
                         "-e", "class", scenario2,
                         "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
 
     elif scelta == "3":
-        print("[EXECUTE] Eseguo " + scenario3)
+        print("[EXECUTE] Eseguo testScenario3NoOpt.java")
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
                         "-e", "class", scenario3,
                         "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
 
     elif scelta == "5":
-        print("[EXECUTE] Eseguo " + scenario5)
+        print("[EXECUTE] Eseguo testScenario5NoOpt.java")
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
                         "-e", "class", scenario5,
                         "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
@@ -133,7 +145,6 @@ def openDirectory():
 
 
 def main():
-    tot = 0
     subprocess.run(["adb", "disconnect"])
     print("[SETUP] Si prega di attivare la modalità sviluppatore sul dispositivo android.")
     print("[SETUP] Si prega di attivare l'usb dubugging sul dispositivo android.")
@@ -168,11 +179,10 @@ def main():
         # Invia un invio a powdroid.py x avviare sessione
         send_enter_powdroid(powdroid_process)
 
-        ottimizzata = "y" #input("[SCELTA] Vuoi eseguire il test sull'applicazione ottimizzata? (y/n): ").lower()
+        ottimizzata = input("[SCELTA] Vuoi eseguire il test sull'applicazione ottimizzata? (y/n): ").lower()
 
         if ottimizzata == "y":
-            tot = tot + 1
-            testOptimizeApp(tot)
+            testOptimizeApp()
 
         elif ottimizzata == "n":
             testNoOptimizeApp()
@@ -190,25 +200,39 @@ def main():
         send_enter_powdroid(powdroid_process)
         powdroid_process.wait()  # Attendi che powdroid.py termini
 
-        out, err = powdroid_process.communicate()
-
-        # Stampa ciò che powdroid.py ha stampato a video
-        print(out.decode())
-        print(err.decode())
+        powdroid_process.communicate()
 
         print("[COMPLETE] Tutte le operazioni sono state completate.")
         print("[DATA] Dati disponibili nella cartella output.")
         openDirectory()
         time.sleep(10)
-        testChoise = input("Vuoi fare un altro test? (y/n): ")
+        testChoise = input("Vuoi fare un altro test? (y/n): ").lower()
 
-'''
-scenario5 = "com.example.robotinteraction.testScenario5NoOpt"
 
-# Ora esegui il comando adb in base alla scelta
-subprocess.run(["adb", "shell", "am", "instrument", "-w",
-                "-e", "class", scenario5,
-                "com.example.robotinteraction.test/androidx.test.runner.AndroidJUnitRunner"])
-'''
 if __name__ == '__main__':
     main()
+
+
+import subprocess
+
+
+def main():
+    package_name = "com.example.robotinteractionOttimizzata"
+    apk_path_app = "/path/to/your/project/app/build/outputs/apk/debug/app-debug.apk"
+    apk_path_test = "/path/to/your/project/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
+    test_name = "com.example.robotinteractionOttimizzata.testScenario2Opt"
+
+    # Costruisci gli APK
+    build_apks()
+
+    # Installa l'APK dell'app e l'APK di test se non sono già installati
+    if not is_package_installed(package_name):
+        install_app(apk_path_app)
+        install_app(apk_path_test)
+
+    # Esegui i test
+    run_test(test_name)
+
+if __name__ == "__main__":
+    main()
+
