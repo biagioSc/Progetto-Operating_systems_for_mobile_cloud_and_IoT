@@ -5,11 +5,11 @@ Email: e.prosciutto@studenti.unina.it, b.scottodicovella@studenti.unina.it
 
 Progetto: https://github.com/biagioSc/Progetto-Operating_systems_for_mobile_cloud_and_IoT
 
-RobotDrinkNonOttimizzata: applicazione non ottimizzata
-RobotDrinkOttimizzata: applicazione ottimizzata
+Codice_RobotDrinkNonOttimizzata: codice applicazione non ottimizzata
+Codice_RobotDrinkOttimizzata: codice applicazione ottimizzata
 
 RisultatiPowDroid: contiene tutti i file di profilazione dati in output da Powdroid
 
 SetupProva: cartella per eseguire i test, capitolo 12
 
-Risultati Test Elaborati: foglio elettronico contente risultati elabroati dai test
+Risultati: foglio elettronico contente risultati elabroati dai test a confronto tra opt e noOpt
