@@ -10,6 +10,6 @@ Codice_RobotDrinkOttimizzata: codice applicazione ottimizzata
 
 RisultatiPowDroid: contiene tutti i file di profilazione dati in output da Powdroid
 
-SetupProva: cartella per eseguire i test, capitolo 12
+SetupProva: cartella per eseguire i test, capitolo 10
 
 Risultati: foglio elettronico contente risultati elabroati dai test a confronto tra opt e noOpt
