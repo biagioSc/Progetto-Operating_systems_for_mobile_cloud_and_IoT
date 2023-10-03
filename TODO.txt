@@ -1,0 +1,5 @@
+-scatola a baffi
+-differenze opt nopt con un solo grafico
+-variabile aleatoria
+-ottimizzazioni intermedie (getter e setter)
+-aggiungere espresso recorder

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <!-- Barra laterale -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#232196F3"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvSidebarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C92196F3"
+            android:padding="16dp"
+            android:text="STATO"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/item_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Login"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Welcome"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_waiting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Waiting"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_ordering"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Ordering"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_serving"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Serving"
+            android:typeface="monospace"/>
+
+        <TextView
+            android:id="@+id/item_attesa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Attesa"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_chatBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="ChatBot"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_farewelling"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Farewelling"
+            android:typeface="monospace"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="#A1673AB7" />
+
+        <TextView
+            android:id="@+id/item_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Signup"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_interview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Interview"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_outofsight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Out Of Sight"
+            android:typeface="monospace" />
+
+        <TextView
+            android:id="@+id/item_gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Gone"
+            android:typeface="monospace"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:background="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewDrink"
+            android:layout_width="380dp"
+            android:layout_height="350dp"
+            android:contentDescription="Logo"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/pic7farewelling" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ritira il Tuo Drink"
+            android:textSize="24sp"
+            android:textColor="#000000"
+            android:layout_below="@id/imageViewDrink"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/textViewMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Il tuo drink è pronto!"
+            android:textSize="18sp"
+            android:textColor="#757575"
+            android:layout_below="@id/textViewTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
+
+        <!-- Aggiungiamo il nome del drink e la sua spiegazione -->
+        <TextView
+            android:id="@+id/textViewDrinkName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome del Drink"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_below="@id/textViewMessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/textViewDrinkDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Breve spiegazione del drink"
+            android:textSize="16sp"
+            android:textColor="#757575"
+            android:layout_below="@id/textViewDrinkName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/buttonRetrieve"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Ritira"
+            android:onClick="onClickRitira"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_design_general"
+            android:layout_below="@id/textViewDrinkDescription"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:padding="16dp" />
+
+    </RelativeLayout>
+</LinearLayout>
