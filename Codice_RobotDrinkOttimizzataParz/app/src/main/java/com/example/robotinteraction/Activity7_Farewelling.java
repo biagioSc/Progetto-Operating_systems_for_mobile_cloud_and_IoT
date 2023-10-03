@@ -1,6 +1,5 @@
 package com.example.robotinteraction;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,19 +14,24 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Activity7_Farewelling extends AppCompatActivity {
 
     private TextView textViewLoggedIn, textViewDrinkName, textViewDrinkDescription;
     private Animation buttonAnimation;
     private Button buttonRetrieve;
     private static final long TIME_THRESHOLD = 60000; // 20 secondi
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest", innerResponseDescription;
     private ImageButton exitButton;
 
     private String selectedDrink;
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class Activity7_Farewelling extends AppCompatActivity {
     }
     private void connection() {
         socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
+        runnable = () -> navigateTo(sessionID, user);
     }
     private void initUIComponents() {
         textViewDrinkName = findViewById(R.id.textViewDrinkName);
@@ -59,32 +63,31 @@ public class Activity7_Farewelling extends AppCompatActivity {
         setTouchListenerForAnimation(exitButton);
     }
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
+                applyButtonAnimation(v);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.performClick();
             }
+            return false;
         });
     }
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 100);
     }
-    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
-        Intent intent = new Intent(Activity7_Farewelling.this, targetActivity);
+    private void navigateTo(String param1, String param2) {
+        Intent intent = new Intent(Activity7_Farewelling.this, Activity0_OutOfSight.class);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3) {
-        Intent intent = new Intent(Activity7_Farewelling.this, targetActivity);
+    private void navigateToParam(String param1, String param2) {
+        Intent intent = new Intent(Activity7_Farewelling.this, Activity8_Gone.class);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
-        intent.putExtra("param3", param3);
+        intent.putExtra("param3", "FAREWELLING");
         startActivity(intent);
         finish();
     }
@@ -139,34 +142,51 @@ public class Activity7_Farewelling extends AppCompatActivity {
     public void onClickRitira(View v) {
         v.setClickable(false);
         resetInactivityTimer(); // Aggiungi questa linea per reimpostare il timer
-        navigateToParam(Activity8_Gone.class, sessionID, user, "FAREWELLING");
+        navigateToParam(sessionID, user);
     }
 
     public void ExitFarewelling(View v) {
-
         v.setClickable(false);
         if(!("Guest".equals(user)) && socket != null) {
-            try {
-                socket.send("USER_GONE");
-                Thread.sleep(500);
-                if(Integer.parseInt(sessionID) != 0) {
-                    socket.send(sessionID);
-                    Thread.sleep(500);
+            executorService.execute(() -> { // Utilizza ExecutorService per eseguire in background
+                try {
+                    socket.send("USER_GONE");
+                    if(Integer.parseInt(sessionID) != 0) {
+                        socket.send(sessionID);
+                    }
+                } catch (Exception e) {
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                    sessionID = "-1";
+                    user = "Guest";
                 }
-            } catch (Exception e) {
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
-                sessionID = "-1";
-                user = "Guest";
+                runOnUiThread(() -> { // Torna al thread principale per terminare l'attività
+                    if(socket != null){
+                        socket.close();
+                    }
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finishAffinity();
+                    finish();
+                });
+            });
+        } else {
+            if(socket != null){
+                socket.close();
             }
-        }else if(socket != null){
-            socket.close();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finishAffinity();
+            finish();
         }
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finishAffinity();
-        finish();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown(); // Assicurati di chiudere l'ExecutorService
     }
 }

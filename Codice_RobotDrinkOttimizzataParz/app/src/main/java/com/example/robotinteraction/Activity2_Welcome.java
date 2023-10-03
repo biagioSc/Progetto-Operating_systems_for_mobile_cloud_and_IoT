@@ -1,11 +1,11 @@
 package com.example.robotinteraction;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,8 +19,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import kotlin.UShort;
 
 public class Activity2_Welcome extends Activity {
 
@@ -34,6 +35,10 @@ public class Activity2_Welcome extends Activity {
     private Socket_Manager socket;
     private TextView textViewLoggedIn;
     private int numPeopleInQueue = 0;
+
+    private AlertDialog loadingDialog;
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +54,7 @@ public class Activity2_Welcome extends Activity {
     }
     private void connection() {
         socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
+        runnable = () -> navigateTo(sessionID, user);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -78,23 +83,23 @@ public class Activity2_Welcome extends Activity {
         }
     }
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
+                applyButtonAnimation(v);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.performClick();
             }
+            return false;
         });
     }
+
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 100);
     }
-    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
-        Intent intent = new Intent(Activity2_Welcome.this, targetActivity);
+    private void navigateTo(String param1, String param2) {
+        Intent intent = new Intent(Activity2_Welcome.this, Activity0_OutOfSight.class);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         startActivity(intent);
@@ -124,8 +129,13 @@ public class Activity2_Welcome extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacks(runnable);
+        handler.removeCallbacksAndMessages(null);
+
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
+
     private void startInactivityTimer() {
 
         handler.postDelayed(runnable, TIME_THRESHOLD);
@@ -141,75 +151,54 @@ public class Activity2_Welcome extends Activity {
         View loadingView = getLayoutInflater().inflate(R.layout.activity_00popuploading, null);
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setView(loadingView);
-        dialogBuilder.setCancelable(false); // Evita la chiusura del messaggio di caricamento toccando al di fuori
+        dialogBuilder.setCancelable(false);
         AlertDialog loadingDialog = dialogBuilder.create();
-        if (loadingDialog != null && !loadingDialog.isShowing()) {
+        if (!isFinishing()) {
             loadingDialog.show();
         }
-
-        loadingDialog.show();
-        loadingDialog.setCancelable(false);
-
         buttonCheckNextState.setClickable(false);
 
-        if("Guest".equals(user)){
-            int min = 0;
-            int max = 3;
-            Random random = new Random();
-            numPeopleInQueue = random.nextInt(max - min + 1) + min;
-            inputString = "Mojito,Martini,Midori,Manhattan,Negroni,Daiquiri,Pina Colada,Gin Lemon,Spritz";
-            String[] cocktails = inputString.split(",");
-
-            int randomIndex = random.nextInt(cocktails.length);
-
-            String randomCocktail = cocktails[randomIndex].trim();
-
-            if (numPeopleInQueue < 2) {
-                showPopupMessage();
-                new Handler().postDelayed(() -> {
-                    navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, randomCocktail);
-                }, 5000);
+        executorService.execute(() -> {
+            if ("Guest".equals(user)) {
+                int min = 0;
+                int max = 3;
+                Random random = new Random();
+                numPeopleInQueue = random.nextInt(max - min + 1) + min;
+                inputString = "Mojito,Martini,Midori,Manhattan,Negroni,Daiquiri,Pina Colada,Gin Lemon,Spritz";
+                String[] cocktails = inputString.split(",");
+                int randomIndex = random.nextInt(cocktails.length);
+                recommendedDrink = cocktails[randomIndex].trim();
             } else {
-                navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue,inputString, randomCocktail);
-            }
-        }else {
-            new Thread(() -> {
                 try {
                     socket.send("CHECK_USERS_ORDERING");
                     Thread.sleep(500);
                     String num = socket.receive();
-                    Thread.sleep(500);
                     numPeopleInQueue = Integer.parseInt(num);
 
                     socket.send("DRINK_LIST");
                     Thread.sleep(500);
                     inputString = socket.receive();
-                    Thread.sleep(500);
+
                     socket.send("SUGG_DRINK");
                     Thread.sleep(500);
                     socket.send(sessionID);
                     Thread.sleep(500);
                     recommendedDrink = socket.receive();
-                    Thread.sleep(500);
 
-                    if(inputString=="[ERROR]" || recommendedDrink=="[ERROR]" || num=="[ERROR]"){
+                    if (inputString.equals("[ERROR]") || recommendedDrink.equals("[ERROR]") || num.equals("[ERROR]")) {
                         throw new Exception();
                     }
+                } catch (Exception e) {
+                    numPeopleInQueue = -1; // Un valore speciale per indicare un errore
+                }
+            }
 
-                    runOnUiThread(() -> {
-                        buttonCheckNextState.setClickable(true);
-                    });
-
-                    if (numPeopleInQueue < 1) {
-                        loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
-                        navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
-                    } else {
-                        loadingDialog.dismiss(); // Chiudi il messaggio di caricamento
-                        navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue, inputString, recommendedDrink);
-                    }
-                }catch (Exception e){
+            runOnUiThread(() -> {
+                if (loadingDialog != null && loadingDialog.isShowing()) {
                     loadingDialog.dismiss();
-                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                }
+                if (numPeopleInQueue == -1) {
+                    Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show();
                     sessionID = "-1";
                     user = "Guest";
                     int min = 0;
@@ -220,42 +209,40 @@ public class Activity2_Welcome extends Activity {
                     String[] cocktails = inputString.split(",");
                     int randomIndex = random.nextInt(cocktails.length);
                     recommendedDrink = cocktails[randomIndex].trim();
-
-                    if (numPeopleInQueue < 2) {
-                        showPopupMessage();
-                        new Handler().postDelayed(() -> {
-                            navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink);
-                        }, 3000);
-                    } else {
-                        navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue, inputString, recommendedDrink);
-                    }
                 }
-            }).start();
-        }
-    }
-    public void showPopupMessage() {
-        runOnUiThread(() -> {
-            LayoutInflater inflater = LayoutInflater.from(Activity2_Welcome.this);
-            View customView = inflater.inflate(R.layout.activity_00popupwelcome, null);
 
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Activity2_Welcome.this);
-            builder.setCustomTitle(customView)
-                    .setCancelable(false);
-
-            android.app.AlertDialog dialog = builder.create();
-            if (!isFinishing()) {
-                if (dialog != null && !dialog.isShowing()) {
-                    dialog.show();
+                if ("Guest".equals(user) || numPeopleInQueue < 2) {
+                    showPopupMessage();
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> navigateToParam(Activity4_Ordering.class, sessionID, user, 0, inputString, recommendedDrink), 3000);
+                } else {
+                    navigateToParam(Activity3_Waiting.class, sessionID, user, numPeopleInQueue, inputString, recommendedDrink);
                 }
-            }
 
-            // Chiudi il popup dopo 5 secondi
-            new Handler().postDelayed(() -> {
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-            }, 4000); // 5000 millisecondi = 5 secondi
+                buttonCheckNextState.setClickable(true);
+            });
         });
+    }
+
+
+    public void showPopupMessage() {
+        LayoutInflater inflater = LayoutInflater.from(Activity2_Welcome.this);
+        @SuppressLint("InflateParams") View customView = inflater.inflate(R.layout.activity_00popupwelcome, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Activity2_Welcome.this);
+        builder.setCustomTitle(customView)
+                .setCancelable(false);
+
+        AlertDialog dialog = builder.create();
+        if (!isFinishing() && dialog != null && !dialog.isShowing()) {
+            dialog.show();
+        }
+
+        // Chiudi il popup dopo 5 secondi
+        new Handler().postDelayed(() -> {
+            if (!isFinishing() && dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }, 4000); // 5000 millisecondi = 5 secondi
     }
 
     public void ExitWelcome(View v) {
@@ -284,5 +271,12 @@ public class Activity2_Welcome extends Activity {
         finishAffinity();
         finish();
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();  // Assicurati di chiudere l'ExecutorService quando l'Activity viene distrutta
     }
 }

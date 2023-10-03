@@ -1,7 +1,6 @@
 package com.example.robotinteraction;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -105,8 +104,13 @@ public class Activity8_Gone extends AppCompatActivity {
     }
     private void setTouchListenerForAnimation(View view) {
         view.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                applyButtonAnimation(v);
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    applyButtonAnimation(v);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    break;
             }
             return false;
         });
@@ -122,15 +126,15 @@ public class Activity8_Gone extends AppCompatActivity {
             user = intent.getStringExtra("param2");
             activity = intent.getStringExtra("param3");
 
-            int atIndex = -1;
+            int atIndex;
             if (user != null && !user.equals("ERROR")) {  // Verifica che user non sia nullo e non sia "ERROR"
                 atIndex = user.indexOf("@");
                 // Verifica se è presente il simbolo "@"
                 if (atIndex != -1) {
                     String username = user.substring(0, atIndex);
-                    runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username));
+                    textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + username);
                 } else {
-                    runOnUiThread(() -> textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user));
+                     textViewGoodbye.setText(textViewGoodbye.getText() + "\n" + user);
                 }
             }
         }

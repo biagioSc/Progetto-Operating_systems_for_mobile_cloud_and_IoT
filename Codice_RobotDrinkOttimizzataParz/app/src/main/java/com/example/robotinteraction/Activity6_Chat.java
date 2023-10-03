@@ -20,13 +20,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Activity6_Chat extends AppCompatActivity {
 
-    private TextView textDomanda, textViewLoggedIn, scoreTextView, scoreText;
+    private TextView textDomanda;
+    private TextView textViewLoggedIn;
+    private TextView scoreTextView;
     private RadioGroup answerRadioGroup;
     private Button confirmButton;
     private List<Activity_Question> questionList;
@@ -41,11 +46,12 @@ public class Activity6_Chat extends AppCompatActivity {
     private String sessionID = "-1", user = "Guest", selectedDrink, innerResponseDescription;
     private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private ProgressBar progressBar;
-    private List<Activity_Question> selectedQuestions = new ArrayList<>();
+    private final List<Activity_Question> selectedQuestions = new ArrayList<>();
     private static final long DELAY_BEFORE_NEXT_QUESTION = 1000; // Ritardo di 10 secondi
     private static final int DARK_GREEN_COLOR = Color.parseColor("#00A859"); // Colore verde scuro
     private static final int ORANGE = Color.parseColor("#FFA500"); // Colore verde scuro
 
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +67,7 @@ public class Activity6_Chat extends AppCompatActivity {
     }
     private void connection() {
         socket = Socket_Manager.getInstance(); // Ottieni l'istanza del gestore del socket
-        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
+        runnable = () -> navigateTo(sessionID, user);
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
@@ -71,7 +77,6 @@ public class Activity6_Chat extends AppCompatActivity {
         scoreTextView = findViewById(R.id.scoreTextView);
         textViewLoggedIn = findViewById(R.id.textViewLoggedIn);
         progressBar = findViewById(R.id.timerProgressBar);
-        scoreText = findViewById(R.id.score);
         exitButton = findViewById(R.id.exitToggle);
     }
     private void setupListeners() {
@@ -80,15 +85,14 @@ public class Activity6_Chat extends AppCompatActivity {
         setTouchListenerForAnimation(exitButton);
     }
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
+                applyButtonAnimation(v);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.performClick();
             }
+            return false;
         });
     }
     private void setOnClickListener(View view) {
@@ -99,14 +103,14 @@ public class Activity6_Chat extends AppCompatActivity {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 100);
     }
-    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
-        Intent intent = new Intent(Activity6_Chat.this, targetActivity);
+    private void navigateTo(String param1, String param2) {
+        Intent intent = new Intent(Activity6_Chat.this, Activity0_OutOfSight.class);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         startActivity(intent);
     }
-    private void navigateToParam(Class<?> targetActivity, String param1, String param2, String param3, String param4) {
-        Intent intent = new Intent(Activity6_Chat.this, targetActivity);
+    private void navigateToParam(String param1, String param2, String param3, String param4) {
+        Intent intent = new Intent(Activity6_Chat.this, Activity7_Farewelling.class);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         intent.putExtra("param3", param3);
@@ -231,9 +235,7 @@ public class Activity6_Chat extends AppCompatActivity {
         if (currentQuestionIndex < selectedQuestions.size()) {
             confirmButton.setEnabled(true);
             Activity_Question currentQuestion = selectedQuestions.get(currentQuestionIndex);
-            runOnUiThread(() -> {
-                textDomanda.setText(currentQuestion.getTopic() + ": " + currentQuestion.getQuestion());
-            });
+            runOnUiThread(() -> textDomanda.setText(String.format("%s: %s", currentQuestion.getTopic(), currentQuestion.getQuestion())));
             List<String> answerOptions = new ArrayList<>();
             answerOptions.add(currentQuestion.getCorrectAnswer());
             answerOptions.add(currentQuestion.getWrongAnswer1());
@@ -241,17 +243,17 @@ public class Activity6_Chat extends AppCompatActivity {
             answerOptions.add(currentQuestion.getWrongAnswer3());
             //Collections.shuffle(answerOptions);
 
-            ((RadioButton) answerRadioGroup.getChildAt(0)).setText("A) " + answerOptions.get(0));
-            ((RadioButton) answerRadioGroup.getChildAt(1)).setText("B) " + answerOptions.get(1));
-            ((RadioButton) answerRadioGroup.getChildAt(2)).setText("C) " + answerOptions.get(2));
-            ((RadioButton) answerRadioGroup.getChildAt(3)).setText("D) " + answerOptions.get(3));
+            ((RadioButton) answerRadioGroup.getChildAt(0)).setText(String.format("A) %s", answerOptions.get(0)));
+            ((RadioButton) answerRadioGroup.getChildAt(1)).setText(String.format("B) %s", answerOptions.get(1)));
+            ((RadioButton) answerRadioGroup.getChildAt(2)).setText(String.format("C) %s", answerOptions.get(2)));
+            ((RadioButton) answerRadioGroup.getChildAt(3)).setText(String.format("D) %s", answerOptions.get(3)));
 
             answerRadioGroup.clearCheck();
             answerRadioGroup.setEnabled(true); // Abilita il gruppo di radiobutton
             progressBar.setProgress(currentQuestionIndex + 1); // Aggiorna la ProgressBar
 
         } else {
-            scoreTextView.setText("Hai finito il quiz. Punteggio: " + score);
+            scoreTextView.setText(MessageFormat.format("Hai finito il quiz. Punteggio: {0}", score));
             //navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink);
         }
     }
@@ -273,7 +275,7 @@ public class Activity6_Chat extends AppCompatActivity {
             String selectedAnswer = selectedRadioButton.getText().toString().substring(3);
             if (selectedAnswer.equals(currentQuestion.getCorrectAnswer())) {
                 score++;
-                scoreTextView.setText("Score: " + score);
+                scoreTextView.setText(MessageFormat.format("Score: {0}", score));
                 selectedRadioButton.setTextColor(darkGreenColor);
             } else {
                 selectedRadioButton.setTextColor(Color.RED);
@@ -314,38 +316,32 @@ public class Activity6_Chat extends AppCompatActivity {
         runOnUiThread(() -> {
             LayoutInflater inflater = LayoutInflater.from(Activity6_Chat.this);
             View customView = inflater.inflate(R.layout.activity_00popupchat, null);
-            int darkGreenColor = DARK_GREEN_COLOR;
-            int orange = ORANGE;
 
             TextView scoreTextView = customView.findViewById(R.id.scoreTextView);
             if(score<3){
                 scoreTextView.setTextColor(Color.RED);
             }else if(score==3){
-                scoreTextView.setTextColor(orange);
+                scoreTextView.setTextColor(ORANGE);
             }else{
-                scoreTextView.setTextColor(darkGreenColor);
+                scoreTextView.setTextColor(DARK_GREEN_COLOR);
             }
 
-            scoreTextView.setText(score + "/" + totalQuestionsForSelectedTopics); // Imposta il punteggio
+            scoreTextView.setText(MessageFormat.format("{0}/{1}", score, totalQuestionsForSelectedTopics)); // Imposta il punteggio
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Activity6_Chat.this);
             builder.setCustomTitle(customView)
                     .setCancelable(false)  // Evita la chiusura cliccando all'esterno
                     .setPositiveButton("Ok", (dialog, id) -> {
                         if(!("Guest".equals(user))) {
-                            new Thread(() -> {
+                            executorService.execute(() -> {
                                 try {
                                     socket.send("DRINK_DESCRIPTION");
-                                    Thread.sleep(500);
+                                    Thread.sleep(500);  // Riconsidera l'uso di sleep
                                     socket.send(selectedDrink);
-                                    Thread.sleep(500);
+                                    Thread.sleep(500);  // Riconsidera l'uso di sleep
                                     innerResponseDescription = socket.receive();
-                                    Thread.sleep(500);
-                                    if(innerResponseDescription=="[ERROR]"){
-                                        throw new Exception();
-                                    }
 
-                                    if(innerResponseDescription == null && innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
+                                    if(innerResponseDescription == null || innerResponseDescription.equalsIgnoreCase("DRINK_DESCRIPTION_NOT_FOUND")) {
                                         innerResponseDescription = "Descrizione non disponibile!";
                                     }
                                 } catch (Exception e) {
@@ -354,14 +350,12 @@ public class Activity6_Chat extends AppCompatActivity {
                                     user = "Guest";
                                     innerResponseDescription = "Descrizione non disponibile!";
                                 }
-                                navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
-                                dialog.dismiss();
+                                navigateToParam(sessionID, user, selectedDrink, innerResponseDescription);
                                 finish();
-                            }).start();
-                        }else{
+                            });
+                        } else {
                             innerResponseDescription = "Descrizione non disponibile!";
-                            navigateToParam(Activity7_Farewelling.class, sessionID, user, selectedDrink, innerResponseDescription);
-                            dialog.dismiss();
+                            navigateToParam(sessionID, user, selectedDrink, innerResponseDescription);
                             finish();
                         }
                     });
@@ -375,31 +369,38 @@ public class Activity6_Chat extends AppCompatActivity {
             dialog.show();
         });
     }
-    public void ExitChat(View v) {
 
+    public void ExitChat(View v) {
         v.setClickable(false);
         if(!("Guest".equals(user)) && socket != null) {
-            try {
-                socket.send("USER_GONE");
-                Thread.sleep(500);
-                if(Integer.parseInt(sessionID) != 0) {
-                    socket.send(sessionID);
-                    Thread.sleep(500);
+            executorService.execute(() -> {
+                try {
+                    socket.send("USER_GONE");
+                    if(Integer.parseInt(sessionID) != 0) {
+                        socket.send(sessionID);
+                    }
+                } catch (Exception e) {
+                    runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
+                    sessionID = "-1";
+                    user = "Guest";
                 }
-            } catch (Exception e) {
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
-                sessionID = "-1";
-                user = "Guest";
-            }
-        }else if(socket != null){
+                if(socket != null){
+                    socket.close();
+                }
+                finishAffinity();
+                finish();
+            });
+        } else if(socket != null){
             socket.close();
+            finishAffinity();
+            finish();
         }
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finishAffinity();
-        finish();
+    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();  // Chiudi l'executor quando l'activity viene distrutta
     }
 }

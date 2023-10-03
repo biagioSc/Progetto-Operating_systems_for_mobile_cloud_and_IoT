@@ -2,6 +2,7 @@ package com.example.robotinteraction;
 
 // Import delle librerie necessarie
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +11,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,12 +24,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class Activity1_New extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
-    private TextInputLayout emailTextInputLayout, passwordTextInputLayout;
     private TextView textViewError, textViewSignUp, textViewGuest;
     private Button buttonLogin;
     private Animation buttonAnimation;
@@ -40,7 +41,8 @@ public class Activity1_New extends AppCompatActivity {
     private static final long TIME_THRESHOLD = 60000; // Tempo di attesa prima dell'inattività
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
-    private boolean isServerConnected = false;
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class Activity1_New extends AppCompatActivity {
 
     private void connection() {
         initializeSocketAndSetCallback();
-        runnable = () -> navigateTo(Activity0_OutOfSight.class, sessionID, user);
+        runnable = () -> navigateTo(sessionID, user);
     }
     private void initializeSocketAndSetCallback() {
         socket = Socket_Manager.getInstance();  // Aggiunto
@@ -66,28 +68,24 @@ public class Activity1_New extends AppCompatActivity {
             socket.setConnectionListener(new ConnectionListener() {
                 @Override
                 public void onConnected() {
-                    isServerConnected = true;
                     // Aggiorna l'UI o fai altre operazioni qui se necessario
                 }
 
                 @Override
                 public void onConnectionFailed(String errore) {
-                    isServerConnected = false;
                     // Mostra un popup o altre notifiche qui
-                    runOnUiThread(() -> showPopupMessage());
+                     showPopupMessage();
                 }
             });
         } else {
             // Se l'istanza è null, mostra un popup
-            runOnUiThread(() -> showPopupMessage());
+            showPopupMessage();
         }
     }
     private void initUIComponents() {
         buttonAnimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        emailTextInputLayout = findViewById(R.id.emailTextInputLayout);
-        passwordTextInputLayout = findViewById(R.id.passwordTextInputLayout);
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewError = findViewById(R.id.textViewError);
         textViewSignUp = findViewById(R.id.buttonSignUp);
@@ -127,23 +125,24 @@ public class Activity1_New extends AppCompatActivity {
         });
     }
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
+                applyButtonAnimation(v);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                // Chiama performClick() quando rilevi un click
+                v.performClick();
             }
+            return false;
         });
     }
+
     private void applyButtonAnimation(View v) {
         v.startAnimation(buttonAnimation);
         new Handler().postDelayed(v::clearAnimation, 100);
     }
-    private void navigateTo(Class<?> targetActivity, String param1, String param2) {
-        Intent intent = new Intent(Activity1_New.this, targetActivity);
+    private void navigateTo(String param1, String param2) {
+        Intent intent = new Intent(Activity1_New.this, Activity0_OutOfSight.class);
         intent.putExtra("param1", param1);
         intent.putExtra("param2", param2);
         startActivity(intent);
@@ -200,24 +199,26 @@ public class Activity1_New extends AppCompatActivity {
         }
 
     }
+    @SuppressLint("SetTextI18n")
     public void onClickAccedi(View v) {
         v.setClickable(false);
         resetInactivityTimer();
         email = editTextEmail.getText().toString().trim();
         password = editTextPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            textViewError.setText("Inserisci email e password!");
-            textViewError.setVisibility(View.VISIBLE);
-        } else {
-            new Thread(() -> {
-                runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
+        executorService.execute(() -> {
+            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                runOnUiThread(() -> {
+                    textViewError.setText("Inserisci email e password!");
+                    textViewError.setVisibility(View.VISIBLE);
+                });
+            } else {
                 try {
                     socket.send("LOG_IN" + " " + email + " " + password);
                     Thread.sleep(250);
                     String response = socket.receive();
                     Thread.sleep(250);
-                    if(response=="[ERROR]"){
+                    if("[ERROR]".equals(response)){
                         throw new Exception();
                     }
                     String[] parts = response.split(" ");
@@ -227,19 +228,19 @@ public class Activity1_New extends AppCompatActivity {
                         user = parts[2];
                     }
                     if ("LOG_IN_SUCCESS".equals(LOG_IN_RESPONSE)) {
-                        navigateToParam(Activity2_Welcome.class, sessionID, user,"");
-                        runOnUiThread(() -> textViewError.setVisibility(View.INVISIBLE));
+                        navigateToParam(Activity2_Welcome.class, sessionID, user, "");
                     } else if ("LOG_IN_ERROR".equals(LOG_IN_RESPONSE)) {
-                        v.setClickable(true);
-                        runOnUiThread(() -> textViewError.setVisibility(View.VISIBLE));
+                        runOnUiThread(() -> {
+                            v.setClickable(true);
+                            textViewError.setVisibility(View.VISIBLE);
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // Se c'è un'eccezione, mostra il popup
                     showPopupMessage();
                 }
-            }).start();
-        }
+            }
+        });
     }
     public void showPopupMessage() {
         runOnUiThread(() -> {
@@ -318,6 +319,12 @@ public class Activity1_New extends AppCompatActivity {
         finishAffinity();
         finish();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();  // Assicurati di chiudere l'ExecutorService quando l'Activity viene distrutta
     }
 
 }

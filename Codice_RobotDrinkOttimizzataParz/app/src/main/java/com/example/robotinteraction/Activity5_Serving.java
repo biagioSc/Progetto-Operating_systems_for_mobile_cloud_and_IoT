@@ -1,11 +1,8 @@
 package com.example.robotinteraction;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Activity5_Serving extends AppCompatActivity {
     private Animation buttonAnimation;
@@ -33,6 +32,8 @@ public class Activity5_Serving extends AppCompatActivity {
     private Socket_Manager socket;  // Manager del socket per la comunicazione con il server
     private String sessionID = "-1", user = "Guest";
     private String[] selectedTopics = new String[2]; // Aggiungi gli argomenti desiderati
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +67,14 @@ public class Activity5_Serving extends AppCompatActivity {
         setTouchListenerForAnimation(exitButton);
     }
     private void setTouchListenerForAnimation(View view) {
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    resetInactivityTimer();
-                    applyButtonAnimation(v);
-                }
-                return false;
+        view.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                resetInactivityTimer();
+                applyButtonAnimation(v);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                v.performClick();
             }
+            return false;
         });
     }
     private void applyButtonAnimation(View v) {
@@ -142,19 +142,19 @@ public class Activity5_Serving extends AppCompatActivity {
     public void onClickQuiz(View v) {
         v.setClickable(false);
         resetInactivityTimer();
-        if("Guest".equals(user)){
-            String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
-            selectedTopics = new String[2];
-            Random random = new Random();
 
-            for (int i = 0; i < 2; i++) {
-                int randomIndex = random.nextInt(allTopics.length);
-                selectedTopics[i] = allTopics[randomIndex];
-            }
-            navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
+        executorService.execute(() -> {
+            if ("Guest".equals(user)) {
+                String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
+                selectedTopics = new String[2];
+                Random random = new Random();
 
-        }else {
-            new Thread(() -> {
+                for (int i = 0; i < 2; i++) {
+                    int randomIndex = random.nextInt(allTopics.length);
+                    selectedTopics[i] = allTopics[randomIndex];
+                }
+                navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
+            } else {
                 try {
                     socket.send("START_CHAT");
                     Thread.sleep(500);
@@ -163,7 +163,7 @@ public class Activity5_Serving extends AppCompatActivity {
                     String inputString = socket.receive();
                     Thread.sleep(500);
 
-                    if(inputString=="[ERROR]"){
+                    if(inputString.equals("[ERROR]")){
                         throw new Exception();
                     }
 
@@ -174,17 +174,15 @@ public class Activity5_Serving extends AppCompatActivity {
                         Random random = new Random();
 
                         String newTopic;
-
                         do {
                             newTopic = allTopics[random.nextInt(allTopics.length)];
                         } while (Arrays.asList(selectedTopics).contains(newTopic));
 
                         String[] newSelectedTopics = Arrays.copyOf(selectedTopics, selectedTopics.length + 1);
                         newSelectedTopics[newSelectedTopics.length - 1] = newTopic;
-
                         selectedTopics = newSelectedTopics;
-                    }else if (selectedTopics.length > 2) {
 
+                    } else if (selectedTopics.length > 2) {
                         int elementsToRemove = selectedTopics.length - 2;
                         Random random = new Random();
                         for (int i = 0; i < elementsToRemove; i++) {
@@ -199,12 +197,10 @@ public class Activity5_Serving extends AppCompatActivity {
                             }
                             selectedTopics = newArray;
                         }
-                    }else if("Nessuno".equals(selectedTopics[0])){
+                    } else if ("Nessuno".equals(selectedTopics[0])) {
                         String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
-
                         selectedTopics = new String[2];
                         Random random = new Random();
-
                         for (int i = 0; i < 2; i++) {
                             int randomIndex = random.nextInt(allTopics.length);
                             selectedTopics[i] = allTopics[randomIndex];
@@ -212,27 +208,24 @@ public class Activity5_Serving extends AppCompatActivity {
                     }
 
                     navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
-
                 } catch (Exception e) {
                     runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Errore nella connessione. Continuerai come Ospite...", Toast.LENGTH_SHORT).show());
                     sessionID = "-1";
                     user = "Guest";
 
                     String[] allTopics = {"Storia", "Attualità", "Sport", "Scienza", "Informatica", "Letteratura", "Musica", "Geografia"};
-
                     selectedTopics = new String[2];
                     Random random = new Random();
-
                     for (int i = 0; i < 2; i++) {
                         int randomIndex = random.nextInt(allTopics.length);
                         selectedTopics[i] = allTopics[randomIndex];
                     }
                     navigateToParam(Activity6_Chat.class, sessionID, user, selectedDrink, selectedTopics);
                 }
-            }).start();
-
-        }
+            }
+        });
     }
+
     private void receiveParam() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -288,4 +281,11 @@ public class Activity5_Serving extends AppCompatActivity {
         finish();
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdown();  // Assicurati di chiudere l'ExecutorService quando l'Activity viene distrutta
+    }
+
 }
