@@ -1,0 +1,64 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1696421546092,1696421547212,1120,3924,2786,237.902493,0.933529,0.074014,1.045553,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421547212,1696421547218,6,3924,2786,237.902493,0.933529,0.000397,0.005601,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696421547218,1696421553268,6050,3924,2786,237.902493,0.933529,0.399808,5.647853,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421553268,1696421553275,7,3924,2786,237.902493,0.933529,0.000463,0.006535,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['SyncLoopWakeLock' 'screen']
+1696421553275,1696421553995,720,3924,2786,237.902493,0.933529,0.047580,0.672141,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421553995,1696421554029,34,3924,2786,237.902493,0.933529,0.002247,0.031740,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.osp.app.signin/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696421554029,1696421554619,590,3924,2786,237.902493,0.933529,0.038990,0.550782,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421554619,1696421554622,3,3924,2786,237.902493,0.933529,0.000198,0.002801,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696421554622,1696421559503,4881,3924,2786,237.902493,0.933529,0.322556,4.556557,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421559503,1696421559507,4,3924,2786,237.902493,0.933529,0.000264,0.003734,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696421559507,1696421562579,3072,3924,2786,237.902493,0.933529,0.203010,2.867802,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421562579,1696421562582,3,3924,2786,237.902493,0.933529,0.000198,0.002801,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696421562582,1696421577713,15131,3924,2786,237.902493,0.933529,0.999917,14.125233,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421577713,1696421577875,162,3924,2786,237.902493,0.933529,0.010706,0.151232,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696421577875,1696421580036,2161,3924,2786,237.902493,0.933529,0.142808,2.017357,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421580036,1696421580038,2,3924,2786,237.902493,0.933529,0.000132,0.001867,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK' 'screen']
+1696421580038,1696421582597,2559,3924,2786,237.902493,0.933529,0.169109,2.388902,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421582597,1696421582700,103,3924,2786,237.902493,0.933529,0.006807,0.096154,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['com.samsung.android.bixby.wakeup:DspControlService' 'screen']
+1696421582700,1696421590344,7644,3924,2786,237.902493,0.933529,0.505146,7.135899,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421590344,1696421590350,6,3924,2786,237.902493,0.933529,0.000397,0.005601,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696421590350,1696421592822,2472,3924,2786,237.902493,0.933529,0.163360,2.307685,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421592822,1696421593043,221,3924,2786,237.902493,0.933529,0.014605,0.206310,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696421593043,1696421596521,3478,3924,2786,237.902493,0.933529,0.229840,3.246815,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421596521,1696421596523,2,3924,2786,237.902493,0.933529,0.000132,0.001867,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696421596523,1696421599017,2494,3924,2786,237.902493,0.933529,0.164814,2.328222,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421599017,1696421599173,156,3924,2786,237.902493,0.933529,0.010309,0.145631,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696421599173,1696421601371,2198,3924,2786,237.902493,0.933529,0.145253,2.051898,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421601371,1696421610484,9113,3924,2782,270.118177,1.059944,0.683774,9.659267,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421610484,1696421610635,151,3924,2782,270.118177,1.059944,0.011330,0.160052,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696421610635,1696421614620,3985,3924,2782,270.118177,1.059944,0.299006,4.223876,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421614620,1696421614631,11,3924,2782,270.118177,1.059944,0.000825,0.011659,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696421614631,1696421635109,20478,3924,2782,270.118177,1.059944,1.536522,21.705528,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421635109,1696421635217,108,3924,2782,270.118177,1.059944,0.008104,0.114474,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696421635217,1696421635948,731,3924,2782,270.118177,1.059944,0.054849,0.774819,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421635948,1696421636067,119,3924,2782,270.118177,1.059944,0.008929,0.126133,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696421636067,1696421637774,1707,3924,2782,270.118177,1.059944,0.128081,1.809324,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421637774,1696421637778,4,3924,2782,270.118177,1.059944,0.000300,0.004240,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'screen']
+1696421637778,1696421637779,1,3924,2782,270.118177,1.059944,0.000075,0.001060,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'GCM_WORK' 'screen']
+1696421637779,1696421637807,28,3924,2782,270.118177,1.059944,0.002101,0.029678,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696421637807,1696421637832,25,3924,2782,270.118177,1.059944,0.001876,0.026499,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'GOOGLE_C2DM' 'screen']
+1696421637832,1696421637837,5,3924,2782,270.118177,1.059944,0.000375,0.005300,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'screen']
+1696421637837,1696421637862,25,3924,2782,270.118177,1.059944,0.001876,0.026499,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'GOOGLE_C2DM' 'screen']
+1696421637862,1696421638798,936,3924,2782,270.118177,1.059944,0.070231,0.992107,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'screen']
+1696421638798,1696421639977,1179,3924,2782,270.118177,1.059944,0.088464,1.249674,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'AudioMix' 'screen']
+1696421639977,1696421640035,58,3924,2782,270.118177,1.059944,0.004352,0.061477,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['AudioMix' 'screen']
+1696421640035,1696421640036,1,3924,2782,270.118177,1.059944,0.000075,0.001060,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK' 'AudioMix' 'screen']
+1696421640036,1696421640726,690,3924,2782,270.118177,1.059944,0.051773,0.731361,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['AudioMix' 'screen']
+1696421640726,1696421641106,380,3924,2782,270.118177,1.059944,0.028512,0.402779,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['AudioMix'
+ '*job*/com.sec.android.diagmonagent/.sa.scheduler.CustomUploadCellularJobService'
+ 'screen']"
+1696421641106,1696421641153,47,3924,2782,270.118177,1.059944,0.003527,0.049817,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.youtube/androidx.work.impl.background.systemjob.SystemJobService'
+ 'AudioMix'
+ '*job*/com.sec.android.diagmonagent/.sa.scheduler.CustomUploadCellularJobService'
+ 'screen']"
+1696421641153,1696421641806,653,3924,2782,270.118177,1.059944,0.048996,0.692143,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['AudioMix'
+ '*job*/com.sec.android.diagmonagent/.sa.scheduler.CustomUploadCellularJobService'
+ 'screen']"
+1696421641806,1696421642193,387,3924,2782,270.118177,1.059944,0.029038,0.410198,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.sec.android.diagmonagent/.sa.scheduler.CustomUploadCellularJobService'
+ 'screen']"
+1696421642193,1696421647399,5206,3924,2782,270.118177,1.059944,0.390621,5.518067,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696421647399,1696421647404,5,3924,2782,270.118177,1.059944,0.000375,0.005300,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696421647404,1696421647499,95,3924,2782,270.118177,1.059944,0.007128,0.100695,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*' 'screen']

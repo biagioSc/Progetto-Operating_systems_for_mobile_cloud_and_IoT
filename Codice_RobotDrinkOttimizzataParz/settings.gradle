@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "RobotInteraction"
+rootProject.name = "robotinteractionOttimizzataParz"
 include ':app'

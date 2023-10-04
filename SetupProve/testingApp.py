@@ -12,14 +12,15 @@ def send_enter_powdroid(powdroid):
 
 def execute_powdroid():
     print("[EXECUTE] Eseguo powdroid.py")
-    powdroid_process = subprocess.Popen(['python',
-                                         r'C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\RisultatiPowDroid\Powdroid\powdroid.py'],
+    script_path = 'powdroid.py'
+    powdroid_process = subprocess.Popen(['python', script_path],
                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
     return powdroid_process
 
 def connection_adb():
     print("[SETUP] Si prega di attivare il wireless dubugging sul dispositivo android.")
-    indirizzo_ip_cellulare = input("[IPADDRESS] Inserisci indirizzo IP cellulare: (es. 192.168.5.33:34829)")
+    indirizzo_ip_cellulare = "192.168.5.32:41361" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: (es. 192.168.5.33:34829)")
 
     while True:
         try:
@@ -29,7 +30,7 @@ def connection_adb():
             # Se si verifica un errore, mostra un messaggio di errore
             print("[ERROR] Errore di connessione adb. Assicurati che l'indirizzo IP sia corretto.")
             # Chiedi all'utente di reinserire l'indirizzo IP
-            indirizzo_ip_cellulare = input("[IPADDRESS] Inserisci indirizzo IP cellulare: ")
+            indirizzo_ip_cellulare = "192.168.5.32:35901" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: ")
 
     # Il ciclo esce solo quando la connessione adb ha successo
     print("[CONNECTION] Connessione adb riuscita.")
@@ -63,6 +64,36 @@ def testOptimizeApp():
         subprocess.run(["adb", "shell", "am", "instrument", "-w",
                         "-e", "class", scenario5,
                         "com.example.robotinteractionOttimizzata.test/androidx.test.runner.AndroidJUnitRunner"])
+
+def testOptimizeParzApp1():
+    scenario2 = "com.example.robotinteractionOttimizzataParz.testScenario2OptParz"
+    scenario3 = "com.example.robotinteractionOttimizzataParz.testScenario3OptParz"
+    scenario5 = "com.example.robotinteractionOttimizzataParz.testScenario5OptParz"
+
+    print("Test disponibili:")
+    print("[SCENARIO2] testScenario2OptParz.java")
+    print("[SCENARIO3] testScenario3OptParz.java")
+    print("[SCENARIO5] testScenario5OptParz.java")
+
+    scelta = "5" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
+
+    if scelta == "2":
+        print("[EXECUTE] Eseguo testScenario2OptParz.java")
+        subprocess.run(["adb", "shell", "am", "instrument", "-w",
+                        "-e", "class", scenario2,
+                        "com.example.robotinteractionOttimizzataParz.test/androidx.test.runner.AndroidJUnitRunner"])
+
+    elif scelta == "3":
+        print("[EXECUTE] Eseguo testScenario3OptParz.java")
+        subprocess.run(["adb", "shell", "am", "instrument", "-w",
+                        "-e", "class", scenario3,
+                        "com.example.robotinteractionOttimizzataParz.test/androidx.test.runner.AndroidJUnitRunner"])
+
+    elif scelta == "5":
+        print("[EXECUTE] Eseguo testScenario5OptParz.java")
+        subprocess.run(["adb", "shell", "am", "instrument", "-w",
+                        "-e", "class", scenario5,
+                        "com.example.robotinteractionOttimizzataParz.test/androidx.test.runner.AndroidJUnitRunner"])
 
 def testNoOptimizeApp():
     scenario2 = "com.example.robotinteraction.testScenario2NoOpt"
@@ -138,11 +169,11 @@ def main():
 
     time.sleep(5)
 
-    install = input("[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n)")
+    install = "y" #input("[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n) ")
 
     while install == "n":
         install = input(
-            "[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n)")
+            "[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n) ")
     testChoise = "y"
 
     while testChoise == "y":
@@ -165,12 +196,19 @@ def main():
         # Invia un invio a powdroid.py x avviare sessione
         send_enter_powdroid(powdroid_process)
 
-        ottimizzata = input("[SCELTA] Vuoi eseguire il test sull'applicazione ottimizzata? (y/n): ").lower()
+        print("[TEST1] App ottimizzata")
+        print("[TEST2] App ottimizzata parz1")
+        print("[TEST3] App non ottimizzata")
 
-        if ottimizzata == "y":
+        test = "2" #input("[SCELTA] Quale test vuoi eseguire? ")
+
+        if test == "1":
             testOptimizeApp()
 
-        elif ottimizzata == "n":
+        elif test == "2":
+            testOptimizeParzApp1()
+
+        elif test == "3":
             testNoOptimizeApp()
 
         # Invia un invio a powdroid.py x stoppare sessione
@@ -184,6 +222,7 @@ def main():
 
         print("[WAIT] Powdroid save data...")
         send_enter_powdroid(powdroid_process)
+
         powdroid_process.wait()  # Attendi che powdroid.py termini
 
         powdroid_process.communicate()

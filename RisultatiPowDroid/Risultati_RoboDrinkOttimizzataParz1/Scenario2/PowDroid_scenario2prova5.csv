@@ -1,0 +1,285 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1696420773574,1696420773576,2,3955,2845,236.881066,0.936865,0.000132,0.001874,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420773576,1696420773587,11,3955,2845,236.881066,0.936865,0.000724,0.010306,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['screen']
+1696420773587,1696420773597,10,3955,2845,236.881066,0.936865,0.000658,0.009369,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420773597,1696420773929,332,3955,2845,236.881066,0.936865,0.021846,0.311039,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420773929,1696420773947,18,3955,2845,236.881066,0.936865,0.001184,0.016864,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'NetworkStats' 'screen']
+1696420773947,1696420773967,20,3955,2845,236.881066,0.936865,0.001316,0.018737,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['NetworkStats' 'screen']
+1696420773967,1696420774579,612,3955,2845,236.881066,0.936865,0.040270,0.573361,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420774579,1696420774583,4,3955,2845,236.881066,0.936865,0.000263,0.003747,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696420774583,1696420799433,24850,3955,2845,236.881066,0.936865,1.635137,23.281086,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420799433,1696420800014,581,3919,2845,236.881066,0.928337,0.038230,0.539364,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420800014,1696420800019,5,3919,2845,236.881066,0.928337,0.000329,0.004642,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK' 'screen']
+1696420800019,1696420805492,5473,3919,2845,236.881066,0.928337,0.360125,5.080788,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420805492,1696420805646,154,3919,2845,236.881066,0.928337,0.010133,0.142964,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420805646,1696420816746,11100,3919,2845,236.881066,0.928337,0.730383,10.304540,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420816746,1696420816762,16,3919,2845,236.881066,0.928337,0.001053,0.014853,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420816762,1696420820642,3880,3919,2845,236.881066,0.928337,0.255305,3.601947,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420820642,1696420820850,208,3919,2845,236.881066,0.928337,0.013686,0.193094,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420820850,1696420826820,5970,3919,2845,236.881066,0.928337,0.392828,5.542171,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420826820,1696420826919,99,3919,2845,236.881066,0.928337,0.006514,0.091905,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420826919,1696420829092,2173,3919,2845,236.881066,0.928337,0.142984,2.017276,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420829092,1696420829102,10,3919,2845,236.881066,0.928337,0.000658,0.009283,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420829102,1696420834582,5480,3919,2841,238.742622,0.935632,0.363419,5.127265,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420834582,1696420834590,8,3919,2841,238.742622,0.935632,0.000531,0.007485,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696420834590,1696420839788,5198,3919,2841,238.742622,0.935632,0.344718,4.863417,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420839788,1696420839977,189,3919,2841,238.742622,0.935632,0.012534,0.176835,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420839977,1696420853772,13795,3919,2841,238.742622,0.935632,0.914848,12.907048,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420853772,1696420853782,10,3919,2841,238.742622,0.935632,0.000663,0.009356,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420853782,1696420855000,1218,3919,2841,238.742622,0.935632,0.080775,1.139600,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420855000,1696420855003,3,3919,2841,238.742622,0.935632,0.000199,0.002807,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'screen']
+1696420855003,1696420855004,1,3919,2841,238.742622,0.935632,0.000066,0.000936,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'GCM_WORK' 'screen']
+1696420855004,1696420855030,26,3919,2841,238.742622,0.935632,0.001724,0.024326,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420855030,1696420855055,25,3919,2841,238.742622,0.935632,0.001658,0.023391,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'GOOGLE_C2DM' 'screen']
+1696420855055,1696420855110,55,3919,2841,238.742622,0.935632,0.003647,0.051460,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'screen']
+1696420855110,1696420855118,8,3919,2841,238.742622,0.935632,0.000531,0.007485,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'wake:com.google.firebase.iid.WakeLockHolder' 'screen']
+1696420855118,1696420855162,44,3919,2841,238.742622,0.935632,0.002918,0.041168,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['wake:com.google.firebase.iid.WakeLockHolder' 'screen']
+1696420855162,1696420855213,51,3919,2841,238.742622,0.935632,0.003382,0.047717,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420855213,1696420855618,405,3919,2841,238.742622,0.935632,0.026859,0.378931,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420855618,1696420855631,13,3919,2841,238.742622,0.935632,0.000862,0.012163,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/.push.RegistrationIntentService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420855631,1696420856465,834,3919,2841,238.742622,0.935632,0.055309,0.780317,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420856465,1696420856467,2,3919,2841,238.742622,0.935632,0.000133,0.001871,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:StatsCompanionService.pull'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420856467,1696420856468,1,3919,2841,238.742622,0.935632,0.000066,0.000936,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:StatsCompanionService.pull'
+ 'com.android.server.stats.StatsCompanionService.PullingAlarmListener'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420856468,1696420856519,51,3919,2841,238.742622,0.935632,0.003382,0.047717,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['com.android.server.stats.StatsCompanionService.PullingAlarmListener'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420856519,1696420856933,414,3919,2841,238.742622,0.935632,0.027455,0.387352,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420856933,1696420856975,42,3919,2841,238.742622,0.935632,0.002785,0.039297,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420856975,1696420857007,32,3919,2841,238.742622,0.935632,0.002122,0.029940,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857007,1696420857009,2,3919,2841,238.742622,0.935632,0.000133,0.001871,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857009,1696420857028,19,3919,2841,238.742622,0.935632,0.001260,0.017777,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857028,1696420857053,25,3919,2841,238.742622,0.935632,0.001658,0.023391,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857053,1696420857054,1,3919,2841,238.742622,0.935632,0.000066,0.000936,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857054,1696420857068,14,3919,2841,238.742622,0.935632,0.000928,0.013099,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857068,1696420857069,1,3919,2841,238.742622,0.935632,0.000066,0.000936,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857069,1696420857089,20,3919,2841,238.742622,0.935632,0.001326,0.018713,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420857089,1696420860012,2923,3919,2841,238.742622,0.935632,0.193846,2.734853,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420860012,1696420882274,22262,3919,2841,238.742622,0.935632,1.476358,20.829047,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882274,1696420882291,17,3919,2841,238.742622,0.935632,0.001127,0.015906,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:*job.delay*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882291,1696420882324,33,3919,2841,238.742622,0.935632,0.002188,0.030876,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882324,1696420882326,2,3919,2841,238.742622,0.935632,0.000133,0.001871,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882326,1696420882329,3,3919,2841,238.742622,0.935632,0.000199,0.002807,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882329,1696420882335,6,3919,2841,238.742622,0.935632,0.000398,0.005614,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['SyncLoopWakeLock'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882335,1696420882342,7,3919,2841,238.742622,0.935632,0.000464,0.006549,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['SyncLoopWakeLock'
+ '*job*/com.sec.android.app.shealth/com.samsung.android.app.shealth.tracker.food.util.service.FoodMealMirroringService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882342,1696420882355,13,3919,2841,238.742622,0.935632,0.000862,0.012163,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['SyncLoopWakeLock'
+ '*job*/com.sec.android.app.shealth/com.samsung.android.app.shealth.tracker.food.util.service.FoodMealMirroringService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882355,1696420882404,49,3919,2841,238.742622,0.935632,0.003250,0.045846,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.sec.android.app.shealth/com.samsung.android.app.shealth.tracker.food.util.service.FoodMealMirroringService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420882404,1696420883385,981,3919,2841,238.742622,0.935632,0.065057,0.917855,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883385,1696420883386,1,3919,2841,238.742622,0.935632,0.000066,0.000936,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['SyncLoopWakeLock'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883386,1696420883457,71,3919,2841,238.742622,0.935632,0.004709,0.066430,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883457,1696420883516,59,3919,2841,238.742622,0.935632,0.003913,0.055202,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.ProviderCreatedJob$ProviderCreatedJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883516,1696420883518,2,3919,2841,238.742622,0.935632,0.000133,0.001871,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.ProviderCreatedJob$ProviderCreatedJobService'
+ '*job*/com.google.android.gm/com.android.mail.widget.NotifyDatasetChangedJob$NotifyDatasetChangedJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883518,1696420883545,27,3919,2841,238.742622,0.935632,0.001791,0.025262,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.ProviderCreatedJob$ProviderCreatedJobService'
+ '*job*/com.google.android.gm/com.android.mail.widget.NotifyDatasetChangedJob$NotifyDatasetChangedJobService'
+ '*job*/com.google.android.gm/androidx.work.impl.background.systemjob.SystemJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883545,1696420883546,1,3919,2841,238.742622,0.935632,0.000066,0.000936,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.ProviderCreatedJob$ProviderCreatedJobService'
+ '*job*/com.google.android.gm/com.android.mail.widget.NotifyDatasetChangedJob$NotifyDatasetChangedJobService'
+ '*job*/com.google.android.gm/androidx.work.impl.background.systemjob.SystemJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883546,1696420883570,24,3919,2841,238.742622,0.935632,0.001592,0.022455,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.mail.widget.NotifyDatasetChangedJob$NotifyDatasetChangedJobService'
+ '*job*/com.google.android.gm/androidx.work.impl.background.systemjob.SystemJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883570,1696420883636,66,3919,2841,238.742622,0.935632,0.004377,0.061752,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/androidx.work.impl.background.systemjob.SystemJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883636,1696420883711,75,3919,2841,238.742622,0.935632,0.004974,0.070172,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883711,1696420883713,2,3919,2841,238.742622,0.935632,0.000133,0.001871,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420883713,1696420884160,447,3919,2841,238.742622,0.935632,0.029644,0.418228,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420884160,1696420886932,2772,3919,2841,238.742622,0.935632,0.183832,2.593573,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420886932,1696420887289,357,3919,2841,238.742622,0.935632,0.023675,0.334021,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it:android'
+ '*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ 'SyncLoopWakeLock'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420887289,1696420887302,13,3919,2841,238.742622,0.935632,0.000862,0.012163,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*sync*/com.google.android.gm.email.provider/com.google.android.gm.legacyimap/XXX@outlook.it'
+ 'SyncLoopWakeLock'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420887302,1696420887316,14,3919,2841,238.742622,0.935632,0.000928,0.013099,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['SyncLoopWakeLock'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420887316,1696420889283,1967,3919,2841,238.742622,0.935632,0.130446,1.840389,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420889283,1696420889418,135,3919,2841,238.742622,0.935632,0.008953,0.126310,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420889418,1696420894582,5164,3919,2837,605.321787,2.372256,0.868300,12.250330,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420894582,1696420894587,5,3919,2837,605.321787,2.372256,0.000841,0.011861,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:DetectMovementSPListener'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420894587,1696420898224,3637,3919,2837,605.321787,2.372256,0.611543,8.627895,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898224,1696420898348,124,3919,2837,605.321787,2.372256,0.020850,0.294160,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898348,1696420898397,49,3919,2837,605.321787,2.372256,0.008239,0.116241,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898397,1696420898466,69,3919,2837,605.321787,2.372256,0.011602,0.163686,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898466,1696420898531,65,3919,2837,605.321787,2.372256,0.010929,0.154197,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898531,1696420898571,40,3919,2837,605.321787,2.372256,0.006726,0.094890,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898571,1696420898577,6,3919,2837,605.321787,2.372256,0.001009,0.014234,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898577,1696420898598,21,3919,2837,605.321787,2.372256,0.003531,0.049817,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*launch*'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898598,1696420898623,25,3919,2837,605.321787,2.372256,0.004204,0.059306,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898623,1696420898641,18,3919,2837,605.321787,2.372256,0.003027,0.042701,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*launch*'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898641,1696420898687,46,3919,2837,605.321787,2.372256,0.007735,0.109124,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898687,1696420898713,26,3919,2837,605.321787,2.372256,0.004372,0.061679,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898713,1696420898725,12,3919,2837,605.321787,2.372256,0.002018,0.028467,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898725,1696420898759,34,3919,2837,605.321787,2.372256,0.005717,0.080657,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898759,1696420898791,32,3919,2837,605.321787,2.372256,0.005381,0.075912,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898791,1696420898812,21,3919,2837,605.321787,2.372256,0.003531,0.049817,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898812,1696420898814,2,3919,2837,605.321787,2.372256,0.000336,0.004745,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898814,1696420898833,19,3919,2837,605.321787,2.372256,0.003195,0.045073,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420898833,1696420910016,11183,3919,2837,605.321787,2.372256,1.880365,26.528940,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420910016,1696420910025,9,3919,2837,605.321787,2.372256,0.001513,0.021350,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420910025,1696420910142,117,3919,2837,605.321787,2.372256,0.019673,0.277554,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"

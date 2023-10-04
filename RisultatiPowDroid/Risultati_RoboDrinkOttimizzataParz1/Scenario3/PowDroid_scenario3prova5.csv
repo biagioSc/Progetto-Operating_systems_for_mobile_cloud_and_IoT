@@ -1,0 +1,26 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1696418105526,1696418105542,16,4013,3110,179.336455,0.719677,0.000797,0.011515,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*']
+1696418105542,1696418105904,362,4013,3110,179.336455,0.719677,0.018033,0.260523,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696418105904,1696418130981,25077,4013,3110,179.336455,0.719677,1.249228,18.047345,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418130981,1696418137264,6283,3980,3110,179.336455,0.713759,0.312992,4.484548,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418137264,1696418137269,5,3980,3110,179.336455,0.713759,0.000249,0.003569,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener']
+1696418137269,1696418137466,197,3980,3110,179.336455,0.713759,0.009814,0.140611,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418137466,1696418137619,153,3980,3110,179.336455,0.713759,0.007622,0.109205,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696418137619,1696418143690,6071,3980,3110,179.336455,0.713759,0.302431,4.333231,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418143690,1696418143692,2,3980,3110,179.336455,0.713759,0.000100,0.001428,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*telephony-radio*']
+1696418143692,1696418143712,20,3980,3110,179.336455,0.713759,0.000996,0.014275,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*telephony-radio*']
+1696418143712,1696418143713,1,3980,3110,179.336455,0.713759,0.000050,0.000714,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418143713,1696418143714,1,3980,3110,179.336455,0.713759,0.000050,0.000714,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*telephony-radio*']
+1696418143714,1696418152587,8873,3980,3110,179.336455,0.713759,0.442015,6.333184,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418152587,1696418152800,213,3980,3110,179.336455,0.713759,0.010611,0.152031,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696418152800,1696418156465,3665,3980,3110,179.336455,0.713759,0.182574,2.615927,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418156465,1696418156467,2,3980,3110,179.336455,0.713759,0.000100,0.001428,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:StatsCompanionService.pull']
+1696418156467,1696418156468,1,3980,3110,179.336455,0.713759,0.000050,0.000714,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:StatsCompanionService.pull'
+ 'com.android.server.stats.StatsCompanionService.PullingAlarmListener']"
+1696418156468,1696418156553,85,3980,3110,179.336455,0.713759,0.004234,0.060670,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['com.android.server.stats.StatsCompanionService.PullingAlarmListener']
+1696418156553,1696418158751,2198,3980,3110,179.336455,0.713759,0.109495,1.568842,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696418158751,1696418158755,4,3980,3110,179.336455,0.713759,0.000199,0.002855,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696418158755,1696418158859,104,3980,3110,179.336455,0.713759,0.005181,0.074231,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*']
+1696418158859,1696418160015,1156,3980,3110,179.336455,0.713759,0.057587,0.825106,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0
+1696418160015,1696418160017,2,3980,3110,179.336455,0.713759,0.000100,0.001428,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK']
+1696418160017,1696418161179,1162,3980,3110,179.336455,0.713759,0.057886,0.829388,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0

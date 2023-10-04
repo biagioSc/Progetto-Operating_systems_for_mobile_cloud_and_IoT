@@ -1,0 +1,45 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1696417198591,1696417198593,2,4020,3182,238.861427,0.960223,0.000133,0.001920,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*job*/com.sec.android.app.shealth/com.samsung.android.app.shealth.wearable.packageinfo.PackageInformationJobIntentService']
+1696417198593,1696417198610,17,4020,3182,238.861427,0.960223,0.001128,0.016324,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*job*/com.sec.android.app.shealth/com.samsung.android.app.shealth.wearable.packageinfo.PackageInformationJobIntentService'
+ 'IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation']"
+1696417198610,1696417198620,10,4020,3182,238.861427,0.960223,0.000664,0.009602,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation']
+1696417198620,1696417198681,61,4020,3182,238.861427,0.960223,0.004047,0.058574,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0
+1696417198681,1696417198685,4,4020,3182,238.861427,0.960223,0.000265,0.003841,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['nearby:ENWearableDeviceManager']
+1696417198685,1696417198695,10,4020,3182,238.861427,0.960223,0.000664,0.009602,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0
+1696417198695,1696417198697,2,4020,3182,238.861427,0.960223,0.000133,0.001920,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['Icing']
+1696417198697,1696417198700,3,4020,3182,238.861427,0.960223,0.000199,0.002881,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['Icing']
+1696417198700,1696417198706,6,4020,3182,238.861427,0.960223,0.000398,0.005761,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0
+1696417198706,1696417200015,1309,4020,3182,238.861427,0.960223,0.086853,1.256932,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0
+1696417200015,1696417200017,2,4020,3182,238.861427,0.960223,0.000133,0.001920,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK']
+1696417200017,1696417203343,3326,4020,3182,238.861427,0.960223,0.220681,3.193701,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,0.0
+1696417203343,1696417203364,21,4020,3182,238.861427,0.960223,0.001393,0.020165,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*']
+1696417203364,1696417203658,294,4020,3182,238.861427,0.960223,0.019507,0.282306,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696417203658,1696417207936,4278,4020,3182,238.861427,0.960223,0.283847,4.107834,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417207936,1696417207938,2,4020,3182,238.861427,0.960223,0.000133,0.001920,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:*job.delay*']
+1696417207938,1696417209894,1956,4020,3182,238.861427,0.960223,0.129781,1.878196,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417209894,1696417209896,2,4020,3182,238.861427,0.960223,0.000133,0.001920,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation']
+1696417209896,1696417209908,12,4020,3182,238.861427,0.960223,0.000796,0.011523,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.sec.android.app.shealth/com.samsung.android.app.shealth.wearable.packageinfo.PackageInformationJobIntentService'
+ 'IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation']"
+1696417209908,1696417209926,18,4020,3182,238.861427,0.960223,0.001194,0.017284,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation']
+1696417209926,1696417209962,36,4020,3182,238.861427,0.960223,0.002389,0.034568,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417209962,1696417209963,1,4020,3182,238.861427,0.960223,0.000066,0.000960,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['nearby:ENWearableDeviceManager' 'Icing']
+1696417209963,1696417209965,2,4020,3182,238.861427,0.960223,0.000133,0.001920,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['Icing']
+1696417209965,1696417209968,3,4020,3182,238.861427,0.960223,0.000199,0.002881,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['Icing']
+1696417209968,1696417209979,11,4020,3182,238.861427,0.960223,0.000730,0.010562,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417209979,1696417209992,13,4020,3182,238.861427,0.960223,0.000863,0.012483,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['Icing']
+1696417209992,1696417212474,2482,4020,3182,238.861427,0.960223,0.164682,2.383273,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417212474,1696417235279,22805,3989,3182,238.861427,0.952818,1.513121,21.729020,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417235279,1696417235414,135,3989,3182,238.861427,0.952818,0.008957,0.128630,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696417235414,1696417237220,1806,3989,3182,238.861427,0.952818,0.119829,1.720790,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417237220,1696417237225,5,3989,3182,238.861427,0.952818,0.000332,0.004764,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener']
+1696417237225,1696417242645,5420,3989,3182,238.861427,0.952818,0.359619,5.164275,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417242645,1696417250391,7746,3989,3178,521.606839,2.080690,1.122324,16.117022,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417250391,1696417250605,214,3989,3178,521.606839,2.080690,0.031007,0.445268,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696417250605,1696417256464,5859,3989,3178,521.606839,2.080690,0.848915,12.190761,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417256464,1696417256465,1,3989,3178,521.606839,2.080690,0.000145,0.002081,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:StatsCompanionService.pull']
+1696417256465,1696417256470,5,3989,3178,521.606839,2.080690,0.000724,0.010403,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:StatsCompanionService.pull'
+ 'com.android.server.stats.StatsCompanionService.PullingAlarmListener']"
+1696417256470,1696417256562,92,3989,3178,521.606839,2.080690,0.013330,0.191423,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['com.android.server.stats.StatsCompanionService.PullingAlarmListener']
+1696417256562,1696417256586,24,3989,3178,521.606839,2.080690,0.003477,0.049937,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,0.0
+1696417256586,1696417256592,6,3989,3178,521.606839,2.080690,0.000869,0.012484,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*']
+1696417256592,1696417256712,120,3989,3178,521.606839,2.080690,0.017387,0.249683,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*']

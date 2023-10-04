@@ -1,0 +1,140 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1696420219516,1696420219535,19,3952,2897,237.009727,0.936662,0.001251,0.017797,['com.android.settings'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420219535,1696420219812,277,3952,2897,237.009727,0.936662,0.018237,0.259455,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420219812,1696420234561,14749,3952,2897,237.009727,0.936662,0.971016,13.814834,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420234561,1696420234568,7,3952,2897,237.009727,0.936662,0.000461,0.006557,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696420234568,1696420251461,16893,3952,2897,237.009727,0.936662,1.112168,15.823039,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420251461,1696420251610,149,3952,2897,237.009727,0.936662,0.009810,0.139563,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420251610,1696420256471,4861,3952,2897,237.009727,0.936662,0.320029,4.553116,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420256471,1696420256472,1,3952,2897,237.009727,0.936662,0.000066,0.000937,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:StatsCompanionService.pull' 'screen']
+1696420256472,1696420256480,8,3952,2897,237.009727,0.936662,0.000527,0.007493,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:StatsCompanionService.pull'
+ 'com.android.server.stats.StatsCompanionService.PullingAlarmListener'
+ 'screen']"
+1696420256480,1696420256580,100,3952,2897,237.009727,0.936662,0.006584,0.093666,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['com.android.server.stats.StatsCompanionService.PullingAlarmListener'
+ 'screen']"
+1696420256580,1696420260017,3437,3952,2897,237.009727,0.936662,0.226278,3.219309,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420260017,1696420260019,2,3952,2897,237.009727,0.936662,0.000132,0.001873,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK' 'screen']
+1696420260019,1696420266590,6571,3952,2897,237.009727,0.936662,0.432609,6.154809,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420266590,1696420266780,190,3952,2897,237.009727,0.936662,0.012509,0.177966,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420266780,1696420272748,5968,3952,2897,237.009727,0.936662,0.392909,5.590001,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420272748,1696420272876,128,3952,2897,237.009727,0.936662,0.008427,0.119893,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420272876,1696420274775,1899,3952,2897,237.009727,0.936662,0.125023,1.778722,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420274775,1696420285705,10930,3952,2893,238.347458,0.941949,0.723649,10.295504,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420285705,1696420285855,150,3952,2893,238.347458,0.941949,0.009931,0.141292,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420285855,1696420294563,8708,3952,2893,238.347458,0.941949,0.576536,8.202493,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420294563,1696420294569,6,3952,2893,238.347458,0.941949,0.000397,0.005652,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696420294569,1696420299823,5254,3952,2893,238.347458,0.941949,0.347855,4.949001,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420299823,1696420299827,4,3952,2893,238.347458,0.941949,0.000265,0.003768,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:*job.delay*' 'screen']
+1696420299827,1696420316979,17152,3952,2893,238.347458,0.941949,1.135593,16.156312,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420316979,1696420316982,3,3952,2893,238.347458,0.941949,0.000199,0.002826,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'screen']
+1696420316982,1696420316983,1,3952,2893,238.347458,0.941949,0.000066,0.000942,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'GCM_WORK' 'screen']
+1696420316983,1696420317024,41,3952,2893,238.347458,0.941949,0.002715,0.038620,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420317024,1696420317048,24,3952,2893,238.347458,0.941949,0.001589,0.022607,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'GOOGLE_C2DM' 'screen']
+1696420317048,1696420317466,418,3952,2893,238.347458,0.941949,0.027675,0.393735,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'screen']
+1696420317466,1696420317469,3,3952,2893,238.347458,0.941949,0.000199,0.002826,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'wake:com.google.firebase.iid.WakeLockHolder' 'screen']
+1696420317469,1696420317637,168,3952,2893,238.347458,0.941949,0.011123,0.158247,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['wake:com.google.firebase.iid.WakeLockHolder' 'screen']
+1696420317637,1696420317814,177,3952,2893,238.347458,0.941949,0.011719,0.166725,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420317814,1696420317815,1,3952,2893,238.347458,0.941949,0.000066,0.000942,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420317815,1696420317855,40,3952,2893,238.347458,0.941949,0.002648,0.037678,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/.AlarmService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420317855,1696420317949,94,3952,2893,238.347458,0.941949,0.006224,0.088543,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['com.whatsapp:NtpAction#updateNtp' '*job*/com.whatsapp/.AlarmService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420317949,1696420317974,25,3952,2893,238.347458,0.941949,0.001655,0.023549,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/.crash.upload.ExceptionsUploadService'
+ 'com.whatsapp:NtpAction#updateNtp' '*job*/com.whatsapp/.AlarmService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420317974,1696420317986,12,3952,2893,238.347458,0.941949,0.000794,0.011303,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['com.whatsapp:NtpAction#updateNtp' '*job*/com.whatsapp/.AlarmService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420317986,1696420317989,3,3952,2893,238.347458,0.941949,0.000199,0.002826,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/.AlarmService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420317989,1696420318298,309,3952,2893,238.347458,0.941949,0.020458,0.291062,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420318298,1696420318308,10,3952,2893,238.347458,0.941949,0.000662,0.009419,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/.push.RegistrationIntentService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420318308,1696420319906,1598,3952,2893,238.347458,0.941949,0.105800,1.505235,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420319906,1696420319937,31,3952,2893,238.347458,0.941949,0.002052,0.029200,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420319937,1696420319969,32,3952,2893,238.347458,0.941949,0.002119,0.030142,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420319969,1696420319971,2,3952,2893,238.347458,0.941949,0.000132,0.001884,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420319971,1696420319986,15,3952,2893,238.347458,0.941949,0.000993,0.014129,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420319986,1696420320014,28,3952,2893,238.347458,0.941949,0.001854,0.026375,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420320014,1696420320020,6,3952,2893,238.347458,0.941949,0.000397,0.005652,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:TIME_TICK'
+ '*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420320020,1696420320383,363,3952,2893,238.347458,0.941949,0.024033,0.341928,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*/com.google.android.gms/.icing.proxy.IcingInternalCorporaUpdateService'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420320383,1696420320386,3,3952,2893,238.347458,0.941949,0.000199,0.002826,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420320386,1696420320402,16,3952,2893,238.347458,0.941949,0.001059,0.015071,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420320402,1696420320405,3,3952,2893,238.347458,0.941949,0.000199,0.002826,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420320405,1696420320420,15,3952,2893,238.347458,0.941949,0.000993,0.014129,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*gms_scheduler*:internal'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420320420,1696420328782,8362,3952,2893,238.347458,0.941949,0.553628,7.876579,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420328782,1696420328788,6,3952,2893,238.347458,0.941949,0.000397,0.005652,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*telephony-radio*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420328788,1696420328789,1,3952,2893,238.347458,0.941949,0.000066,0.000942,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420328789,1696420328810,21,3952,2893,238.347458,0.941949,0.001390,0.019781,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*telephony-radio*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420328810,1696420328812,2,3952,2893,238.347458,0.941949,0.000132,0.001884,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*telephony-radio*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420328812,1696420335191,6379,3952,2893,238.347458,0.941949,0.422338,6.008694,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420335191,1696420335215,24,3929,2889,559.679739,2.198982,0.003731,0.052776,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420335215,1696420335360,145,3929,2889,559.679739,2.198982,0.022543,0.318852,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420335360,1696420344507,9147,3929,2889,559.679739,2.198982,1.422053,20.114086,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420344507,1696420344631,124,3929,2889,559.679739,2.198982,0.019278,0.272674,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*launch*'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420344631,1696420345666,1035,3929,2889,559.679739,2.198982,0.160908,2.275946,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420345666,1696420345693,27,3929,2889,559.679739,2.198982,0.004198,0.059373,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:com.whatsapp.alarm.CLIENT_PING_PERIODIC'
+ '*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420345693,1696420347914,2221,3929,2889,559.679739,2.198982,0.345291,4.883938,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService'
+ 'screen']"
+1696420347914,1696420349759,1845,3929,2889,559.679739,2.198982,0.286836,4.057121,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420349759,1696420349763,4,3929,2889,559.679739,2.198982,0.000622,0.008796,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'screen']
+1696420349763,1696420349765,2,3929,2889,559.679739,2.198982,0.000311,0.004398,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_READ' 'GCM_WORK' 'screen']
+1696420349765,1696420349791,26,3929,2889,559.679739,2.198982,0.004042,0.057174,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420349791,1696420349817,26,3929,2889,559.679739,2.198982,0.004042,0.057174,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GOOGLE_C2DM' 'GCM_WORK' 'screen']
+1696420349817,1696420349826,9,3929,2889,559.679739,2.198982,0.001399,0.019791,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420349826,1696420349829,3,3929,2889,559.679739,2.198982,0.000466,0.006597,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420349829,1696420349836,7,3929,2889,559.679739,2.198982,0.001088,0.015393,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['GCM_WORK' 'screen']
+1696420349836,1696420354564,4728,3929,2889,559.679739,2.198982,0.735046,10.396785,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420354564,1696420354581,17,3929,2889,559.679739,2.198982,0.002643,0.037383,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696420354581,1696420355968,1387,3929,2889,559.679739,2.198982,0.215632,3.049988,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696420355968,1696420355978,10,3929,2889,559.679739,2.198982,0.001555,0.021990,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696420355978,1696420356072,94,3929,2889,559.679739,2.198982,0.014614,0.206704,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
