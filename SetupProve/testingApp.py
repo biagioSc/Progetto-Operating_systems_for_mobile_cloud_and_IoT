@@ -20,7 +20,7 @@ def execute_powdroid():
 
 def connection_adb():
     print("[SETUP] Si prega di attivare il wireless dubugging sul dispositivo android.")
-    indirizzo_ip_cellulare = "192.168.5.32:35019" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: (es. 192.168.5.33:34829)")
+    indirizzo_ip_cellulare = input("[IPADDRESS] Inserisci indirizzo IP cellulare: (es. 192.168.5.33:34829)")
 
     while True:
         try:
@@ -30,7 +30,7 @@ def connection_adb():
             # Se si verifica un errore, mostra un messaggio di errore
             print("[ERROR] Errore di connessione adb. Assicurati che l'indirizzo IP sia corretto.")
             # Chiedi all'utente di reinserire l'indirizzo IP
-            indirizzo_ip_cellulare = "192.168.5.32:35901" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: ")
+            indirizzo_ip_cellulare = input("[IPADDRESS] Inserisci indirizzo IP cellulare: ")
 
     # Il ciclo esce solo quando la connessione adb ha successo
     print("[CONNECTION] Connessione adb riuscita.")
@@ -75,7 +75,7 @@ def testOptimizeParzApp1():
     print("[SCENARIO3] testScenario3OptParz.java")
     print("[SCENARIO5] testScenario5OptParz.java")
 
-    scelta = "2" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
+    scelta = input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
 
     if scelta == "2":
         print("[EXECUTE] Eseguo testScenario2OptParz.java")
@@ -169,7 +169,7 @@ def main():
 
     time.sleep(5)
 
-    install = "y" #input("[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n) ")
+    install = input("[APP INSTALL] Hai installato l'app? Ricorda che ci sono due tipi app a seconda del test che si vuole fare. (y/n) ")
 
     while install == "n":
         install = input(
@@ -200,7 +200,7 @@ def main():
         print("[TEST2] App ottimizzata parz1")
         print("[TEST3] App non ottimizzata")
 
-        test = "2" #input("[SCELTA] Quale test vuoi eseguire? ")
+        test = input("[SCELTA] Quale test vuoi eseguire? ")
 
         if test == "1":
             testOptimizeApp()
