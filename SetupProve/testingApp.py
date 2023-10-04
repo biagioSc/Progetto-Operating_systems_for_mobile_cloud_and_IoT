@@ -20,7 +20,7 @@ def execute_powdroid():
 
 def connection_adb():
     print("[SETUP] Si prega di attivare il wireless dubugging sul dispositivo android.")
-    indirizzo_ip_cellulare = "192.168.5.32:41361" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: (es. 192.168.5.33:34829)")
+    indirizzo_ip_cellulare = "192.168.5.32:35019" #input("[IPADDRESS] Inserisci indirizzo IP cellulare: (es. 192.168.5.33:34829)")
 
     while True:
         try:
@@ -75,7 +75,7 @@ def testOptimizeParzApp1():
     print("[SCENARIO3] testScenario3OptParz.java")
     print("[SCENARIO5] testScenario5OptParz.java")
 
-    scelta = "5" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
+    scelta = "2" #input("Inserisci un numero tra 2, 3 e 5 per scegliere lo scenario di test: ")
 
     if scelta == "2":
         print("[EXECUTE] Eseguo testScenario2OptParz.java")

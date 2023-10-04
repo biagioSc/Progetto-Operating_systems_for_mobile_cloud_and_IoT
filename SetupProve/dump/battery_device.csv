@@ -1,298 +1,302 @@
 metric,type,start_time,end_time,value,opt
-Wakelock_in,service,1696422028721,1696422028722,*telephony-radio*,1001
-Wakelock_in,service,1696422028723,1696422028732,*telephony-radio*,1000
-Wakelock_in,service,1696422028732,1696422028733,*telephony-radio*,1001
-Wakelock_in,service,1696422029839,1696422029846,Wakeful StateMachine: GeofencerStateMachine,10044
-Wakelock_in,service,1696422029887,1696422029888,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422029842,1696422029896,NlpWakeLock,10044
-Wakelock_in,service,1696422029888,1696422029900,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422029900,1696422029902,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422029903,1696422029903,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422029910,1696422029911,*telephony-radio*,1001
-Wakelock_in,service,1696422029913,1696422029914,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422029912,1696422029918,*telephony-radio*,1000
-Wakelock_in,service,1696422029917,1696422029925,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10044
-Charging status,string,1696422028647,1696422029992,c,
-Plug,string,1696422028647,1696422029992,u,
-Temperature,int,1696422028647,1696422029992,341,
-Voltage,int,1696422028647,1696422029992,3936,
-Plugged,bool,1696422028647,1696422029992,true,
-Wakelock_in,service,1696422029918,1696422030050,*telephony-radio*,1001
-Wakelock_in,service,1696422029992,1696422030055,NetworkStats,1000
-Wakelock_in,service,1696422030050,1696422030056,*telephony-radio*,1000
-Wakelock_in,service,1696422030056,1696422030056,*telephony-radio*,1001
-Wakelock_in,service,1696422030065,1696422030066,*telephony-radio*,1001
-Wakelock_in,service,1696422030066,1696422030071,*telephony-radio*,1000
-Wakelock_in,service,1696422030071,1696422030075,*telephony-radio*,1001
-Alarm,service,1696422032039,1696422032061,*alarm*:com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE,10113
-Wakelock_in,service,1696422032045,1696422032061,*alarm*:com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE,10113
-Alarm,service,1696422032045,1696422032084,*alarm*:a.ACTION_INEXACT_ALARM.PreloadedFBNS.com.facebook.services,10035
-Wakelock_in,service,1696422032061,1696422032085,*alarm*,10035
-Top app,service,1696422028647,1696422033651,com.sec.android.app.launcher,10113
-Wakelock_in,service,1696422033625,1696422033967,*launch*,10031
-Wakelock_in,service,1696422034189,1696422034209,NetworkStats,1000
-Alarm,service,1696422034616,1696422034618,*alarm*:DetectMovementSPListener,1000
-Wakelock_in,service,1696422034617,1696422034619,*alarm*:DetectMovementSPListener,1000
-Temp White List,service,1696422032059,1696422042081,"broadcast:u0a35:a.ACTION_INEXACT_ALARM.PreloadedFBNS.com.facebook.services,reason:",10035
-Mobile signal strength,string,1696422028647,1696422044267,great,
-Mobile signal strength,string,1696422044267,1696422048904,good,
-Wakelock_in,service,1696422050294,1696422050764,PushWakefulExecutor,10130
-Wakelock_in,service,1696422053205,1696422053209,GCM_WORK,10044
-Alarm,service,1696422056473,1696422056480,*alarm*:StatsCompanionService.pull,1000
-Wakelock_in,service,1696422056475,1696422056480,*alarm*:StatsCompanionService.pull,1000
-Wakelock_in,service,1696422056475,1696422056554,com.android.server.stats.StatsCompanionService.PullingAlarmListener,1000
-Wakelock_in,service,1696422056540,1696422056576,NetworkStats,1000
-Temp White List,service,1696422048904,1696422058930,com.facebook.katana,10130
-Alarm,service,1696422060018,1696422060033,*alarm*:TIME_TICK,1000
-Wakelock_in,service,1696422060032,1696422060033,*alarm*:TIME_TICK,1000
-Voltage,int,1696422029992,1696422060039,3942,
-Wakelock_in,service,1696422065541,1696422065546,GCM_WORK,10044
-Wakelock_in,service,1696422065555,1696422065691,*launch*,10031
-Wakelock_in,service,1696422074814,1696422074826,GCM_WORK,10044
-Wakelock_in,service,1696422080668,1696422080877,*launch*,10031
-Wakelock_in,service,1696422086869,1696422086930,NetworkStats,1000
-Wakelock_in,service,1696422086861,1696422086980,*launch*,10031
-Coulomb charge,int,1696422028647,1696422090221,2746,
-Alarm,service,1696422094617,1696422094629,*alarm*:DetectMovementSPListener,1000
-Wakelock_in,service,1696422094620,1696422094630,*alarm*:DetectMovementSPListener,1000
-Wakelock_in,service,1696422098316,1696422098481,*launch*,10031
-Wakelock_in,service,1696422108794,1696422108800,GCM_WORK,10044
-Mobile signal strength,string,1696422048904,1696422112896,great,
-Alarm,service,1696422120017,1696422120021,*alarm*:TIME_TICK,1000
-Wakelock_in,service,1696422120020,1696422120021,*alarm*:TIME_TICK,1000
-Wakelock_in,service,1696422122944,1696422123084,*launch*,10031
-Wakelock_in,service,1696422123784,1696422123904,*launch*,10031
-Wakelock_in,service,1696422126954,1696422127004,NetworkStats,1000
-Mobile signal strength,string,1696422112896,1696422128262,good,
-Wakelock_in,service,1696422128262,1696422128971,*telephony-radio*,1001
-Wakelock_in,service,1696422128972,1696422128991,*telephony-radio*,1001
-Wakelock_in,service,1696422128992,1696422128992,*telephony-radio*,1001
-Top app,service,1696422033651,1696422135253,com.example.robotinteractionOttimizzataParz,10031
-Wakelock_in,service,1696422135247,1696422135330,*launch*,10113
-Mobile signal strength,string,1696422128262,1696422135736,great,
-Active process,service,1696422033342,1696422135736,com.example.robotinteractionOttimizzataParz,10031
-Coulomb charge,int,1696422090221,1696422150629,2742,
-Alarm,service,1696422154622,1696422154629,*alarm*:DetectMovementSPListener,1000
-Wakelock_in,service,1696422154624,1696422154629,*alarm*:DetectMovementSPListener,1000
-Wakelock_in,service,1696422155938,1696422155941,Wakeful StateMachine: GeofencerStateMachine,10044
-Wakelock_in,service,1696422155956,1696422155973,NlpWakeLock,10044
-Wakelock_in,service,1696422155977,1696422155979,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422155979,1696422155983,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422155983,1696422155984,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422155985,1696422155986,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422155988,1696422155990,*telephony-sem-radio*,1001
-Wakelock_in,service,1696422156006,1696422156007,*telephony-radio*,1001
-Wakelock_in,service,1696422156008,1696422156015,*telephony-radio*,1000
-Wakelock_in,service,1696422156015,1696422156016,*telephony-radio*,1001
-Wakelock_in,service,1696422156033,1696422156050,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10044
-Wakelock_in,service,1696422156048,1696422156058,AudioMix,1041
-Charging status,string,1696422029992,1696422156112,d,
-Plug,string,1696422029992,1696422156112,n,
-Temperature,int,1696422029992,1696422156112,347,
-Wakelock_in,service,1696422156050,1696422156112,*gms_scheduler*:internal,10044
-Wakelock_in,service,1696422156178,1696422156179,*telephony-radio*,1001
-Wakelock_in,service,1696422156137,1696422156180,NetworkStats,1000
-Wakelock_in,service,1696422156179,1696422156183,*telephony-radio*,1000
-Wakelock_in,service,1696422156183,1696422156184,*telephony-radio*,1001
-Wakelock_in,service,1696422156193,1696422156195,*telephony-radio*,1001
-Wakelock_in,service,1696422156195,1696422156202,*telephony-radio*,1000
-Wakelock_in,service,1696422156202,1696422156202,*telephony-radio*,1001
-Audio,bool,1696422156057,1696422156230,true,
-Wakelock_in,service,1696422156058,1696422156247,AudioMix,10009
-Wakelock_in,service,1696422156247,1696422156357,AudioMix,1041
-JobScheduler,service,1696422156010,1696422156723,com.facebook.katana/com.facebook.conditionalworker.ConditionalWorkerService,10130
-Wakelock_in,service,1696422156031,1696422156724,*job*/com.facebook.katana/com.facebook.conditionalworker.ConditionalWorkerService,10130
-Wakelock_in,service,1696422156083,1696422156816,*gms_scheduler*/com.google.android.gms/.wallet.service.WalletGcmTaskService,10044
-Wakelock_in,service,1696422156817,1696422156834,*gms_scheduler*:internal,10044
-Wakelock_in,service,1696422156835,1696422156853,*gms_scheduler*:internal,10044
-Audio,bool,1696422156247,1696422157555,true,
-Wakelock_in,service,1696422156230,1696422157555,android.media.MediaPlayer,10009
-Wakelock_in,service,1696422156357,1696422157573,AudioMix,10009
-Alarm,service,1696422157954,1696422157977,*walarm*:com.google.android.gms.gcm.HEARTBEAT_ALARM,10044
-Wakelock_in,service,1696422157959,1696422157977,*walarm*:com.google.android.gms.gcm.HEARTBEAT_ALARM,10044
-Wakelock_in,service,1696422157980,1696422158001,GCM_HB_ALARM,10044
-Wakelock_in,service,1696422157969,1696422158002,GCM_WORK,10044
-Wakelock_in,service,1696422157573,1696422159058,AudioMix,1041
-Wakelock_in,service,1696422162092,1696422162094,*telephony-radio*,1001
-Wakelock_in,service,1696422162094,1696422162102,*telephony-radio*,1000
-Wakelock_in,service,1696422162102,1696422162103,*telephony-radio*,1001
-Voltage,int,1696422060039,1696422165939,3904,
-Temp White List,service,1696422157971,1696422167981,"broadcast:u0a44:com.google.android.gms.gcm.HEARTBEAT_ALARM,reason:",10044
-Wakelock_in,service,1696422170699,1696422170701,GCM_WORK,10044
-Wakelock_in,service,1696422173843,1696422173852,GCM_WORK,10044
-Alarm,service,1696422180018,1696422180024,*alarm*:TIME_TICK,1000
-Wakelock_in,service,1696422180024,1696422180025,*alarm*:TIME_TICK,1000
-Coulomb charge,int,1696422150629,1696422185975,2738,
-Wakelock_in,service,1696422191783,1696422191786,*telephony-radio*,1001
-Wakelock_in,service,1696422191786,1696422191794,*telephony-radio*,1000
-Wakelock_in,service,1696422191794,1696422191794,*telephony-radio*,1001
-Wakelock_in,service,1696422195486,1696422195489,GCM_WORK,10044
-Voltage,int,1696422165939,1696422196147,3937,
-Wakelock_in,service,1696422200219,1696422200220,*telephony-radio*,1001
-Wakelock_in,service,1696422200220,1696422200228,*telephony-radio*,1000
-Wakelock_in,service,1696422200228,1696422200228,*telephony-radio*,1001
-Wakelock_in,service,1696422201715,1696422201716,GCM_WORK,10044
-Wakelock_in,service,1696422204822,1696422204823,GCM_WORK,10044
-Wakelock_in,service,1696422206982,1696422207190,NetworkStats,1000
-Wakelock_in,service,1696422207913,1696422207915,GCM_WORK,10044
-Wakelock_in,service,1696422208534,1696422208536,*telephony-radio*,1001
-Wakelock_in,service,1696422208537,1696422208545,*telephony-radio*,1001
-Wakelock_in,service,1696422208545,1696422208547,*telephony-radio*,1001
-Alarm,service,1696422208674,1696422208685,*walarm*:*job.deadline*,5012
-Wakelock_in,service,1696422208675,1696422208686,*walarm*:*job.deadline*,5012
-Alarm,service,1696422208678,1696422208702,*alarm*:com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE,10113
-Wakelock_in,service,1696422208686,1696422208702,*alarm*,10113
-Wakelock_in,service,1696422211006,1696422211007,GCM_WORK,10044
-Active process,service,1696422030239,1696422216063,com.samsung.android.sm.policy,10144
-Active process,service,1696422030790,1696422216102,com.samsung.android.dqagent,1000
-Alarm,service,1696422214624,1696422216103,*alarm*:DetectMovementSPListener,1000
-Wakelock_in,service,1696422214624,1696422216109,*alarm*:DetectMovementSPListener,1000
-Wakelock_in,service,1696422216113,1696422216119,GCM_WORK,10044
-Wakelock_in,service,1696422216164,1696422216176,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10044
-Voltage,int,1696422196147,1696422216393,3906,
-Alarm,service,1696422217986,1696422218001,*walarm*:com.google.android.gms.gcm.HEARTBEAT_ALARM,10044
-Wakelock_in,service,1696422217989,1696422218001,*walarm*:com.google.android.gms.gcm.HEARTBEAT_ALARM,10044
-Wakelock_in,service,1696422218003,1696422218007,GCM_READ,10044
-Wakelock_in,service,1696422217996,1696422218013,GCM_WORK,10044
-Wakelock_in,service,1696422218191,1696422218200,GCM_WORK,10044
-Wakelock_in,service,1696422218208,1696422218214,GCM_WORK,10044
-Wakelock_in,service,1696422218282,1696422218285,GCM_READ,10044
-Wakelock_in,service,1696422218288,1696422218290,GCM_READ,10044
-Wakelock_in,service,1696422218008,1696422218298,GCM_CONN_ALARM,10044
-Wakelock_in,service,1696422218299,1696422218302,GCM_READ,10044
-Wakelock_in,service,1696422218304,1696422218306,GCM_READ,10044
-Wakelock_in,service,1696422218309,1696422218312,GCM_READ,10044
-Wakelock_in,service,1696422218284,1696422218347,GCM_WORK,10044
-Wakelock_in,service,1696422218349,1696422218353,GCM_WORK,10044
-Wakelock_in,service,1696422218341,1696422218363,GOOGLE_C2DM,10056
-JobScheduler,service,1696422208701,1696422218439,com.samsung.android.sm.devicesecurity/.BackgroundCloudScanJobService,5012
-Wakelock_in,service,1696422208730,1696422218440,*job*/com.samsung.android.sm.devicesecurity/.BackgroundCloudScanJobService,5012
-Wakelock_in,service,1696422219201,1696422219203,GCM_WORK,10044
-JobScheduler,service,1696422219470,1696422219547,com.google.android.gm/androidx.work.impl.background.systemjob.SystemJobService,10179
-Wakelock_in,service,1696422219472,1696422219548,*job*/com.google.android.gm/androidx.work.impl.background.systemjob.SystemJobService,10179
-Wakelock_in,service,1696422219641,1696422219647,SyncLoopWakeLock,1000
-Wakelock_in,service,1696422219649,1696422219658,SyncLoopWakeLock,1000
-Wakelock_in,service,1696422218318,1696422219658,GOOGLE_C2DM,10179
-Wakelock_in,service,1696422219665,1696422219666,SyncLoopWakeLock,1000
-Wakelock_in,service,1696422219946,1696422219947,AudioIn,1041
-Wakelock_in,service,1696422219955,1696422219956,AudioIn,1041
-Foreground process,service,1696422219902,1696422220424,com.samsung.android.bixby.wakeup,1000
-Audio,bool,1696422219947,1696422220426,true,
-Wakelock_in,service,1696422219788,1696422220426,com.samsung.android.bixby.wakeup:DspControlService,1000
-Wakelock_in,service,1696422219956,1696422220451,AudioIn,1000
-Wakelock_in,service,1696422220451,1696422220473,AudioIn,1041
-Wakelock_in,service,1696422220491,1696422220491,AudioIn,1041
-JobScheduler,service,1696422219647,1696422222118,gmail-ls/com.google/eM_ADDR:android,10179
-Wakelock_in,service,1696422219648,1696422222118,*job*/gmail-ls/com.google/XXX@gmail.com:android,10179
-SyncManager,service,1696422219656,1696422222140,gmail-ls/com.google/eM_ADDR,10179
-Wakelock_in,service,1696422219652,1696422222141,*sync*/gmail-ls/com.google/XXX@gmail.com,10179
-Wakelock_in,service,1696422222107,1696422222143,SyncLoopWakeLock,1000
-Wakelock_in,service,1696422220205,1696422223206,AudioMix,1041
-Wakelock_in,service,1696422218330,1696422223346,GOOGLE_C2DM,10254
-JobScheduler,service,1696422223899,1696422223954,com.google.android.gm/.job.ProviderCreatedJob$ProviderCreatedJobService,10179
-Wakelock_in,service,1696422223905,1696422223954,*job*/com.google.android.gm/.job.ProviderCreatedJob$ProviderCreatedJobService,10179
-JobScheduler,service,1696422223972,1696422223991,com.google.android.gm/com.android.mail.widget.NotifyDatasetChangedJob$NotifyDatasetChangedJobService,10179
-Wakelock_in,service,1696422223977,1696422223991,*job*/com.google.android.gm/com.android.mail.widget.NotifyDatasetChangedJob$NotifyDatasetChangedJobService,10179
-JobScheduler,service,1696422223607,1696422224119,it.sky.skysport/androidx.work.impl.background.systemjob.SystemJobService,10254
-Wakelock_in,service,1696422223663,1696422224119,*job*/it.sky.skysport/androidx.work.impl.background.systemjob.SystemJobService,10254
-JobScheduler,service,1696422223997,1696422224224,com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService,10179
-Wakelock_in,service,1696422224000,1696422224224,*job*/com.google.android.gm/com.android.email.job.UpdateNotificationJob$UpdateNotificationJobService,10179
-Wakelock_in,service,1696422224496,1696422224498,*telephony-radio*,1001
-Wakelock_in,service,1696422224498,1696422224508,*telephony-radio*,1000
-Wakelock_in,service,1696422224508,1696422224508,*telephony-radio*,1001
-Active process,service,1696422028647,1696422224508,com.sec.android.app.launcher,10113
-Active process,service,1696422028647,1696422224508,com.sec.android.sdhms,1000
-Active process,service,1696422028647,1696422224508,com.samsung.android.authfw,5278
-Top app,service,1696422135253,1696422224508,com.sec.android.app.launcher,10113
-Active process,service,1696422189350,1696422224508,com.samsung.android.da.daagent,1000
-Active process,service,1696422223967,1696422224508,com.samsung.android.app.taskedge,10110
-Battery Level,int,1696422028647,1696422224508,69,
-Active process,service,1696422032854,1696422224508,com.android.settings,1000
-Active process,service,1696422028647,1696422224508,com.android.bluetooth,1002
-Wifi signal strength,string,1696422028647,1696422224508,good,
-Active process,service,1696422028647,1696422224508,com.samsung.android.honeyboard,10357
-Active process,service,1696422221515,1696422224508,com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0,10254
-Active process,service,1696422222097,1696422224508,com.google.android.webview:webview_service,10158
-JobScheduler,service,1696422224219,1696422224508,com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService,10179
-Screen,bool,1696422028647,1696422224508,true,unknown screen on reason
-Active process,service,1696422028647,1696422224508,com.android.se,1068
-Active process,service,1696422219856,1696422224508,com.samsung.android.bixby.agent,5018
-Active process,service,1696422028647,1696422224508,com.android.providers.media.module,10423
-Wifi radio,bool,1696422028647,1696422224508,true,
-Active process,service,1696422030450,1696422224508,com.samsung.android.lool,1000
-Voltage,int,1696422216393,1696422224508,3852,
-Active process,service,1696422190020,1696422224508,com.sec.android.desktopmode.uiservice,10025
-Active process,service,1696422028647,1696422224508,com.sec.android.app.shealth:remote,10218
-Active process,service,1696422028647,1696422224508,com.google.android.googlequicksearchbox:search,10118
-Active process,service,1696422028647,1696422224508,com.android.phone,1001
-Active process,service,1696422028647,1696422224508,com.samsung.android.bixby.wakeup,1000
-Active process,service,1696422163514,1696422224508,com.android.traceur,10140
-Plug,string,1696422156112,1696422224508,u,
-Active process,service,1696422189372,1696422224508,com.samsung.klmsagent,10055
-Active process,service,1696422029900,1696422224508,com.samsung.android.sm.devicesecurity,5012
-Active process,service,1696422221565,1696422224508,com.google.process.gapps,10044
-CPU running,string,1696422028647,1696422224508,1696422224508~Unknown wakeup reason,
-Active process,service,1696422028647,1696422224508,com.sec.sve,1000
-Active process,service,1696422216226,1696422224508,com.google.android.permissioncontroller,10279
-Active process,service,1696422028647,1696422224508,com.samsung.android.beaconmanager,5006
-Active process,service,1696422028647,1696422224508,com.sec.imsservice,1000
-Active process,service,1696422033296,1696422224508,com.microsoft.appmanager,10119
-Active process,service,1696422218349,1696422224508,com.google.android.gm,10179
-Active process,service,1696422028647,1696422224508,com.android.networkstack.process,1073
-Active process,service,1696422028647,1696422224508,com.samsung.android.smartsuggestions,10392
-Active process,service,1696422206185,1696422224508,com.samsung.android.game.gos,10159
-Active process,service,1696422208575,1696422224508,com.sec.android.app.desktoplauncher,1000
-Temperature,int,1696422156112,1696422224508,343,
-Active process,service,1696422028647,1696422224508,com.android.nfc,1027
-Active process,service,1696422028647,1696422224508,com.samsung.android.oneconnect:Core,10222
-Mobile signal strength,string,1696422135736,1696422224508,good,
-Active process,service,1696422028647,1696422224508,com.samsung.android.mdx.kit,5025
-Network connectivity,service,1696422053197,1696422224508,"TYPE_WIFI:""CONNECTED""",
-Brightness,int,1696422028647,1696422224508,2,
-Wifi supplicant,string,1696422028647,1696422224508,compl,
-Partial wakelock,service,1696422028647,1696422224508,unknown-wakelock-holder,
-Active process,service,1696422028647,1696422224508,android:drmService,1000
-Active process,service,1696422056980,1696422224508,com.sec.android.provider.badge,10013
-Wakelock_in,service,1696422224229,1696422224508,*job*/com.google.android.gm/.job.SendSetNewEmailIndicatorJob$SendSetNewEmailIndicatorJobService,10179
-Health,string,1696422028647,1696422224508,g,
-Active process,service,1696422028647,1696422224508,com.google.android.ext.services,10045
-Active process,service,1696422028647,1696422224508,com.google.android.gms.persistent,10044
-Wifi on,bool,1696422028647,1696422224508,true,
-Active process,service,1696422028647,1696422224508,com.sec.android.diagmonagent,1000
-Active process,service,1696422037587,1696422224508,com.google.process.gservices,10044
-Active process,service,1696422028647,1696422224508,com.samsung.android.app.cocktailbarservice,10022
-Foreground process,service,1696422028647,1696422224508,com.sec.android.app.shealth,10218
-Active process,service,1696422222202,1696422224508,com.android.vending:background,10070
-Active process,service,1696422028647,1696422224508,com.samsung.android.fmm,1000
-Active process,service,1696422028647,1696422224508,com.sec.location.nsflp2,5013
-Active process,service,1696422030123,1696422224508,com.google.android.apps.turbo,10114
-Active process,service,1696422033789,1696422224508,com.samsung.android.app.routines,10009
-Active process,service,1696422028647,1696422224508,com.samsung.android.samsungpass,10085
-Active process,service,1696422044267,1696422224508,com.samsung.android.samsungpassautofill,10149
-Active process,service,1696422048953,1696422224508,com.facebook.katana,10130
-Plugged,bool,1696422156112,1696422224508,true,
-Wakelock_in,service,1696422028647,1696422224508,screen,-1
-Active process,service,1696422028647,1696422224508,com.android.cellbroadcastservice,1001
-Active process,service,1696422028647,1696422224508,com.google.android.googlequicksearchbox:interactor,10118
-Active process,service,1696422028647,1696422224508,com.sec.android.app.dexonpc,1000
-Active process,service,1696422208764,1696422224508,com.samsung.android.kgclient,10057
-Temp White List,service,1696422217992,1696422224508,"broadcast:u0a44:com.google.android.gms.gcm.HEARTBEAT_ALARM,reason:",10044
-BLE scanning,bool,1696422028647,1696422224508,true,
-Active process,service,1696422028647,1696422224508,com.samsung.android.mcfserver,10492
-Active process,service,1696422028647,1696422224508,com.facebook.services,10035
-Active process,service,1696422156057,1696422224508,com.google.android.gms,10044
-Active process,service,1696422221028,1696422224508,com.android.vending,10070
-Active process,service,1696422028647,1696422224508,com.samsung.android.bio.face.service,1000
-Active process,service,1696422219677,1696422224508,it.sky.skysport,10254
-Charging status,string,1696422156112,1696422224508,c,
-Active process,service,1696422028647,1696422224508,com.google.android.as,10402
-Active process,service,1696422028647,1696422224508,android.process.media,10026
-Active process,service,1696422028647,1696422224508,com.android.systemui,10009
-Active process,service,1696422028647,1696422224508,com.samsung.sec.android.teegris.tui_service,1000
-Active process,service,1696422028647,1696422224508,com.samsung.android.mcfds,10486
-Active process,service,1696422028647,1696422224508,com.samsung.android.smartface,1000
-Active process,service,1696422033063,1696422224508,com.google.android.projection.gearhead:car,10276
-Coulomb charge,int,1696422185975,1696422224508,2734,
-Active process,service,1696422033605,1696422224508,com.samsung.android.mdx,10059
-Active process,service,1696422200774,1696422224508,com.android.printspooler,10129
-Active process,service,1696422028647,1696422224508,com.samsung.android.service.peoplestripe,10069
+Wakelock_in,service,1696436594795,1696436594796,*telephony-radio*,1001
+Wakelock_in,service,1696436594796,1696436594805,*telephony-radio*,1000
+Wakelock_in,service,1696436594805,1696436594806,*telephony-radio*,1001
+Wakelock_in,service,1696436597037,1696436597044,Wakeful StateMachine: GeofencerStateMachine,10044
+Wakelock_in,service,1696436597042,1696436597056,NlpWakeLock,10044
+Wakelock_in,service,1696436597053,1696436597062,*telephony-radio*,1001
+Wakelock_in,service,1696436597065,1696436597067,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436597062,1696436597072,*telephony-radio*,1000
+Wakelock_in,service,1696436597072,1696436597073,*telephony-radio*,1001
+Wakelock_in,service,1696436597067,1696436597079,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436597079,1696436597081,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436597081,1696436597086,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436597090,1696436597090,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436597083,1696436597096,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10044
+Charging status,string,1696436594717,1696436597178,c,
+Plug,string,1696436594717,1696436597178,u,
+Temperature,int,1696436594717,1696436597178,344,
+Voltage,int,1696436594717,1696436597178,3807,
+Coulomb charge,int,1696436594717,1696436597178,1563,
+Plugged,bool,1696436594717,1696436597178,true,
+Wakelock_in,service,1696436597218,1696436597220,*telephony-radio*,1001
+Wakelock_in,service,1696436597189,1696436597224,NetworkStats,1000
+Wakelock_in,service,1696436597222,1696436597228,*telephony-radio*,1000
+Wakelock_in,service,1696436597228,1696436597229,*telephony-radio*,1001
+Wakelock_in,service,1696436597243,1696436597245,*telephony-radio*,1001
+Wakelock_in,service,1696436597245,1696436597251,*telephony-radio*,1000
+Wakelock_in,service,1696436597251,1696436597256,*telephony-radio*,1001
+Alarm,service,1696436599370,1696436599389,*alarm*:com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE,10113
+Wakelock_in,service,1696436599383,1696436599389,*alarm*:com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE,10113
+Top app,service,1696436594717,1696436599637,com.sec.android.app.launcher,10113
+Wakelock_in,service,1696436599618,1696436600037,*launch*,10031
+Wakelock_in,service,1696436600983,1696436601016,NetworkStats,1000
+Wakelock_in,service,1696436602884,1696436602890,GCM_WORK,10044
+Alarm,service,1696436606547,1696436606559,*alarm*:DetectMovementSPListener,1000
+Wakelock_in,service,1696436606549,1696436606560,*alarm*:DetectMovementSPListener,1000
+Wakelock_in,service,1696436609045,1696436609052,GCM_WORK,10044
+Wakelock_in,service,1696436616723,1696436616724,*telephony-radio*,1001
+Wakelock_in,service,1696436616725,1696436616758,*telephony-radio*,1001
+Wakelock_in,service,1696436616758,1696436616761,*telephony-radio*,1001
+Mobile signal strength,string,1696436594717,1696436616965,good,
+Wakelock_in,service,1696436616717,1696436616965,RILJ_ACK_WL,1001
+Wakelock_in,service,1696436618358,1696436618360,GCM_WORK,10044
+Wakelock_in,service,1696436621451,1696436621455,GCM_WORK,10044
+Wakelock_in,service,1696436624556,1696436624568,GCM_WORK,10044
+Voltage,int,1696436597178,1696436627263,3812,
+Wakelock_in,service,1696436631558,1696436631691,*launch*,10031
+Wakelock_in,service,1696436633849,1696436633861,GCM_WORK,10044
+Wakelock_in,service,1696436640020,1696436640026,GCM_WORK,10044
+Alarm,service,1696436640052,1696436640060,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1696436640059,1696436640060,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1696436643070,1696436643074,GCM_WORK,10044
+Wakelock_in,service,1696436646694,1696436646908,*launch*,10031
+Wakelock_in,service,1696436649328,1696436649332,*telephony-radio*,1001
+Wakelock_in,service,1696436649332,1696436649364,*telephony-radio*,1001
+Wakelock_in,service,1696436649364,1696436649366,*telephony-radio*,1001
+Mobile signal strength,string,1696436616965,1696436649574,great,
+Wakelock_in,service,1696436649319,1696436649574,RILJ_ACK_WL,1001
+Wakelock_in,service,1696436652879,1696436653012,*launch*,10031
+Coulomb charge,int,1696436597178,1696436657457,1567,
+Wakelock_in,service,1696436665847,1696436666034,*launch*,10031
+Alarm,service,1696436666549,1696436666558,*alarm*:DetectMovementSPListener,1000
+Wakelock_in,service,1696436666551,1696436666559,*alarm*:DetectMovementSPListener,1000
+Mobile signal strength,string,1696436649574,1696436677443,good,
+Mobile signal strength,string,1696436677443,1696436683856,great,
+Wakelock_in,service,1696436688948,1696436688961,GCM_READ,10044
+Wakelock_in,service,1696436688956,1696436688994,GCM_WORK,10044
+Wakelock_in,service,1696436695119,1696436695119,AudioIn,1041
+Wakelock_in,service,1696436695123,1696436695123,AudioIn,1041
+Foreground process,service,1696436695108,1696436695599,com.samsung.android.bixby.wakeup,1000
+Audio,bool,1696436695123,1696436695600,true,
+Wakelock_in,service,1696436695089,1696436695600,com.samsung.android.bixby.wakeup:DspControlService,1000
+Wakelock_in,service,1696436695123,1696436695615,AudioIn,1000
+Wakelock_in,service,1696436695615,1696436695633,AudioIn,1041
+Wakelock_in,service,1696436695643,1696436695644,AudioIn,1041
+Wakelock_in,service,1696436695175,1696436698177,AudioMix,1041
+Alarm,service,1696436700045,1696436700053,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1696436700052,1696436700054,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1696436715464,1696436715619,*launch*,10031
+Coulomb charge,int,1696436657457,1696436717832,1563,
+Wakelock_in,service,1696436719325,1696436719325,AudioIn,1041
+Wakelock_in,service,1696436719330,1696436719331,AudioIn,1041
+Foreground process,service,1696436719309,1696436719806,com.samsung.android.bixby.wakeup,1000
+Audio,bool,1696436719325,1696436719809,true,
+Wakelock_in,service,1696436719304,1696436719809,com.samsung.android.bixby.wakeup:DspControlService,1000
+Wakelock_in,service,1696436719331,1696436719826,AudioIn,1000
+Wakelock_in,service,1696436719826,1696436719843,AudioIn,1041
+Wakelock_in,service,1696436719856,1696436719856,AudioIn,1041
+Wakelock_in,service,1696436719377,1696436722386,AudioMix,1041
+Wakelock_in,service,1696436724777,1696436724886,*launch*,10031
+Alarm,service,1696436726551,1696436726562,*alarm*:DetectMovementSPListener,1000
+Wakelock_in,service,1696436726554,1696436726562,*alarm*:DetectMovementSPListener,1000
+Alarm,service,1696436732959,1696436734838,*walarm*:action_batch_upload,10226
+Wakelock_in,service,1696436732963,1696436734838,*walarm*:action_batch_upload,10226
+Alarm,service,1696436732966,1696436734838,*alarm*:WakingExecutorService.ACTION_ALARM.com.facebook.katana.Mqtt_Wakeup,10130
+Wakelock_in,service,1696436734838,1696436734838,*alarm*,10130
+Wakelock_in,service,1696436735771,1696436735772,GCM_WORK,10044
+Top app,service,1696436599637,1696436736195,com.example.robotinteractionOttimizzataParz,10031
+Wakelock_in,service,1696436736191,1696436736287,*launch*,10113
+Active process,service,1696436599272,1696436736678,com.example.robotinteractionOttimizzataParz,10031
+Wakelock_in,service,1696436738868,1696436738873,GCM_WORK,10044
+Alarm,service,1696436739682,1696436739685,*alarm*:*job.delay*,10226
+Wakelock_in,service,1696436739683,1696436739686,*alarm*:*job.delay*,10226
+JobScheduler,service,1696436739704,1696436739734,com.instagram.android/com.facebook.common.errorreporting.memory.service.jobschedulercompat.igsvc.DumperUploadService,10226
+Wakelock_in,service,1696436739708,1696436739734,*job*/com.instagram.android/com.facebook.common.errorreporting.memory.service.jobschedulercompat.igsvc.DumperUploadService,10226
+Wakelock_in,service,1696436740965,1696436740970,Wakeful StateMachine: GeofencerStateMachine,10044
+Wakelock_in,service,1696436740970,1696436741010,NlpWakeLock,10044
+Wakelock_in,service,1696436741044,1696436741045,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436741045,1696436741048,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436741051,1696436741051,*telephony-radio*,1001
+Wakelock_in,service,1696436741049,1696436741054,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436741054,1696436741055,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436741028,1696436741058,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10044
+Wakelock_in,service,1696436741058,1696436741059,*telephony-sem-radio*,1001
+Wakelock_in,service,1696436741051,1696436741063,*telephony-radio*,1000
+Wakelock_in,service,1696436741063,1696436741064,*telephony-radio*,1001
+Wakelock_in,service,1696436741060,1696436741077,*gms_scheduler*:internal,10044
+Wakelock_in,service,1696436741103,1696436741110,AudioMix,1041
+Charging status,string,1696436597178,1696436741146,d,
+Plug,string,1696436597178,1696436741146,n,
+Temperature,int,1696436597178,1696436741146,348,
+Voltage,int,1696436627263,1696436741146,3770,
+Coulomb charge,int,1696436717832,1696436741146,1559,
+Wakelock_in,service,1696436741222,1696436741224,*telephony-radio*,1001
+Wakelock_in,service,1696436741224,1696436741228,*telephony-radio*,1000
+Wakelock_in,service,1696436741228,1696436741229,*telephony-radio*,1001
+Wakelock_in,service,1696436741146,1696436741231,NetworkStats,1000
+Wakelock_in,service,1696436741240,1696436741242,*telephony-radio*,1001
+Wakelock_in,service,1696436741243,1696436741250,*telephony-radio*,1000
+Wakelock_in,service,1696436741250,1696436741251,*telephony-radio*,1001
+Wakelock_in,service,1696436741110,1696436741322,AudioMix,10009
+Audio,bool,1696436741110,1696436741322,true,
+Wakelock_in,service,1696436741322,1696436741473,AudioMix,1041
+Wakelock_in,service,1696436741334,1696436742663,android.media.MediaPlayer,10009
+Wakelock_in,service,1696436741473,1696436742687,AudioMix,10009
+Audio,bool,1696436741473,1696436742687,true,
+Wakelock_in,service,1696436742977,1696436742980,*telephony-radio*,1001
+Wakelock_in,service,1696436742980,1696436742990,*telephony-radio*,1000
+Wakelock_in,service,1696436742990,1696436742991,*telephony-radio*,1001
+Wakelock_in,service,1696436743738,1696436743781,NetworkStats,1000
+Wakelock_in,service,1696436742687,1696436744106,AudioMix,1041
+Alarm,service,1696436756500,1696436756504,*alarm*:StatsCompanionService.pull,1000
+Wakelock_in,service,1696436756501,1696436756504,*alarm*:StatsCompanionService.pull,1000
+Wakelock_in,service,1696436756503,1696436756569,com.android.server.stats.StatsCompanionService.PullingAlarmListener,1000
+Alarm,service,1696436760046,1696436760055,*alarm*:TIME_TICK,1000
+Wakelock_in,service,1696436760051,1696436760055,*alarm*:TIME_TICK,1000
+Voltage,int,1696436741146,1696436760986,3757,
+Coulomb charge,int,1696436741146,1696436771056,1555,
+Wakelock_in,service,1696436774016,1696436774068,NetworkStats,1000
+Alarm,service,1696436777326,1696436778060,*walarm*:com.sec.android.intent.action.HQM_TRIGGER,1000
+Wakelock_in,service,1696436778052,1696436778061,*walarm*:com.sec.android.intent.action.HQM_TRIGGER,1000
+Alarm,service,1696436778058,1696436778063,*alarm*:*job.delay*,10304
+Alarm,service,1696436778053,1696436778063,*alarm*:com.samsung.action.EVERY_MINUTE_CLOCK_UPDATE,10113
+Wakelock_in,service,1696436778061,1696436778063,*alarm*,10113
+JobScheduler,service,1696436778070,1696436778778,it.vodafone.myNumbers/com.vodafone.netperform.runtime.NetPerformJobService,10304
+Wakelock_in,service,1696436778777,1696436778778,*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService,10304
+Wakelock_in,service,1696436781097,1696436781098,*telephony-radio*,1001
+Wakelock_in,service,1696436781098,1696436781103,*telephony-radio*,1000
+Wakelock_in,service,1696436781103,1696436781103,*telephony-radio*,1001
+Voltage,int,1696436760986,1696436781263,3790,
+JobScheduler,service,1696436783991,1696436784087,it.vodafone.myNumbers/com.vodafone.netperform.runtime.NetPerformJobService,10304
+Wakelock_in,service,1696436783992,1696436784088,*job*/it.vodafone.my190/com.vodafone.netperform.runtime.NetPerformJobService,10304
+JobScheduler,service,1696436785098,1696436785744,com.samsung.android.lool/com.samsung.android.sm.history.SdhmsIntegrationService,1000
+Wakelock_in,service,1696436785105,1696436785744,*job*/com.samsung.android.lool/com.samsung.android.sm.history.SdhmsIntegrationService,1000
+Alarm,service,1696436786553,1696436786557,*alarm*:DetectMovementSPListener,1000
+Wakelock_in,service,1696436786553,1696436786558,*alarm*:DetectMovementSPListener,1000
+Temp White List,service,1696436778053,1696436788080,"broadcast:1000:com.sec.android.intent.action.HQM_TRIGGER,reason:",1000
+Top app,service,1696436736195,1696436789463,com.sec.android.app.launcher,10113
+Wakelock_in,service,1696436789548,1696436789549,*telephony-radio*,1001
+Wakelock_in,service,1696436789549,1696436789555,*telephony-radio*,1000
+Wakelock_in,service,1696436789555,1696436789555,*telephony-radio*,1001
+Wakelock_in,service,1696436784288,1696436790365,MotionRecognitionSensorChecker,1000
+JobScheduler,service,1696436790496,1696436790544,com.whatsapp/.push.RegistrationIntentService,10227
+Wakelock_in,service,1696436790520,1696436790544,*job*/com.whatsapp/.push.RegistrationIntentService,10227
+JobScheduler,service,1696436790604,1696436790694,com.sec.android.daemonapp/.service.LoggerService,10182
+Wakelock_in,service,1696436790609,1696436790694,*job*/com.sec.android.daemonapp/.service.LoggerService,10182
+Wakelock_in,service,1696436789442,1696436791276,*launch*,10227
+JobScheduler,service,1696436791338,1696436791348,com.whatsapp/.crash.upload.ExceptionsUploadService,10227
+Wakelock_in,service,1696436791340,1696436791348,*job*/com.whatsapp/.crash.upload.ExceptionsUploadService,10227
+Wakelock_in,service,1696436791385,1696436791386,GCM_WORK,10044
+Wakelock_in,service,1696436791389,1696436791492,com.whatsapp:NtpAction#updateNtp,10227
+JobScheduler,service,1696436791313,1696436791495,com.whatsapp/.AlarmService,10227
+Wakelock_in,service,1696436791315,1696436791495,*job*/com.whatsapp/.AlarmService,10227
+Top app,service,1696436789463,1696436791924,com.whatsapp,10227
+Wakelock_in,service,1696436791920,1696436791930,*launch*,10227
+Wakelock_in,service,1696436791930,1696436792064,*launch*,10113
+Wakelock_in,service,1696436794446,1696436794453,GCM_WORK,10044
+Wakelock_in,service,1696436796503,1696436796506,*telephony-radio*,1001
+Wakelock_in,service,1696436796506,1696436796517,*telephony-radio*,1001
+Wakelock_in,service,1696436796517,1696436796520,*telephony-radio*,1001
+JobScheduler,service,1696436778077,1696436798345,com.samsung.android.sm.devicesecurity/.BackgroundCloudScanJobService,5012
+Wakelock_in,service,1696436778105,1696436798345,*job*/com.samsung.android.sm.devicesecurity/.BackgroundCloudScanJobService,5012
+Wakelock_in,service,1696436804700,1696436804730,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10044
+Wakelock_in,service,1696436805046,1696436805058,IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation,10044
+Coulomb charge,int,1696436771056,1696436811675,1551,
+Mobile signal strength,string,1696436683856,1696436813117,good,
+Wakelock_in,service,1696436813117,1696436813549,*telephony-radio*,1001
+Wakelock_in,service,1696436813549,1696436813556,*telephony-radio*,1000
+Wakelock_in,service,1696436813556,1696436813557,*telephony-radio*,1001
+Voltage,int,1696436781263,1696436813640,3709,
+Coulomb charge,int,1696436811675,1696436813640,1547,
+Active process,service,1696436779528,1696436813640,com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0,10304
+Active process,service,1696436785155,1696436813640,com.samsung.android.sm.provider,1000
+Active process,service,1696436796545,1696436813640,com.sec.android.app.desktoplauncher,1000
+Wifi on,bool,1696436594717,1696436813640,true,
+Wifi supplicant,string,1696436594717,1696436813640,compl,
+Active process,service,1696436594717,1696436813640,com.facebook.services,10035
+Top app,service,1696436791924,1696436813640,com.sec.android.app.launcher,10113
+Active process,service,1696436736374,1696436813640,com.samsung.android.app.taskedge,10110
+Wifi radio,bool,1696436594717,1696436813640,true,
+Wakelock_in,service,1696436594717,1696436813640,screen,-1
+JobScheduler,service,1696436790671,1696436813640,com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService,10227
+Active process,service,1696436594717,1696436813640,com.android.providers.media.module,10423
+Active process,service,1696436594717,1696436813640,com.android.phone,1001
+Active process,service,1696436594717,1696436813640,com.samsung.android.service.peoplestripe,10069
+Wifi signal strength,string,1696436594717,1696436813640,good,
+Foreground process,service,1696436594717,1696436813640,com.sec.android.app.shealth,10218
+Active process,service,1696436735586,1696436813640,com.google.android.gms,10044
+Partial wakelock,service,1696436594717,1696436813640,unknown-wakelock-holder,
+Active process,service,1696436594717,1696436813640,com.samsung.android.authfw,5278
+Active process,service,1696436594717,1696436813640,com.samsung.android.honeyboard,10357
+Active process,service,1696436597702,1696436813640,com.samsung.android.lool,1000
+Active process,service,1696436616838,1696436813640,com.android.cellbroadcastreceiver,10422
+Active process,service,1696436594717,1696436813640,com.android.bluetooth,1002
+Active process,service,1696436594717,1696436813640,com.sec.android.desktopmode.uiservice,10025
+Active process,service,1696436621565,1696436813640,com.sec.android.provider.badge,10013
+Active process,service,1696436804970,1696436813640,com.google.android.permissioncontroller,10279
+Active process,service,1696436594717,1696436813640,com.samsung.android.bio.face.service,1000
+Active process,service,1696436594717,1696436813640,com.android.providers.calendar,10077
+Active process,service,1696436597298,1696436813640,com.google.android.apps.turbo,10114
+Active process,service,1696436600404,1696436813640,com.samsung.android.mdx,10059
+Active process,service,1696436784455,1696436813640,com.sec.android.daemonapp,10182
+Active process,service,1696436594717,1696436813640,com.samsung.android.oneconnect,10222
+Network connectivity,service,1696436602872,1696436813640,"TYPE_WIFI:""CONNECTED""",
+Active process,service,1696436778087,1696436813640,it.vodafone.my190,10304
+Active process,service,1696436594717,1696436813640,com.samsung.android.beaconmanager,5006
+Active process,service,1696436597076,1696436813640,com.samsung.android.sm.devicesecurity,5012
+Active process,service,1696436744343,1696436813640,com.android.traceur,10140
+Health,string,1696436594717,1696436813640,g,
+Active process,service,1696436594717,1696436813640,android.process.media,10026
+Active process,service,1696436594717,1696436813640,com.samsung.android.fmm,1000
+Active process,service,1696436796727,1696436813640,com.samsung.android.kgclient,10057
+CPU running,string,1696436594717,1696436813640,1696436813640~Unknown wakeup reason,
+Active process,service,1696436594717,1696436813640,com.android.nfc,1027
+Active process,service,1696436784299,1696436813640,com.samsung.android.app.aodservice,10009
+Wakelock_in,service,1696436790728,1696436813640,*job*/com.whatsapp/androidx.work.impl.background.systemjob.SystemJobService,10227
+Active process,service,1696436594717,1696436813640,com.samsung.android.mdx.kit,5025
+Active process,service,1696436600011,1696436813640,com.google.android.projection.gearhead:car,10276
+Active process,service,1696436600570,1696436813640,com.samsung.android.app.routines,10009
+Active process,service,1696436610281,1696436813640,com.samsung.android.samsungpassautofill,10149
+Active process,service,1696436793639,1696436813640,com.samsung.android.game.gos,10159
+Battery Level,int,1696436594717,1696436813640,39,
+Active process,service,1696436778010,1696436813640,com.samsung.android.da.daagent,1000
+Active process,service,1696436789973,1696436813640,com.android.printspooler,10129
+Active process,service,1696436594717,1696436813640,com.google.android.gms.persistent,10044
+Active process,service,1696436594717,1696436813640,com.sec.sve,1000
+Active process,service,1696436598059,1696436813640,com.samsung.android.dqagent,1000
+Active process,service,1696436594717,1696436813640,com.android.cellbroadcastservice,1001
+Active process,service,1696436594717,1696436813640,com.samsung.android.oneconnect:Core,10222
+Active process,service,1696436594717,1696436813640,com.samsung.android.mcfds,10486
+Brightness,int,1696436594717,1696436813640,2,
+Active process,service,1696436594717,1696436813640,com.sec.android.app.launcher,10113
+Active process,service,1696436594717,1696436813640,com.google.android.googlequicksearchbox:search,10118
+Active process,service,1696436594717,1696436813640,com.samsung.android.app.cocktailbarservice,10022
+Active process,service,1696436594717,1696436813640,com.sec.imsservice,1000
+Active process,service,1696436594717,1696436813640,com.google.android.ext.services,10045
+Active process,service,1696436780207,1696436813640,com.google.android.webview:webview_service,10158
+Charging status,string,1696436741146,1696436813640,c,
+Active process,service,1696436594717,1696436813640,com.samsung.android.bixby.wakeup,1000
+Active process,service,1696436597498,1696436813640,com.samsung.android.sm.policy,10144
+Temperature,int,1696436741146,1696436813640,344,
+Active process,service,1696436594717,1696436813640,com.android.networkstack.process,1073
+Active process,service,1696436789406,1696436813640,com.whatsapp,10227
+Active process,service,1696436594717,1696436813640,com.android.settings,1000
+Active process,service,1696436594717,1696436813640,android:drmService,1000
+Active process,service,1696436594717,1696436813640,com.sec.android.app.dexonpc,1000
+Plug,string,1696436741146,1696436813640,u,
+Active process,service,1696436594717,1696436813640,com.samsung.android.smartsuggestions,10392
+Active process,service,1696436594717,1696436813640,com.samsung.android.mcfserver,10492
+Active process,service,1696436594717,1696436813640,com.google.android.googlequicksearchbox:interactor,10118
+Active process,service,1696436732998,1696436813640,com.instagram.android,10226
+BLE scanning,bool,1696436594717,1696436813640,true,
+Active process,service,1696436594717,1696436813640,com.sec.android.sdhms,1000
+Active process,service,1696436594717,1696436813640,com.android.se,1068
+Active process,service,1696436594717,1696436813640,com.sec.android.diagmonagent,1000
+Active process,service,1696436594717,1696436813640,com.samsung.android.samsungpass,10085
+Active process,service,1696436594717,1696436813640,android.process.acore,10019
+Active process,service,1696436594717,1696436813640,com.sec.android.app.shealth:remote,10218
+Mobile signal strength,string,1696436813117,1696436813640,great,
+Plugged,bool,1696436741146,1696436813640,true,
+Active process,service,1696436594717,1696436813640,com.samsung.android.bixby.agent,5018
+Active process,service,1696436594717,1696436813640,com.google.android.as,10402
+Active process,service,1696436594717,1696436813640,com.samsung.sec.android.teegris.tui_service,1000
+Active process,service,1696436594717,1696436813640,com.google.process.gservices,10044
+Active process,service,1696436594717,1696436813640,com.samsung.android.easysetup,10030
+Active process,service,1696436594717,1696436813640,com.android.systemui,10009
+Active process,service,1696436600183,1696436813640,com.microsoft.appmanager,10119
+Active process,service,1696436594717,1696436813640,com.samsung.klmsagent,10055
+Active process,service,1696436733637,1696436813640,com.facebook.katana,10130
+Screen,bool,1696436594717,1696436813640,true,unknown screen on reason
+Active process,service,1696436594717,1696436813640,com.samsung.android.smartface,1000
+Active process,service,1696436594717,1696436813640,com.sec.location.nsflp2,5013

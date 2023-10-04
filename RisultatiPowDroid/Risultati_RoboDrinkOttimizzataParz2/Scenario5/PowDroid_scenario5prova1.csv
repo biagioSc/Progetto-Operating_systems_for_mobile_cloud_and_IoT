@@ -1,0 +1,89 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1696434011179,1696434011224,45,3805,1729,214.371846,0.815685,0.002680,0.036706,['com.android.settings'],True,False,False,True,True,False,False,False,['*launch*' 'AudioMix' 'screen']
+1696434011224,1696434011310,86,3805,1729,214.371846,0.815685,0.005121,0.070149,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'AudioMix' 'screen']
+1696434011310,1696434011345,35,3805,1729,214.371846,0.815685,0.002084,0.028549,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['NetworkStats' '*launch*' 'AudioMix' 'screen']
+1696434011345,1696434011542,197,3805,1729,214.371846,0.815685,0.011731,0.160690,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'AudioMix' 'screen']
+1696434011542,1696434011891,349,3805,1729,214.371846,0.815685,0.020782,0.284674,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['AudioMix' 'screen']
+1696434011891,1696434012291,400,3805,1729,214.371846,0.815685,0.023819,0.326274,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434012291,1696434012300,9,3805,1729,214.371846,0.815685,0.000536,0.007341,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['CMWakeLock' 'screen']
+1696434012300,1696434012306,6,3805,1729,214.371846,0.815685,0.000357,0.004894,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['Wakeful StateMachine: GeofencerStateMachine' 'CMWakeLock' 'screen']
+1696434012306,1696434012310,4,3805,1729,214.371846,0.815685,0.000238,0.003263,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['CMWakeLock' 'screen']
+1696434012310,1696434012312,2,3805,1729,214.371846,0.815685,0.000119,0.001631,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['CMWakeLock' 'Wakeful StateMachine: GeofencerStateMachine' 'screen']
+1696434012312,1696434012314,2,3805,1729,214.371846,0.815685,0.000119,0.001631,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['Wakeful StateMachine: GeofencerStateMachine' 'screen']
+1696434012314,1696434012316,2,3805,1729,214.371846,0.815685,0.000119,0.001631,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434012316,1696434012318,2,3805,1729,214.371846,0.815685,0.000119,0.001631,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['Wakeful StateMachine: GeofencerStateMachine' 'screen']
+1696434012318,1696434025667,13349,3805,1729,214.371846,0.815685,0.794903,10.888577,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434025667,1696434025673,6,3805,1729,214.371846,0.815685,0.000357,0.004894,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696434025673,1696434043180,17507,3805,1729,214.371846,0.815685,1.042502,14.280195,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434043180,1696434043316,136,3805,1729,214.371846,0.815685,0.008098,0.110933,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434043316,1696434056473,13157,3805,1729,214.371846,0.815685,0.783470,10.731966,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434056473,1696434056478,5,3805,1729,214.371846,0.815685,0.000298,0.004078,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:StatsCompanionService.pull' 'screen']
+1696434056478,1696434056480,2,3805,1729,214.371846,0.815685,0.000119,0.001631,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:StatsCompanionService.pull'
+ 'com.android.server.stats.StatsCompanionService.PullingAlarmListener'
+ 'screen']"
+1696434056480,1696434056575,95,3805,1729,214.371846,0.815685,0.005657,0.077490,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['com.android.server.stats.StatsCompanionService.PullingAlarmListener'
+ 'screen']"
+1696434056575,1696434058333,1758,3805,1729,214.371846,0.815685,0.104685,1.433974,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434058333,1696434058498,165,3805,1729,214.371846,0.815685,0.009825,0.134588,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434058498,1696434060020,1522,3805,1729,214.371846,0.815685,0.090632,1.241472,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434060020,1696434060022,2,3805,1729,214.371846,0.815685,0.000119,0.001631,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:TIME_TICK' 'screen']
+1696434060022,1696434060092,70,3805,1729,214.371846,0.815685,0.004168,0.057098,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434060092,1696434060095,3,3805,1729,214.371846,0.815685,0.000179,0.002447,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,"['*alarm*:WakingExecutorService.ACTION_ALARM.com.facebook.orca.Mqtt_Wakeup'
+ 'screen']"
+1696434060095,1696434064500,4405,3805,1729,214.371846,0.815685,0.262308,3.593092,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434064500,1696434064644,144,3805,1729,214.371846,0.815685,0.008575,0.117459,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434064644,1696434067490,2846,3805,1729,214.371846,0.815685,0.169473,2.321439,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434067490,1696434075951,8461,3805,1725,301.772916,1.148246,0.709250,9.715309,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434075951,1696434076098,147,3805,1725,301.772916,1.148246,0.012322,0.168792,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434076098,1696434085674,9576,3805,1725,301.772916,1.148246,0.802716,10.995603,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434085674,1696434085682,8,3805,1725,301.772916,1.148246,0.000671,0.009186,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*alarm*:DetectMovementSPListener' 'screen']
+1696434085682,1696434100571,14889,3805,1725,301.772916,1.148246,1.248082,17.096234,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434100571,1696434100718,147,3805,1725,301.772916,1.148246,0.012322,0.168792,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434100718,1696434101403,685,3805,1725,301.772916,1.148246,0.057421,0.786548,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434101403,1696434101516,113,3805,1725,301.772916,1.148246,0.009472,0.129752,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434101516,1696434112840,11324,3805,1725,301.772916,1.148246,0.949243,13.002737,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['screen']
+1696434112840,1696434112845,5,3805,1725,301.772916,1.148246,0.000419,0.005741,['com.example.robotinteractionOttimizzataParz'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434112845,1696434112949,104,3805,1725,301.772916,1.148246,0.008718,0.119418,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*launch*' 'screen']
+1696434112949,1696434115058,2109,3805,1725,301.772916,1.148246,0.176789,2.421651,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['screen']
+1696434115058,1696434115067,9,3805,1725,301.772916,1.148246,0.000754,0.010334,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['Wakeful StateMachine: GeofencerStateMachine' 'screen']
+1696434115067,1696434115070,3,3805,1725,301.772916,1.148246,0.000251,0.003445,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['Wakeful StateMachine: GeofencerStateMachine' 'NlpWakeLock' 'screen']
+1696434115070,1696434115085,15,3805,1725,301.772916,1.148246,0.001257,0.017224,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['NlpWakeLock' 'screen']
+1696434115085,1696434115089,4,3805,1725,301.772916,1.148246,0.000335,0.004593,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'NlpWakeLock' 'screen']
+1696434115089,1696434115090,1,3805,1725,301.772916,1.148246,0.000084,0.001148,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['NlpWakeLock' 'screen']
+1696434115090,1696434115098,8,3805,1725,301.772916,1.148246,0.000671,0.009186,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'NlpWakeLock' 'screen']
+1696434115098,1696434115099,1,3805,1725,301.772916,1.148246,0.000084,0.001148,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*telephony-radio*' 'NlpWakeLock' 'screen']
+1696434115099,1696434115104,5,3805,1725,301.772916,1.148246,0.000419,0.005741,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['NlpWakeLock' 'screen']
+1696434115104,1696434115158,54,3805,1725,301.772916,1.148246,0.004527,0.062005,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['screen']
+1696434115158,1696434115159,1,3805,1725,301.772916,1.148246,0.000084,0.001148,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*telephony-sem-radio*' 'screen']
+1696434115159,1696434115160,1,3805,1725,301.772916,1.148246,0.000084,0.001148,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*telephony-sem-radio*' 'screen']
+1696434115160,1696434115164,4,3805,1725,301.772916,1.148246,0.000335,0.004593,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*telephony-sem-radio*'
+ 'IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation'
+ 'screen']"
+1696434115164,1696434115167,3,3805,1725,301.772916,1.148246,0.000251,0.003445,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*telephony-sem-radio*'
+ 'IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation'
+ 'screen']"
+1696434115167,1696434115168,1,3805,1725,301.772916,1.148246,0.000084,0.001148,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*telephony-sem-radio*'
+ 'IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation'
+ 'screen']"
+1696434115168,1696434115169,1,3805,1725,301.772916,1.148246,0.000084,0.001148,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation'
+ 'screen']"
+1696434115169,1696434115170,1,3805,1725,301.772916,1.148246,0.000084,0.001148,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['*telephony-sem-radio*'
+ 'IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation'
+ 'screen']"
+1696434115170,1696434115182,12,3805,1725,301.772916,1.148246,0.001006,0.013779,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,"['IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation'
+ 'screen']"
+1696434115182,1696434115184,2,3805,1725,301.772916,1.148246,0.000168,0.002296,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['screen']
+1696434115184,1696434115190,6,3805,1725,301.772916,1.148246,0.000503,0.006889,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['*gms_scheduler*:internal' 'screen']
+1696434115190,1696434115200,10,3805,1725,301.772916,1.148246,0.000838,0.011482,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['screen']
+1696434115200,1696434115204,4,3805,1725,301.772916,1.148246,0.000335,0.004593,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,False,['AudioMix' 'screen']
+1696434115204,1696434115208,4,3805,1725,301.772916,1.148246,0.000335,0.004593,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['AudioMix' 'screen']
+1696434115208,1696434115273,65,3780,1721,481.492627,1.820042,0.008694,0.118303,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['NetworkStats' 'AudioMix' 'screen']
+1696434115273,1696434115275,2,3780,1721,481.492627,1.820042,0.000267,0.003640,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['*telephony-radio*' 'NetworkStats' 'AudioMix' 'screen']
+1696434115275,1696434115279,4,3780,1721,481.492627,1.820042,0.000535,0.007280,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['*telephony-radio*' 'NetworkStats' 'AudioMix' 'screen']
+1696434115279,1696434115281,2,3780,1721,481.492627,1.820042,0.000267,0.003640,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['*telephony-radio*' 'NetworkStats' 'AudioMix' 'screen']
+1696434115281,1696434115284,3,3780,1721,481.492627,1.820042,0.000401,0.005460,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['NetworkStats' 'AudioMix' 'screen']
+1696434115284,1696434115299,15,3780,1721,481.492627,1.820042,0.002006,0.027301,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['AudioMix' 'screen']
+1696434115299,1696434115301,2,3780,1721,481.492627,1.820042,0.000267,0.003640,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['*telephony-radio*' 'AudioMix' 'screen']
+1696434115301,1696434115311,10,3780,1721,481.492627,1.820042,0.001337,0.018200,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['*telephony-radio*' 'AudioMix' 'screen']
+1696434115311,1696434115312,1,3780,1721,481.492627,1.820042,0.000134,0.001820,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['*telephony-radio*' 'AudioMix' 'screen']
+1696434115312,1696434115354,42,3780,1721,481.492627,1.820042,0.005617,0.076442,['com.sec.android.app.launcher'],True,False,False,True,True,False,False,True,['AudioMix' 'screen']

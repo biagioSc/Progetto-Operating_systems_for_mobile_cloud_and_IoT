@@ -1,4 +1,6 @@
 metric,type,start_time,end_time,value,opt
-Top app,service,1696422028647,1696422033651,com.sec.android.app.launcher,10113
-Top app,service,1696422033651,1696422135253,com.example.robotinteractionOttimizzataParz,10031
-Top app,service,1696422135253,1696422224508,com.sec.android.app.launcher,10113
+Top app,service,1696436594717,1696436599637,com.sec.android.app.launcher,10113
+Top app,service,1696436599637,1696436736195,com.example.robotinteractionOttimizzataParz,10031
+Top app,service,1696436736195,1696436789463,com.sec.android.app.launcher,10113
+Top app,service,1696436789463,1696436791924,com.whatsapp,10227
+Top app,service,1696436791924,1696436813640,com.sec.android.app.launcher,10113

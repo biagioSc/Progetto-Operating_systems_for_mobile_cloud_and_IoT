@@ -1,0 +1,84 @@
+start_time,end_time,Duration (mS),Voltage (mV),Remaining_charge (mAh),Intensity (mA),Power (W),Consumed charge(mAh),Energy (J),Top app,Screen(ON/OFF),GPS(ON/OFF),Mobile_Radio(ON/OFF),WiFi(ON/OFF),Wifi radio,Camera(ON/OFF),Video (ON/OFF),Audio(ON/OFF),Wakelock_in (Service)
+1.69643E+12,1.69643E+12,464,3809,1654,-455.955924,-1.736736,-0.058768,-0.805846,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69643E+12,1.69643E+12,55,3809,1654,-455.955924,-1.736736,-0.006966,-0.09552,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['NetworkStats' 'screen']
+1.69643E+12,1.69644E+12,21107,3809,1654,-455.955924,-1.736736,-2.673295,-36.657289,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,7,3809,1654,-455.955924,-1.736736,-0.000887,-0.012157,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*alarm*:TIME_TICK' 'screen']
+1.69644E+12,1.69644E+12,4780,3809,1654,-455.955924,-1.736736,-0.605408,-8.301599,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,5203,3785,1658,476.789617,1.804649,0.689093,9.389587,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,147,3785,1658,476.789617,1.804649,0.019469,0.265283,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*launch*' 'screen']
+1.69644E+12,1.69644E+12,14983,3785,1658,476.789617,1.804649,1.984372,27.039051,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,166,3785,1658,476.789617,1.804649,0.021985,0.299572,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*launch*' 'screen']
+1.69644E+12,1.69644E+12,622,3785,1658,476.789617,1.804649,0.082379,1.122491,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,4,3785,1658,476.789617,1.804649,0.00053,0.007219,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*alarm*:DetectMovementSPListener' 'screen']
+1.69644E+12,1.69644E+12,5404,3785,1658,476.789617,1.804649,0.715714,9.752322,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,123,3785,1658,476.789617,1.804649,0.01629,0.221972,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*launch*' 'screen']
+1.69644E+12,1.69644E+12,3550,3785,1658,476.789617,1.804649,0.470168,6.406503,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,7620,3785,1654,477.042338,1.805605,1.00974,13.758712,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,20,3785,1654,477.042338,1.805605,0.00265,0.036112,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['com.samsung.android.bixby.wakeup:DspControlService' 'screen']
+1.69644E+12,1.69644E+12,1,3785,1654,477.042338,1.805605,0.000133,0.001806,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['AudioIn' 'com.samsung.android.bixby.wakeup:DspControlService' 'screen']
+1.69644E+12,1.69644E+12,4,3785,1654,477.042338,1.805605,0.00053,0.007222,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['com.samsung.android.bixby.wakeup:DspControlService' 'screen']
+1.69644E+12,1.69644E+12,109,3785,1654,477.042338,1.805605,0.014444,0.196811,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,['com.samsung.android.bixby.wakeup:DspControlService' 'AudioIn' 'screen']
+1.69644E+12,1.69644E+12,139,3785,1654,477.042338,1.805605,0.018419,0.250979,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,"['*launch*' 'com.samsung.android.bixby.wakeup:DspControlService' 'AudioIn'
+ 'screen']"
+1.69644E+12,1.69644E+12,44,3785,1654,477.042338,1.805605,0.005831,0.079447,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,"['*launch*' 'com.samsung.android.bixby.wakeup:DspControlService' 'AudioIn'
+ 'AudioMix' 'screen']"
+1.69644E+12,1.69644E+12,1289,3785,1654,477.042338,1.805605,0.170808,2.327425,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,"['com.samsung.android.bixby.wakeup:DspControlService' 'AudioIn' 'AudioMix'
+ 'screen']"
+1.69644E+12,1.69644E+12,23,3785,1654,477.042338,1.805605,0.003048,0.041529,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,TRUE,['AudioIn' 'AudioMix' 'screen']
+1.69644E+12,1.69644E+12,22,3785,1654,477.042338,1.805605,0.002915,0.039723,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['AudioIn' 'AudioMix' 'screen']
+1.69644E+12,1.69644E+12,11,3785,1654,477.042338,1.805605,0.001458,0.019862,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['AudioMix' 'screen']
+1.69644E+12,1.69644E+12,1,3785,1654,477.042338,1.805605,0.000133,0.001806,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['AudioIn' 'AudioMix' 'screen']
+1.69644E+12,1.69644E+12,1620,3785,1654,477.042338,1.805605,0.214669,2.925081,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['AudioMix' 'screen']
+1.69644E+12,1.69644E+12,14098,3785,1654,477.042338,1.805605,1.868151,25.455423,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,1,3785,1654,477.042338,1.805605,0.000133,0.001806,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*alarm*:TIME_TICK' 'screen']
+1.69644E+12,1.69644E+12,5184,3785,1654,477.042338,1.805605,0.686941,9.360258,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,2194,3785,1650,534.580688,2.023388,0.325797,4.439313,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,118,3785,1650,534.580688,2.023388,0.017522,0.23876,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*launch*' 'screen']
+1.69644E+12,1.69644E+12,749,3785,1650,534.580688,2.023388,0.111222,1.515518,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,100,3785,1650,534.580688,2.023388,0.014849,0.202339,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*launch*' 'screen']
+1.69644E+12,1.69644E+12,10912,3785,1650,534.580688,2.023388,1.620373,22.079209,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,5,3785,1650,534.580688,2.023388,0.000742,0.010117,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*alarm*:*job.delay*' 'screen']
+1.69644E+12,1.69644E+12,413,3785,1650,534.580688,2.023388,0.061328,0.835659,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,5,3785,1650,534.580688,2.023388,0.000742,0.010117,['com.example.robotinteractionOttimizzataParz'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*launch*' 'screen']
+1.69644E+12,1.69644E+12,102,3785,1650,534.580688,2.023388,0.015146,0.206386,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['*launch*' 'screen']
+1.69644E+12,1.69644E+12,173,3785,1650,534.580688,2.023388,0.02569,0.350046,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,['screen']
+1.69644E+12,1.69644E+12,2180,3785,1650,534.580688,2.023388,0.323718,4.410986,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,5,3785,1650,534.580688,2.023388,0.000742,0.010117,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['Wakeful StateMachine: GeofencerStateMachine'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,1,3785,1650,534.580688,2.023388,0.000148,0.002023,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,26,3785,1650,534.580688,2.023388,0.003861,0.052608,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['NlpWakeLock'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,8,3785,1650,534.580688,2.023388,0.001188,0.016187,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,2,3785,1650,534.580688,2.023388,0.000297,0.004047,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*telephony-sem-radio*'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,6,3785,1650,534.580688,2.023388,0.000891,0.01214,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*telephony-sem-radio*'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,3,3785,1650,534.580688,2.023388,0.000445,0.00607,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*telephony-sem-radio*'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,1,3785,1650,534.580688,2.023388,0.000148,0.002023,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,1,3785,1650,534.580688,2.023388,0.000148,0.002023,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*telephony-sem-radio*'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,13,3785,1650,534.580688,2.023388,0.00193,0.026304,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,1,3785,1650,534.580688,2.023388,0.000148,0.002023,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,4,3785,1650,534.580688,2.023388,0.000594,0.008094,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*telephony-radio*'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,3,3785,1650,534.580688,2.023388,0.000445,0.00607,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*telephony-radio*'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"
+1.69644E+12,1.69644E+12,2,3785,1650,534.580688,2.023388,0.000297,0.004047,['com.sec.android.app.launcher'],TRUE,FALSE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,"['*telephony-radio*'
+ 'IntentOp:.common.broadcast.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation'
+ '*job*/com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain'
+ 'screen']"

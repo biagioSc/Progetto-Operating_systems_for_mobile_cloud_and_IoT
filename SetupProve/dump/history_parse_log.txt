@@ -1,72 +1,94 @@
-Parsing C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\SetupProve\dump/battery_device.zip~dumpstate-2023-10-04-14-22-42.txt
-2023/10/04 14:24:16 Errors encountered when getting package list: [error getting appID from string: strconv.Atoi: parsing "u0ai0": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai1": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai9000": invalid syntax]
+Parsing C:\Users\biagi\Desktop\Progetto-Operating_systems_for_mobile_cloud_and_IoT\SetupProve\dump/battery_device.zip~dumpstate-2023-10-04-18-25-43.txt
+2023/10/04 18:28:23 Errors encountered when getting package list: [error getting appID from string: strconv.Atoi: parsing "u0ai0": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai1": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai2": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai3": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai4": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai5": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai6": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai7": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai8": invalid syntax error getting appID from string: strconv.Atoi: parsing "u0ai9000": invalid syntax]
 Unknown history key: Mrc / 0
 Unknown history key: Wrc / 0
 Unknown history key: +Ud / 
+Unknown history key: +Chtp / 
+Unknown history key: -Chtp / 
 Unknown history key: -Ud / 
+Unknown history key: +Chtp / 
+Unknown history key: -Chtp / 
 Unknown history key: +Ud / 
+Unknown history key: +Chtp / 
+Unknown history key: -Chtp / 
 Errors encountered:
-** Error in 9,h,0,Bl=69,Bs=c,Bh=g,Bp=u,Bt=341,Bv=3936,Bcc=2746,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=4,Sb=2,+W,+Ud,Wss=3,Wsp=compl,+bles with Mrc=0 : unknown key Mrc
-** Error in 9,h,0,Bl=69,Bs=c,Bh=g,Bp=u,Bt=341,Bv=3936,Bcc=2746,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=4,Sb=2,+W,+Ud,Wss=3,Wsp=compl,+bles with Wrc=0 : unknown key Wrc
-** Error in 9,h,0,Bl=69,Bs=c,Bh=g,Bp=u,Bt=341,Bv=3936,Bcc=2746,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=4,Sb=2,+W,+Ud,Wss=3,Wsp=compl,+bles with +Ud : unknown key Ud
-** Error in 9,h,57,+Ewl=43 with +Ewl=43 : two positive transitions seen for "Wakelock_in"
-** Error in 9,h,1,-Ud,-Ewl=62 with -Ud : unknown key Ud
-** Error in 9,h,0,+Ud,+Ewl=87 with +Ud : unknown key Ud
-** Error in 9,h,2875,+Epr=64 with +Epr=64 : two positive transitions seen for "Active process"
+** Error in 9,h,0,Bl=39,Bs=c,Bh=g,Bp=u,Bt=344,Bv=3807,Bcc=1563,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=3,Wsp=compl,+bles,+Chtp with Mrc=0 : unknown key Mrc
+** Error in 9,h,0,Bl=39,Bs=c,Bh=g,Bp=u,Bt=344,Bv=3807,Bcc=1563,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=3,Wsp=compl,+bles,+Chtp with Wrc=0 : unknown key Wrc
+** Error in 9,h,0,Bl=39,Bs=c,Bh=g,Bp=u,Bt=344,Bv=3807,Bcc=1563,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=3,Wsp=compl,+bles,+Chtp with +Ud : unknown key Ud
+** Error in 9,h,0,Bl=39,Bs=c,Bh=g,Bp=u,Bt=344,Bv=3807,Bcc=1563,Mrc=0,Wrc=0,+r,+w,+Wr,+S,+BP,Pss=3,Sb=2,+W,+Ud,Wss=3,Wsp=compl,+bles,+Chtp with +Chtp : unknown key Chtp
+** Error in 9,h,0,-Chtp,Epr=0 with -Chtp : unknown key Chtp
+** Error in 9,h,82,Bs=d,Bh=u,Bp=n,Bt=348,Bv=3812,Bcc=1567,-BP with Bh=u : unknown health = "u"
+** Error in 9,h,0,-Ud,+Chtp,+Etp=67 with -Ud : unknown key Ud
+** Error in 9,h,0,-Ud,+Chtp,+Etp=67 with +Chtp : unknown key Chtp
+** Error in 9,h,374,-Chtp,+Epr=70 with -Chtp : unknown key Chtp
+** Error in 9,h,0,+a,+Ud,+Chtp,+Ewl=99 with +Ud : unknown key Ud
+** Error in 9,h,0,+a,+Ud,+Chtp,+Ewl=99 with +Chtp : unknown key Chtp
+** Error in 9,h,1190,-Chtp,-Ewl=100 with -Chtp : unknown key Chtp
+** Error in 9,h,128,+Epr=70 with +Epr=70 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=0 with +Epr=0 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=1 with +Epr=1 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=2 with +Epr=2 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=3 with +Epr=3 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=4 with +Epr=4 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=5 with +Epr=5 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=72 with +Epr=72 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=6 with +Epr=6 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=77 with +Epr=77 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=7 with +Epr=7 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=8 with +Epr=8 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=9 with +Epr=9 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=10 with +Epr=10 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=11 with +Epr=11 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=79 with +Epr=79 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=12 with +Epr=12 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=73 with +Epr=73 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=69 with +Epr=69 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=94 with +Epr=94 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=13 with +Epr=13 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=14 with +Epr=14 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=58 with +Epr=58 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=90 with +Epr=90 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=73 with +Epr=73 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=15 with +Epr=15 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=63 with +Epr=63 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=65 with +Epr=65 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=16 with +Epr=16 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=55 with +Epr=55 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=66 with +Epr=66 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=17 with +Epr=17 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=18 with +Epr=18 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=56 with +Epr=56 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=71 with +Epr=71 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=19 with +Epr=19 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=79 with +Epr=79 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=63 with +Epr=63 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=20 with +Epr=20 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=21 with +Epr=21 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=64 with +Epr=64 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=89 with +Epr=89 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=22 with +Epr=22 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=57 with +Epr=57 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=50 with +Epr=50 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=80 with +Epr=80 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=23 with +Epr=23 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=24 with +Epr=24 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=25 with +Epr=25 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=26 with +Epr=26 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=65 with +Epr=65 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=27 with +Epr=27 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=58 with +Epr=58 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=28 with +Epr=28 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=29 with +Epr=29 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=71 with +Epr=71 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=30 with +Epr=30 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=31 with +Epr=31 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=32 with +Epr=32 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=86 with +Epr=86 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=33 with +Epr=33 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=34 with +Epr=34 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=35 with +Epr=35 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=36 with +Epr=36 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=37 with +Epr=37 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=38 with +Epr=38 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=92 with +Epr=92 : two positive transitions seen for "Active process"
 ** Error in 9,h,0,+Epr=39 with +Epr=39 : two positive transitions seen for "Active process"
-** Error in 9,h,0,+Epr=67 with +Epr=67 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=40 with +Epr=40 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=41 with +Epr=41 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=42 with +Epr=42 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=43 with +Epr=43 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=44 with +Epr=44 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=45 with +Epr=45 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=46 with +Epr=46 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=72 with +Epr=72 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=47 with +Epr=47 : two positive transitions seen for "Active process"
+** Error in 9,h,0,+Epr=48 with +Epr=48 : two positive transitions seen for "Active process"
 
 Number of summaries  0 
 
